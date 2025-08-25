@@ -1,0 +1,51 @@
+server:
+  port: 8181
+  servlet:
+    context-path: /crde/gpsnel
+  error:
+    whitelabel:
+      enabled: false
+    include-exception: true
+    include-stacktrace: always
+
+spring:
+  application:
+    name: Gestion du personnel de CRDE
+  servlet:
+    multipart:
+      enabled: true
+      resolve-lazily: true
+      location: /crde/gprsnupload
+      max-file-size: 200MB	
+  h2:
+    console:
+      enabled: true
+      path : /h2-console   # navigate to http://localhost:8181/crde/gpsnel/h2-console to see db UI
+      settings.trace: false
+      settings.web-allow-others: true
+  datasource:
+    url: jdbc:h2:~/crde/crdedb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL #;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;        # jdbc:h2:~/olibilldb;AUTO_SERVER=TRUE
+    username: admin
+    password: admin123
+    driverClassName: org.h2.Driver    
+     # platform: h2
+       # data: classpath:data/taxes.sql, classpath:data/provinces.sql, classpath:data/taxesprovinces.sql #, classpath:reviews.sql
+  jpa:
+     database-platform: org.hibernate.dialect.H2Dialect
+     defer-datasource-initialization: true
+     hibernate:
+       ddl-auto: create-drop #update 
+  sql:
+     init:
+       platform: h2
+       mode: always
+       dataLocations: classpath:sql/status.sql, classpath:sql/lieuxaffectations.sql, classpath:sql/fonctions.sql, classpath:sql/typesemployes.sql, classpath:sql/employes.sql, classpath:sql/affectations.sql, classpath:sql/conges.sql, classpath:sql/missions.sql, classpath:sql/visites.sql, classpath:sql/utilisateurs.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  web:
+    resources:
+      cache:
+        period: 120000

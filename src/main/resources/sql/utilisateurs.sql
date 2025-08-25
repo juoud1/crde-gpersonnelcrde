@@ -1,0 +1,6 @@
+--CREATE SCHEMA IF NOT EXISTS;
+CREATE TABLE IF NOT EXISTS utilisateur (id SERIAL PRIMARY KEY, utilisateur_firstname VARCHAR(30), utilisateur_las_name VARCHAR(30), utilisateur_email VARCHAR(50), utilisateur_phone_number VARCHAR(15), utilisateur_nom_connexion VARCHAR(15), utilisateur_mot_de_passe VARCHAR(12), utilisateur_role VARCHAR(5), utilisateur_status VARCHAR(15), utilisateur_cree_le TIMESTAMP(9) WITH TIME ZONE, utilisateur_cree_par VARCHAR(15), utilisateur_modifie_le TIMESTAMP(9) WITH TIME ZONE, utilisateur_modifie_par VARCHAR(15));
+--CREATE TABLE IF NOT EXISTS member (id SERIAL PRIMARY KEY, member_first_name VARCHAR(30), member_last_name VARCHAR(30), member_email VARCHAR(50), member_phone_number VARCHAR(20), member_username VARCHAR(20) UNIQUE, member_password VARCHAR(150), member_role VARCHAR(15), member_status VARCHAR(15), member_created TIMESTAMP(9) WITH TIME ZONE, member_created_by VARCHAR(15), member_last_updated TIMESTAMP(9) WITH TIME ZONE, member_last_updated_by VARCHAR(15));
+
+insert into utilisateur (ID, utilisateur_firstname, utilisateur_lastname, utilisateur_email, utilisateur_phone_number, utilisateur_nom_connexion, utilisateur_mot_de_passe, utilisateur_role, utilisateur_status) 
+values (1L, 'admin', 'super admin', 'admin@gmail.com', '740000000', 'admin', 'admin123', 'ADMIN', 'Actif');

@@ -1,0 +1,147 @@
+body {
+    background: #f8fafc;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body::before {
+    content: "CRDE";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    font-size: 10vw;
+    color: rgba(44, 62, 80, 0.07);
+    font-weight: 900;
+    letter-spacing: 1vw;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at 50% 50%, rgba(80,180,255,0.12) 0%, rgba(80,180,255,0.08) 60%, transparent 80%),
+                repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg, transparent 10deg 20deg);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container, .card, .card-body, .table, #login-container {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    border-radius: 12px;
+}
+
+#employee-form input {
+    border-radius: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-danger {
+    border-radius: 8px;
+}
+
+/* Espacement personnalisé pour les colonnes du tableau du personnel */
+.col-nom {
+    min-width: 140px;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+.col-email {
+    min-width: 180px;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+@media print {
+  body, table, th, td, h1, h2, h3, h4, h5, h6, div, span, p {
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+  .print-footer-signature {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    font-size: 1.1em;
+    font-style: italic;
+    font-weight: bold;
+  }
+   .signature-doc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 0;
+  }
+  .signature-general {
+    margin-left: 20%;
+  }
+  .print-underline {
+    text-decoration: underline;
+  }
+  #employee-table, #employee-table th, #employee-table td {
+    border: 1px solid #000 !important;
+    border-collapse: collapse !important;
+  }
+  img {
+    display: block !important;
+    max-height: 100px !important;
+  }
+  .print-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    visibility: visible !important;
+  }
+  .print-header-col {
+    flex: 1;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  .print-header-col.text-center {
+    text-align: center;
+  }
+  .print-header-col.text-end {
+    text-align: right;
+  }
+  .print-header-blason {
+    max-height: 80px;
+    display: inline-block;
+  }
+}
+
+.print-header-row, .print-footer-signature {
+  display: none;
+} 

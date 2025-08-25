@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Yves DOUD">
+	<meta name="description" content="CRDE, CRDE RCA, Gestion du personnel de la CRDE RCA">
+    <title>GESTION DU PERSONNEL DE LA CRDE</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css}">
+
+	<script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+	<link rel="stylesheet" href="@{css/style.css}">
+	<!--link rel="preconnect" href="https://fonts.gstatic.com/" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/-->
+<body>
+	<!--div class="container position-fixed mw-100"-->
+	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img th:src="@{/images/blason.png}" alt="Logo CRDE " style="width:40px;" class="rounded-pill"> 
+				</a>
+			
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarTogglercrde"
+					aria-controls="navbarTogglercrde"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarTogglercrde">
+					<ul class="navbar-nav m-auto">
+
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#" th:text="|CRDE|">CRDE</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="#gpersonnel" th:text="|Gérer le personnel|">Gérer le personnel</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="#gaffectations" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="#gconges" th:text="|Absences et congés|">Congés</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="#gmissions" th:text="|Gérer les missions|">missions</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="#gvisites" th:text="|Planifier visites|">Visites </a>
+						</li>
+						
+						<li class="nav-item dropdown ml-5">
+							<a class="nav-link dropdown-toggle ml-5" href="#gadmin" id="navbarDropdownMenuLink5" role="button" data-bs-toggle="dropdown">Administration</a>
+							<ul class="dropdown-menu dropdown-menu-light ml-5">
+								<li><a class="dropdown-item" href="#gadminUser">Utilisateurs</a></li>
+								<li><a class="dropdown-item" href="#gadminChangePwd">Changer votre mot de passe</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminStatus">Status employés</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminLaffectation">Lieux Affectation</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminFonctions">Fonctions</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminTconges">Types de congés</a></li>
+							</ul>
+						</li>
+
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<div id="main-app" class="w-100">
+        <div class="container py-5">
+				<div class="text-center my-3">
+					<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
+				</div>
+				<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
+
+				<section id="accueilCrde">
+					<div class="card mb-4">
+						<div class="card-header">
+							<a class="btn" data-bs-toggle="collapse" href="#collapseAcrde" style="font-size: medium; font-weight: bold;">
+								CRDE
+							</a>
+						</div>
+
+						<div id="collapseAcrde" class="collapse show" data-bs-parent="#main-app">
+							<div class="card-body">
+
+								<div class="row" style="position: relative; margin-top: 0em;">
+									<div class="col-lg-5 col-md-5 col-sm-12 desc" style="margin-bottom: 0.15em;" >
+										<div class="description" style="background-color: #e3f2fd; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
+											<p class="text-center align-items"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
+											<hr>
+											<h2 style="color: #A92900;">Baraooooo, vous êtes la bienvenue sur <em>ePortail-CRDE</em>
+												<span style="color: #B9867A; font-size: 22px; width:100%; line-height: 1.5;"><em> pour la gestion de tous les employés et stagiaires de la CRDE du Centrafrique ainsi que de leur status, mouvements et congés.</em></span>
+											</h2>
+										</div>
+									</div>
+									
+									<div class="col-lg-7 col-md-7 col-sm-12" style="margin-bottom: 0.15em; padding-bottom: 0.05em;">
+										<div id="carouselIndicatorscrde" class="carousel slide" data-bs-ride="carousel">
+
+											<div class="carousel-indicators">
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="1" aria-label="Slide 1"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="2" aria-label="Slide 2"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="3" aria-label="Slide 3"></button>
+											</div>
+											
+											<div class="carousel-inner" style="align-items: center; text-align: justify;">
+												<div class="carousel-item active" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: #fbfcfb;">Actualité 1</h5>
+														<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block" alt="Actu2" style="width: 800px; height: 533; margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: yellow;">Actualité 2</h5>
+														<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image3.jpg}" class="d-block" alt="Actu3" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: orangered;">Actualité 3</h5>
+														<p style="color: orangered;">Conférence des exprts à Doubaï (Émirats Arrabes Unis)</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image4.jpg}" class="d-block w-100" alt="Actu4" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: yellow;">Actualité 4</h5>
+														<p style="color: yellow;">... en Europe</p>
+													</div>
+												</div>
+											</div>
+											
+											<button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="prev">
+												<span class="carousel-control-prev-icon btn-warning" aria-hidden="true"></span>
+												<span class="visually-hidden">Précédent</span>
+											</button>
+											<button class="carousel-control-next" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="next">
+												<span class="carousel-control-next-icon btn-warning" aria-hidden="true"></span>
+												<span class="visually-hidden">Suivant</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+			</section>
+			<hr>
+
+			<section id="gpersonnel">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="btn" data-bs-toggle="collapse" href="#collapseGpernonnel" style="font-size: medium; font-weight: bold;">
+							GÉRER LES EMPLOYÉS ET/OU LEUR STATUS
+						</a>
+					</div>
+					<div id="collapseGpernonnel" class="collapse" data-bs-parent="#main-app">
+						<div class="card-body">
+							<h2 class="h4 mb-3 text-center">Ajouter ou modifier un employé ou stagiaire</h2>
+							<form id="employee-form" class="row g-3">
+								<div class="col-md-3">
+									<input type="text" id="civiliteougradeemp" class="form-control" placeholder="Civilité ou grade" required>
+								</div>
+								<div class="col-md-4">
+									<input type="text" id="name" class="form-control" placeholder="Nom" required>
+								</div>
+								<div class="col-md-4">
+									<input type="text" id="firstname" class="form-control" placeholder="Prénom" required>
+								</div>
+								<div class="col-md-4">
+									<select id="typeemp" class="form-select" required>
+										<option value="">Sélectionner un type employé</option>
+    									<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<input type="text" id="matricule" class="form-control" placeholder="Matricule" required>
+								</div>
+							
+								<div class="col-md-6">
+									<input type="email" id="email" class="form-control" placeholder="Email" required>
+								</div>
+								<div class="col-md-4">
+									<input type="tel" id="phone" class="form-control" placeholder="Numéro de Téléphone" required>
+								</div>
+								<br>
+								<div class="col-md-4">
+									<select id="status" class="form-select" required>
+										<option value="">Sélectionner un status</option>
+    									<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
+									</select>
+								</div>
+								<div class="col-md-3" id="startDate-group">
+									<input type="date" id="startDate" class="form-control" placeholder="Date début" required>
+								</div>
+								<div class="col-md-3" id="endDate-group">
+									<input type="date" id="endDate" class="form-control" placeholder="Date fin" required>
+								</div>
+								<div class="col-md-4">
+									<select id="lieuaffect" class="form-select" required>
+										<option value="">Sélectionner un lieu d'affectation</option>
+    									<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
+									</select>
+								</div>
+								<div class="col-md-4">
+									<select id="fonction" class="form-select" required>
+										<option value="">Sélectionner une fonction</option>
+    									<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
+									</select>
+								</div>
+
+								<div class="col-md-2" id="startDate-group">
+									<input type="date" id="startDateAff" class="form-control" placeholder="Date début" required>
+								</div>
+								<div class="col-md-2" id="endDate-group">
+									<input type="date" id="endDateAff" class="form-control" placeholder="Date fin" required>
+								</div>
+
+								<div class="col-12 text-end">
+									<button type="submit" class="btn btn-primary">Ajouter</button>
+									<button type="reset" class="btn btn-dark">Annuler</button>
+								</div>
+							</form>
+
+							<hr>
+
+							<div class="container">
+								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-start;">
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="CABINET">CABINET</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION SECURITE EXTERIEURE">DIRECTION SECURITE EXTERIEURE</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION BANGUI">DIRECTION BANGUI</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION PREFECTURES">DIRECTION PREFECTURES</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="ALL">Tous</button>
+								</div>
+								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+									<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer la liste</button>
+									<button type="button" class="btn btn-info" id="print-conges">Imprimer les congés</button>
+									<button type="button" class="btn btn-info" id="print-missions">Imprimer les missions</button>
+									<button type="button" class="btn btn-info" id="print-stagiaires">Imprimer les stagiaires</button>
+								</div>
+								<hr>
+
+								<h2 class="h4 mb-3 text-center print-underline">Liste du personnel</h2>
+								<table class="table table-striped" id="employee-table">
+									<thead>
+										<tr>
+											<th class="col-nom">Nom</th>
+											<th>Prénom</th>
+											<th class="col-email">Email</th>
+											<th>Téléphone</th>
+											<th>Statut</th>
+											<th>Date début</th>
+											<th>Date fin</th>
+											<th>Affectation</th>
+											<th>Fonction</th>
+											<th class="col-action">
+												Actions
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Les employés seront ajoutés ici dynamiquement -->
+									</tbody>
+								</table>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<div class="row" style="position: relative;">
+				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des affectations au sein de la CRDE -->
+					<section id="gaffectations">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
+									AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
+								</a>
+							</div>
+							<div id="collapseAffectations" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un mouvement d'affectation d'un employé</h2>
+									<form id="conges-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="civiliteougradeempaff" class="form-control" placeholder="Civilité ou grade" required>
+										</div>
+										<div class="col-md-7">
+											<select id="employesaffectes" class="form-select" required>
+												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="text" id="matriculeempaff" class="form-control" placeholder="Matricule" required>
+										</div>
+										
+										<div class="col-md-7">
+											<input type="text" id="refaffect" class="form-control" placeholder="Référence" required>
+										</div>
+
+										<div class="col-md-5">
+											<select id="lieuaffect" class="form-select" required>
+												<option value="">Sélectionner un lieu d'affectation</option>
+												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
+											</select>
+										</div>
+										<div class="col-md-7">
+											<input type="text" id="emplacementaff" class="form-control" placeholder="Emplacement affectation" required>
+										</div>
+										
+										<div class="col-md-9">
+											<select id="fonction" class="form-select" required>
+												<option value="">Sélectionner une fonction</option>
+												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
+											</select>
+										</div>
+										<div class="col-md-4">
+											<input type="date" id="dateaffect" class="form-control" placeholder="Date affectation" required>
+										</div>
+										<div class="col-md-4">
+											<input type="date" id="datepriseservice" class="form-control" placeholder="Date prise de service" >
+										</div>
+										<div class="col-md-4">
+											<input type="date" id="dateprisesce" class="form-control" placeholder="Date fin de service">
+										</div>
+										<div class="col-md-10">
+											<input type="text" id="commenataireaffect" class="form-control" placeholder="Commentaires">
+										</div>
+
+										<div class="col-4 text-end">
+											<button type="submit" class="btn btn-primary">Ajouter l'affectation</button>
+										</div>
+										<div class="col-2 text-end">
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+										<div class="col-1 text-end">
+											
+										</div>
+										<div class="col-5 text-center">
+											<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer la note de service</button>
+										</div>
+										
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer les affectations</button>
+											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les ...</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+													<th>Pays</th>
+													<th>Durée (jours)</th>
+													<th>Date début</th>
+													<th>Date fin</th>
+													<th>But</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les visites seront ajoutées ici dynamiquement -->
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion d'absences et congés des employés -->
+					<section id="gconges">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
+									ABSENCES ET CONGÉS DES EMPLOYÉS
+								</a>
+							</div>
+							<div id="collapseConges" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou Congé d'un employés</h2>
+									<form id="conges-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="civiliteougradeempconge" class="form-control" placeholder="Civilité ou grade" required>
+										</div>
+										<div class="col-md-5">
+											<select id="employesaffectes" class="form-select" required>
+												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="text" id="matriculeempaff" class="form-control" placeholder="Matricule" required>
+										</div>
+										
+										<div class="col-md-4">
+											<input type="date" id="datedebconges" class="form-control" placeholder="Date début de congé" required>
+										</div>
+										<div class="col-md-4">
+											<input type="date" id="datefinconges" class="form-control" placeholder="Date fin de congé" >
+										</div>
+										
+										<div class="col-md-10">
+											<input type="text" id="infosupplemetaires" class="form-control" placeholder="informations supplémentaires">
+										</div>
+										<div class="col-4 text-end">
+											<button type="submit" class="btn btn-primary">Ajouter le Congé</button>
+										</div>
+										<div class="col-2 text-end">
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+										<div class="col-1 text-end">
+											
+										</div>
+										<div class="col-5 text-center">
+											<button type="button" class="btn btn-warning" id="print-noteserv-congé">Imprimer la note de service</button>
+										</div>
+										
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer les congés</button>
+											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les congés en cours</button>
+										</div>
+										<hr>
+										
+										<h2 class="h4 mb-3 text-center">Liste d'absences et congés des employés</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+													<th>Pays</th>
+													<th>Durée (jours)</th>
+													<th>Date début</th>
+													<th>Date fin</th>
+													<th>But</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les visites seront ajoutées ici dynamiquement -->
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<div class="row" style="position: relative;">
+				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion  -->
+					<section id="gconges1">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges1" style="font-size: small; font-weight: bold;">
+									...
+								</a>
+							</div>
+							<div id="collapseConges1" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									
+									Non disponible
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion de missions -->
+					<section id="gmissions">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" style="font-size: small; font-weight: bold;">
+									MISSIONS ET DÉPLACEMENTS DES EMPLOYÉS
+								</a>
+							</div>
+							<div id="collapseMissions" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une mission à l'intérieur et l'extérieur</h2>
+									<form id="conges-form" class="row g-3">
+
+										<div class="col-md-3">
+											<input type="text" id="civiliteougradeempmiss" class="form-control" placeholder="Civilité ou grade" required>
+										</div>
+										<div class="col-md-6">
+											<select id="employesmissions" class="form-select" required>
+												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="text" id="matriculeempmiss" class="form-control" placeholder="Matricule" required>
+										</div>
+										
+										<div class="col-md-9">
+											<select id="naturedeplacement" class="form-select" required>
+												<option value="">Nature de déplacement</option>
+												<option value="deplmissionint">Mission à l'intérieur de RCA</option>
+												<option value="deplmissionext">Mission à l'extérieur</option>
+												<option value="deplint">Déplacement à l'intérieur de RCA</option>
+												<option value="deplext">Déplacement à l'extérieur</option>
+												<option value="deplautre">Autre déplacement</option>
+											</select>
+										</div>
+
+										<div class="col-md-4">
+											<select id="cadremission" class="form-select" required>
+												<option value="">Cadre de la mission</option>
+												<option value="cooperation">Coopération</option>
+												<option value="formation">Formation</option>
+												<option value="suivi">Suivi et évaluation</option>
+												<option value="autremission">Autre</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="precisioncadremiss" class="form-control" placeholder="Précision sur le cadre de la mission" required>
+										</div>
+
+										<div class="col-md-4">
+											<input type="date" id="datedepartmiss" class="form-control" placeholder="Date du départ" required>
+										</div>
+										<div class="col-md-4">
+											<input type="date" id="dateretourmiss" class="form-control" placeholder="Date de retour" >
+										</div>
+
+										<div class="col-md-5">
+											<input type="text" id="destville" class="form-control" placeholder="Ville de destination" required>
+										</div>
+
+										<div class="col-md-5">
+											<input type="text" id="destpays" class="form-control" placeholder="Pays de destination" required>
+										</div>
+
+										<div class="col-md-7">
+											<select id="motifmission" class="form-select" required>
+												<option value="">Motif</option>
+												<option value="missoff">Mission officielle</option>
+												<option value="autremotif">Autre</option>
+											</select>
+										</div>
+								
+										<div class="col-md-10">
+											<input type="text" id="infosupplmission" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
+										</div>
+
+										<div class="col-4 text-end">
+											<button type="submit" class="btn btn-primary">Ajouter la mission</button>
+										</div>
+										<div class="col-2 text-end">
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+										<div class="col-1 text-end">
+											
+										</div>
+										<div class="col-5 text-end">
+											<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer l'ordre de mission</button>
+										</div>
+										
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer toutes les missions</button>
+											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les missions en cours </button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des missions</h2>
+										<table class="table table-striped" id="missions-table">
+											<thead>
+												<tr>
+													<th>Pays</th>
+													<th>Durée (jours)</th>
+													<th>Date début</th>
+													<th>Date fin</th>
+													<th>But</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les visites seront ajoutées ici dynamiquement -->
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<hr>
+
+			<!-- Nouvelle section pour les visites officielles -->
+			<section id="gvisites">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseGvisites" style="font-size: medium; font-weight: bold;">
+							PLANIFIER UNE VISITE
+						</a>
+					</div>
+					<div id="collapseGvisites" class="collapse" data-bs-parent="#main-app">
+						<div class="card-body">
+							<h2 class="h4 mb-3 text-center">Ajouter ou modifier une visite officielle</h2>
+							<form id="visit-form" class="row g-3">
+								<div class="col-md-6">
+									<input type="text" id="nomvisit" class="form-control" placeholder="Nom visiteur" required>
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="prenomvisit" class="form-control" placeholder="Prénom visiteur" required>
+								</div>
+								<div class="col-md-7">
+									<input type="text" id="fonctvisit" class="form-control" placeholder="Fonction visiteur" required>
+								</div>
+								<div class="col-md-4">
+									<input type="text" id="country" class="form-control" placeholder="Pays" required>
+								</div>
+								<div class="col-md-2">
+									<input type="number" id="duration" class="form-control" placeholder="Durée (jours)" min="1" required>
+								</div>
+								<div class="col-md-3">
+									<input type="date" id="visitStartDate" class="form-control" placeholder="Date début" required>
+								</div>
+								<div class="col-md-3">
+									<input type="date" id="visitEndDate" class="form-control" placeholder="Date fin" required>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="purpose" class="form-control" placeholder="But de la visite" required>
+								</div>
+								
+								<div class="col-5 text-center">
+									<button type="submit" class="btn btn-primary">Ajouter la visite</button>
+									<button type="reset" class="btn btn-dark">Annuler</button>
+								</div>
+								
+								<div class="col-4 text-start">
+									<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer le récapitulatif</button>
+								</div>
+
+							</form>
+
+							<hr>
+
+							<div class="container">
+								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+									<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer la liste des visites</button>
+									<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les prochaines visites </button>
+									<button type="button" class="btn btn-info" id="print-visites-a">Imprimer les visites annulées</button>
+									<button type="button" class="btn btn-info" id="print-">Imprimer les visites approuvées</button>
+								</div>
+								<hr>
+
+								<h2 class="h4 mb-3 text-center">Liste des visites officielles</h2>
+								<table class="table table-striped" id="visit-table">
+									<thead>
+										<tr>
+											<th>Pays</th>
+											<th>Durée (jours)</th>
+											<th>Date début</th>
+											<th>Date fin</th>
+											<th>But</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Les visites seront ajoutées ici dynamiquement -->
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+			<hr>
+
+			<div class="row" style="position: relative;">
+				<div class="col-lg-4 col-md-4 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des lieux d'affectation -->
+					<section id="glaffectationz">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseLaffectations" style="font-size: small; font-weight: bold;">
+									LIEUX D'AFFECTATIONS
+								</a>
+							</div>
+							<div id="collapseLaffectations" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un lieu d'affectation</h2>
+									<form id="laffectation-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="codelieu" class="form-control" placeholder="Code" required>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="lieuaffectation" class="form-control" placeholder="Lieu d'affectation" required>
+										</div>
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-success">Ajouter le lieu</button>
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-laffect">Imprimer les lieux</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des lieux d'affectation</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+													<th>Code</th>
+													<th>Nom du lieu</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les Lieux d'affectation ici dynamiquement -->
+												<tr th:each="lAff: ${allLieuAffect}">
+													<td th:text="${lAff.lieuAffectCode}">status code</td>
+													<td th:text="${lAff.lieuAffect}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des fonctions administratives -->
+					<section id="gfonctions">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseFonctions" style="font-size: small; font-weight: bold;">
+									FONCTIONS ADMINISTATIVES
+								</a>
+							</div>
+							<div id="collapseFonctions" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une fonction administrative</h2>
+									<form id="laffectation-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="codefonction" class="form-control" placeholder="Code de fonction" required>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="fonction" class="form-control" placeholder="Fonction" required>
+										</div>
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-success">Ajouter la fonction</button>
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-fonction">Imprimer les fonctions</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des fonctions administratives</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+													<th>Code</th>
+													<th>Fonction administrative</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les fonctions administratives ici dynamiquement -->
+												<tr th:each="fonct: ${allFonction}">
+													<td th:text="${fonct.fonctionCode}">status code</td>
+													<td th:text="${fonct.fonction}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des status -->
+					<section id="gadminStatus">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseStatus" style="font-size: small; font-weight: bold;">
+									STATUS
+								</a>
+							</div>
+							<div id="collapseStatus" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un status</h2>
+									<form id="laffectation-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="codestatus" class="form-control" placeholder="Code" required>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="status" class="form-control" placeholder="Status" required>
+										</div>
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-success">Ajouter le status</button>
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-status">Imprimer les status</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des status</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+													<th>Code</th>
+													<th>Status</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les status ici dynamiquement -->
+												<tr th:each="status: ${allStatus}">
+													<td th:text="${status.statusCode}">status code</td>
+													<td th:text="${status.status}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			
+			<div class="row" style="position: relative;">
+				<div class="col-lg-4 col-md-4 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des types d'employés -->
+					<section id="gadminTypeEmp">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTypeEmp" style="font-size: small; font-weight: bold;">
+									TYPES EMPLOYÉS
+								</a>
+							</div>
+							<div id="collapseTypeEmp" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un status</h2>
+									<form id="typeEmp-form" class="row g-3">
+										<div class="col-md-3">
+											<input type="text" id="codetypeemp" class="form-control" placeholder="Code" required>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="typeemp" class="form-control" placeholder="type employé" required>
+										</div>
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-success">Ajouter le type employé</button>
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-type-emp">Imprimer les types employés</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des types employés</h2>
+										<table class="table table-striped" id="type-emp-table">
+											<thead>
+												<tr>
+													<th>Code</th>
+													<th>Type employé</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les types employés ici dynamiquement -->
+												<tr th:each="typeEmp: ${allTypeEmp}">
+													<td th:text="${typeEmp.typeEmpCode}">type employé code</td>
+													<td th:text="${typeEmp.typeEmp}">type employé</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-8 col-md-8 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion des utilisateurs -->
+					<section id="gadminUtilisateur">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseUtilisateur" style="font-size: small; font-weight: bold;">
+									UTILISATEURS
+								</a>
+							</div>
+							<div id="collapseUtilisateur" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un status</h2>
+									<form id="utilisateur-form" class="row g-3">
+										<div class="col-md-6">
+											<input type="text" id="utilisateurFirstname" class="form-control" placeholder="prénom" required>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="utilisateurLastname" class="form-control" placeholder="nom" required>
+										</div>
+										<div class="col-md-4">
+											<input type="text" id="utilisateurPhoneNumber" class="form-control" placeholder="tél" required>
+										</div>
+										<div class="col-md-8">
+											<input type="text" id="utilisateurEmail" class="form-control" placeholder="email" required>
+										</div>
+										<div class="col-md-5">
+											<input type="text" id="utilisateurNomConnexion" class="form-control" placeholder="nom connexion" required>
+										</div>
+										<div class="col-md-3">
+											<input type="text" id="utilisateurRole" class="form-control" placeholder="role" required>
+										</div>
+										<div class="col-md-4">
+											<input type="text" id="utilisateurStatus" class="form-control" placeholder="status" required>
+										</div>
+										
+										<div class="col-12 text-center">
+											<button type="submit" class="btn btn-success">Ajouter l'utilisateur</button>
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div>
+									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-type-emp">Imprimer tous les utilisateurs</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-type-emp">Imprimer les utilisateurs actifs</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-type-emp">Imprimer les utilisateurs non actifs</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des utilisateurs</h2>
+										<table class="table table-striped" id="type-emp-table">
+											<thead>
+												<tr>
+													<th>Nom & prénoms</th>
+													<th>Téléphone</th>
+													<th>Email</th>
+													<th>Nom connexion</th>
+													<th>Role</th>
+													<th>Status</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les types employés ici dynamiquement -->
+												<tr th:each="utilisateur: ${allUtilisateurs}">
+													<td th:text="${utilisateur.utilisateurFirstname} + | | + ${utilisateur.utilisateurLastname} ">nom</td>
+													<td th:text="${utilisateur.utilisateurPhoneNumber}">tel</td>
+													<td th:text="${utilisateur.utilisateurEmail}">email</td>
+													<td th:text="${utilisateur.utilisateurNomConnexion}">tel</td>
+													<td th:text="${utilisateur.utilisateurRole}">role</td>
+													<td th:text="${utilisateur.utilisateurStatus}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			<hr>
+        </div>
+		<footer style="position: relative; background-color:#c2b280; height: 5em; margin: auto;">
+	   		<p style="margin: auto;"> <span class="text-center">CRDE &#169; 2025</span> <span class="text-end">Pour toute information, veuillez contacter <em>Doud Yves</em></span></p>
+	   	</footer>
+    </div>
+
+    <div id="change-password-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Changer le mot de passe</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="change-password-form">
+              <div class="mb-3">
+                <input type="password" id="old-password" class="form-control" placeholder="Ancien mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" id="new-password" class="form-control" placeholder="Nouveau mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" id="confirm-password" class="form-control" placeholder="Confirmer le nouveau mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" id="new-username" class="form-control" placeholder="Nouveau nom d'utilisateur (optionnel)">
+              </div>
+              <div id="change-password-error" class="text-danger mb-2" style="display:none;"></div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success">Changer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="open-change-password" class="btn btn-link position-fixed top-0 end-0 m-3" style="z-index:1000;display:none;">Changer le mot de passe</button>
+    <!--script th:src="{/scripts/app.js}"></script-->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
+	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script>
+        // Masquer/afficher les champs date début et date fin selon le statut
+        const statusField = document.getElementById('status');
+        const startDateGroup = document.getElementById('startDate-group');
+        const endDateGroup = document.getElementById('endDate-group');
+        function toggleDateFields() {
+            if (statusField.value === 'En Service') {
+                startDateGroup.style.display = 'none';
+                endDateGroup.style.display = 'none';
+                document.getElementById('startDate').required = false;
+                document.getElementById('endDate').required = false;
+            } else {
+                startDateGroup.style.display = '';
+                endDateGroup.style.display = '';
+                document.getElementById('startDate').required = true;
+                document.getElementById('endDate').required = true;
+            }
+        }
+        statusField.addEventListener('change', toggleDateFields);
+        window.addEventListener('DOMContentLoaded', toggleDateFields);
+    </script>
+</body>
+</html> 
