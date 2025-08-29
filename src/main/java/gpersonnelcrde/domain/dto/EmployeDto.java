@@ -1,5 +1,7 @@
 package gpersonnelcrde.domain.dto;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.ManyToOne;
@@ -9,6 +11,8 @@ public class EmployeDto {
 	private String empNom;
 	private String empPren;
 	private String empCivilite;
+	private String empTelephone;
+	private String empEmail;
 
 	@JsonIgnore
 	@ManyToOne
@@ -26,70 +30,81 @@ public class EmployeDto {
 	@ManyToOne
 	private FonctionDto fonction;
 
+	private LocalDate empDateDebutStatus;
+	private LocalDate empDateFinStatus;
+
 	public String getEmpMatricule() {
 		return empMatricule;
 	}
-
 	public void setEmpMatricule(String empMatricule) {
 		this.empMatricule = empMatricule;
 	}
-
 	public String getEmpNom() {
 		return empNom;
 	}
-
 	public void setEmpNom(String empNom) {
 		this.empNom = empNom;
 	}
-
 	public String getEmpPren() {
 		return empPren;
 	}
-
 	public void setEmpPren(String empPren) {
 		this.empPren = empPren;
 	}
-
 	public String getEmpCivilite() {
 		return empCivilite;
 	}
-
 	public void setEmpCivilite(String empCivilite) {
 		this.empCivilite = empCivilite;
 	}
-
+	public String getEmpTelephone() {
+		return empTelephone;
+	}
+	public void setEmpTelephone(String empTelephone) {
+		this.empTelephone = empTelephone;
+	}
+	public String getEmpEmail() {
+		return empEmail;
+	}
+	public void setEmpEmail(String empEmail) {
+		this.empEmail = empEmail;
+	}
 	public TypeEmployeDto getTypeEmploye() {
 		return typeEmploye;
 	}
-
 	public void setTypeEmploye(TypeEmployeDto typeEmploye) {
 		this.typeEmploye = typeEmploye;
 	}
-
 	public StatusDto getStatus() {
 		return status;
 	}
-
 	public void setStatus(StatusDto status) {
 		this.status = status;
 	}
-
 	public LieuAffectationDto getLieuAffectation() {
 		return lieuAffectation;
 	}
-
 	public void setLieuAffectation(LieuAffectationDto lieuAffectation) {
 		this.lieuAffectation = lieuAffectation;
 	}
-
 	public FonctionDto getFonction() {
 		return fonction;
 	}
-
 	public void setFonction(FonctionDto fonction) {
 		this.fonction = fonction;
 	}
-
+	public LocalDate getEmpDateDebutStatus() {
+		return empDateDebutStatus;
+	}
+	public void setEmpDateDebutStatus(LocalDate empDateDebutStatus) {
+		this.empDateDebutStatus = empDateDebutStatus;
+	}
+	public LocalDate getEmpDateFinStatus() {
+		return empDateFinStatus;
+	}
+	public void setEmpDateFinStatus(LocalDate empDateFinStatus) {
+		this.empDateFinStatus = empDateFinStatus;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -98,13 +113,16 @@ public class EmployeDto {
 		result = prime * result + ((empNom == null) ? 0 : empNom.hashCode());
 		result = prime * result + ((empPren == null) ? 0 : empPren.hashCode());
 		result = prime * result + ((empCivilite == null) ? 0 : empCivilite.hashCode());
+		result = prime * result + ((empTelephone == null) ? 0 : empTelephone.hashCode());
+		result = prime * result + ((empEmail == null) ? 0 : empEmail.hashCode());
 		result = prime * result + ((typeEmploye == null) ? 0 : typeEmploye.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
+		result = prime * result + ((empDateDebutStatus == null) ? 0 : empDateDebutStatus.hashCode());
+		result = prime * result + ((empDateFinStatus == null) ? 0 : empDateFinStatus.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,6 +152,16 @@ public class EmployeDto {
 				return false;
 		} else if (!empCivilite.equals(other.empCivilite))
 			return false;
+		if (empTelephone == null) {
+			if (other.empTelephone != null)
+				return false;
+		} else if (!empTelephone.equals(other.empTelephone))
+			return false;
+		if (empEmail == null) {
+			if (other.empEmail != null)
+				return false;
+		} else if (!empEmail.equals(other.empEmail))
+			return false;
 		if (typeEmploye == null) {
 			if (other.typeEmploye != null)
 				return false;
@@ -154,13 +182,25 @@ public class EmployeDto {
 				return false;
 		} else if (!fonction.equals(other.fonction))
 			return false;
+		if (empDateDebutStatus == null) {
+			if (other.empDateDebutStatus != null)
+				return false;
+		} else if (!empDateDebutStatus.equals(other.empDateDebutStatus))
+			return false;
+		if (empDateFinStatus == null) {
+			if (other.empDateFinStatus != null)
+				return false;
+		} else if (!empDateFinStatus.equals(other.empDateFinStatus))
+			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "EmployeDto [empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
-				+ ", empCivilite=" + empCivilite + ", typeEmploye=" + typeEmploye + ", status=" + status
-				+ ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + "]";
+				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
+				+ ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation=" + lieuAffectation
+				+ ", fonction=" + fonction + ", empDateDebutStatus=" + empDateDebutStatus + ", empDateFinStatus="
+				+ empDateFinStatus + "]";
 	}
+	
 }

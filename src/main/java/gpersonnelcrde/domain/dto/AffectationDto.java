@@ -12,6 +12,7 @@ public class AffectationDto {
 	private LocalDate dateFinAffect;
 	private LocalDate datePriseService;
 	private String infoSupplementaires;
+	private String numNoteService;
 
 	@JsonIgnore
 	@ManyToOne
@@ -73,6 +74,14 @@ public class AffectationDto {
 		this.infoSupplementaires = infoSupplementaires;
 	}
 
+	public String getNumNoteService() {
+		return numNoteService;
+	}
+
+	public void setNumNoteService(String numNoteService) {
+		this.numNoteService = numNoteService;
+	}
+
 	public EmployeDto getEmploye() {
 		return employe;
 	}
@@ -107,6 +116,7 @@ public class AffectationDto {
 		result = prime * result + ((dateFinAffect == null) ? 0 : dateFinAffect.hashCode());
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
+		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
@@ -152,6 +162,11 @@ public class AffectationDto {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
+		if (numNoteService == null) {
+			if (other.numNoteService != null)
+				return false;
+		} else if (!numNoteService.equals(other.numNoteService))
+			return false;
 		if (employe == null) {
 			if (other.employe != null)
 				return false;
@@ -174,7 +189,8 @@ public class AffectationDto {
 	public String toString() {
 		return "AffectationDto [referenceAffect=" + referenceAffect + ", EmplacementAffect=" + EmplacementAffect
 				+ ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect + ", datePriseService="
-				+ datePriseService + ", infoSupplementaires=" + infoSupplementaires + ", employe=" + employe
-				+ ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + "]";
+				+ datePriseService + ", infoSupplementaires=" + infoSupplementaires + ", numNoteService="
+				+ numNoteService + ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction="
+				+ fonction + "]";
 	}
 }

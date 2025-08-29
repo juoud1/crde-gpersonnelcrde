@@ -12,7 +12,7 @@ import gpersonnelcrde.repository.UtilisateurRepository;
 @Service
 @Transactional
 public class UtilisateurService {
-	private UtilisateurRepository utilisateurRepository;
+	private final UtilisateurRepository utilisateurRepository;
 
 	public UtilisateurService(UtilisateurRepository utilisateurRepository) {
 		this.utilisateurRepository = utilisateurRepository;

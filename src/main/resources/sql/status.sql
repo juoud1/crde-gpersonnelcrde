@@ -11,4 +11,6 @@ values (3L, 'MSN', 'EN mission');
 insert into status (ID, STATUS_CODE, STATUS)
 values (4L, 'STG', 'Stagiaire');
 insert into status (ID, STATUS_CODE, STATUS)
-values (5L, 'AUT', 'Autre');
+values (5L, 'NACT', 'Non actif');
+insert into status (ID, STATUS_CODE, STATUS)
+values (6L, 'AUT', 'Autre');

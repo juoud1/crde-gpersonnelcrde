@@ -1,7 +1,9 @@
 package gpersonnelcrde.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,7 @@ import gpersonnelcrde.repository.LieuAffectationRepository;
 @Service
 @Transactional
 public class LieuAffectationService {
-	private LieuAffectationRepository lieuAffectationRepository;
+	private final LieuAffectationRepository lieuAffectationRepository;
 
 	public LieuAffectationService(LieuAffectationRepository lieuAffectationRepository) {
 		this.lieuAffectationRepository = lieuAffectationRepository;
@@ -27,5 +29,26 @@ public class LieuAffectationService {
 					return lDto; 
 				})
 				.toList();
+	}
+
+	public Optional<LieuAffectationDto> getLieuAffectByCode(String lieuAffectCode){
+		if (StringUtils.isBlank(lieuAffectCode)){
+			return Optional.empty();
+		}
+		var optionalLieuAffect = lieuAffectationRepository.findByLieuAffectCode(lieuAffectCode);
+
+		return lieuAffectMapper(optionalLieuAffect); 
+	}
+
+	private Optional<LieuAffectationDto> lieuAffectMapper(Optional<LieuAffectation> optLieuAffect){
+		if (optLieuAffect.isPresent()){
+			var lAffect = optLieuAffect.get();
+			var lDto = new LieuAffectationDto();
+			lDto.setLieuAffectCode(lAffect.getLieuAffectCode());
+			lDto.setLieuAffect(lAffect.getLieuAffect());
+
+			return Optional.of(lDto);
+		}
+		return Optional.empty();
 	}
 }

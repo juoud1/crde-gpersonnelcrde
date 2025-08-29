@@ -15,6 +15,7 @@ public class MissionDto {
 	private String villeMission;
 	private String motifMission;
 	private String infoSupplementaires;
+	private String numOrderMission;
 
 	@JsonIgnore
 	@ManyToOne
@@ -84,6 +85,14 @@ public class MissionDto {
 		this.infoSupplementaires = infoSupplementaires;
 	}
 
+	public String getNumOrderMission() {
+		return numOrderMission;
+	}
+
+	public void setNumOrderMission(String numOrderMission) {
+		this.numOrderMission = numOrderMission;
+	}
+
 	public EmployeDto getEmploye() {
 		return employe;
 	}
@@ -104,6 +113,7 @@ public class MissionDto {
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
+		result = prime * result + ((numOrderMission == null) ? 0 : numOrderMission.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		return result;
 	}
@@ -157,6 +167,11 @@ public class MissionDto {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
+		if (numOrderMission == null) {
+			if (other.numOrderMission != null)
+				return false;
+		} else if (!numOrderMission.equals(other.numOrderMission))
+			return false;
 		if (employe == null) {
 			if (other.employe != null)
 				return false;
@@ -170,6 +185,7 @@ public class MissionDto {
 		return "MissionDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
 				+ dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission="
 				+ villeMission + ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires
-				+ ", employe=" + employe + "]";
+				+ ", numOrderMission=" + numOrderMission + ", employe=" + employe + "]";
 	}
+
 }

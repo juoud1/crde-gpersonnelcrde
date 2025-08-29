@@ -14,7 +14,7 @@ import gpersonnelcrde.repository.StatusRepository;
 @Service
 @Transactional
 public class StatusService {
-	private StatusRepository statusRepository;
+	private final StatusRepository statusRepository;
 
 	public StatusService(StatusRepository statusRepository){
 		this.statusRepository = statusRepository;

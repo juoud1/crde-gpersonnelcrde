@@ -14,7 +14,7 @@ import gpersonnelcrde.repository.TypeEmployeRepository;
 @Service
 @Transactional
 public class TypeEmployeService {
-	private TypeEmployeRepository typeEmployeRepository;
+	private final TypeEmployeRepository typeEmployeRepository;
 
 	public TypeEmployeService(TypeEmployeRepository typeEmployeRepository) {
 		this.typeEmployeRepository = typeEmployeRepository;

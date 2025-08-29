@@ -268,10 +268,13 @@
 								<table class="table table-striped" id="employee-table">
 									<thead>
 										<tr>
+											<th>Matricule</th>
 											<th class="col-nom">Nom</th>
 											<th>Prénom</th>
-											<th class="col-email">Email</th>
+											<th>Civilité</th>
 											<th>Téléphone</th>
+											<th class="col-email">Email</th>
+											<th>Type employé</th>
 											<th>Statut</th>
 											<th>Date début</th>
 											<th>Date fin</th>
@@ -284,6 +287,21 @@
 									</thead>
 									<tbody>
 										<!-- Les employés seront ajoutés ici dynamiquement -->
+										<tr th:each="employe: ${allEmployes}">
+											<td th:text="${employe.empMatricule}">nom</td>
+											<td th:text="${employe.empNom}">prenom</td>
+											<td th:text="${employe.empPren}">prenom</td>
+											<td th:text="${employe.empCivilite}">prenom</td>
+											<td th:text="${employe.empTelephone}">email</td>
+											<td th:text="${employe.empEmail}">email</td>
+											<td th:text="${employe.typeEmploye.getTypeEmp()}">tel</td>
+											<td th:text="${employe.status.getStatus()}">role</td>
+											<td th:text="${employe.empDateDebutStatus}">date</td>
+											<td th:text="${employe.empDateFinStatus}">date</td>
+											<td th:text="${employe.lieuAffectation.getLieuAffect()}">status</td>
+											<td th:text="${employe.fonction.getFonction()}">status</td>
+											<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -294,7 +312,7 @@
 			</section>
 
 			<div class="row" style="position: relative;">
-				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+				<div class="col-lg-9 col-md-9 col-sm-12 desc">
 					<!-- Nouvelle section pour la gestion des affectations au sein de la CRDE -->
 					<section id="gaffectations">
 						<div class="card mb-4">
@@ -311,8 +329,9 @@
 											<input type="text" id="civiliteougradeempaff" class="form-control" placeholder="Civilité ou grade" required>
 										</div>
 										<div class="col-md-7">
-											<select id="employesaffectes" class="form-select" required>
-												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											<select id="affectEmploye" class="form-select" required>
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
 										<div class="col-md-3">
@@ -380,16 +399,28 @@
 										<table class="table table-striped" id="conges-table">
 											<thead>
 												<tr>
-													<th>Pays</th>
-													<th>Durée (jours)</th>
-													<th>Date début</th>
+													<th>Matricule</th>
+													<th>Date debut</th>
 													<th>Date fin</th>
-													<th>But</th>
+													<th>Fonction</th>
+													<th>Lieu</th>
+													<th>Emplacement</th>
+													<th>Num. note service</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
 											<tbody>
-												<!-- Les visites seront ajoutées ici dynamiquement -->
+												<!-- Les affectations seront ajoutées ici dynamiquement -->
+												<tr th:each="affectation: ${allAffectations}">
+													<td th:text="${affectation.employe.empMatricule}">nom</td>
+													<td th:text="${affectation.dateDebutAffect}">prenom</td>
+													<td th:text="${affectation.dateFinAffect}">email</td>
+													<td th:text="${affectation.fonction.fonction}">tel</td>
+													<td th:text="${affectation.lieuAffectation.lieuAffect}">lieu</td>
+													<td th:text="${affectation.emplacementAffect}">status</td>
+													<td th:text="${affectation.numNoteService}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -400,7 +431,7 @@
 					</section>
 				</div>
 
-				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+				<div class="col-lg-9 col-md-9 col-sm-12 desc">
 					<!-- Nouvelle section pour la gestion d'absences et congés des employés -->
 					<section id="gconges">
 						<div class="card mb-4">
@@ -417,8 +448,9 @@
 											<input type="text" id="civiliteougradeempconge" class="form-control" placeholder="Civilité ou grade" required>
 										</div>
 										<div class="col-md-5">
-											<select id="employesaffectes" class="form-select" required>
-												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											<select id="congeEmploye" class="form-select" required>
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
 										<div class="col-md-3">
@@ -463,16 +495,24 @@
 										<table class="table table-striped" id="conges-table">
 											<thead>
 												<tr>
-													<th>Pays</th>
-													<th>Durée (jours)</th>
+													<th>Matricule</th>
 													<th>Date début</th>
 													<th>Date fin</th>
-													<th>But</th>
+													<th>Détails</th>
+													<th>Num note service</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
 											<tbody>
-												<!-- Les visites seront ajoutées ici dynamiquement -->
+												<!-- Les missions seront ajoutées ici dynamiquement -->
+												<tr th:each="conge: ${allConges}">
+													<td th:text="${conge.employe.getEmpMatricule()}">nom</td>
+													<td th:text="${conge.dateDebutConge}">email</td>
+													<td th:text="${conge.dateFinConge}">tel</td>
+													<td th:text="${conge.infoSupplementaires}">role</td>
+													<td th:text="${conge.numNoteServiceConge}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -485,7 +525,7 @@
 			</div>
 
 			<div class="row" style="position: relative;">
-				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+				<div class="col-lg-3 col-md-3 col-sm-3 desc">
 					<!-- Nouvelle section pour la gestion  -->
 					<section id="gconges1">
 						<div class="card mb-4">
@@ -504,7 +544,7 @@
 					</section>
 				</div>
 
-				<div class="col-lg-6 col-md-6 col-sm-12 desc">
+				<div class="col-lg-9 col-md-9 col-sm-9 desc">
 					<!-- Nouvelle section pour la gestion de missions -->
 					<section id="gmissions">
 						<div class="card mb-4">
@@ -522,8 +562,9 @@
 											<input type="text" id="civiliteougradeempmiss" class="form-control" placeholder="Civilité ou grade" required>
 										</div>
 										<div class="col-md-6">
-											<select id="employesmissions" class="form-select" required>
-												<option value="">Nom prénoms employé (provenant de bdd)</option>
+											<select id="affectEmploye" class="form-select" required>
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
 										<div class="col-md-3">
@@ -532,23 +573,21 @@
 										
 										<div class="col-md-9">
 											<select id="naturedeplacement" class="form-select" required>
-												<option value="">Nature de déplacement</option>
-												<option value="deplmissionint">Mission à l'intérieur de RCA</option>
-												<option value="deplmissionext">Mission à l'extérieur</option>
-												<option value="deplint">Déplacement à l'intérieur de RCA</option>
-												<option value="deplext">Déplacement à l'extérieur</option>
-												<option value="deplautre">Autre déplacement</option>
+												<option value="" th:text="|Nature de déplacement|">Nature de déplacement</option>
+												<option th:value="|Mission-intérieur-RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
+												<option th:value="|Mission-extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
 										</div>
 
 										<div class="col-md-4">
-											<select id="cadremission" class="form-select" required>
+											<input type="text" id="cadremission" class="form-control" placeholder="Le cadre de la mission" required>
+											<!--select id="cadremission" class="form-select" required>
 												<option value="">Cadre de la mission</option>
 												<option value="cooperation">Coopération</option>
 												<option value="formation">Formation</option>
 												<option value="suivi">Suivi et évaluation</option>
 												<option value="autremission">Autre</option>
-											</select>
+											</select-->
 										</div>
 										<div class="col-md-6">
 											<input type="text" id="precisioncadremiss" class="form-control" placeholder="Précision sur le cadre de la mission" required>
@@ -571,9 +610,9 @@
 
 										<div class="col-md-7">
 											<select id="motifmission" class="form-select" required>
-												<option value="">Motif</option>
-												<option value="missoff">Mission officielle</option>
-												<option value="autremotif">Autre</option>
+												<option value="" th:text="|Sélectionner le motif de la mission|">Motif</option>
+												<option th:value="|missoff|" th:text="|Mission officielle|">officielle</option>
+												<option th:value="|autremotif|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
 								
@@ -609,16 +648,30 @@
 										<table class="table table-striped" id="missions-table">
 											<thead>
 												<tr>
+													<th>Matricule</th>
+													<!--th>Cadre de mission</th>
+													<th>Nature de mission</th-->
+													<th>Motif</th>
+													<th>Date départ</th>
+													<th>Date retour</th>
 													<th>Pays</th>
-													<th>Durée (jours)</th>
-													<th>Date début</th>
-													<th>Date fin</th>
-													<th>But</th>
+													<th>Ville</th>
+													<th>Num ordre</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
 											<tbody>
-												<!-- Les visites seront ajoutées ici dynamiquement -->
+												<!-- Les missions seront ajoutées ici dynamiquement -->
+												<tr th:each="mission: ${allMissions}">
+													<td th:text="${mission.employe.empMatricule}">nom</td>
+													<td th:text="${mission.motifMission}">prenom</td>
+													<td th:text="${mission.dateDepart}">email</td>
+													<td th:text="${mission.dateRetour}">tel</td>
+													<td th:text="${mission.paysMission}">role</td>
+													<td th:text="${mission.villeMission}">status</td>
+													<td th:text="${mission.numOrderMission}">status</td>
+													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
