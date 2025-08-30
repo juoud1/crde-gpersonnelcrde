@@ -257,7 +257,7 @@
 									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="ALL">Tous</button>
 								</div>
 								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-									<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer la liste</button>
+									<button type="button" class="btn btn-info ms-auto" id="print-personnel" th:onclick="printPersonnel()">Imprimer la liste</button>
 									<button type="button" class="btn btn-info" id="print-conges">Imprimer les congés</button>
 									<button type="button" class="btn btn-info" id="print-missions">Imprimer les missions</button>
 									<button type="button" class="btn btn-info" id="print-stagiaires">Imprimer les stagiaires</button>
@@ -390,8 +390,8 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer les affectations</button>
-											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les ...</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-affectations">Imprimer les affectations</button>
+											<button type="button" class="btn btn-info" id="print-affectations-p">Imprimer les ...</button>
 										</div>
 										<hr>
 
@@ -486,8 +486,8 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer les congés</button>
-											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les congés en cours</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-conges">Imprimer les congés</button>
+											<button type="button" class="btn btn-info" id="print-conges-p">Imprimer les congés en cours</button>
 										</div>
 										<hr>
 										
@@ -525,25 +525,6 @@
 			</div>
 
 			<div class="row" style="position: relative;">
-				<div class="col-lg-3 col-md-3 col-sm-3 desc">
-					<!-- Nouvelle section pour la gestion  -->
-					<section id="gconges1">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges1" style="font-size: small; font-weight: bold;">
-									...
-								</a>
-							</div>
-							<div id="collapseConges1" class="collapse" data-bs-parent="#main-app">
-								<div class="card-body">
-									
-									Non disponible
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
-
 				<div class="col-lg-9 col-md-9 col-sm-9 desc">
 					<!-- Nouvelle section pour la gestion de missions -->
 					<section id="gmissions">
@@ -556,31 +537,31 @@
 							<div id="collapseMissions" class="collapse" data-bs-parent="#main-app">
 								<div class="card-body">
 									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une mission à l'intérieur et l'extérieur</h2>
-									<form id="conges-form" class="row g-3">
+									<form id="missionsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
 
-										<div class="col-md-3">
-											<input type="text" id="civiliteougradeempmiss" class="form-control" placeholder="Civilité ou grade" required>
+										<div class="col-md-4">
+											<input type="text" id="numordremiss" class="form-control" placeholder="num ordre mission" disabled>
 										</div>
 										<div class="col-md-6">
-											<select id="affectEmploye" class="form-select" required>
+											<select id="missEmpNom" name="missempmatricule" class="form-select">
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
-										<div class="col-md-3">
-											<input type="text" id="matriculeempmiss" class="form-control" placeholder="Matricule" required>
-										</div>
+										<!--div class="col-md-3">
+											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
+										</div-->
 										
 										<div class="col-md-9">
-											<select id="naturedeplacement" class="form-select" required>
+											<select id="naturedeplacement" name="naturedeplacement" class="form-select" required>
 												<option value="" th:text="|Nature de déplacement|">Nature de déplacement</option>
-												<option th:value="|Mission-intérieur-RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
-												<option th:value="|Mission-extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
+												<option th:value="|Mission intérieur RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
+												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
 										</div>
 
 										<div class="col-md-4">
-											<input type="text" id="cadremission" class="form-control" placeholder="Le cadre de la mission" required>
+											<input type="text" id="cadremission" name="cadremission" class="form-control" placeholder="Le cadre de la mission" required>
 											<!--select id="cadremission" class="form-select" required>
 												<option value="">Cadre de la mission</option>
 												<option value="cooperation">Coopération</option>
@@ -590,34 +571,34 @@
 											</select-->
 										</div>
 										<div class="col-md-6">
-											<input type="text" id="precisioncadremiss" class="form-control" placeholder="Précision sur le cadre de la mission" required>
+											<input type="text" id="precisioncadremiss" name="precisioncadremiss" class="form-control" placeholder="Précision sur le cadre de la mission">
 										</div>
 
 										<div class="col-md-4">
-											<input type="date" id="datedepartmiss" class="form-control" placeholder="Date du départ" required>
+											<input type="date" id="datedepartmiss" name="datedepartmiss" class="form-control" placeholder="Date du départ" required>
 										</div>
 										<div class="col-md-4">
-											<input type="date" id="dateretourmiss" class="form-control" placeholder="Date de retour" >
+											<input type="date" id="dateretourmiss" name="dateretourmiss" class="form-control" placeholder="Date de retour" >
 										</div>
 
 										<div class="col-md-5">
-											<input type="text" id="destville" class="form-control" placeholder="Ville de destination" required>
+											<input type="text" id="destville" name="destville" class="form-control" placeholder="Ville de destination" required>
 										</div>
 
 										<div class="col-md-5">
-											<input type="text" id="destpays" class="form-control" placeholder="Pays de destination" required>
+											<input type="text" id="destpays" name="destpays" class="form-control" placeholder="Pays de destination" required>
 										</div>
 
 										<div class="col-md-7">
-											<select id="motifmission" class="form-select" required>
+											<select id="motifmission" name="motifmission" class="form-select" required>
 												<option value="" th:text="|Sélectionner le motif de la mission|">Motif</option>
-												<option th:value="|missoff|" th:text="|Mission officielle|">officielle</option>
-												<option th:value="|autremotif|" th:text="|Autre|">Autre</option>
+												<option th:value="|Mission officielle|" th:text="|Mission officielle|">officielle</option>
+												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
 								
 										<div class="col-md-10">
-											<input type="text" id="infosupplmission" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
+											<input type="text" id="infosupplmission" name="infosupplmission" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
 										</div>
 
 										<div class="col-4 text-end">
@@ -639,8 +620,8 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer toutes les missions</button>
-											<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les missions en cours </button>
+											<button type="button" class="btn btn-info ms-auto" id="print-missions">Imprimer toutes les missions</button>
+											<button type="button" class="btn btn-info" id="print-missions-p">Imprimer les missions en cours </button>
 										</div>
 										<hr>
 
@@ -676,6 +657,25 @@
 										</table>
 									</div>
 
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="col-lg-3 col-md-3 col-sm-3 desc">
+					<!-- Nouvelle section pour la gestion  -->
+					<section id="gconges1">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges1" style="font-size: small; font-weight: bold;">
+									...
+								</a>
+							</div>
+							<div id="collapseConges1" class="collapse" data-bs-parent="#main-app">
+								<div class="card-body">
+									
+									Non disponible
 								</div>
 							</div>
 						</div>
@@ -736,7 +736,7 @@
 
 							<div class="container">
 								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-									<button type="button" class="btn btn-info ms-auto" id="print-personnel">Imprimer la liste des visites</button>
+									<button type="button" class="btn btn-info ms-auto" id="print-visites">Imprimer la liste des visites</button>
 									<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les prochaines visites </button>
 									<button type="button" class="btn btn-info" id="print-visites-a">Imprimer les visites annulées</button>
 									<button type="button" class="btn btn-info" id="print-">Imprimer les visites approuvées</button>
@@ -1129,15 +1129,15 @@
       </div>
     </div>
     <button id="open-change-password" class="btn btn-link position-fixed top-0 end-0 m-3" style="z-index:1000;display:none;">Changer le mot de passe</button>
-    <!--script th:src="{/scripts/app.js}"></script-->
+    <!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script>
+    <script  th:inline="javascript">
         // Masquer/afficher les champs date début et date fin selon le statut
-        const statusField = document.getElementById('status');
+        /*const statusField = document.getElementById('status');
         const startDateGroup = document.getElementById('startDate-group');
         const endDateGroup = document.getElementById('endDate-group');
         function toggleDateFields() {
@@ -1154,7 +1154,115 @@
             }
         }
         statusField.addEventListener('change', toggleDateFields);
-        window.addEventListener('DOMContentLoaded', toggleDateFields);
+        window.addEventListener('DOMContentLoaded', toggleDateFields);*/
+
+		function accessDeepProp(objName, path) {
+			try {
+				return eval(`${objName}.${path}`);
+			} catch (e) {
+				return null;
+			}
+		}
+
+		let allEmployees = [[${allEmployes}]];
+
+		function getEmployees() {
+			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
+		}
+
+		// Impression principale et tri personnalisée
+		function printPersonnel() {
+			const printBtn = document.getElementById('print-personnel');
+			
+			if (printBtn) {
+				const employees = getEmployees();
+				alert("employees: " + employees);
+				alert("stringify employe: " + JSON.stringify(allEmployees));
+				
+				//printBtn.addEventListener('click', function() {
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DU PERSONNEL</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th class='print-col-nom'>Nom</th><th class='print-col-nom'>Prénom</th><th class='print-col-email'>Email</th><th>Numéro de Téléphone</th><th>Statut</th><th class='print-col-fonction'>Affectation</th><th class='print-col-fonction'>Fonction</th></tr></thead><tbody>`;
+					alert("tableHtml: " + tableHtml);
+
+					employees.forEach(emp => {
+						//alert("stringify deb emp: " + JSON.stringify(emp));
+						//let status = 'emp.status.status';
+						//let lieuAffectation = ${emp.lieuAffectation};
+						//let typeEmploye = ${emp.typeEmploye};
+						//let fonction = ${emp.fonction};
+						//o1["o2"]["contact"]["phone"]
+						tableHtml += `<tr><td>${emp.empMatricule}</td><td>${emp.empNom}, ${emp.empPren}</td><td>${emp.empEmail}</td><td>${emp.empTelephone}</td><td>${emp[typeEmploye][typeEmp] || ''}</td><td>${emp} || ''</td><td>${emp.lieuAffection || ''}</td><td>${emp.fonction || ''}</td></tr>`;
+					});
+
+					tableHtml += `</tbody></table>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+				}//);
+			//}
+		}
+
+		// Fonction utilitaire pour l'en-tête imprimable
+		function getPrintableHeader() {
+			return `
+			<table style='width:100%;border-collapse:collapse;margin-bottom:20px;'>
+			<tr>
+				<th style='width:42%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>PRESIDENCE DE LA REPUBLIQUE</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>DIRECTION DE CABINET</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>COORDINATION <br/>DE RENSEIGNEMENTS ET<br/> DE LA DOCUMENTATION D'ETAT.</div>
+				<div>***********</div>
+				<div style='font-weight:bold;'>SECRETARIAT PARTICULIER</div>
+				<div>**********</div>
+				<div style='margin-bottom:10px;'>
+					<span style='text-decoration:underline;'>N°</span>
+					<span>_______</span>
+					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 25</span>
+				</div>
+				</th>
+				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
+				<img src='./blason.png' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
+				</th>
+				<th style='width:40%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>REPUBLIQUE CENTRAFRICAINE</div>
+				<div>Unité – Dignité – Travail</div>
+				<div>***********</div>
+				<div style='height:40px;'></div>
+				</th>
+			</tr>
+			</table>
+			<div style='height:60px;'></div>
+			`;
+		}
+
+		// Fonction utilitaire pour le pied de page
+		function getPrintableFooter() {
+			return `
+			<div style='width:80%;margin-top:40px; margin-right:10%;'>
+			<div style='float:right;text-align:center;'>
+				<span>Le Ministre Conseiller Spécial en charge</span><br/>
+				<span>de la Coordination de Renseignements et </span><br/>
+				<span>de la Documentation d'Etat</span><br/><br/><br/><br/>
+
+				<span style='font-style:italic;'>Le Général d'Armée</span><br/>
+				<span style='font-weight:bold;text-decoration:underline;font-size:1.1em;'>Henri WANZET LINGUISSARA</span>
+			</div>
+			</div>
+			`;
+		}
+
     </script>
 </body>
 </html> 

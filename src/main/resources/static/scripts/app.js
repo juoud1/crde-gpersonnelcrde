@@ -3,8 +3,10 @@
 const form = document.getElementById('employee-form');
 const tableBody = document.querySelector('#employee-table tbody');
 
+let allEmployees = [[${allEmployes}]];
+
 function getEmployees() {
-    return JSON.parse(localStorage.getItem('employees') || '[]');
+	return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
 }
 
 function saveEmployees(employees) {

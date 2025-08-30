@@ -2,6 +2,7 @@ package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.ManyToOne;
@@ -11,6 +12,7 @@ public class MissionDto {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
+
 	private String paysMission;
 	private String villeMission;
 	private String motifMission;
