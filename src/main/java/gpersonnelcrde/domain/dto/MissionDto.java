@@ -19,9 +19,7 @@ public class MissionDto {
 	private String infoSupplementaires;
 	private String numOrderMission;
 
-	@JsonIgnore
-	@ManyToOne
-	private EmployeDto employe;
+	private String employe;
 
 	public String getNatureMission() {
 		return natureMission;
@@ -95,11 +93,11 @@ public class MissionDto {
 		this.numOrderMission = numOrderMission;
 	}
 
-	public EmployeDto getEmploye() {
+	public String getEmploye() {
 		return employe;
 	}
 
-	public void setEmploye(EmployeDto employe) {
+	public void setEmploye(String employe) {
 		this.employe = employe;
 	}
 

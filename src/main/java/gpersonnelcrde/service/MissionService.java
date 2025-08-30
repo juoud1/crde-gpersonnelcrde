@@ -43,7 +43,7 @@ public class MissionService {
 					mDto.setCadreMission(mission.getCadreMission());
 					mDto.setDateDepart(mission.getDateDepart());
 					mDto.setDateRetour(mission.getDateRetour());
-					mDto.setEmploye(missEmploye.orElseThrow(EntityNotFoundException::new));
+					mDto.setEmploye(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
 					mDto.setInfoSupplementaires(mission.getInfoSupplementaires());
 					mDto.setMotifMission(mission.getMotifMission());
 					mDto.setNatureMission(mission.getNatureMission());
@@ -90,7 +90,7 @@ public class MissionService {
 		}
 		
 		return this.getAllMissions().stream()
-									.filter(m -> empMatricule.equalsIgnoreCase(m.getEmploye().getEmpMatricule()))
+									.filter(m -> empMatricule.equalsIgnoreCase(m.getEmploye()))
 									.sorted((m1, m2) -> m2.getDateDepart().compareTo(m1.getDateDepart()))
 									.toList();
 	}
@@ -105,7 +105,7 @@ public class MissionService {
 		mDto.setCadreMission(cadreMission);
 		mDto.setDateDepart(dateDepartMiss);
 		mDto.setDateRetour(dateRetourMiss);
-		mDto.setEmploye(missEmp.orElseThrow(EntityNotFoundException::new));
+		mDto.setEmploye(missEmp.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
 		mDto.setInfoSupplementaires(infoSupplmission);
 		mDto.setMotifMission(motifMission);
 		mDto.setNatureMission(natureDeplacement);
@@ -133,13 +133,13 @@ public class MissionService {
 		mDto.setNatureMission(mission.getNatureMission());
 		mDto.setPaysMission(mission.getPaysMission());
 		mDto.setVilleMission(mission.getVilleMission());
-		mDto.setEmploye(missEmp.orElseThrow(() -> new EntityNotFoundException()));
+		mDto.setEmploye(missEmp.orElseThrow(() -> new EntityNotFoundException()).getEmpMatricule());
 		
 		return Optional.of(mDto);
 	}
 
 	private Mission missionDtoMapper(MissionDto missionDto){
-		var optEmploye = employeRepository.findByEmpMatricule(missionDto.getEmploye().getEmpMatricule());
+		var optEmploye = employeRepository.findByEmpMatricule(missionDto.getEmploye());
 		
 		var missionToSave = new Mission();
 		missionToSave.setCadreMission(missionDto.getCadreMission());

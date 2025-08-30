@@ -14,21 +14,10 @@ public class EmployeDto {
 	private String empTelephone;
 	private String empEmail;
 
-	@JsonIgnore
-	@ManyToOne
-	private TypeEmployeDto typeEmploye;
-
-	@JsonIgnore
-	@ManyToOne
-	private StatusDto status;
-
-	@JsonIgnore
-	@ManyToOne
-	private LieuAffectationDto lieuAffectation;
-
-	@JsonIgnore
-	@ManyToOne
-	private FonctionDto fonction;
+	private String typeEmploye;
+	private String status;
+	private String lieuAffectation;
+	private String fonction;
 
 	private LocalDate empDateDebutStatus;
 	private LocalDate empDateFinStatus;
@@ -69,28 +58,28 @@ public class EmployeDto {
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
 	}
-	public TypeEmployeDto getTypeEmploye() {
+	public String getTypeEmploye() {
 		return typeEmploye;
 	}
-	public void setTypeEmploye(TypeEmployeDto typeEmploye) {
+	public void setTypeEmploye(String typeEmploye) {
 		this.typeEmploye = typeEmploye;
 	}
-	public StatusDto getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(StatusDto status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	public LieuAffectationDto getLieuAffectation() {
+	public String getLieuAffectation() {
 		return lieuAffectation;
 	}
-	public void setLieuAffectation(LieuAffectationDto lieuAffectation) {
+	public void setLieuAffectation(String lieuAffectation) {
 		this.lieuAffectation = lieuAffectation;
 	}
-	public FonctionDto getFonction() {
+	public String getFonction() {
 		return fonction;
 	}
-	public void setFonction(FonctionDto fonction) {
+	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
 	public LocalDate getEmpDateDebutStatus() {

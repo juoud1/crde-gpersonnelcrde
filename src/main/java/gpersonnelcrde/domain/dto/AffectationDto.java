@@ -13,18 +13,9 @@ public class AffectationDto {
 	private LocalDate datePriseService;
 	private String infoSupplementaires;
 	private String numNoteService;
-
-	@JsonIgnore
-	@ManyToOne
-	private EmployeDto employe;
-
-	@JsonIgnore
-	@ManyToOne
-	private LieuAffectationDto lieuAffectation;
-
-	@JsonIgnore
-	@ManyToOne
-	private FonctionDto fonction;
+	private String employe;
+	private String lieuAffectation;
+	private String fonction;
 
 	public String getReferenceAffect() {
 		return referenceAffect;
@@ -82,27 +73,27 @@ public class AffectationDto {
 		this.numNoteService = numNoteService;
 	}
 
-	public EmployeDto getEmploye() {
+	public String getEmploye() {
 		return employe;
 	}
 
-	public void setEmploye(EmployeDto employe) {
+	public void setEmploye(String employe) {
 		this.employe = employe;
 	}
 
-	public LieuAffectationDto getLieuAffectation() {
+	public String getLieuAffectation() {
 		return lieuAffectation;
 	}
 
-	public void setLieuAffectation(LieuAffectationDto lieuAffectation) {
+	public void setLieuAffectation(String lieuAffectation) {
 		this.lieuAffectation = lieuAffectation;
 	}
 
-	public FonctionDto getFonction() {
+	public String getFonction() {
 		return fonction;
 	}
 
-	public void setFonction(FonctionDto fonction) {
+	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
 

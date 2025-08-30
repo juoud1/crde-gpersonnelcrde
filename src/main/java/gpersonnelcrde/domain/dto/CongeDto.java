@@ -2,19 +2,12 @@ package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.ManyToOne;
-
 public class CongeDto {
 	private LocalDate dateDebutConge;
 	private LocalDate dateFinConge;
 	private String infoSupplementaires;
 	private String numNoteServiceConge;
-
-	@JsonIgnore
-	@ManyToOne
-	private EmployeDto employe;
+	private String employe;
 
 	public LocalDate getDateDebutConge() {
 		return dateDebutConge;
@@ -48,11 +41,11 @@ public class CongeDto {
 		this.numNoteServiceConge = numNoteServiceConge;
 	}
 
-	public EmployeDto getEmploye() {
+	public String getEmploye() {
 		return employe;
 	}
 
-	public void setEmploye(EmployeDto employe) {
+	public void setEmploye(String employe) {
 		this.employe = employe;
 	}
 
