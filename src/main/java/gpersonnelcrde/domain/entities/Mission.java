@@ -3,8 +3,6 @@ package gpersonnelcrde.domain.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -26,6 +24,8 @@ public class Mission {
 	private String villeMission;
 	private String motifMission;
 	private String infoSupplementaires;
+	private String statusMission;
+	private LocalDate dateStatusMission;
 
 	@JsonIgnore
 	@ManyToOne

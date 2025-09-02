@@ -7,48 +7,67 @@ public class CongeDto {
 	private LocalDate dateFinConge;
 	private String infoSupplementaires;
 	private String numNoteServiceConge;
-	private String employe;
+	private String statusConge;
+	private LocalDate dateStatusConge;
 
+	private String employeMatricule;
+	private String employeNom;
+	private String employeCivilite;
 	public LocalDate getDateDebutConge() {
 		return dateDebutConge;
 	}
-
 	public void setDateDebutConge(LocalDate dateDebutConge) {
 		this.dateDebutConge = dateDebutConge;
 	}
-
 	public LocalDate getDateFinConge() {
 		return dateFinConge;
 	}
-
 	public void setDateFinConge(LocalDate dateFinConge) {
 		this.dateFinConge = dateFinConge;
 	}
-
 	public String getInfoSupplementaires() {
 		return infoSupplementaires;
 	}
-
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
 	}
-
 	public String getNumNoteServiceConge() {
 		return numNoteServiceConge;
 	}
-
 	public void setNumNoteServiceConge(String numNoteServiceConge) {
 		this.numNoteServiceConge = numNoteServiceConge;
 	}
-
-	public String getEmploye() {
-		return employe;
+	public String getEmployeMatricule() {
+		return employeMatricule;
+	}
+	public void setEmployeMatricule(String employeMatricule) {
+		this.employeMatricule = employeMatricule;
+	}
+	public String getEmployeNom() {
+		return employeNom;
+	}
+	public void setEmployeNom(String employeNom) {
+		this.employeNom = employeNom;
+	}
+	public String getEmployeCivilite() {
+		return employeCivilite;
+	}
+	public void setEmployeCivilite(String employeCivilite) {
+		this.employeCivilite = employeCivilite;
 	}
 
-	public void setEmploye(String employe) {
-		this.employe = employe;
+	public String getStatusConge() {
+		return statusConge;
 	}
-
+	public void setStatusConge(String statusConge) {
+		this.statusConge = statusConge;
+	}
+	public LocalDate getDateStatusConge() {
+		return dateStatusConge;
+	}
+	public void setDateStatusConge(LocalDate dateStatusConge) {
+		this.dateStatusConge = dateStatusConge;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,10 +76,11 @@ public class CongeDto {
 		result = prime * result + ((dateFinConge == null) ? 0 : dateFinConge.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((numNoteServiceConge == null) ? 0 : numNoteServiceConge.hashCode());
-		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
+		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
+		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
+		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,19 +110,28 @@ public class CongeDto {
 				return false;
 		} else if (!numNoteServiceConge.equals(other.numNoteServiceConge))
 			return false;
-		if (employe == null) {
-			if (other.employe != null)
+		if (employeMatricule == null) {
+			if (other.employeMatricule != null)
 				return false;
-		} else if (!employe.equals(other.employe))
+		} else if (!employeMatricule.equals(other.employeMatricule))
+			return false;
+		if (employeNom == null) {
+			if (other.employeNom != null)
+				return false;
+		} else if (!employeNom.equals(other.employeNom))
+			return false;
+		if (employeCivilite == null) {
+			if (other.employeCivilite != null)
+				return false;
+		} else if (!employeCivilite.equals(other.employeCivilite))
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "CongeDto [dateDebutConge=" + dateDebutConge + ", dateFinConge=" + dateFinConge
 				+ ", infoSupplementaires=" + infoSupplementaires + ", numNoteServiceConge=" + numNoteServiceConge
-				+ ", employe=" + employe + "]";
-	}
-		
+				+ ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom + ", employeCivilite="
+				+ employeCivilite + "]";
+	} 
 }

@@ -12,4 +12,5 @@ import gpersonnelcrde.domain.entities.TypeEmploye;
 @Transactional
 public interface TypeEmployeRepository extends JpaRepository<TypeEmploye, Long> {
 	Optional<TypeEmploye> findByTypeEmpCode(String typeEmpCode);
+	Optional<TypeEmploye> findByTypeEmp(String typeEmp);
 }

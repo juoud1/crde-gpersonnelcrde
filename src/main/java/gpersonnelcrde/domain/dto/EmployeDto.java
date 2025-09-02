@@ -2,10 +2,6 @@ package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.ManyToOne;
-
 public class EmployeDto {
 	private String empMatricule;
 	private String empNom;

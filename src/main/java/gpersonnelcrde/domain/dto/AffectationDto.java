@@ -2,9 +2,6 @@ package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.ManyToOne;
-
 public class AffectationDto {
 	private String referenceAffect;
 	private String EmplacementAffect;
@@ -13,90 +10,98 @@ public class AffectationDto {
 	private LocalDate datePriseService;
 	private String infoSupplementaires;
 	private String numNoteService;
-	private String employe;
+	private String statusAffect;
+	private LocalDate dateStatusAffect;
+	private String employeMatricule;
+	private String employeNom;
+	private String employeCivilite;
 	private String lieuAffectation;
 	private String fonction;
 
 	public String getReferenceAffect() {
 		return referenceAffect;
 	}
-
 	public void setReferenceAffect(String referenceAffect) {
 		this.referenceAffect = referenceAffect;
 	}
-
 	public String getEmplacementAffect() {
 		return EmplacementAffect;
 	}
-
 	public void setEmplacementAffect(String emplacementAffect) {
 		EmplacementAffect = emplacementAffect;
 	}
-
 	public LocalDate getDateDebutAffect() {
 		return dateDebutAffect;
 	}
-
 	public void setDateDebutAffect(LocalDate dateDebutAffect) {
 		this.dateDebutAffect = dateDebutAffect;
 	}
-
 	public LocalDate getDateFinAffect() {
 		return dateFinAffect;
 	}
-
 	public void setDateFinAffect(LocalDate dateFinAffect) {
 		this.dateFinAffect = dateFinAffect;
 	}
-
 	public LocalDate getDatePriseService() {
 		return datePriseService;
 	}
-
 	public void setDatePriseService(LocalDate datePriseService) {
 		this.datePriseService = datePriseService;
 	}
-
 	public String getInfoSupplementaires() {
 		return infoSupplementaires;
 	}
-
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
 	}
-
 	public String getNumNoteService() {
 		return numNoteService;
 	}
-
 	public void setNumNoteService(String numNoteService) {
 		this.numNoteService = numNoteService;
 	}
-
-	public String getEmploye() {
-		return employe;
+	public String getEmployeMatricule() {
+		return employeMatricule;
 	}
-
-	public void setEmploye(String employe) {
-		this.employe = employe;
+	public void setEmployeMatricule(String employeMatricule) {
+		this.employeMatricule = employeMatricule;
 	}
-
+	public String getEmployeNom() {
+		return employeNom;
+	}
+	public void setEmployeNom(String employeNom) {
+		this.employeNom = employeNom;
+	}
+	public String getEmployeCivilite() {
+		return employeCivilite;
+	}
+	public void setEmployeCivilite(String employeCivilite) {
+		this.employeCivilite = employeCivilite;
+	}
 	public String getLieuAffectation() {
 		return lieuAffectation;
 	}
-
 	public void setLieuAffectation(String lieuAffectation) {
 		this.lieuAffectation = lieuAffectation;
 	}
-
 	public String getFonction() {
 		return fonction;
 	}
-
 	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
-
+	public String getStatusAffect() {
+		return statusAffect;
+	}
+	public void setStatusAffect(String statusAffect) {
+		this.statusAffect = statusAffect;
+	}
+	public LocalDate getDateStatusAffect() {
+		return dateStatusAffect;
+	}
+	public void setDateStatusAffect(LocalDate dateStatusAffect) {
+		this.dateStatusAffect = dateStatusAffect;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,12 +113,13 @@ public class AffectationDto {
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
-		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
+		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
+		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
+		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -158,10 +164,20 @@ public class AffectationDto {
 				return false;
 		} else if (!numNoteService.equals(other.numNoteService))
 			return false;
-		if (employe == null) {
-			if (other.employe != null)
+		if (employeMatricule == null) {
+			if (other.employeMatricule != null)
 				return false;
-		} else if (!employe.equals(other.employe))
+		} else if (!employeMatricule.equals(other.employeMatricule))
+			return false;
+		if (employeNom == null) {
+			if (other.employeNom != null)
+				return false;
+		} else if (!employeNom.equals(other.employeNom))
+			return false;
+		if (employeCivilite == null) {
+			if (other.employeCivilite != null)
+				return false;
+		} else if (!employeCivilite.equals(other.employeCivilite))
 			return false;
 		if (lieuAffectation == null) {
 			if (other.lieuAffectation != null)
@@ -175,13 +191,14 @@ public class AffectationDto {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "AffectationDto [referenceAffect=" + referenceAffect + ", EmplacementAffect=" + EmplacementAffect
 				+ ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect + ", datePriseService="
 				+ datePriseService + ", infoSupplementaires=" + infoSupplementaires + ", numNoteService="
-				+ numNoteService + ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction="
+				+ numNoteService + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom
+				+ ", employeCivilite=" + employeCivilite + ", lieuAffectation=" + lieuAffectation + ", fonction="
 				+ fonction + "]";
 	}
+	
 }

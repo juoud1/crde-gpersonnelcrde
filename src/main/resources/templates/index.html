@@ -38,27 +38,27 @@
 					<ul class="navbar-nav m-auto">
 
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#" th:text="|CRDE|">CRDE</a>
+							<a class="nav-link active" aria-current="page" th:href="@{/accueil.html}" th:text="|CRDE|">CRDE</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="#gpersonnel" th:text="|Gérer le personnel|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" th:text="|Gérer le personnel|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" href="#gaffectations" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" th:text="|Affectations au sein de la CRDE|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="#gconges" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="#gmissions" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" th:text="|Gérer les missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="#gvisites" th:text="|Planifier visites|">Visites </a>
+							<a class="nav-link" th:href="@{/planif-visites-crde.html}" th:text="|Planifier visites|">Visites </a>
 						</li>
 						
 						<li class="nav-item dropdown ml-5">
@@ -294,12 +294,12 @@
 											<td th:text="${employe.empCivilite}">prenom</td>
 											<td th:text="${employe.empTelephone}">email</td>
 											<td th:text="${employe.empEmail}">email</td>
-											<td th:text="${employe.typeEmploye.getTypeEmp()}">tel</td>
-											<td th:text="${employe.status.getStatus()}">role</td>
+											<td th:text="${employe.typeEmploye}">tel</td>
+											<td th:text="${employe.status}">role</td>
 											<td th:text="${employe.empDateDebutStatus}">date</td>
 											<td th:text="${employe.empDateFinStatus}">date</td>
-											<td th:text="${employe.lieuAffectation.getLieuAffect()}">status</td>
-											<td th:text="${employe.fonction.getFonction()}">status</td>
+											<td th:text="${employe.lieuAffectation}">status</td>
+											<td th:text="${employe.fonction}">status</td>
 											<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
 										</tr>
 									</tbody>
@@ -390,7 +390,7 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-affectations">Imprimer les affectations</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-affectations" th:onclick="printAffectations()">Imprimer les affectations</button>
 											<button type="button" class="btn btn-info" id="print-affectations-p">Imprimer les ...</button>
 										</div>
 										<hr>
@@ -400,6 +400,7 @@
 											<thead>
 												<tr>
 													<th>Matricule</th>
+													<th>Employé</th>
 													<th>Date debut</th>
 													<th>Date fin</th>
 													<th>Fonction</th>
@@ -412,11 +413,12 @@
 											<tbody>
 												<!-- Les affectations seront ajoutées ici dynamiquement -->
 												<tr th:each="affectation: ${allAffectations}">
-													<td th:text="${affectation.employe.empMatricule}">nom</td>
+													<td th:text="${affectation.employeMatricule}">nom</td>
+													<td th:text="${affectation.employeNom}">nom</td>
 													<td th:text="${affectation.dateDebutAffect}">prenom</td>
 													<td th:text="${affectation.dateFinAffect}">email</td>
-													<td th:text="${affectation.fonction.fonction}">tel</td>
-													<td th:text="${affectation.lieuAffectation.lieuAffect}">lieu</td>
+													<td th:text="${affectation.fonction}">tel</td>
+													<td th:text="${affectation.lieuAffectation}">lieu</td>
 													<td th:text="${affectation.emplacementAffect}">status</td>
 													<td th:text="${affectation.numNoteService}">status</td>
 													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
@@ -486,7 +488,7 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-conges">Imprimer les congés</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-conges" th:onclick="printConges()">Imprimer les congés</button>
 											<button type="button" class="btn btn-info" id="print-conges-p">Imprimer les congés en cours</button>
 										</div>
 										<hr>
@@ -496,6 +498,7 @@
 											<thead>
 												<tr>
 													<th>Matricule</th>
+													<th>Employé</th>
 													<th>Date début</th>
 													<th>Date fin</th>
 													<th>Détails</th>
@@ -506,7 +509,8 @@
 											<tbody>
 												<!-- Les missions seront ajoutées ici dynamiquement -->
 												<tr th:each="conge: ${allConges}">
-													<td th:text="${conge.employe.getEmpMatricule()}">nom</td>
+													<td th:text="${conge.employeMatricule}">nom</td>
+													<td th:text="${conge.employeNom}">nom</td>
 													<td th:text="${conge.dateDebutConge}">email</td>
 													<td th:text="${conge.dateFinConge}">tel</td>
 													<td th:text="${conge.infoSupplementaires}">role</td>
@@ -540,7 +544,7 @@
 									<form id="missionsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
 
 										<div class="col-md-4">
-											<input type="text" id="numordremiss" class="form-control" placeholder="num ordre mission" disabled>
+											<input type="text" id="numordremiss" name="numordremiss" class="form-control" placeholder="num ordre mission" disabled>
 										</div>
 										<div class="col-md-6">
 											<select id="missEmpNom" name="missempmatricule" class="form-select">
@@ -611,7 +615,7 @@
 											
 										</div>
 										<div class="col-5 text-end">
-											<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer l'ordre de mission</button>
+											<button type="button" class="btn btn-warning" id="print-ordre-mission" th:onclick="printOrdreMissions()">Imprimer l'ordre de mission</button>
 										</div>
 										
 									</form>
@@ -620,8 +624,8 @@
 
 									<div class="container">
 										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-missions">Imprimer toutes les missions</button>
-											<button type="button" class="btn btn-info" id="print-missions-p">Imprimer les missions en cours </button>
+											<button type="button" class="btn btn-info ms-auto" id="print-missions" th:onclick="printMissions()">Imprimer toutes les missions</button>
+											<button type="button" class="btn btn-info" id="print-missions-p">Imprimer missions en cours </button>
 										</div>
 										<hr>
 
@@ -630,8 +634,9 @@
 											<thead>
 												<tr>
 													<th>Matricule</th>
-													<!--th>Cadre de mission</th>
-													<th>Nature de mission</th-->
+													<th>Employé</th>
+													<th>Cadre de mission</th>
+													<!--th>Nature de mission</th-->
 													<th>Motif</th>
 													<th>Date départ</th>
 													<th>Date retour</th>
@@ -644,7 +649,9 @@
 											<tbody>
 												<!-- Les missions seront ajoutées ici dynamiquement -->
 												<tr th:each="mission: ${allMissions}">
-													<td th:text="${mission.employe.empMatricule}">nom</td>
+													<td th:text="${mission.employeMatricule}">nom</td>
+													<td th:text="${mission.employeNom}">nom</td>
+													<td th:text="${mission.cadreMission}">prenom</td>
 													<td th:text="${mission.motifMission}">prenom</td>
 													<td th:text="${mission.dateDepart}">email</td>
 													<td th:text="${mission.dateRetour}">tel</td>
@@ -1156,43 +1163,54 @@
         statusField.addEventListener('change', toggleDateFields);
         window.addEventListener('DOMContentLoaded', toggleDateFields);*/
 
-		function accessDeepProp(objName, path) {
-			try {
-				return eval(`${objName}.${path}`);
-			} catch (e) {
-				return null;
-			}
-		}
-
 		let allEmployees = [[${allEmployes}]];
+        let allMissions = [[${allMissions}]];
+        let allAffectations = [[${allAffectations}]];
+		let allConges = [[${allConges}]];
 
 		function getEmployees() {
 			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
 		}
 
 		// Impression principale et tri personnalisée
-		function printPersonnel() {
-			const printBtn = document.getElementById('print-personnel');
+        function printConges() {
+			const printBtn = document.getElementById('print-conges');
 			
 			if (printBtn) {
-				const employees = getEmployees();
-				alert("employees: " + employees);
-				alert("stringify employe: " + JSON.stringify(allEmployees));
-				
-				//printBtn.addEventListener('click', function() {
 					
-					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DU PERSONNEL</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
-						`<th class='print-col-nom'>Nom</th><th class='print-col-nom'>Prénom</th><th class='print-col-email'>Email</th><th>Numéro de Téléphone</th><th>Statut</th><th class='print-col-fonction'>Affectation</th><th class='print-col-fonction'>Fonction</th></tr></thead><tbody>`;
-					alert("tableHtml: " + tableHtml);
+				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES CONGÉS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date Début</th><th>Date Fin</th><th class='print-col-fonction'>Détails</th><th>Num. note de svce</th></tr></thead><tbody>`;
+					
+				allConges.forEach(conge => {
+					tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br>${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><<td>${conge.numNoteServiceConge }</td></tr>`;
+				});
 
-					employees.forEach(emp => {
-						//alert("stringify deb emp: " + JSON.stringify(emp));
-						//let status = 'emp.status.status';
-						//let lieuAffectation = ${emp.lieuAffectation};
-						//let typeEmploye = ${emp.typeEmploye};
-						//let fonction = ${emp.fonction};
-						//o1["o2"]["contact"]["phone"]
-						tableHtml += `<tr><td>${emp.empMatricule}</td><td>${emp.empNom}, ${emp.empPren}</td><td>${emp.empEmail}</td><td>${emp.empTelephone}</td><td>${emp[typeEmploye][typeEmp] || ''}</td><td>${emp} || ''</td><td>${emp.lieuAffection || ''}</td><td>${emp.fonction || ''}</td></tr>`;
+				tableHtml += `</tbody></table>`;
+
+				const win = window.open('', '', 'height=700,width=900');
+				win.document.write('<html><head>');
+				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+				win.document.write('</head><body>');
+				win.document.write(getPrintableHeader());
+				win.document.write(tableHtml);
+				win.document.write(getPrintableFooter());
+				win.document.write('</body></html>');
+				win.document.close();
+				win.print();
+			}
+		}
+
+		function printAffectations() {
+			const printBtn = document.getElementById('print-affectations');
+			
+			if (printBtn) {
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES AFFECTATIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date Début</th><th>Date prise svce</th><th>Date Fin</th><th class='print-col-nom'>Fonction</th><th class='print-col-fonction'>Lieu</th><th>Num. note de svce</th></tr></thead><tbody>`;
+					
+					allAffectations.forEach(affect => {
+						tableHtml += `<tr><td>${affect.employeMatricule}</td><td>${affect.employeCivilite}<br> ${affect.employeNom}</td><td>${affect.dateDebutAffect}</td><td>${affect.datePriseService}</td><td>${affect.dateFinAffect}</td><td>${affect.fonction}</td><td>${affect.lieuAffectation}, ${affect.EmplacementAffect}</td><td>${affect.numNoteService }</td></tr>`;
 					});
 
 					tableHtml += `</tbody></table>`;
@@ -1208,8 +1226,96 @@
 					win.document.write('</body></html>');
 					win.document.close();
 					win.print();
-				}//);
-			//}
+			}
+		}
+
+		function printPersonnel() {
+			const printBtn = document.getElementById('print-personnel');
+			
+			if (printBtn) {		
+				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DU PERSONNEL</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Nom & prénom</th><th>Civ./Grade</th><th class='print-col-email'>Email</th><th>Tél</th><th>Type employé</th><th>Statut</th><th class='print-col-fonction'>Affectation</th><th class='print-col-fonction'>Fonction</th></tr></thead><tbody>`;
+					
+				allEmployees.forEach(emp => {
+						tableHtml += `<tr><td>${emp.empMatricule}</td><td>${emp.empNom}  ${emp.empPren}</td><td>${emp.empCivilite}</td><td>${emp.empEmail}</td><td>${emp.empTelephone}</td><td>${emp.typeEmploye}</td><td>${emp.status}</td><td>${emp.lieuAffectation}</td><td>${emp.fonction }</td></tr>`;
+				});
+
+				tableHtml += `</tbody></table>`;
+
+				const win = window.open('', '', 'height=700,width=900');
+				win.document.write('<html><head>');
+				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+				win.document.write('</head><body>');
+				win.document.write(getPrintableHeader());
+				win.document.write(tableHtml);
+				win.document.write(getPrintableFooter());
+				win.document.write('</body></html>');
+				win.document.close();
+				win.print();
+			}
+		}
+
+		function printMissions() {
+			const printBtn = document.getElementById('print-missions');
+			
+			if (printBtn) {
+				//const employees = getEmployees();
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
+					
+					allMissions.forEach(miss => {
+						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrderMission }</td></tr>`;
+					});
+
+					tableHtml += `</tbody></table>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
+		}
+
+		function printOrdreMissions() {
+			const printOmBtn = document.getElementById('print-ordre-mission');
+			const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
+			
+			if (printBtn && null !== numordremissTxt) {
+				//const employees = getEmployees();
+					
+					let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-lg-10 col-md-10 col-sm-10 desc">`;
+					
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
+						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
+					divHtml += `</div></div>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(divHtml);
+					win.document.write(getPrintableFooterNoteSvce());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
 		}
 
 		// Fonction utilitaire pour l'en-tête imprimable
@@ -1233,13 +1339,14 @@
 				</div>
 				</th>
 				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
-				<img src='./blason.png' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
+				<img th:src='@{/images/blason.png}' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
 				</th>
 				<th style='width:40%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
 				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>REPUBLIQUE CENTRAFRICAINE</div>
 				<div>Unité – Dignité – Travail</div>
 				<div>***********</div>
 				<div style='height:40px;'></div>
+				<p style='font-weight:bold;font-size:14pt;margin:2px;'>Bangui le,</p>
 				</th>
 			</tr>
 			</table>
@@ -1248,8 +1355,7 @@
 		}
 
 		// Fonction utilitaire pour le pied de page
-		function getPrintableFooter() {
-			return `
+		const signataireDoc = `
 			<div style='width:80%;margin-top:40px; margin-right:10%;'>
 			<div style='float:right;text-align:center;'>
 				<span>Le Ministre Conseiller Spécial en charge</span><br/>
@@ -1259,6 +1365,33 @@
 				<span style='font-style:italic;'>Le Général d'Armée</span><br/>
 				<span style='font-weight:bold;text-decoration:underline;font-size:1.1em;'>Henri WANZET LINGUISSARA</span>
 			</div>
+			</div>
+			`;
+
+		const ampliDoc = `
+			<div style='float:left;text-align:left;'>
+				<span style='font-weight:bold;text-decoration:underline;font-size:14pt;'>Ampliation</span><br/>
+				<ul>
+                     <li>M.E DIRCAB……(ATCR) ;</li>
+					 <li>Intéressé…………..(01) ;</li>
+					 <li>Archive / Chrono.</li>
+				</ul>
+			</div>
+			`;
+
+		function getPrintableFooter() {
+			return signataireDoc;
+		}
+
+		function getPrintableFooterNoteSvce() {
+			return `
+			<div class="row" style="position: relative;">
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` + 
+			ampliDoc +
+			`</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` +
+			signataireDoc +
+			`</div>
 			</div>
 			`;
 		}
