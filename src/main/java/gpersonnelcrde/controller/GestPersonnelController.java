@@ -53,12 +53,12 @@ public class GestPersonnelController {
 		model.addAttribute("allUtilisateurs", utilisateurService.getAllUtilisateur());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
-			.filter(emp -> "SVCE".equalsIgnoreCase(emp.getStatus().getStatusCode()))
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
 		model.addAttribute("allMissions", missionService.getAllMissions());
 		model.addAttribute("allAffectations", affectationService.getAllAffectation());
-		model.addAttribute("allConges", congeService.getAllConge());
+		model.addAttribute("allConges", congeService.getAllConges());
 
 		return "index";
 	}	

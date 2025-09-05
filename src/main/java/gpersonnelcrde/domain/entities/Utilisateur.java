@@ -2,16 +2,15 @@ package gpersonnelcrde.domain.entities;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Utilisateur {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	//@NotBlank(message = "required.memberfirstname.not.blank")
 	//@Size(min = 3, max = 50, message = "required.memberfirstname.size")

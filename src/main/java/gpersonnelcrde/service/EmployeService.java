@@ -48,8 +48,7 @@ public class EmployeService {
 
 		return employeRepository.findAll().stream()
 				.map((Employe emp) -> {
-					
-					var empFonct = fonctionService.getFonctionByCode(emp.getEmpFonction().getFonctionCode());
+					/*var empFonct = fonctionService.getFonctionByCode(emp.getEmpFonction().getFonctionCode());
 					var empStatus = statusService.getStatusByCode(emp.getEmpStatus().getStatusCode());
 					var empTypeEmp = typeEmployeService.getTypeEmpByCode(emp.getTypeEmploye().getTypeEmpCode());
 					var empLieuAffect = lieuAffectationService.getLieuAffectByCode(emp.getEmpLieuAffectation().getLieuAffectCode());
@@ -60,16 +59,17 @@ public class EmployeService {
 					eDto.setEmpPren(emp.getEmpPren());
 					eDto.setEmpTelephone(emp.getEmpTelephone());
 					eDto.setEmpEmail(emp.getEmpEmail());
-					eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new));
-					eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new));
-					eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new));
-					eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new));
+					eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new).getFonction());
+					eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new).getStatus());
+					eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
+					eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
 
 					var optAffectationEmploye = checktatusEncoursEmploye(emp);
 					var optCongeEmploye = checkCongeEncoursEmploye(emp);
 					var optMissionEmploye = checkMissionEncoursEmploye(emp);
-					computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
-
+					computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);*/
+                    
+					var eDto = employeToDtoMapper(emp);
 					return eDto;
 				})
 				.toList();
@@ -101,13 +101,13 @@ public class EmployeService {
 						// Employé en congé
 						employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 						employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new));	
+						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new).getStatus());	
 				} else {
 					if (missionEmploye.getDateDepart().isAfter(affectationEmploye.getDateDebutAffect())){
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new));
+						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new).getStatus());
 					}
 				}		
 			} else {
@@ -116,18 +116,18 @@ public class EmployeService {
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new));
+						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new).getStatus());
 					
 				} else {
 					if (Objects.nonNull(congeEmploye) && congeEmploye.getDateDebutConge().isAfter(affectationEmploye.getDateDebutAffect())){
 							// Employé en congé
 							employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 							employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-							employeDto.setStatus(statusService.getStatusByCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new));
+							employeDto.setStatus(statusService.getStatusByCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new).getStatus());
 					} else {
 						// Employé n'a ni congé ni mission
 						employeDto.setEmpDateDebutStatus(affectationEmploye.getDateDebutAffect());
-						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("SVCE")).orElseThrow(EntityNotFoundException::new));
+						employeDto.setStatus(statusService.getStatusByCode(String.valueOf("SVCE")).orElseThrow(EntityNotFoundException::new).getStatus());
 
 						if (!affectationEmploye.getDateFinAffect().isAfter(affectationEmploye.getDateDebutAffect())){
 							employeDto.setEmpDateFinStatus(affectationEmploye.getDateFinAffect());
@@ -152,7 +152,7 @@ public class EmployeService {
 			return Optional.empty();	
 		}
 				
-		var emp = optEmploye.get();
+		/*var emp = optEmploye.get();
 		var eDto = new EmployeDto();
 		
 		var empFonct = fonctionService.getFonctionByCode(emp.getEmpFonction().getFonctionCode());
@@ -167,17 +167,49 @@ public class EmployeService {
 		eDto.setEmpTelephone(emp.getEmpTelephone());
 		eDto.setEmpEmail(emp.getEmpEmail());
 
-		eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new));
+		eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new).getFonction());
 		//eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new)); // voir computeStatusEncoursEmploye
-		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new));
-		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new));
+		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
+		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
 
 		var optAffectationEmploye = checktatusEncoursEmploye(emp);
 		var optCongeEmploye = checkCongeEncoursEmploye(emp);
 		var optMissionEmploye = checkMissionEncoursEmploye(emp);
-		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
+		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);*/
+
+		var eDto = employeToDtoMapper(optEmploye.get());
 
 		return Optional.of(eDto);
+	}
+    
+    private EmployeDto employeToDtoMapper(Employe employe){
+	    if (Objects.isNull(employe)){
+            throw new EntityNotFoundException("L'entité employé ne doit être null");
+		}
+
+	    var empFonct = fonctionService.getFonctionByCode(employe.getEmpFonction().getFonctionCode());
+		var empStatus = statusService.getStatusByCode(employe.getEmpStatus().getStatusCode());
+		var empTypeEmp = typeEmployeService.getTypeEmpByCode(employe.getTypeEmploye().getTypeEmpCode());
+		var empLieuAffect = lieuAffectationService.getLieuAffectByCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		
+		var eDto = new EmployeDto();
+		eDto.setEmpCivilite(employe.getEmpCivilite());
+		eDto.setEmpMatricule(employe.getEmpMatricule());
+		eDto.setEmpNom(employe.getEmpNom());
+		eDto.setEmpPren(employe.getEmpPren());
+		eDto.setEmpTelephone(employe.getEmpTelephone());
+		eDto.setEmpEmail(employe.getEmpEmail());
+		eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new).getFonction());
+		eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new).getStatus());
+		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
+		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
+
+		var optAffectationEmploye = checktatusEncoursEmploye(employe);
+		var optCongeEmploye = checkCongeEncoursEmploye(employe);
+		var optMissionEmploye = checkMissionEncoursEmploye(employe);
+		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
+
+		return eDto;
 	}
 
 	private final Optional<Affectation> checktatusEncoursEmploye(final Employe employe) {

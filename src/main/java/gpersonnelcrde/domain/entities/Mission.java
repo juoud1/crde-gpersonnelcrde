@@ -3,20 +3,21 @@ package gpersonnelcrde.domain.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Mission {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
+	private String numOrdreMission;
+	private String typeOrdreMission;
 	private String natureMission;
 	private String cadreMission;
 	private LocalDate dateDepart;
@@ -25,6 +26,8 @@ public class Mission {
 	private String villeMission;
 	private String motifMission;
 	private String infoSupplementaires;
+	private String statusMission;
+	private LocalDate dateStatusMission;
 
 	@JsonIgnore
 	@ManyToOne
@@ -39,6 +42,18 @@ public class Mission {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getNumOrdreMission() {
+		return numOrdreMission;
+	}
+	public void setNumOrdreMission(String numOrdreMission) {
+		this.numOrdreMission = numOrdreMission;
+	}
+	public String getTypeOrdreMission() {
+		return typeOrdreMission;
+	}
+	public void setTypeOrdreMission(String typeOrdreMission) {
+		this.typeOrdreMission = typeOrdreMission;
 	}
 	public String getNatureMission() {
 		return natureMission;
@@ -88,6 +103,18 @@ public class Mission {
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
 	}
+	public String getStatusMission() {
+		return statusMission;
+	}
+	public void setStatusMission(String statusMission) {
+		this.statusMission = statusMission;
+	}
+	public LocalDate getDateStatusMission() {
+		return dateStatusMission;
+	}
+	public void setDateStatusMission(LocalDate dateStatusMission) {
+		this.dateStatusMission = dateStatusMission;
+	}
 	public Employe getEmploye() {
 		return employe;
 	}
@@ -123,6 +150,8 @@ public class Mission {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((numOrdreMission == null) ? 0 : numOrdreMission.hashCode());
+		result = prime * result + ((typeOrdreMission == null) ? 0 : typeOrdreMission.hashCode());
 		result = prime * result + ((natureMission == null) ? 0 : natureMission.hashCode());
 		result = prime * result + ((cadreMission == null) ? 0 : cadreMission.hashCode());
 		result = prime * result + ((dateDepart == null) ? 0 : dateDepart.hashCode());
@@ -131,6 +160,8 @@ public class Mission {
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
+		result = prime * result + ((statusMission == null) ? 0 : statusMission.hashCode());
+		result = prime * result + ((dateStatusMission == null) ? 0 : dateStatusMission.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((missionCreeeLe == null) ? 0 : missionCreeeLe.hashCode());
 		result = prime * result + ((missionCreeePar == null) ? 0 : missionCreeePar.hashCode());
@@ -151,6 +182,16 @@ public class Mission {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (numOrdreMission == null) {
+			if (other.numOrdreMission != null)
+				return false;
+		} else if (!numOrdreMission.equals(other.numOrdreMission))
+			return false;
+		if (typeOrdreMission == null) {
+			if (other.typeOrdreMission != null)
+				return false;
+		} else if (!typeOrdreMission.equals(other.typeOrdreMission))
 			return false;
 		if (natureMission == null) {
 			if (other.natureMission != null)
@@ -192,6 +233,16 @@ public class Mission {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
+		if (statusMission == null) {
+			if (other.statusMission != null)
+				return false;
+		} else if (!statusMission.equals(other.statusMission))
+			return false;
+		if (dateStatusMission == null) {
+			if (other.dateStatusMission != null)
+				return false;
+		} else if (!dateStatusMission.equals(other.dateStatusMission))
+			return false;
 		if (employe == null) {
 			if (other.employe != null)
 				return false;
@@ -221,9 +272,13 @@ public class Mission {
 	}
 	@Override
 	public String toString() {
-		return "Mission [id=" + id + ", natureMission=" + natureMission + ", cadreMission=" + cadreMission
-				+ ", dateDepart=" + dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission
-				+ ", villeMission=" + villeMission + ", motifMission=" + motifMission + ", infoSupplementaires="
-				+ infoSupplementaires + ", employe=" + employe + "]";
-	}	
+		return "Mission [id=" + id + ", numOrdreMission=" + numOrdreMission + ", typeOrdreMission=" + typeOrdreMission
+				+ ", natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart=" + dateDepart
+				+ ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission=" + villeMission
+				+ ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires + ", statusMission="
+				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employe=" + employe
+				+ ", missionCreeeLe=" + missionCreeeLe + ", missionCreeePar=" + missionCreeePar + ", missionModifieeLe="
+				+ missionModifieeLe + ", missionModifieePar=" + missionModifieePar + "]";
+	}
+		
 }

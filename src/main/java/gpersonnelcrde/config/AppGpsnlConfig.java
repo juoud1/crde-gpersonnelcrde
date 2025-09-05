@@ -1,13 +1,17 @@
 package gpersonnelcrde.config;
 
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.Formatter;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
@@ -23,8 +27,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan
 public class AppGpsnlConfig implements WebMvcConfigurer{
 	// Divers
-	public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
-	public static final String ZONED_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss.nnn VV";
+	public static final String DEFAULT_DATE_PATTERN = "yyyyMMdd";
+	public static final String ZONED_DATE_PATTERN = "yyyyMMdd HH:mm:ss.nnn VV";
 	
 	/*@Bean
 	public MessageSource messageSource() {
@@ -44,25 +48,28 @@ public class AppGpsnlConfig implements WebMvcConfigurer{
 		return localValidatorFactoryBean;
 	}*/
 
-	@Bean
-	public FormattingConversionService conversionService() {
-		// do not register defaults
-		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
-
-		// ensure @NumberFormat is stille supported
-		conversionService.addFormatterForFieldAnnotation(new NumberFormatAnnotationFormatterFactory());
-
-		// Register JSR-310 date conversion with a specific global format
-		DateTimeFormatterRegistrar dateTimeFormatterRegistrar = new DateTimeFormatterRegistrar();
-		dateTimeFormatterRegistrar.setDateFormatter(DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN));
-		dateTimeFormatterRegistrar.registerFormatters(conversionService);
-
-		// Register date conversion with a specific global format
-		DateFormatterRegistrar dateFormatterRegistrar = new DateFormatterRegistrar();
-		dateFormatterRegistrar.setFormatter(new DateFormatter(DEFAULT_DATE_PATTERN));
-		dateFormatterRegistrar.registerFormatters(conversionService);
-
-		return conversionService;
+	@Bean // for formatting type system (PRÉFÉRÉ 2)
+	public FormattingConversionService conversionService() { 
+		var formattingConversionServiceBean = new DefaultFormattingConversionService(true); 
+		formattingConversionServiceBean.addFormatter(localDateFormatter()); 
+		return formattingConversionServiceBean; 
+	} 
+	protected Formatter<LocalDate> localDateFormatter() { 
+		return new Formatter<LocalDate>() { 
+			@Override 
+			public LocalDate parse(String source, Locale locale) throws ParseException {
+				return LocalDate.parse(source, getDateTimeFormatter()); 
+			} 
+			
+			@Override 
+			public String print(LocalDate source, Locale locale) { 
+				return source.format(getDateTimeFormatter()); 
+			} 
+			
+			protected DateTimeFormatter getDateTimeFormatter(){ 
+				return DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+			} 
+		}; 
 	}
 
 	@Override

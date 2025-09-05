@@ -2,6 +2,7 @@ package gpersonnelcrde.service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,46 +13,32 @@ import org.springframework.transaction.annotation.Transactional;
 import gpersonnelcrde.domain.dto.AffectationDto;
 import gpersonnelcrde.domain.entities.Affectation;
 import gpersonnelcrde.repository.AffectationRepository;
+import gpersonnelcrde.repository.EmployeRepository;
+import gpersonnelcrde.repository.FonctionRepository;
+import gpersonnelcrde.repository.LieuAffectationRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
 public class AffectationService {
 	private final AffectationRepository affectationRepository;
-	private final EmployeService employeService;
-	private final LieuAffectationService lieuAffectationService;
-	private final FonctionService fonctionService;
+	private final EmployeRepository employeRepository;
+	private final LieuAffectationRepository lieuAffectationRepository;
+	private final FonctionRepository fonctionRepository;
 
-	public AffectationService(AffectationRepository affectationRepository, EmployeService employeService,
-			LieuAffectationService lieuAffectationService, FonctionService fonctionService) {
+	public AffectationService(AffectationRepository affectationRepository, EmployeRepository employeRepository,
+			 LieuAffectationRepository lieuAffectationRepository, FonctionRepository fonctionRepository) {
 		this.affectationRepository = affectationRepository;
-		this.employeService = employeService;
-		this.lieuAffectationService = lieuAffectationService;
-		this.fonctionService = fonctionService;
+		this.employeRepository = employeRepository;
+		this.lieuAffectationRepository = lieuAffectationRepository;
+		this.fonctionRepository = fonctionRepository;
 	}
 
 	public List<AffectationDto> getAllAffectation(){
 		return affectationRepository.findAll().stream()
 				.map(affect -> {
-					var affectEmploye = employeService.getEmployeByMatricule(affect.getEmploye().getEmpMatricule());
-					var affectLieuAffectation = lieuAffectationService.getLieuAffectByCode(affect.getLieuAffectation().getLieuAffectCode());
-					var affectFonction = fonctionService.getFonctionByCode(affect.getFonction().getFonctionCode());
-					var aDto = new AffectationDto();
-					aDto.setDateDebutAffect(affect.getDateDebutAffect());
+					var aDto = affectationToDtoMapper(affect);
 					
-					if (!affect.getDateDebutAffect().equals(affect.getDateFinAffect())) {
-						aDto.setDateFinAffect(affect.getDateFinAffect());			
-					}
-		
-					aDto.setDatePriseService(affect.getDatePriseService());
-					aDto.setEmplacementAffect(affect.getEmplacementAffect());
-					aDto.setEmploye(affectEmploye.orElseThrow(EntityNotFoundException::new));
-					aDto.setFonction(affectFonction.orElseThrow(EntityNotFoundException::new));
-					aDto.setInfoSupplementaires(affect.getInfoSupplementaires());
-					aDto.setLieuAffectation(affectLieuAffectation.orElseThrow(EntityNotFoundException::new));
-					aDto.setReferenceAffect(affect.getReferenceAffect());
-					aDto.setNumNoteService(String.valueOf(affect.getId())); ///Formule à détermier
-
 					return aDto;
 				})
 				.toList();
@@ -63,7 +50,7 @@ public class AffectationService {
 		}
 
 		return this.getAllAffectation().stream()
-				.filter(a -> empMatricule.equalsIgnoreCase(a.getEmploye().getEmpMatricule()))
+				.filter(a -> empMatricule.equalsIgnoreCase(a.getEmployeMatricule()))
 				.sorted((a1, a2) -> a2.getDateDebutAffect().compareTo(a1.getDateDebutAffect()))
 				.toList();
 	}
@@ -81,22 +68,40 @@ public class AffectationService {
 		if (!optAffect.isPresent()){
 			return Optional.empty();
 		}
-		var affect = optAffect.get();
-		var aDto = new AffectationDto();
-		var affectEmp = employeService.getEmployeByMatricule(affect.getEmploye().getEmpMatricule());
-		var affectLieuAffect = lieuAffectationService.getLieuAffectByCode(affect.getLieuAffectation().getLieuAffectCode());
-		var affectFonction = fonctionService.getFonctionByCode(affect.getFonction().getFonctionCode());
 
-		aDto.setDateDebutAffect(affect.getDateDebutAffect());
-		aDto.setDateFinAffect(affect.getDateFinAffect());
-		aDto.setDatePriseService(affect.getDatePriseService());
-		aDto.setEmplacementAffect(affect.getEmplacementAffect());
-		aDto.setEmploye(affectEmp.orElseThrow(EntityNotFoundException::new));
-		aDto.setFonction(affectFonction.orElseThrow(EntityNotFoundException::new));
-		aDto.setInfoSupplementaires(affect.getInfoSupplementaires());
-		aDto.setLieuAffectation(affectLieuAffect.orElseThrow(EntityNotFoundException::new));
-		aDto.setReferenceAffect(affect.getReferenceAffect());
+		var aDto = affectationToDtoMapper(optAffect.get());
 
 		return Optional.of(aDto);
+	}
+
+	private AffectationDto affectationToDtoMapper(final Affectation affectation) {
+	    if (Objects.isNull(affectation)){
+            throw new EntityNotFoundException("L'entité affectation ne doit être null");
+		}
+
+		var affectEmploye = employeRepository.findByEmpMatricule(affectation.getEmploye().getEmpMatricule());
+		var affectLieuAffectation = lieuAffectationRepository.findByLieuAffectCode(affectation.getLieuAffectation().getLieuAffectCode());
+		var affectFonction = fonctionRepository.findByFonctionCode(affectation.getFonction().getFonctionCode());
+					
+		var aDto = new AffectationDto();
+		aDto.setDateDebutAffect(affectation.getDateDebutAffect());
+					
+		if (!affectation.getDateDebutAffect().equals(affectation.getDateFinAffect())) {
+			aDto.setDateFinAffect(affectation.getDateFinAffect());			
+		}
+		
+		aDto.setDatePriseService(affectation.getDatePriseService());
+		aDto.setEmplacementAffect(affectation.getEmplacementAffect());
+		aDto.setEmployeMatricule(affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
+		aDto.setEmployeCivilite(affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
+		aDto.setEmployeNom(String.join(", ", affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
+				affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
+		aDto.setFonction(affectFonction.orElseThrow(EntityNotFoundException::new).getFonction());
+		aDto.setInfoSupplementaires(affectation.getInfoSupplementaires());
+		aDto.setLieuAffectation(affectLieuAffectation.orElseThrow(EntityNotFoundException::new).getLieuAffect());
+		aDto.setReferenceAffect(affectation.getReferenceAffect());
+		aDto.setNumNoteService(String.valueOf(affectation.getId())); ///Formule à détermier
+
+		return aDto;
 	}
 }

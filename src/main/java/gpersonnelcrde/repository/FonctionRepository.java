@@ -12,4 +12,5 @@ import gpersonnelcrde.domain.entities.Fonction;
 @Transactional
 public interface FonctionRepository extends JpaRepository<Fonction, Long> {
 	Optional<Fonction> findByFonctionCode(String fonctionCode);
+	Optional<Fonction> findByFonction(String fonction);
 }

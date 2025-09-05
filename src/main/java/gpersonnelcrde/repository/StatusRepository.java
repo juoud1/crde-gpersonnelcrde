@@ -12,4 +12,5 @@ import java.util.Optional;
 @Transactional
 public interface StatusRepository extends JpaRepository<Status, Long> {
 	Optional<Status> findByStatusCode(String statusCode);
+	Optional<Status> findByStatus(String status);
 }

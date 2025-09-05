@@ -11,7 +11,7 @@ import gpersonnelcrde.service.StatusService;
 
 @Controller
 public class StatusController {
-	private StatusService statusService;
+	private final StatusService statusService;
 
 	public StatusController(StatusService statusService) {
 		this.statusService = statusService;

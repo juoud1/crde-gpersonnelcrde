@@ -7,17 +7,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Conge {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private LocalDate dateDebutConge;
 	private LocalDate dateFinConge;
 	private String infoSupplementaires;
+	private String statusConge;
+	private LocalDate dateStatusConge;
 
 	@JsonIgnore
 	@ManyToOne
@@ -80,6 +83,18 @@ public class Conge {
 	}
 	public void setCongeModifiePar(String congeModifiePar) {
 		this.congeModifiePar = congeModifiePar;
+	}
+	public String getStatusConge() {
+		return statusConge;
+	}
+	public void setStatusConge(String statusConge) {
+		this.statusConge = statusConge;
+	}
+	public LocalDate getDateStatusConge() {
+		return dateStatusConge;
+	}
+	public void setDateStatusConge(LocalDate dateStatusConge) {
+		this.dateStatusConge = dateStatusConge;
 	}
 	@Override
 	public int hashCode() {

@@ -12,4 +12,5 @@ import gpersonnelcrde.domain.entities.LieuAffectation;
 @Transactional
 public interface LieuAffectationRepository extends JpaRepository<LieuAffectation, Long> {
 	Optional<LieuAffectation> findByLieuAffectCode (String lieuAffectCode);
+	Optional<LieuAffectation> findByLieuAffect (String lieuAffect);
 }
