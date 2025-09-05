@@ -2,6 +2,7 @@ package gpersonnelcrde.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -39,29 +40,54 @@ public class MissionService {
 				.toList();
 	}
 
-	public MissionDto saveMissionEmploye(final String MissEmpMatricule, String natureDeplacement, String cadreMission,
-												LocalDate dateDepartMiss, LocalDate dateRetourMiss, 
-												String destVille, String destPays, String motifMission, String infoSupplmission){
-		var missionDto = getMissionDtoFromWebParm(MissEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission);
+	public MissionDto saveMissionEmploye(final String missEmpMatricule, String natureDeplacement, String cadreMission,
+												LocalDate dateDepartMiss, LocalDate dateRetourMiss, String destVille, String destPays, String motifMission, String infoSupplmission, final String numOrdreMiss, final String typeOrdreMission){
+		var missionDto = getMissionDtoFromWebParm(numOrdreMiss, typeOrdreMission, missEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission);
 		
 		return saveMissionEmploye(missionDto);
+	}
+
+	public List<MissionDto> saveMissionEmployes(final String numOrdreMiss, final String typeOrdreMission, final String natureDeplacement, final String cadreMission,
+												final LocalDate dateDepartMiss, final LocalDate dateRetourMiss, final String destVille, final String destPays, final String motifMission,
+												final String infoSupplmission, final String... missEmpMatricules){
+		
+		List<MissionDto> missionDtos = new ArrayList<>(); 
+		for (String missEmpMatricule : missEmpMatricules) {
+			var missionDto = saveMissionEmploye(missEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, numOrdreMiss, typeOrdreMission);
+			missionDtos.add(missionDto);
+		} 
+		
+		return missionDtos;
 	}
 
 	public MissionDto saveMissionEmploye(final MissionDto missionDtoToSave){
 		var missionToSave = missionDtoMapper(missionDtoToSave);
 		//missionToSave.setId(computeNumOrdreMission());
 		missionToSave = missionRepository.save(missionToSave);
-		missionDtoToSave.setNumOrderMission(String.valueOf(missionToSave.getId()));
+		missionDtoToSave.setNumOrdreMission(String.valueOf(missionToSave.getId()));
 		return missionDtoToSave;
 	}
 
-	public Optional<MissionDto> getMissionByNumOrdreMission (String numOrdreMission){
+	public List<MissionDto> getMissionByNumOrdreMission (String numOrdreMission){
 		if (StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
+			return Collections.emptyList();
+		}
+		final List<MissionDto> mDtos = new ArrayList<>();
+		var missions = missionRepository.findByNumOrdreMission(numOrdreMission);
+		missions.forEach(m -> mDtos.add(missionToDtoMapper(m)));
+
+		return mDtos;//missionMapper(optionalMission);
+	}
+
+	public Optional<MissionDto> getMissionByNumOrdreMissionAndMatriculeEmp (final String numOrdreMission, final String empMatricule){
+		if (StringUtils.isBlank(empMatricule) || StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
 			return Optional.empty();
 		}
-		var optionalMission = missionRepository.findById(Long.valueOf(numOrdreMission));
+		var optMissionDto = getMissionByNumOrdreMission(numOrdreMission).stream()
+								.filter(mDto -> empMatricule.equalsIgnoreCase(mDto.getEmployeMatricule()))
+								.findFirst();
 
-		return missionMapper(optionalMission);
+		return optMissionDto; //missionMapper(optionalMission);
 	}
 
 	public List<MissionDto> getMissionByEmployeMatricule (final String empMatricule){
@@ -75,12 +101,15 @@ public class MissionService {
 									.toList();
 	}
 	
-	private MissionDto getMissionDtoFromWebParm(final String missEmpMatricule, String natureDeplacement, String cadreMission,
+	private MissionDto getMissionDtoFromWebParm(final String numOrdreMiss, final String typeOrdreMission, final String missEmpMatricule, String natureDeplacement, String cadreMission,
 												LocalDate dateDepartMiss, LocalDate dateRetourMiss, 
 												String destVille, String destPays, String motifMission, String infoSupplmission){
 		
 		var missEmploye = employeRepository.findByEmpMatricule(missEmpMatricule);
 		var mDto = new MissionDto();
+
+		mDto.setTypeOrdreMission(typeOrdreMission);
+		mDto.setNumOrdreMission(numOrdreMiss);
 		mDto.setCadreMission(cadreMission);
 		mDto.setDateDepart(dateDepartMiss);
 		mDto.setDateRetour(dateRetourMiss);
@@ -93,7 +122,9 @@ public class MissionService {
 		mDto.setNatureMission(natureDeplacement);
 		mDto.setPaysMission(destPays);
 		mDto.setVilleMission(destVille);
-		mDto.setNumOrderMission(String.valueOf(missEmploye.orElseThrow(EntityNotFoundException::new).getId())); ///Formule à determiner
+		mDto.setStatusMission("En attente de validation");
+		mDto.setDateStatusMission(LocalDate.now());
+		//mDto.setNumOrderMission(String.valueOf(missEmploye.orElseThrow(EntityNotFoundException::new).getId())); ///Formule à determiner
 
 		return mDto;
 	}
@@ -115,6 +146,8 @@ public class MissionService {
 	    
 		var missEmploye = employeRepository.findByEmpMatricule(mission.getEmploye().getEmpMatricule());
 		var mDto = new MissionDto();
+		mDto.setNumOrdreMission(mission.getNumOrdreMission());
+		mDto.setTypeOrdreMission(mission.getTypeOrdreMission());
 	    mDto.setCadreMission(mission.getCadreMission());
 		mDto.setDateDepart(mission.getDateDepart());
 		mDto.setDateRetour(mission.getDateRetour());
@@ -128,7 +161,9 @@ public class MissionService {
 		mDto.setNatureMission(mission.getNatureMission());
 		mDto.setPaysMission(mission.getPaysMission());
 		mDto.setVilleMission(mission.getVilleMission());
-		mDto.setNumOrderMission(String.valueOf(mission.getId())); ///Formule à determiner
+		mDto.setNumOrdreMission(mission.getNumOrdreMission()); ///Formule à determiner
+		mDto.setStatusMission(mission.getStatusMission());
+		mDto.setDateStatusMission(mission.getDateStatusMission());
 
 		return mDto;
 	}
@@ -137,6 +172,8 @@ public class MissionService {
 		var optEmploye = employeRepository.findByEmpMatricule(missionDto.getEmployeMatricule());
 		
 		var missionToSave = new Mission();
+		missionToSave.setTypeOrdreMission(missionDto.getTypeOrdreMission());
+		missionToSave.setNumOrdreMission(missionDto.getNumOrdreMission());
 		missionToSave.setCadreMission(missionDto.getCadreMission());
 		missionToSave.setDateDepart(missionDto.getDateDepart());
 		missionToSave.setDateRetour(missionDto.getDateRetour());
@@ -146,6 +183,14 @@ public class MissionService {
 		missionToSave.setNatureMission(missionDto.getNatureMission());
 		missionToSave.setVilleMission(missionDto.getVilleMission());
 		missionToSave.setPaysMission(missionDto.getPaysMission());
+
+		if (Objects.nonNull(missionDto.getStatusMission())){
+			missionToSave.setStatusMission(missionDto.getStatusMission());
+		} else {
+			missionToSave.setStatusMission("En attente de validation");
+		}
+
+		missionToSave.setDateStatusMission(LocalDate.now());
 		missionToSave.setMissionCreeeLe(LocalDateTime.now());
 		missionToSave.setMissionCreeePar("admin");
 		missionToSave.setMissionModifieeLe(LocalDateTime.now());

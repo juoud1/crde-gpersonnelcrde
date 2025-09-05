@@ -12,7 +12,8 @@ public class MissionDto {
 	private String villeMission;
 	private String motifMission;
 	private String infoSupplementaires;
-	private String numOrderMission;
+	private String numOrdreMission;
+	private String typeOrdreMission;
 	private String statusMission;
 	private LocalDate dateStatusMission;
 
@@ -68,11 +69,29 @@ public class MissionDto {
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
 	}
-	public String getNumOrderMission() {
-		return numOrderMission;
+	public String getNumOrdreMission() {
+		return numOrdreMission;
 	}
-	public void setNumOrderMission(String numOrderMission) {
-		this.numOrderMission = numOrderMission;
+	public void setNumOrdreMission(String numOrdreMission) {
+		this.numOrdreMission = numOrdreMission;
+	}
+	public String getTypeOrdreMission() {
+		return typeOrdreMission;
+	}
+	public void setTypeOrdreMission(String typeOrdreMission) {
+		this.typeOrdreMission = typeOrdreMission;
+	}
+	public String getStatusMission() {
+		return statusMission;
+	}
+	public void setStatusMission(String statusMission) {
+		this.statusMission = statusMission;
+	}
+	public LocalDate getDateStatusMission() {
+		return dateStatusMission;
+	}
+	public void setDateStatusMission(LocalDate dateStatusMission) {
+		this.dateStatusMission = dateStatusMission;
 	}
 	public String getEmployeMatricule() {
 		return employeMatricule;
@@ -98,18 +117,6 @@ public class MissionDto {
 	public void setEmployeFonction(String employeFonction) {
 		this.employeFonction = employeFonction;
 	}
-	public String getStatusMission() {
-		return statusMission;
-	}
-	public void setStatusMission(String statusMission) {
-		this.statusMission = statusMission;
-	}
-	public LocalDate getDateStatusMission() {
-		return dateStatusMission;
-	}
-	public void setDateStatusMission(LocalDate dateStatusMission) {
-		this.dateStatusMission = dateStatusMission;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -122,7 +129,10 @@ public class MissionDto {
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
-		result = prime * result + ((numOrderMission == null) ? 0 : numOrderMission.hashCode());
+		result = prime * result + ((numOrdreMission == null) ? 0 : numOrdreMission.hashCode());
+		result = prime * result + ((typeOrdreMission == null) ? 0 : typeOrdreMission.hashCode());
+		result = prime * result + ((statusMission == null) ? 0 : statusMission.hashCode());
+		result = prime * result + ((dateStatusMission == null) ? 0 : dateStatusMission.hashCode());
 		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
 		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
 		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
@@ -178,10 +188,25 @@ public class MissionDto {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
-		if (numOrderMission == null) {
-			if (other.numOrderMission != null)
+		if (numOrdreMission == null) {
+			if (other.numOrdreMission != null)
 				return false;
-		} else if (!numOrderMission.equals(other.numOrderMission))
+		} else if (!numOrdreMission.equals(other.numOrdreMission))
+			return false;
+		if (typeOrdreMission == null) {
+			if (other.typeOrdreMission != null)
+				return false;
+		} else if (!typeOrdreMission.equals(other.typeOrdreMission))
+			return false;
+		if (statusMission == null) {
+			if (other.statusMission != null)
+				return false;
+		} else if (!statusMission.equals(other.statusMission))
+			return false;
+		if (dateStatusMission == null) {
+			if (other.dateStatusMission != null)
+				return false;
+		} else if (!dateStatusMission.equals(other.dateStatusMission))
 			return false;
 		if (employeMatricule == null) {
 			if (other.employeMatricule != null)
@@ -210,7 +235,11 @@ public class MissionDto {
 		return "MissionDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
 				+ dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission="
 				+ villeMission + ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires
-				+ ", numOrderMission=" + numOrderMission + ", employeMatricule=" + employeMatricule + ", employeNom="
-				+ employeNom + ", employeCivilite=" + employeCivilite + ", employeFonction=" + employeFonction + "]";
+				+ ", numOrdreMission=" + numOrdreMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
+				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employeMatricule=" + employeMatricule
+				+ ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite + ", employeFonction="
+				+ employeFonction + "]";
 	}
+	
+		
 }

@@ -58,7 +58,7 @@ public class GestPersonnelController {
 		);
 		model.addAttribute("allMissions", missionService.getAllMissions());
 		model.addAttribute("allAffectations", affectationService.getAllAffectation());
-		model.addAttribute("allConges", congeService.getAllConge());
+		model.addAttribute("allConges", congeService.getAllConges());
 
 		return "index";
 	}	

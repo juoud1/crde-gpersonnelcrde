@@ -50,11 +50,11 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link active" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/missions-emp-crde.html}" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" th:text="|Gérer les missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
@@ -174,86 +174,111 @@
 			<div class="row" style="position: relative;">
 				<div class="col-lg-12 col-md-12 col-sm-12 desc">
 					<!-- Nouvelle section pour la gestion de missions -->
-					<section id="gmissions">
+					<section id="gconges">
 						<div class="card mb-4">
 							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" style="font-size: small; font-weight: bold;">
-									MISSIONS ET DÉPLACEMENTS DES EMPLOYÉS : RÉSUMÉ DE LA CREATION 
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
+									ABSENCES ET CONGÉS DES EMPLOYÉS
 								</a>
 							</div>
-							<div id="collapseMissions" class="collapse show" data-bs-parent="#main-app">
+							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
 								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Récapitulatif</h2>
-									<form id="missionsform" class="row g-3" th:autocomplete="|false|">
-										<h4 style="color: green;" th:text="${resultTraitement}" >Résultat traitement</h4>
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou un congé d'un employé</h2>
+									<form id="congesform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
 
 										<div class="col-md-2">
-											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMissions.get(0).numOrdreMission}" class="form-control" placeholder="num ordre mission" disabled>
+											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control" placeholder="num. note de service" disabled>
 										</div>
-
-										<div class="col-md-2">
-											<input type="text" id="typeordremission" name="typeordremission" th:value="${savedMissions.get(0).typeOrdreMission}" class="form-control" placeholder="num ordre mission" disabled>
-										</div>
-
-										<div class="col-md-8">
-											<select id="missEmpNom" name="missEmpNom" class="form-select" multiple disabled>
-												<option th:each="miss : ${savedMissions}" th:value="${miss.employeMatricule}" th:text="${miss.employeNom}"></option>
+										<div class="col-md-6">
+											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
-											<!--input type="text" id="missEmpNom" name="missEmpNom" th:value="${savedMission.employeNom}" class="form-control" placeholder="num ordre mission" disabled-->
 										</div>
-										<!--div class="col-md-3">
-											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
-										</div-->
 										
-										<div class="col-md-5">
-											<input type="text" id="naturedeplacement" name="naturedeplacement" th:value="${savedMissions.get(0).natureMission}" class="form-control" placeholder="num ordre mission" disabled>
-										</div>
-
-										<div class="col-md-3">
-											<input type="text" id="cadremission" name="cadremission" th:value="${savedMissions.get(0).cadreMission}" class="form-control" placeholder="Le cadre de la mission" disabled>
-										</div>
-
 										<div class="col-md-2">
-											<input type="date" id="datedepartmiss" name="datedepartmiss" th:value="${savedMissions.get(0).dateDepart}" class="form-control" placeholder="Date du départ" disabled>
+											<input type="date" id="datedebconge" name="datedebconge" class="form-control" placeholder="Date début congé" required>
 										</div>
 										<div class="col-md-2">
-											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMissions.get(0).dateRetour}" class="form-control" placeholder="Date de retour" disabled>
+											<input type="date" id="datefinconge" name="datefinconge" class="form-control" placeholder="Date fin congé" required>
 										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="destville" name="destville" th:value="${savedMissions.get(0).villeMission}" class="form-control" placeholder="Ville de destination" disabled>
-										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="destpays" name="destpays" th:value="${savedMissions.get(0).paysMission}" class="form-control" placeholder="Pays de destination" disabled>
-										</div>
-
-										<div class="col-md-3">
-											<input type="text" id="motifmission" name="motifmission" th:value="${savedMissions.get(0).motifMission}" class="form-control" placeholder="num ordre mission" disabled>
-										</div>
-								
-										<div class="col-md-7">
-											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMissions.get(0).infoSupplementaires}" class="form-control" placeholder="informations supplémentaires s'il y a lieu" disabled>
-										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="statusmission" name="statusmission" th:value="${savedMissions.get(0).statusMission}" class="form-control" placeholder="Status de mission" disabled>
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="datestatusmission" name="datestatussission" th:value="${savedMissions.get(0).dateStatusMission}" class="form-control" placeholder="Date de status mission" disabled>
+										
+										<div class="col-md-9">
+											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
 										</div>
 										<hr>
 										
-										<div class="col-4 text-end">
-											<!--button type="submit" class="btn btn-primary" th:text="|Modifier la mission|"> Modif</button>
-											<a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
-											<a class="btn btn-dark" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="Retourner">Annuler</a>
+										<div class="col-md-2">
+											<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control" placeholder="num. autorisation sortie" disabled>
 										</div>
-										<div class="col-7 text-end">
-											<button type="button" class="btn btn-warning" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMissions}]])">OM</button>
+										<div class="col-md-2">
+											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control" placeholder="Date départ autorisée">
+										</div>
+										<div class="col-md-2">
+											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control" placeholder="Date retour autorisée">
+										</div>
+										
+										<div class="col-md-3">
+											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" placeholder="Ville autorisation de sortie">
+										</div>
+
+										<div class="col-md-3">
+											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" placeholder="Pays autorisation de sortie">
+										</div>
+										<hr>
+
+										<div class="col-4 text-end">
+											<button type="submit" class="btn btn-primary" th:text="|Ajouter le congé|">Ajouter</button>
+											<button type="reset" class="btn btn-dark" th:text="|Annuler|">Ann</button>
 										</div>
 										
 									</form>
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-conges" th:onclick="printConges()" th:text="|Imprimer tous les congés|">Imprimer</button>
+											<button type="button" class="btn btn-info" id="print-conges-p" th:text="|Imprimer congés en cours|">Imprimer</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste d'absences et de congés des employés</h2>
+										<table class="table table-striped" id="missions-table">
+											<thead>
+												<tr>
+													<th style="width: 150px;">Employé</th>
+													<th tyle="width: 180px;">Fonction</th>
+													<th>Date début</th>
+													<th>Date fin</th>
+													<th tyle="width: 180px;">Détails</th>
+													<th tyle="width: 120px;">Status</th>
+													<th>Num note service</th>
+													<th style="width: 120px; padding-left: 0; padding-right: 0;">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les congés seront ajoutées ici dynamiquement -->
+												<tr th:each="conge: ${allConges}">
+													<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
+													<td th:text="${conge.employeFonction}">nom</td>
+													<td th:text="${conge.dateDebutConge}">email</td>
+													<td th:text="${conge.dateFinConge}">tel</td>
+													<td th:text="${conge.infoSupplementaires}">role</td>
+													<td th:text="${conge.statusConge} + |, | + ${conge.dateStatusConge}">role</td>
+													<td th:text="${conge.numNoteServiceConge}">status</td>
+													<td style="padding-left: 0; padding-right: 0;">
+														<button type="button" class="btn btn-info align-items" id="${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteServiceConge([[${conge}]])" th:text="|NS|">Note de srvce</button>
+														<button type="button" class="btn btn-info align-items" id="${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|A sort|">Autorisation</button> <br> 
+														<form method = "get" th:action="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}">
+															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">Supprimer</button>
+														</form>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
 								</div>
 							</div>
 						</div>
@@ -275,75 +300,49 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
-        let allMissions = [[${allMissions}]];
+        let allConges = [[${allConges}]];
 
 		// Impression principale et tri personnalisée
-		function printMissions() {
-			const printBtn = document.getElementById('print-missions');
+		function printConges() {
+			const printBtn = document.getElementById('print-conges');
 			
 			if (printBtn) {
 				//const employees = getEmployees();
 					
-				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
-					`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
-				
-				allMissions.forEach(miss => {
-					tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
-				});
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES CONGES</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date début</th><th>Date fin</th><th class='print-col-email'>Détails</th><th class='print-col-email'>Status</th><th>Num. note de srvce</th></tr></thead><tbody>`;
+					
+					allConges.forEach(conge => {
+						tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br> ${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><td>${conge.statusConge}<br> ${conge.dateStatusConge}</td><td>${conge.numNoteServiceConge }</td></tr>`;
+					});
 
-				tableHtml += `</tbody></table>`;
+					tableHtml += `</tbody></table>`;
 
-				const win = window.open('', '', 'height=700,width=900');
-				win.document.write('<html><head>');
-				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
-				win.document.write('</head><body>');
-				win.document.write(getPrintableHeader());
-				win.document.write(tableHtml);
-				win.document.write(getPrintableFooter());
-				win.document.write('</body></html>');
-				win.document.close();
-				win.print();
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
 			}
 		}
 
-		function printOrdreMissions(savedMission) {
-			//const btnId = 'print-ordre-mission' + numordremiss;
-			//const printOmBtn = document.getElementById(btnId);
-			//const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
-	
-			if (undefined !== savedMission) {
-				let divHtml ='';
-
-				if ('ordre-mission' == savedMission.typeOrdreMission) {
+		function printNoteServiceConge(savedConge) {
+			if (undefined !== savedConge) {
+				//const employees = getEmployees();
+				let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">NOTE DE SERVICE</h2><br><br>` +
+					`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 				
-					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
-						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
-					
-					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
-						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
-						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
-						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
-						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
-						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+				divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Conformément aux textes du code du travail en vigueur, ${savedConge.employeCivilite} ` +
+					` <b> ${savedConge.employeNom},</b> ${savedConge.employeFonction} est en congé(e) ou sera absent(e) du <b>${savedConge.dateDebutConge}</b> au <b>${savedConge.dateFinConge}</b>.</p>` +
+					`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente note est établie pour servir et valoir ce que de droit.</p>`;
 
-					divHtml += `</div><div class="col-1"></div></div>`;
-
-					/*const win = window.open('', '', 'height=700,width=900');
-					win.document.write('<html><head>');
-					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
-					win.document.write('</head><body>');
-					win.document.write(getPrintableHeader());
-					win.document.write(divHtml);
-					win.document.write(getPrintableFooterNoteSvce());
-					win.document.write('</body></html>');
-					win.document.close();
-					win.print();*/
-				} else {
-				
-				
-				}
+				divHtml += `</div><div class="col-1"></div></div>`;
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');

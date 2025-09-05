@@ -13,6 +13,13 @@ public class CongeDto {
 	private String employeMatricule;
 	private String employeNom;
 	private String employeCivilite;
+	private String employeFonction;
+
+	private LocalDate dateDepartAutorisatSortie;
+	private LocalDate dateRetourAutorisatSortie;
+	private String villeAutorisatSortie;
+	private String paysAutorisatSortie;
+	
 	public LocalDate getDateDebutConge() {
 		return dateDebutConge;
 	}
@@ -37,6 +44,18 @@ public class CongeDto {
 	public void setNumNoteServiceConge(String numNoteServiceConge) {
 		this.numNoteServiceConge = numNoteServiceConge;
 	}
+	public String getStatusConge() {
+		return statusConge;
+	}
+	public void setStatusConge(String statusConge) {
+		this.statusConge = statusConge;
+	}
+	public LocalDate getDateStatusConge() {
+		return dateStatusConge;
+	}
+	public void setDateStatusConge(LocalDate dateStatusConge) {
+		this.dateStatusConge = dateStatusConge;
+	}
 	public String getEmployeMatricule() {
 		return employeMatricule;
 	}
@@ -55,18 +74,29 @@ public class CongeDto {
 	public void setEmployeCivilite(String employeCivilite) {
 		this.employeCivilite = employeCivilite;
 	}
-
-	public String getStatusConge() {
-		return statusConge;
+	public LocalDate getDateDepartAutorisatSortie() {
+		return dateDepartAutorisatSortie;
 	}
-	public void setStatusConge(String statusConge) {
-		this.statusConge = statusConge;
+	public void setDateDepartAutorisatSortie(LocalDate dateDepartAutorisatSortie) {
+		this.dateDepartAutorisatSortie = dateDepartAutorisatSortie;
 	}
-	public LocalDate getDateStatusConge() {
-		return dateStatusConge;
+	public LocalDate getDateRetourAutorisatSortie() {
+		return dateRetourAutorisatSortie;
 	}
-	public void setDateStatusConge(LocalDate dateStatusConge) {
-		this.dateStatusConge = dateStatusConge;
+	public void setDateRetourAutorisatSortie(LocalDate dateRetourAutorisatSortie) {
+		this.dateRetourAutorisatSortie = dateRetourAutorisatSortie;
+	}
+	public String getVilleAutorisatSortie() {
+		return villeAutorisatSortie;
+	}
+	public void setVilleAutorisatSortie(String villeAutorisatSortie) {
+		this.villeAutorisatSortie = villeAutorisatSortie;
+	}
+	public String getPaysAutorisatSortie() {
+		return paysAutorisatSortie;
+	}
+	public void setPaysAutorisatSortie(String paysAutorisatSortie) {
+		this.paysAutorisatSortie = paysAutorisatSortie;
 	}
 	@Override
 	public int hashCode() {
@@ -133,5 +163,11 @@ public class CongeDto {
 				+ ", infoSupplementaires=" + infoSupplementaires + ", numNoteServiceConge=" + numNoteServiceConge
 				+ ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom + ", employeCivilite="
 				+ employeCivilite + "]";
+	}
+	public String getEmployeFonction() {
+		return employeFonction;
+	}
+	public void setEmployeFonction(String employeFonction) {
+		this.employeFonction = employeFonction;
 	} 
 }
