@@ -185,7 +185,7 @@
 								<div class="card-body">
 									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou un congé d'un employé</h2>
 									<form id="congesform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
-
+										 <hr>
 										<div class="col-md-2">
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control" placeholder="num. note de service" disabled>
 										</div>
@@ -228,8 +228,10 @@
 										<hr>
 
 										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary" th:text="|Ajouter le congé|">Ajouter</button>
-											<button type="reset" class="btn btn-dark" th:text="|Annuler|">Ann</button>
+											<button type="submit" class="btn btn-primary">Ajouter</button>
+										</div>
+										<div class="col-2 text-start">
+											<button type="reset" class="btn btn-dark">Annuler</button>
 										</div>
 										
 									</form>

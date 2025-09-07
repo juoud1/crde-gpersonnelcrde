@@ -29,7 +29,7 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conges-emp-crde.html")
-	public String getGestMissions(HttpServletRequest request, Model model){
+	public String getConges(HttpServletRequest request, Model model){
 	    model.addAttribute("allConges", congeService.getAllConges());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		//request.getSession().setAttribute("modelMission", model);

@@ -8,6 +8,7 @@ date_prise_service TIMESTAMP(9) WITH TIME ZONE,
 info_supplementaires VARCHAR(60),
 status_affect VARCHAR(15),
 date_status_affect TIMESTAMP(9) WITH TIME ZONE,   
+num_note_service VARCHAR(15),
 employe_id long,
 lieu_affectation_id long,
 fonction_id long,
@@ -18,9 +19,9 @@ constraint fk_affect_lieu_affect FOREIGN key (lieu_affectation_id) references li
 constraint fk_affect_fonction FOREIGN key (fonction_id) references fonction(id)
 );
 
-insert into affectation (reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, employe_id, lieu_affectation_id, fonction_id) 
-values ('Decret 1/2019', 'Présidence', '20190130', '20190130', '20190205', 'Décret présidentiel', 1L, 1L, 1L);
-insert into affectation (reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, employe_id, lieu_affectation_id, fonction_id) 
-values ('Décision 06/2023', 'Aeroport de BG', '20230607', '20230607', '20230617', 'Note de service', 2L, 3L, 4L);
-insert into affectation (reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, employe_id, lieu_affectation_id, fonction_id) 
-values ('Arrt 11/2022', 'Aeroport de BG', '20221115', '20221115', '20230105', 'Note de service', 3L, 2L, 6L);
+insert into affectation (num_note_service, reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, status_affect, date_status_affect, employe_id, lieu_affectation_id, fonction_id) 
+values ('15', 'Decret 1/2019', 'Présidence', '20190130', '20190130', '20190205', 'Décret présidentiel', 'Approuvée', '20190130', 1L, 1L, 1L);
+insert into affectation (num_note_service, reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, status_affect, date_status_affect, employe_id, lieu_affectation_id, fonction_id) 
+values ('21', 'Décision 06/2023', 'Aeroport de BG', '20230607', '20230607', '20230617', 'Note de service', 'Approuvée', '20230607', 2L, 3L, 4L);
+insert into affectation (num_note_service, reference_affect, emplacement_affect, date_debut_affect, date_fin_affect, date_prise_service, info_supplementaires, status_affect, date_status_affect, employe_id, lieu_affectation_id, fonction_id) 
+values ('26', 'Arrt 11/2022', 'Aeroport de BG', '20221115', '20221115', '20230105', 'Note de service', 'Approuvée', '20221115', 3L, 2L, 6L);

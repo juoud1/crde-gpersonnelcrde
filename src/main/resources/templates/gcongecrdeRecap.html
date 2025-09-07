@@ -184,8 +184,8 @@
 							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
 								<div class="card-body">
 									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou un congé d'un employé</h2>
-									<form id="congesform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
-
+									<form id="congesform" class="row g-3" th:autocomplete="|false|" th:action="@{/conge-emp-crde.html}">
+										<hr>
 										<div class="col-md-2">
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control" placeholder="num. note de service" disabled>
 										</div>

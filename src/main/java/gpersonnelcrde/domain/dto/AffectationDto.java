@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class AffectationDto {
 	private String referenceAffect;
-	private String EmplacementAffect;
+	private String emplacementAffect;
 	private LocalDate dateDebutAffect;
 	private LocalDate dateFinAffect;
 	private LocalDate datePriseService;
@@ -25,10 +25,10 @@ public class AffectationDto {
 		this.referenceAffect = referenceAffect;
 	}
 	public String getEmplacementAffect() {
-		return EmplacementAffect;
+		return this.emplacementAffect;
 	}
 	public void setEmplacementAffect(String emplacementAffect) {
-		EmplacementAffect = emplacementAffect;
+		this.emplacementAffect = emplacementAffect;
 	}
 	public LocalDate getDateDebutAffect() {
 		return dateDebutAffect;
@@ -107,7 +107,7 @@ public class AffectationDto {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((referenceAffect == null) ? 0 : referenceAffect.hashCode());
-		result = prime * result + ((EmplacementAffect == null) ? 0 : EmplacementAffect.hashCode());
+		result = prime * result + ((emplacementAffect == null) ? 0 : emplacementAffect.hashCode());
 		result = prime * result + ((dateDebutAffect == null) ? 0 : dateDebutAffect.hashCode());
 		result = prime * result + ((dateFinAffect == null) ? 0 : dateFinAffect.hashCode());
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
@@ -134,10 +134,10 @@ public class AffectationDto {
 				return false;
 		} else if (!referenceAffect.equals(other.referenceAffect))
 			return false;
-		if (EmplacementAffect == null) {
-			if (other.EmplacementAffect != null)
+		if (emplacementAffect == null) {
+			if (other.emplacementAffect != null)
 				return false;
-		} else if (!EmplacementAffect.equals(other.EmplacementAffect))
+		} else if (!emplacementAffect.equals(other.emplacementAffect))
 			return false;
 		if (dateDebutAffect == null) {
 			if (other.dateDebutAffect != null)
@@ -193,7 +193,7 @@ public class AffectationDto {
 	}
 	@Override
 	public String toString() {
-		return "AffectationDto [referenceAffect=" + referenceAffect + ", EmplacementAffect=" + EmplacementAffect
+		return "AffectationDto [referenceAffect=" + referenceAffect + ", EmplacementAffect=" + emplacementAffect
 				+ ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect + ", datePriseService="
 				+ datePriseService + ", infoSupplementaires=" + infoSupplementaires + ", numNoteService="
 				+ numNoteService + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom

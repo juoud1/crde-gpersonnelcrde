@@ -46,11 +46,11 @@
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link active" th:href="@{/affectations-emp-crde.html}" th:text="|Affectations au sein de la CRDE|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
@@ -76,8 +76,6 @@
 								<li><a class="dropdown-item" href="#gadminTconges">Types de congés</a></li>
 							</ul>
 						</li>
-
-
 					</ul>
 				</div>
 			</div>
@@ -125,14 +123,14 @@
 											
 											<div class="carousel-inner" style="align-items: center; text-align: justify;">
 												<div class="carousel-item active" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
+													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block" alt="Actu1" style="margin: auto;">
 													<div class="carousel-caption d-none d-md-block">
 														<h5 style="color: #fbfcfb;">Actualité 1</h5>
 														<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
 													</div>
 												</div>
 												<div class="carousel-item" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block" alt="Actu2" style="width: 800px; height: 533; margin: auto;">
+													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block w-100" alt="Actu2" style="margin: auto;">
 													<div class="carousel-caption d-none d-md-block">
 														<h5 style="color: yellow;">Actualité 2</h5>
 														<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
@@ -172,76 +170,129 @@
 			<hr>
 
 			<div class="row" style="position: relative;">
-				<div class="col-lg-12 col-md-12 col-sm-12 desc">
-					<!-- Nouvelle section pour la gestion de missions -->
-					<section id="gconges">
+				<div class="col-12 desc">
+					<!-- Nouvelle section pour la gestion des affectations au sein de la CRDE -->
+					<section id="gaffectations">
 						<div class="card mb-4">
 							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
-									MISE À JOUR DES ABSENCES ET CONGÉS DES EMPLOYÉS
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
+									AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
 								</a>
 							</div>
-							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
+							<div id="collapseAffectations" class="collapse show" data-bs-parent="#main-app">
 								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Modifier ou supprimer une absence ou un congé d'un employé</h2>
-									<form id="congesform" class="row g-3" th:autocomplete="|false|">
-
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un mouvement d'affectation d'un employé</h2>
+									<form id="affectationsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
+										<hr>
 										<div class="col-md-2">
-											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control" placeholder="num. note de service" disabled>
+											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" class="form-control" placeholder="num note de service affectation">
 										</div>
-										<div class="col-md-6">
-											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
-												<option th:value="${savedConge.employeNom}" th:text="${savedConge.employeNom}">Sélectionner un employé</option>
+										
+										<div class="col-md-7">
+											<select id="affectEmpNom" name="affectempmatricule" class="form-select" required>
+												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
+									
+										<div class="col-md-4">
+											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
+												<option value="">Sélectionner un lieu d'affectation</option>
+												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
+											</select>
+										</div>
+										<div class="col-md-5">
+											<input type="text" id="emplacementaffect" name="emplacementaffect" class="form-control" placeholder="Emplacement affectation">
+										</div>
 										
-										<div class="col-md-2">
-											<input type="date" id="datedebconge" name="datedebconge" th:value="${savedConge.dateDebutConge}" class="form-control" placeholder="Date début congé" required>
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" placeholder="Date fin congé" required>
-										</div>
-										
-										<div class="col-md-9">
-											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
-										</div>
-
-										<div class="col-md-3">
-											<select id="statusconge" name="statusconge" class="form-select">
-												<option value="" th:text="|Status mission|">Motif</option>
-												<option th:value="|1. En attente|" th:text="|En attente|">officielle</option>
-												<option th:value="|2. Approuvée|" th:text="|Approuvée|">officielle</option>
-												<option th:value="|3. Reportée|" th:text="|Reportée|">officielle</option>
-												<option th:value="|4. Suspendue|" th:text="|Suspendue|">officielle</option>
-												<option th:value="|5. Annulée|" th:text="|Annulée|">officielle</option>
-												<option th:value="|6. Autre|" th:text="|Autre|">Autre</option>
+										<div class="col-md-6">
+											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
+												<option value="">Sélectionner une fonction</option>
+												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
 											</select>
 										</div>
 										<div class="col-md-2">
-											<input type="date" id="datestatusconge" name="datestatusconge" class="form-control" placeholder="Date status" >
+											<input type="date" id="datedebaffect" name="datedebaffect" class="form-control" placeholder="Date affectation" required>
+										</div>
+										<div class="col-md-2">
+											<input type="date" id="datepriseservice" name="datepriseservice" class="form-control" placeholder="Date prise de service" >
+										</div>
+										<div class="col-md-2">
+											<input type="date" id="datefinaffect" name="datefinaffect" class="form-control" placeholder="Date fin de service">
+										</div>
+										<div class="col-md-10">
+											<input type="text" id="commenataireaffect" name="commenataireaffect" class="form-control" placeholder="Commentaires">
 										</div>
 										<hr>
 										
 										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary" th:text="|Modifier|"> Modif</button>
-											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
-											<a class="btn btn-dark" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+											<button type="submit" class="btn btn-primary">Ajouter</button>
 										</div>
-										<div class="col-7 text-end">
-											<button type="button" class="btn btn-warning" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
-											<button type="button" class="btn btn-warning" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
+										<div class="col-2 text-start">
+											<button type="reset" class="btn btn-dark">Annuler</button>
 										</div>
-
+										<!--div class="col-1 text-end">
+											
+										</div>
+										<div class="col-5 text-center">
+											<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer la note de service</button>
+										</div-->
+										
 									</form>
-									
+
+									<hr>
+
+									<div class="container">
+										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+											<button type="button" class="btn btn-info ms-auto" id="print-affectations" th:onclick="printAffectations()">Imprimer les affectations</button>
+											<button type="button" class="btn btn-info" id="print-affectations-p">Imprimer les affectations par Direction</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
+										<table class="table table-striped" id="conges-table">
+											<thead>
+												<tr>
+												    <th>Num. note srvce</th>
+													<th>Matricule</th>
+													<th style="width: 120px;">Employé</th>
+													<th>Date debut</th>
+													<th>Date fin</th>
+													<th>Prise srvce</th>
+													<th style="width: 140px;">Fonction</th>
+													<th style="width: 150px;">Lieu affectation</th>
+													<th style="width: 110px; padding-left: 0; padding-right: 0;">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les affectations seront ajoutées ici dynamiquement -->
+												<tr th:each="affectation: ${allAffectations}">
+													<td th:text="${affectation.numNoteService}">status</td>
+													<td th:text="${affectation.employeMatricule}">nom</td>
+													<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
+													<td th:text="${affectation.dateDebutAffect}">prenom</td>
+													<td th:text="${affectation.dateFinAffect}">email</td>
+													<td th:text="${affectation.datePriseService}">email</td>
+													<td th:text="${affectation.fonction}">tel</td>
+													<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">lieu</td>
+													<td style="padding-left: 0; padding-right: 0;">
+														<button type="button" class="btn btn-info align-items" id="${affectation.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Note svce|">NS</button> <br> 
+														<form method = "get" th:action="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}">
+															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
+														</form>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
 								</div>
 							</div>
 						</div>
 					</section>
 				</div>
 			</div>
-			<hr>
+			<hr>	
         </div>
 		<footer style="position: relative; background-color:#c2b280; height: 5em; margin: auto;">
 	   		<p style="margin: auto;"> <span class="text-center">CRDE &#169; 2025</span> <span class="text-end">Pour toute information, veuillez contacter <em>Doud Yves</em></span></p>
@@ -256,20 +307,19 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
-        let allConges = [[${allConges}]];
+        let allAffectations = [[${allAffectations}]];
 
 		// Impression principale et tri personnalisée
-		function printConges() {
-			const printBtn = document.getElementById('print-conges');
+		function printAffectations() {
+			const printBtn = document.getElementById('print-affectations');
 			
 			if (printBtn) {
-				//const employees = getEmployees();
 					
-					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES CONGES</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
-						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date début</th><th>Date fin</th><th class='print-col-email'>Détails</th><th class='print-col-email'>Status</th><th>Num. note de srvce</th></tr></thead><tbody>`;
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES AFFECTATIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date Début</th><th>Date prise svce</th><th>Date Fin</th><th class='print-col-nom'>Fonction</th><th class='print-col-fonction'>Lieu</th><th>Num. note de svce</th></tr></thead><tbody>`;
 					
-					allConges.forEach(conge => {
-						tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br> ${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><td>${conge.statusConge}<br> ${conge.dateStatusConge}</td><td>${conge.numNoteServiceConge }</td></tr>`;
+					allAffectations.forEach(affect => {
+						tableHtml += `<tr><td>${affect.employeMatricule}</td><td>${affect.employeCivilite}<br> ${affect.employeNom}</td><td>${affect.dateDebutAffect}</td><td>${affect.datePriseService}</td><td>${affect.dateFinAffect}</td><td>${affect.fonction}</td><td>${affect.lieuAffectation}, ${affect.EmplacementAffect}</td><td>${affect.numNoteService }</td></tr>`;
 					});
 
 					tableHtml += `</tbody></table>`;
@@ -288,29 +338,36 @@
 			}
 		}
 
-		function printNoteServiceConge(savedConge) {
-			if (undefined !== savedConge) {
+		function printNoteDeServiceAffectation(savedAffectation) {
+			const printOmBtn = document.getElementById('print-ordre-mission');
+			const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
+			
+			if (undefined !== savedAffectation)  {
 				//const employees = getEmployees();
-				let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">NOTE DE SERVICE</h2><br><br>` +
-					`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
-				
-				divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Conformément aux textes du code du travail en vigueur, ${savedConge.employeCivilite} ` +
-					` <b> ${savedConge.employeNom},</b> ${savedConge.employeFonction} est en congé(e) ou sera absent(e) du <b>${savedConge.dateDebutConge}</b> au <b>${savedConge.dateFinConge}</b>.</p>` +
-					`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente note est établie pour servir et valoir ce que de droit.</p>`;
+					
+					let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">NOTE DE SERVICE D'AFFECTATION</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-lg-10 col-md-10 col-sm-10 desc">`;
+					
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedAffectation.employeNom}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedAffectation.employeCivilite}` +
+						` <b> ${savedAffectation.employeNom},</b> ${savedAffectation.fonction} de se rendre à ${savedAffectation.employeNom},  ${savedAffectation.employeNom}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedAffectation.employeNom}<br> <b>Date de retour:</b> ${savedAffectation.employeNom}<br>` +
+						`<b>Motif:</b> ${savedAffectation.employeNom}</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
 
-				divHtml += `</div><div class="col-1"></div></div>`;
+					divHtml += `</div></div>`;
 
-				const win = window.open('', '', 'height=700,width=900');
-				win.document.write('<html><head>');
-				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-				win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
-				win.document.write('</head><body>');
-				win.document.write(getPrintableHeader());
-				win.document.write(divHtml);
-				win.document.write(getPrintableFooterNoteSvce());
-				win.document.write('</body></html>');
-				win.document.close();
-				win.print();
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(divHtml);
+					win.document.write(getPrintableFooterNoteSvce());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
 			}
 		}
 
@@ -335,14 +392,14 @@
 				</div>
 				</th>
 				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
-				<img src='images/blason.png' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
+				<img th:src='@{/images/blason.png}' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
 				</th>
 				<th style='width:40%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
 				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>REPUBLIQUE CENTRAFRICAINE</div>
 				<div>Unité – Dignité – Travail</div>
 				<div>***********</div>
 				<div style='height:40px;'></div>
-				<p style='font-weight:bold;font-size:14pt;margin:4px;'>Bangui le,</p>
+				<p style='font-weight:bold;font-size:14pt;margin:2px;'>Bangui le,</p>
 				</th>
 			</tr>
 			</table>
@@ -351,7 +408,7 @@
 		}
 
 		// Fonction utilitaire pour le pied de page
-		const signataireDoc = `<br>
+		const signataireDoc = `
 			<div style='width:80%;margin-top:40px; margin-right:10%;'>
 			<div style='float:right;text-align:center;'>
 				<span>Le Ministre Conseiller Spécial en charge</span><br/>
@@ -364,7 +421,7 @@
 			</div>
 			`;
 
-		const ampliDoc = `<br> <br>
+		const ampliDoc = `
 			<div style='float:left;text-align:left;'>
 				<span style='font-weight:bold;text-decoration:underline;font-size:14pt;'>Ampliation</span><br/>
 				<ul>
@@ -382,10 +439,10 @@
 		function getPrintableFooterNoteSvce() {
 			return `
 			<div class="row" style="position: relative;">
-			<div class="col-6">` + 
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` + 
 			ampliDoc +
 			`</div>
-			<div class="col-6">` +
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` +
 			signataireDoc +
 			`</div>
 			</div>
