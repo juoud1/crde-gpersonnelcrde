@@ -183,10 +183,14 @@
 						<div class="card-body">
 							<h2 class="h4 mb-3 text-center">Ajouter ou modifier une visite officielle</h2>
 							<form id="visit-form" class="row g-3">
-								<div class="col-md-6">
+								<hr>
+								<div class="col-md-3">
+									<input type="text" id="civiliteougradevisit" class="form-control" placeholder="Civilité ou grade">
+								</div>
+								<div class="col-md-4">
 									<input type="text" id="nomvisit" class="form-control" placeholder="Nom visiteur" required>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<input type="text" id="prenomvisit" class="form-control" placeholder="Prénom visiteur" required>
 								</div>
 								<div class="col-md-7">
@@ -195,21 +199,24 @@
 								<div class="col-md-4">
 									<input type="text" id="country" class="form-control" placeholder="Pays" required>
 								</div>
-								<div class="col-md-2">
-									<input type="number" id="duration" class="form-control" placeholder="Durée (jours)" min="1" required>
-								</div>
 								<div class="col-md-3">
 									<input type="date" id="visitStartDate" class="form-control" placeholder="Date début" required>
 								</div>
 								<div class="col-md-3">
 									<input type="date" id="visitEndDate" class="form-control" placeholder="Date fin" required>
 								</div>
-								<div class="col-md-10">
+								<div class="col-md-2">
+									<input type="number" id="duration" class="form-control" placeholder="Durée (jours)" min="1" required>
+								</div>
+								<div class="col-md-8">
 									<input type="text" id="purpose" class="form-control" placeholder="But de la visite" required>
 								</div>
-								
-								<div class="col-5 text-center">
-									<button type="submit" class="btn btn-primary">Ajouter la visite</button>
+								<hr>
+
+								<div class="col-4 text-end">
+									<button type="submit" class="btn btn-primary">Ajouter</button>
+								</div>
+								<div class="col-2 text-start">
 									<button type="reset" class="btn btn-dark">Annuler</button>
 								</div>
 								
@@ -234,16 +241,32 @@
 								<table class="table table-striped" id="visit-table">
 									<thead>
 										<tr>
+											<th>Nom & prénoms</th>
+											<th>Fonction</th>
 											<th>Pays</th>
-											<th>Durée (jours)</th>
 											<th>Date début</th>
 											<th>Date fin</th>
+											<th>Durée (jours)</th>
 											<th>But</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
 									<tbody>
 										<!-- Les visites seront ajoutées ici dynamiquement -->
+										<td>Visiteur</td>
+											<td>fonction</td>
+											<td>pays visiteur</td>
+											<td>date debut visite</td>
+											<td>date fin visite</td>
+											<td>duréé</td>
+											<td>but</td>
+
+											<td style="padding-left: 0; padding-right: 0;">
+												<button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br> 
+												<form method = "get">
+													<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|MAJ|">Mise à jour</button>
+												</form>
+											</td>
 									</tbody>
 								</table>
 							</div>

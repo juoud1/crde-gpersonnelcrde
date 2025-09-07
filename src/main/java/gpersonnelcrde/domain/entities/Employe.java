@@ -21,6 +21,7 @@ public class Employe {
 	private String empCivilite;
 	private String empTelephone;
 	private String empEmail;
+	private String numNoteService;
 
 	@JsonIgnore
 	@ManyToOne
@@ -42,6 +43,7 @@ public class Employe {
 	private String empCreePar;
 	private LocalDateTime empModifieLe;
 	private String empModifiePar;
+	
 	public Long getId() {
 		return id;
 	}
@@ -83,6 +85,12 @@ public class Employe {
 	}
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
+	}
+	public String getNumNoteService() {
+		return numNoteService;
+	}
+	public void setNumNoteService(String numNoteService) {
+		this.numNoteService = numNoteService;
 	}
 	public TypeEmploye getTypeEmploye() {
 		return typeEmploye;

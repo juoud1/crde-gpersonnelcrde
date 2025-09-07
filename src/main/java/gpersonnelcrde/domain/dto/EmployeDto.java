@@ -14,10 +14,11 @@ public class EmployeDto {
 	private String status;
 	private String lieuAffectation;
 	private String fonction;
+	private String numNoteService;
 
 	private LocalDate empDateDebutStatus;
 	private LocalDate empDateFinStatus;
-
+	
 	public String getEmpMatricule() {
 		return empMatricule;
 	}
@@ -186,6 +187,12 @@ public class EmployeDto {
 				+ ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation=" + lieuAffectation
 				+ ", fonction=" + fonction + ", empDateDebutStatus=" + empDateDebutStatus + ", empDateFinStatus="
 				+ empDateFinStatus + "]";
+	}
+	public String getNumNoteService() {
+		return numNoteService;
+	}
+	public void setNumNoteService(String numNoteService) {
+		this.numNoteService = numNoteService;
 	}
 	
 }

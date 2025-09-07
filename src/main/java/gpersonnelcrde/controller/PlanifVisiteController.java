@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PlanifVisiteController {
 
 	@GetMapping ("/planif-visites-crde.html")
-	public String getEmployes(HttpServletRequest request, Model model){
+	public String getVisites(HttpServletRequest request, Model model){
 
 		return "planifvisitecrde";
 	}

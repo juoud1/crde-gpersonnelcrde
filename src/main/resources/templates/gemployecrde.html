@@ -240,8 +240,10 @@
 									<input type="date" id="endDateAff" class="form-control" placeholder="Date fin" required>
 								</div>
 
-								<div class="col-12 text-end">
+								<div class="col-4 text-end">
 									<button type="submit" class="btn btn-primary">Ajouter</button>
+								</div>
+								<div class="col-2 text-start">
 									<button type="reset" class="btn btn-dark">Annuler</button>
 								</div>
 							</form>
@@ -300,8 +302,13 @@
 											<td th:text="${employe.empDateFinStatus}">date</td>
 											<td th:text="${employe.lieuAffectation}">status</td>
 											<td th:text="${employe.fonction}">status</td>
-											<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
-										</tr>
+											<td style="padding-left: 0; padding-right: 0;">
+												<button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br> 
+												<form method = "get" th:action="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}">
+													<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|MAJ|">Mise à jour</button>
+												</form>
+											</td>
+										</tr>	
 									</tbody>
 								</table>
 							</div>
