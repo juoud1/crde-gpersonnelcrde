@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Yves DOUD">
+	<meta name="description" content="CRDE, CRDE RCA, Gestion du personnel de la CRDE RCA">
+    <title>GESTION DU PERSONNEL DE LA CRDE</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css}">
+
+	<script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+	<link rel="stylesheet" href="@{css/style.css}">
+	<!--link rel="preconnect" href="https://fonts.gstatic.com/" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/-->
+<body>
+	<!--div class="container position-fixed mw-100"-->
+	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img th:src="@{/images/blason.png}" alt="Logo CRDE " style="width:40px;" class="rounded-pill"> 
+				</a>
+			
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarTogglercrde"
+					aria-controls="navbarTogglercrde"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarTogglercrde">
+					<ul class="navbar-nav m-auto">
+
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" th:href="@{/accueil.html}" th:text="|CRDE|">CRDE</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/employes-crde.html}" th:text="|Gérer le personnel|">Gérer le personnel</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" th:text="|Gérer les missions|">missions</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active" th:href="@{/planif-visites-crde.html}" th:text="|Planifier visites|">Visites </a>
+						</li>
+						
+						<li class="nav-item dropdown ml-5">
+							<a class="nav-link dropdown-toggle ml-5" href="#gadmin" id="navbarDropdownMenuLink5" role="button" data-bs-toggle="dropdown">Administration</a>
+							<ul class="dropdown-menu dropdown-menu-light ml-5">
+								<li><a class="dropdown-item" href="#gadminUser">Utilisateurs</a></li>
+								<li><a class="dropdown-item" href="#gadminChangePwd">Changer votre mot de passe</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminStatus">Status employés</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminLaffectation">Lieux Affectation</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminFonctions">Fonctions</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminTconges">Types de congés</a></li>
+							</ul>
+						</li>
+
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<div id="main-app" class="w-100">
+        <div class="container py-5">
+				<div class="text-center my-3">
+					<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
+				</div>
+				<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
+
+				<section id="accueilCrde">
+					<div class="card mb-4">
+						<div class="card-header">
+							<a class="btn" data-bs-toggle="collapse" href="#collapseAcrde" style="font-size: medium; font-weight: bold;">
+								CRDE
+							</a>
+						</div>
+
+						<div id="collapseAcrde" class="collapse" data-bs-parent="#main-app">
+							<div class="card-body">
+
+								<div class="row" style="position: relative; margin-top: 0em;">
+									<div class="col-lg-5 col-md-5 col-sm-12 desc" style="margin-bottom: 0.15em;" >
+										<div class="description" style="background-color: #e3f2fd; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
+											<p class="text-center align-items"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
+											<hr>
+											<h2 style="color: #A92900;">Baraooooo, vous êtes la bienvenue sur <em>ePortail-CRDE</em>
+												<span style="color: #B9867A; font-size: 22px; width:100%; line-height: 1.5;"><em> pour la gestion de tous les employés et stagiaires de la CRDE ainsi que de leur status, mouvements et congés.</em></span>
+											</h2>
+										</div>
+									</div>
+									
+									<div class="col-lg-7 col-md-7 col-sm-12" style="margin-bottom: 0.15em; padding-bottom: 0.05em;">
+										<div id="carouselIndicatorscrde" class="carousel slide" data-bs-ride="carousel">
+
+											<div class="carousel-indicators">
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="1" aria-label="Slide 1"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="2" aria-label="Slide 2"></button>
+												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="3" aria-label="Slide 3"></button>
+											</div>
+											
+											<div class="carousel-inner" style="align-items: center; text-align: justify;">
+												<div class="carousel-item active" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: #fbfcfb;">Actualité 1</h5>
+														<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block w-100" alt="Actu2" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: yellow;">Actualité 2</h5>
+														<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image3.jpg}" class="d-block w-100" alt="Actu3" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: orangered;">Actualité 3</h5>
+														<p style="color: orangered;">Conférence des exprts à Doubaï (Émirats Arrabes Unis)</p>
+													</div>
+												</div>
+												<div class="carousel-item" style="align-items: center;">
+													<img th:src="@{/images/caroussel-image4.jpg}" class="d-block w-100" alt="Actu4" style="margin: auto;">
+													<div class="carousel-caption d-none d-md-block">
+														<h5 style="color: yellow;">Actualité 4</h5>
+														<p style="color: yellow;">... en Europe</p>
+													</div>
+												</div>
+											</div>
+											
+											<button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="prev">
+												<span class="carousel-control-prev-icon btn-warning" aria-hidden="true"></span>
+												<span class="visually-hidden">Précédent</span>
+											</button>
+											<button class="carousel-control-next" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="next">
+												<span class="carousel-control-next-icon btn-warning" aria-hidden="true"></span>
+												<span class="visually-hidden">Suivant</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+			</section>
+			<hr>
+
+			<!-- Nouvelle section pour les visites officielles -->
+			<section id="gvisites">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseGvisites" style="font-size: medium; font-weight: bold;">
+							PLANIFIER UNE VISITE
+						</a>
+					</div>
+					<div id="collapseGvisites" class="collapse show" data-bs-parent="#main-app">
+						<div class="card-body">
+							<h2 class="h4 mb-3 text-center">Ajouter ou modifier une visite officielle</h2>
+							<form id="visit-form" class="row g-3">
+								<div class="col-md-6">
+									<input type="text" id="nomvisit" class="form-control" placeholder="Nom visiteur" required>
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="prenomvisit" class="form-control" placeholder="Prénom visiteur" required>
+								</div>
+								<div class="col-md-7">
+									<input type="text" id="fonctvisit" class="form-control" placeholder="Fonction visiteur" required>
+								</div>
+								<div class="col-md-4">
+									<input type="text" id="country" class="form-control" placeholder="Pays" required>
+								</div>
+								<div class="col-md-2">
+									<input type="number" id="duration" class="form-control" placeholder="Durée (jours)" min="1" required>
+								</div>
+								<div class="col-md-3">
+									<input type="date" id="visitStartDate" class="form-control" placeholder="Date début" required>
+								</div>
+								<div class="col-md-3">
+									<input type="date" id="visitEndDate" class="form-control" placeholder="Date fin" required>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="purpose" class="form-control" placeholder="But de la visite" required>
+								</div>
+								
+								<div class="col-5 text-center">
+									<button type="submit" class="btn btn-primary">Ajouter la visite</button>
+									<button type="reset" class="btn btn-dark">Annuler</button>
+								</div>
+								
+								<div class="col-4 text-start">
+									<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer le récapitulatif</button>
+								</div>
+
+							</form>
+
+							<hr>
+
+							<div class="container">
+								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+									<button type="button" class="btn btn-info ms-auto" id="print-visites">Imprimer la liste des visites</button>
+									<button type="button" class="btn btn-info" id="print-visites-p">Imprimer les prochaines visites </button>
+									<button type="button" class="btn btn-info" id="print-visites-a">Imprimer les visites annulées</button>
+									<button type="button" class="btn btn-info" id="print-">Imprimer les visites approuvées</button>
+								</div>
+								<hr>
+
+								<h2 class="h4 mb-3 text-center">Liste des visites officielles</h2>
+								<table class="table table-striped" id="visit-table">
+									<thead>
+										<tr>
+											<th>Pays</th>
+											<th>Durée (jours)</th>
+											<th>Date début</th>
+											<th>Date fin</th>
+											<th>But</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Les visites seront ajoutées ici dynamiquement -->
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+			<hr>
+        </div>
+		<footer style="position: relative; background-color:#c2b280; height: 5em; margin: auto;">
+	   		<p style="margin: auto;"> <span class="text-center">CRDE &#169; 2025</span> <span class="text-end">Pour toute information, veuillez contacter <em>Doud Yves</em></span></p>
+	   	</footer>
+    </div>
+
+    <div id="change-password-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Changer le mot de passe</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="change-password-form">
+              <div class="mb-3">
+                <input type="password" id="old-password" class="form-control" placeholder="Ancien mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" id="new-password" class="form-control" placeholder="Nouveau mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" id="confirm-password" class="form-control" placeholder="Confirmer le nouveau mot de passe" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" id="new-username" class="form-control" placeholder="Nouveau nom d'utilisateur (optionnel)">
+              </div>
+              <div id="change-password-error" class="text-danger mb-2" style="display:none;"></div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success">Changer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="open-change-password" class="btn btn-link position-fixed top-0 end-0 m-3" style="z-index:1000;display:none;">Changer le mot de passe</button>
+    <!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
+	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script  th:inline="javascript">
+        // Masquer/afficher les champs date début et date fin selon le statut
+        /*const statusField = document.getElementById('status');
+        const startDateGroup = document.getElementById('startDate-group');
+        const endDateGroup = document.getElementById('endDate-group');
+        function toggleDateFields() {
+            if (statusField.value === 'En Service') {
+                startDateGroup.style.display = 'none';
+                endDateGroup.style.display = 'none';
+                document.getElementById('startDate').required = false;
+                document.getElementById('endDate').required = false;
+            } else {
+                startDateGroup.style.display = '';
+                endDateGroup.style.display = '';
+                document.getElementById('startDate').required = true;
+                document.getElementById('endDate').required = true;
+            }
+        }
+        statusField.addEventListener('change', toggleDateFields);
+        window.addEventListener('DOMContentLoaded', toggleDateFields);*/
+
+		let allEmployees = [[${allEmployes}]];
+        let allMissions = [[${allMissions}]];
+        let allAffectations = [[${allAffectations}]];
+		let allConges = [[${allConges}]];
+
+		function getEmployees() {
+			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
+		}
+
+		// Impression principale et tri personnalisée
+        function printConges() {
+			const printBtn = document.getElementById('print-conges');
+			
+			if (printBtn) {
+					
+				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES CONGÉS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date Début</th><th>Date Fin</th><th class='print-col-fonction'>Détails</th><th>Num. note de svce</th></tr></thead><tbody>`;
+					
+				allConges.forEach(conge => {
+					tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br>${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><<td>${conge.numNoteServiceConge }</td></tr>`;
+				});
+
+				tableHtml += `</tbody></table>`;
+
+				const win = window.open('', '', 'height=700,width=900');
+				win.document.write('<html><head>');
+				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+				win.document.write('</head><body>');
+				win.document.write(getPrintableHeader());
+				win.document.write(tableHtml);
+				win.document.write(getPrintableFooter());
+				win.document.write('</body></html>');
+				win.document.close();
+				win.print();
+			}
+		}
+
+		function printAffectations() {
+			const printBtn = document.getElementById('print-affectations');
+			
+			if (printBtn) {
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES AFFECTATIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date Début</th><th>Date prise svce</th><th>Date Fin</th><th class='print-col-nom'>Fonction</th><th class='print-col-fonction'>Lieu</th><th>Num. note de svce</th></tr></thead><tbody>`;
+					
+					allAffectations.forEach(affect => {
+						tableHtml += `<tr><td>${affect.employeMatricule}</td><td>${affect.employeCivilite}<br> ${affect.employeNom}</td><td>${affect.dateDebutAffect}</td><td>${affect.datePriseService}</td><td>${affect.dateFinAffect}</td><td>${affect.fonction}</td><td>${affect.lieuAffectation}, ${affect.EmplacementAffect}</td><td>${affect.numNoteService }</td></tr>`;
+					});
+
+					tableHtml += `</tbody></table>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
+		}
+
+		function printPersonnel() {
+			const printBtn = document.getElementById('print-personnel');
+			
+			if (printBtn) {		
+				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DU PERSONNEL</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Nom & prénom</th><th>Civ./Grade</th><th class='print-col-email'>Email</th><th>Tél</th><th>Type employé</th><th>Statut</th><th class='print-col-fonction'>Affectation</th><th class='print-col-fonction'>Fonction</th></tr></thead><tbody>`;
+					
+				allEmployees.forEach(emp => {
+						tableHtml += `<tr><td>${emp.empMatricule}</td><td>${emp.empNom}  ${emp.empPren}</td><td>${emp.empCivilite}</td><td>${emp.empEmail}</td><td>${emp.empTelephone}</td><td>${emp.typeEmploye}</td><td>${emp.status}</td><td>${emp.lieuAffectation}</td><td>${emp.fonction }</td></tr>`;
+				});
+
+				tableHtml += `</tbody></table>`;
+
+				const win = window.open('', '', 'height=700,width=900');
+				win.document.write('<html><head>');
+				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+				win.document.write('</head><body>');
+				win.document.write(getPrintableHeader());
+				win.document.write(tableHtml);
+				win.document.write(getPrintableFooter());
+				win.document.write('</body></html>');
+				win.document.close();
+				win.print();
+			}
+		}
+
+		function printMissions() {
+			const printBtn = document.getElementById('print-missions');
+			
+			if (printBtn) {
+				//const employees = getEmployees();
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
+					
+					allMissions.forEach(miss => {
+						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrderMission }</td></tr>`;
+					});
+
+					tableHtml += `</tbody></table>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
+		}
+
+		function printOrdreMissions() {
+			const printOmBtn = document.getElementById('print-ordre-mission');
+			const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
+			
+			if (printBtn && null !== numordremissTxt) {
+				//const employees = getEmployees();
+					
+					let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-lg-10 col-md-10 col-sm-10 desc">`;
+					
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
+						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
+					divHtml += `</div></div>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(divHtml);
+					win.document.write(getPrintableFooterNoteSvce());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
+		}
+
+		// Fonction utilitaire pour l'en-tête imprimable
+		function getPrintableHeader() {
+			return `
+			<table style='width:100%;border-collapse:collapse;margin-bottom:20px;'>
+			<tr>
+				<th style='width:42%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>PRESIDENCE DE LA REPUBLIQUE</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>DIRECTION DE CABINET</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>COORDINATION <br/>DE RENSEIGNEMENTS ET<br/> DE LA DOCUMENTATION D'ETAT.</div>
+				<div>***********</div>
+				<div style='font-weight:bold;'>SECRETARIAT PARTICULIER</div>
+				<div>**********</div>
+				<div style='margin-bottom:10px;'>
+					<span style='text-decoration:underline;'>N°</span>
+					<span>_______</span>
+					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 25</span>
+				</div>
+				</th>
+				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
+				<img th:src='@{/images/blason.png}' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
+				</th>
+				<th style='width:40%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>REPUBLIQUE CENTRAFRICAINE</div>
+				<div>Unité – Dignité – Travail</div>
+				<div>***********</div>
+				<div style='height:40px;'></div>
+				<p style='font-weight:bold;font-size:14pt;margin:2px;'>Bangui le,</p>
+				</th>
+			</tr>
+			</table>
+			<div style='height:60px;'></div>
+			`;
+		}
+
+		// Fonction utilitaire pour le pied de page
+		const signataireDoc = `
+			<div style='width:80%;margin-top:40px; margin-right:10%;'>
+			<div style='float:right;text-align:center;'>
+				<span>Le Ministre Conseiller Spécial en charge</span><br/>
+				<span>de la Coordination de Renseignements et </span><br/>
+				<span>de la Documentation d'Etat</span><br/><br/><br/><br/>
+
+				<span style='font-style:italic;'>Le Général d'Armée</span><br/>
+				<span style='font-weight:bold;text-decoration:underline;font-size:1.1em;'>Henri WANZET LINGUISSARA</span>
+			</div>
+			</div>
+			`;
+
+		const ampliDoc = `
+			<div style='float:left;text-align:left;'>
+				<span style='font-weight:bold;text-decoration:underline;font-size:14pt;'>Ampliation</span><br/>
+				<ul>
+                     <li>M.E DIRCAB……(ATCR) ;</li>
+					 <li>Intéressé…………..(01) ;</li>
+					 <li>Archive / Chrono.</li>
+				</ul>
+			</div>
+			`;
+
+		function getPrintableFooter() {
+			return signataireDoc;
+		}
+
+		function getPrintableFooterNoteSvce() {
+			return `
+			<div class="row" style="position: relative;">
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` + 
+			ampliDoc +
+			`</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 desc">` +
+			signataireDoc +
+			`</div>
+			</div>
+			`;
+		}
+
+    </script>
+</body>
+</html> 
