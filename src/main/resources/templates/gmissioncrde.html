@@ -185,6 +185,7 @@
 								<div class="card-body">
 									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une mission à l'intérieur et l'extérieur</h2>
 									<form id="missionsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
+										<hr>
 										<div class="col-md-2">
 											<input type="text" id="numordremiss" name="numordremiss" class="form-control" placeholder="num ordre mission">
 										</div>
@@ -195,7 +196,7 @@
 												<option th:value="|ordre-mission-collectif|" th:text="|Ordre de mission collectif|">type de mission</option>
 											</select>
 										</div>
-
+										
 										<div class="col-md-8">
 											<select id="missEmpNom" name="missempmatricule" class="form-select" multiple>
 												<option value="">Sélectionner un employé</option>
@@ -253,7 +254,9 @@
 										<hr>
 										
 										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary">Ajouter la mission</button>
+											<button type="submit" class="btn btn-primary">Ajouter</button>
+										</div>
+										<div class="col-2 text-start">
 											<button type="reset" class="btn btn-dark">Annuler</button>
 										</div>
 										
@@ -304,7 +307,7 @@
 													<td style="padding-left: 0; padding-right: 0;">
 														<button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
 														<form method = "get" th:action="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}+ |/| + ${mission.employeMatricule}">
-															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">Supprimer</button>
+															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
 														</form>
 													</td>
 												</tr>

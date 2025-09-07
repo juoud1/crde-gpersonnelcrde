@@ -125,14 +125,14 @@
 											
 											<div class="carousel-inner" style="align-items: center; text-align: justify;">
 												<div class="carousel-item active" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
+													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block" alt="Actu1" style="margin: auto;">
 													<div class="carousel-caption d-none d-md-block">
 														<h5 style="color: #fbfcfb;">Actualité 1</h5>
 														<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
 													</div>
 												</div>
 												<div class="carousel-item" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block" alt="Actu2" style="width: 800px; height: 533; margin: auto;">
+													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block w-100" alt="Actu2" style="margin: auto;">
 													<div class="carousel-caption d-none d-md-block">
 														<h5 style="color: yellow;">Actualité 2</h5>
 														<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
@@ -432,103 +432,9 @@
 						</div>
 					</section>
 				</div>
-
-				<div class="col-lg-9 col-md-9 col-sm-12 desc">
-					<!-- Nouvelle section pour la gestion d'absences et congés des employés -->
-					<section id="gconges">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#c" style="font-size: small; font-weight: bold;">
-									ABSENCES ET CONGÉS DES EMPLOYÉS
-								</a>
-							</div>
-							<div id="collapseConges" class="collapse" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou Congé d'un employés</h2>
-									<form id="conges-form" class="row g-3">
-										<div class="col-md-3">
-											<input type="text" id="civiliteougradeempconge" class="form-control" placeholder="Civilité ou grade" required>
-										</div>
-										<div class="col-md-5">
-											<select id="congeEmploye" class="form-select" required>
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
-										</div>
-										<div class="col-md-3">
-											<input type="text" id="matriculeempaff" class="form-control" placeholder="Matricule" required>
-										</div>
-										
-										<div class="col-md-4">
-											<input type="date" id="datedebconges" class="form-control" placeholder="Date début de congé" required>
-										</div>
-										<div class="col-md-4">
-											<input type="date" id="datefinconges" class="form-control" placeholder="Date fin de congé" >
-										</div>
-										
-										<div class="col-md-10">
-											<input type="text" id="infosupplemetaires" class="form-control" placeholder="informations supplémentaires">
-										</div>
-										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary">Ajouter le Congé</button>
-										</div>
-										<div class="col-2 text-end">
-											<button type="reset" class="btn btn-dark">Annuler</button>
-										</div>
-										<div class="col-1 text-end">
-											
-										</div>
-										<div class="col-5 text-center">
-											<button type="button" class="btn btn-warning" id="print-noteserv-congé">Imprimer la note de service</button>
-										</div>
-										
-									</form>
-
-									<hr>
-
-									<div class="container">
-										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-conges" th:onclick="printConges()">Imprimer les congés</button>
-											<button type="button" class="btn btn-info" id="print-conges-p">Imprimer les congés en cours</button>
-										</div>
-										<hr>
-										
-										<h2 class="h4 mb-3 text-center">Liste d'absences et congés des employés</h2>
-										<table class="table table-striped" id="conges-table">
-											<thead>
-												<tr>
-													<th>Matricule</th>
-													<th>Employé</th>
-													<th>Date début</th>
-													<th>Date fin</th>
-													<th>Détails</th>
-													<th>Num note service</th>
-													<th>Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="conge: ${allConges}">
-													<td th:text="${conge.employeMatricule}">nom</td>
-													<td th:text="${conge.employeNom}">nom</td>
-													<td th:text="${conge.dateDebutConge}">email</td>
-													<td th:text="${conge.dateFinConge}">tel</td>
-													<td th:text="${conge.infoSupplementaires}">role</td>
-													<td th:text="${conge.numNoteServiceConge}">status</td>
-													<td><button class="btn btn-secondary btn-warning">Supprimer</button></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
 			</div>
 			<hr>
-			
+
 			<!-- Nouvelle section pour les visites officielles -->
 			<section id="gvisites">
 				<div class="card mb-4">

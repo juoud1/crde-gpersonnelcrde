@@ -42,8 +42,6 @@ public class GestPersonnelController {
 		this.congeService = congeService;
 	}
 
-
-
 	@GetMapping("/accueil.html")
 	public String displayGestPersonnel(Model model) {
 		model.addAttribute("allStatus", statusService.getAllStatus());

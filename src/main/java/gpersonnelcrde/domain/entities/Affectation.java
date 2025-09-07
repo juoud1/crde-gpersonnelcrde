@@ -22,7 +22,10 @@ public class Affectation {
 	private LocalDate dateFinAffect;
 	private LocalDate datePriseService;
 	private String infoSupplementaires;
-
+	private String statusAffect;
+	private LocalDate dateStatusAffect;
+	private String numNoteService;
+	
 	@JsonIgnore
 	@ManyToOne
 	private Employe employe;
@@ -81,6 +84,24 @@ public class Affectation {
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
 	}
+	public String getStatusAffect() {
+		return statusAffect;
+	}
+	public void setStatusAffect(String statusAffect) {
+		this.statusAffect = statusAffect;
+	}
+	public LocalDate getDateStatusAffect() {
+		return dateStatusAffect;
+	}
+	public void setDateStatusAffect(LocalDate dateStatusAffect) {
+		this.dateStatusAffect = dateStatusAffect;
+	}
+	public String getNumNoteService() {
+		return numNoteService;
+	}
+	public void setNumNoteService(String numNoteService) {
+		this.numNoteService = numNoteService;
+	}
 	public Employe getEmploye() {
 		return employe;
 	}
@@ -134,13 +155,12 @@ public class Affectation {
 		result = prime * result + ((dateFinAffect == null) ? 0 : dateFinAffect.hashCode());
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
+		result = prime * result + ((statusAffect == null) ? 0 : statusAffect.hashCode());
+		result = prime * result + ((dateStatusAffect == null) ? 0 : dateStatusAffect.hashCode());
+		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
-		result = prime * result + ((affectCreeeLe == null) ? 0 : affectCreeeLe.hashCode());
-		result = prime * result + ((affectCreeePar == null) ? 0 : affectCreeePar.hashCode());
-		result = prime * result + ((affectModifieeLe == null) ? 0 : affectModifieeLe.hashCode());
-		result = prime * result + ((affectModifieePar == null) ? 0 : affectModifieePar.hashCode());
 		return result;
 	}
 	@Override
@@ -187,6 +207,21 @@ public class Affectation {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
+		if (statusAffect == null) {
+			if (other.statusAffect != null)
+				return false;
+		} else if (!statusAffect.equals(other.statusAffect))
+			return false;
+		if (dateStatusAffect == null) {
+			if (other.dateStatusAffect != null)
+				return false;
+		} else if (!dateStatusAffect.equals(other.dateStatusAffect))
+			return false;
+		if (numNoteService == null) {
+			if (other.numNoteService != null)
+				return false;
+		} else if (!numNoteService.equals(other.numNoteService))
+			return false;
 		if (employe == null) {
 			if (other.employe != null)
 				return false;
@@ -202,26 +237,6 @@ public class Affectation {
 				return false;
 		} else if (!fonction.equals(other.fonction))
 			return false;
-		if (affectCreeeLe == null) {
-			if (other.affectCreeeLe != null)
-				return false;
-		} else if (!affectCreeeLe.equals(other.affectCreeeLe))
-			return false;
-		if (affectCreeePar == null) {
-			if (other.affectCreeePar != null)
-				return false;
-		} else if (!affectCreeePar.equals(other.affectCreeePar))
-			return false;
-		if (affectModifieeLe == null) {
-			if (other.affectModifieeLe != null)
-				return false;
-		} else if (!affectModifieeLe.equals(other.affectModifieeLe))
-			return false;
-		if (affectModifieePar == null) {
-			if (other.affectModifieePar != null)
-				return false;
-		} else if (!affectModifieePar.equals(other.affectModifieePar))
-			return false;
 		return true;
 	}
 	@Override
@@ -229,6 +244,9 @@ public class Affectation {
 		return "Affectation [id=" + id + ", referenceAffect=" + referenceAffect + ", EmplacementAffect="
 				+ EmplacementAffect + ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect
 				+ ", datePriseService=" + datePriseService + ", infoSupplementaires=" + infoSupplementaires
-				+ ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + "]";
-	}	
+				+ ", statusAffect=" + statusAffect + ", dateStatusAffect=" + dateStatusAffect + ", numNoteService="
+				+ numNoteService + ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction="
+				+ fonction + "]";
+	}
+			
 }
