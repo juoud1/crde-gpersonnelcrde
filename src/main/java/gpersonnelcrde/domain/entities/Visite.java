@@ -3,8 +3,6 @@ package gpersonnelcrde.domain.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -23,10 +21,18 @@ public class Visite {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private String butVisite;
+	private Boolean visiteEstAcceptee;
+	private LocalDate visiteEstAccepteeLe;
 	private LocalDateTime visiteCreeeLe;
 	private String visiteCreeePar;
 	private LocalDateTime visiteModifieeLe;
 	private String visiteModifieePar;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getCiviliteVisiteur() {
 		return civiliteVisiteur;
 	}
@@ -81,6 +87,18 @@ public class Visite {
 	public void setButVisite(String butVisite) {
 		this.butVisite = butVisite;
 	}
+	public Boolean getVisiteEstAcceptee() {
+		return visiteEstAcceptee;
+	}
+	public void setVisiteEstAcceptee(Boolean visiteEstAcceptee) {
+		this.visiteEstAcceptee = visiteEstAcceptee;
+	}
+	public LocalDate getVisiteEstAccepteeLe() {
+		return visiteEstAccepteeLe;
+	}
+	public void setVisiteEstAccepteeLe(LocalDate visiteEstAccepteeLe) {
+		this.visiteEstAccepteeLe = visiteEstAccepteeLe;
+	}
 	public LocalDateTime getVisiteCreeeLe() {
 		return visiteCreeeLe;
 	}
@@ -108,7 +126,8 @@ public class Visite {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((civiliteVisiteur == null) ? 0 : civiliteVisiteur.hashCode());
 		result = prime * result + ((nomVisiteur == null) ? 0 : nomVisiteur.hashCode());
 		result = prime * result + ((prenomVisiteur == null) ? 0 : prenomVisiteur.hashCode());
@@ -118,17 +137,25 @@ public class Visite {
 		result = prime * result + ((dateDebut == null) ? 0 : dateDebut.hashCode());
 		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
 		result = prime * result + ((butVisite == null) ? 0 : butVisite.hashCode());
+		result = prime * result + ((visiteEstAcceptee == null) ? 0 : visiteEstAcceptee.hashCode());
+		result = prime * result + ((visiteEstAccepteeLe == null) ? 0 : visiteEstAccepteeLe.hashCode());
+		result = prime * result + ((visiteCreeePar == null) ? 0 : visiteCreeePar.hashCode());
 		return result;
 	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Visite other = (Visite) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (civiliteVisiteur == null) {
 			if (other.civiliteVisiteur != null)
 				return false;
@@ -174,13 +201,30 @@ public class Visite {
 				return false;
 		} else if (!butVisite.equals(other.butVisite))
 			return false;
+		if (visiteEstAcceptee == null) {
+			if (other.visiteEstAcceptee != null)
+				return false;
+		} else if (!visiteEstAcceptee.equals(other.visiteEstAcceptee))
+			return false;
+		if (visiteEstAccepteeLe == null) {
+			if (other.visiteEstAccepteeLe != null)
+				return false;
+		} else if (!visiteEstAccepteeLe.equals(other.visiteEstAccepteeLe))
+			return false;
+		if (visiteCreeePar == null) {
+			if (other.visiteCreeePar != null)
+				return false;
+		} else if (!visiteCreeePar.equals(other.visiteCreeePar))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Visite [civiliteVisiteur=" + civiliteVisiteur + ", nomVisiteur=" + nomVisiteur + ", prenomVisiteur="
-				+ prenomVisiteur + ", fonctionVisiteur=" + fonctionVisiteur + ", paysVisiteur=" + paysVisiteur
-				+ ", duree=" + duree + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", butVisite=" + butVisite
-				+ "]";
-	}		
+		return "Visite [id=" + id + ", civiliteVisiteur=" + civiliteVisiteur + ", nomVisiteur=" + nomVisiteur
+				+ ", prenomVisiteur=" + prenomVisiteur + ", fonctionVisiteur=" + fonctionVisiteur + ", paysVisiteur="
+				+ paysVisiteur + ", duree=" + duree + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin
+				+ ", butVisite=" + butVisite + ", visiteEstAcceptee=" + visiteEstAcceptee + ", visiteEstAccepteeLe="
+				+ visiteEstAccepteeLe + "]";
+	}
+		
 }
