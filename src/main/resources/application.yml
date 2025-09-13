@@ -20,7 +20,7 @@ spring:
   h2:
     console:
       enabled: true
-      path : /h2-console   # navigate to http://localhost:8181/crde/gpsnel/h2-console to see db UI
+      path : /admin/h2-console   # navigate to http://localhost:8181/crde/gpsnel/h2-console to see db UI
       settings.trace: false
       settings.web-allow-others: true
   datasource:
