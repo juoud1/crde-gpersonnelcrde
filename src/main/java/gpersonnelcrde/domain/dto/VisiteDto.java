@@ -12,6 +12,9 @@ public class VisiteDto {
 	private LocalDate dateDebut;
 	private LocalDate dateFin;
 	private String butVisite;
+	private Boolean visiteEstAcceptee;
+	private LocalDate visiteEstAccepteeLe;
+
 	public String getCiviliteVisiteur() {
 		return civiliteVisiteur;
 	}
@@ -66,6 +69,18 @@ public class VisiteDto {
 	public void setButVisite(String butVisite) {
 		this.butVisite = butVisite;
 	}
+	public Boolean getVisiteEstAcceptee() {
+		return visiteEstAcceptee;
+	}
+	public void setVisiteEstAcceptee(Boolean visiteEstAcceptee) {
+		this.visiteEstAcceptee = visiteEstAcceptee;
+	}
+	public LocalDate getVisiteEstAccepteeLe() {
+		return visiteEstAccepteeLe;
+	}
+	public void setVisiteEstAccepteeLe(LocalDate visiteEstAccepteeLe) {
+		this.visiteEstAccepteeLe = visiteEstAccepteeLe;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +94,8 @@ public class VisiteDto {
 		result = prime * result + ((dateDebut == null) ? 0 : dateDebut.hashCode());
 		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
 		result = prime * result + ((butVisite == null) ? 0 : butVisite.hashCode());
+		result = prime * result + ((visiteEstAcceptee == null) ? 0 : visiteEstAcceptee.hashCode());
+		result = prime * result + ((visiteEstAccepteeLe == null) ? 0 : visiteEstAccepteeLe.hashCode());
 		return result;
 	}
 	@Override
@@ -135,6 +152,16 @@ public class VisiteDto {
 				return false;
 		} else if (!butVisite.equals(other.butVisite))
 			return false;
+		if (visiteEstAcceptee == null) {
+			if (other.visiteEstAcceptee != null)
+				return false;
+		} else if (!visiteEstAcceptee.equals(other.visiteEstAcceptee))
+			return false;
+		if (visiteEstAccepteeLe == null) {
+			if (other.visiteEstAccepteeLe != null)
+				return false;
+		} else if (!visiteEstAccepteeLe.equals(other.visiteEstAccepteeLe))
+			return false;
 		return true;
 	}
 	@Override
@@ -142,6 +169,7 @@ public class VisiteDto {
 		return "VisiteDto [civiliteVisiteur=" + civiliteVisiteur + ", nomVisiteur=" + nomVisiteur + ", prenomVisiteur="
 				+ prenomVisiteur + ", fonctionVisiteur=" + fonctionVisiteur + ", paysVisiteur=" + paysVisiteur
 				+ ", duree=" + duree + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", butVisite=" + butVisite
-				+ "]";
-	}	
+				+ ", visiteEstAcceptee=" + visiteEstAcceptee + ", visiteEstAccepteeLe=" + visiteEstAccepteeLe + "]";
+	}
+		
 }

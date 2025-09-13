@@ -248,6 +248,7 @@
 											<th>Date fin</th>
 											<th>Durée (jours)</th>
 											<th>But</th>
+											<th>Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -260,9 +261,9 @@
 											<td>date fin visite</td>
 											<td>duréé</td>
 											<td>but</td>
-
+											<td>Acceptée, le ...</td>
 											<td style="padding-left: 0; padding-right: 0;">
-												<button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br> 
+												<!-- button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br--> 
 												<form method = "get">
 													<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|MAJ|">Mise à jour</button>
 												</form>
