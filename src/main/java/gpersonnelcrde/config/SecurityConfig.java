@@ -25,12 +25,18 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(authorize -> authorize
+					//.requestMatchers("/resources/static/css/**").permitAll()
+					//.requestMatchers("/resources/static/images/**").permitAll()
+					//.requestMatchers("/resources/static/scripts/**").permitAll()
+					
+					.requestMatchers("/css/**").permitAll()
+					.requestMatchers("/images/**").permitAll()
+					.requestMatchers("/scripts/**").permitAll()
+					.requestMatchers("/sql/**").permitAll()
+					//.requestMatchers("/flavicom.ico").permitAll()
 					.requestMatchers("/resources/**").permitAll()
 					.requestMatchers("/webjars/**").permitAll()
-					//.requestMatchers("/css/**").permitAll()
-					//.requestMatchers("/images/**").permitAll()
-					//.requestMatchers("/scripts/**").permitAll()
-					//.requestMatchers("/flavicom.ico").permitAll()
+					.requestMatchers("/registry/**").permitAll()
 					.requestMatchers("/accueil.html").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/login.html/*").hasAnyRole("USER", "ANONYMOUS")
 					.requestMatchers("/logout").hasAnyRole("USER", "ADMIN")

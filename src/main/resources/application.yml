@@ -17,6 +17,9 @@ spring:
       resolve-lazily: true
       location: /crde/gprsnupload
       max-file-size: 200MB	
+  mvc:
+    static-path-pattern: "/resources/**"
+    webjars-path-pattern: "/webjars/**"
   h2:
     console:
       enabled: true
