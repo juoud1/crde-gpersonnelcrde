@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
@@ -24,11 +25,12 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(authorize -> authorize
+					.requestMatchers("/resources/**").permitAll()
 					.requestMatchers("/webjars/**").permitAll()
-					.requestMatchers("/css/**").permitAll()
-					.requestMatchers("/images/**").permitAll()
-					.requestMatchers("/scripts/**").permitAll()
-					.requestMatchers("/flavicom.ico").permitAll()
+					//.requestMatchers("/css/**").permitAll()
+					//.requestMatchers("/images/**").permitAll()
+					//.requestMatchers("/scripts/**").permitAll()
+					//.requestMatchers("/flavicom.ico").permitAll()
 					.requestMatchers("/accueil.html").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/login.html/*").hasAnyRole("USER", "ANONYMOUS")
 					.requestMatchers("/logout").hasAnyRole("USER", "ADMIN")
@@ -59,6 +61,13 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
+	/*@Bean
+    public void configure(WebSecurity web) throws Exception {
+        web
+            .ignoring()
+            .requestMatchers("/resources/**", "/static/**","/webjars/**");
+    }*/
 
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService(){
