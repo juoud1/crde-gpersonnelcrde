@@ -4,17 +4,62 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 	public final static Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+		http.authorizeHttpRequests(authorize -> authorize
+					.requestMatchers("/webjars/**").permitAll()
+					.requestMatchers("/css/**").permitAll()
+					.requestMatchers("/images/**").permitAll()
+					.requestMatchers("/scripts/**").permitAll()
+					.requestMatchers("/flavicom.ico").permitAll()
+					.requestMatchers("/accueil.html").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/login.html/*").permitAll()
+					.requestMatchers("/logout").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/signup.html/*").permitAll()
+					.requestMatchers("/errors/**").permitAll()
+					.requestMatchers("/admin/h2-console/**").access(new WebExpressionAuthorizationManager("isFullyAuthenticated() and hasRole('ADMIN')"))
+					.requestMatchers("/admin/").hasRole("ADMIN")
+					.requestMatchers("/**").hasRole("USER")
+
+				)
+				.exceptionHandling(exception -> exception.accessDeniedPage("/errors/403"))
+				.formLogin(form -> form
+					.loginPage("/login.html")
+					.loginProcessingUrl("/login.html")
+					.failureForwardUrl("/login.html?error")
+					.usernameParameter("idconnexion")
+					.passwordParameter("motdepasse")
+					.defaultSuccessUrl("/accueil.html", true).permitAll()
+				)
+				.logout(form -> form
+					.logoutUrl("/logout")
+					.logoutSuccessUrl("/login.html?logout").permitAll()
+				)
+				.csrf(AbstractHttpConfigurer::disable);
+
+				// Pour le console H2
+				http.headers(header -> header.frameOptions(FrameOptionsConfig::disable));
+
+		return http.build();
+	}
+
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService(){
 		UserDetails user = User.builder()
@@ -28,8 +73,8 @@ public class SecurityConfig {
 					.password(passwordEncoder().encode("admin123"))
 					.roles("USER", "ADMIN")
 					.build();
-		logger.info("user pwd : {}", passwordEncoder().encode("user123"));
-		logger.info("admin pwd : {}", passwordEncoder().encode("admin123"));
+		logger.info("user pwd : {}", passwordEncoder().encode("user123").replaceAll("A", "dobatii"));
+		logger.info("admin pwd : {}", passwordEncoder().encode("admin123").replaceAll("a", "agab"));
 
 		return new InMemoryUserDetailsManager(user, admin);
 	}

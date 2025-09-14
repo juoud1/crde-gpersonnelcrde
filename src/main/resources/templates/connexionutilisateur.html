@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Yves DOUD">
+	<meta name="description" content="CRDE, CRDE RCA, Gestion du personnel de la CRDE RCA">
+    <title>GESTION DU PERSONNEL DE LA CRDE</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css}">
+
+	<script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+	<link rel="stylesheet" href="@{css/style.css}">
+<body>
+	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img th:src="@{/images/blason.png}" alt="Logo CRDE " style="width:40px;" class="rounded-pill"> 
+				</a>
+			
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarTogglercrde"
+					aria-controls="navbarTogglercrde"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</nav>
+	</header>
+	
+	<div id="main-app" class="w-100">
+        <div class="container py-5">
+			<div class="text-center my-3">
+				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
+			</div>
+			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
+
+			<section id="accueilCrde">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="btn" href="#collapseAcrde" style="font-size: medium; font-weight: bold;">
+							CRDE
+						</a>
+					</div>
+
+					<div id="collapseAcrde" data-bs-parent="#main-app">
+						<div class="card-body">
+
+							<div class="row" style="position: relative; margin-top: 0em;">
+								<div class="col-lg-5 col-md-5 col-sm-12 desc" style="margin-bottom: 0.15em;" >
+									<div class="description" style="background-color: #e3f2fd; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
+										<p class="text-center align-items"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
+										<hr>
+										<h2 style="color: #A92900;">Baraooooo, vous êtes la bienvenue sur <em>ePortail-CRDE</em>
+											<span style="color: #B9867A; font-size: 22px; width:100%; line-height: 1.5;"><em> pour la gestion de tous les employés et stagiaires de la CRDE du Centrafrique ainsi que de leur status, mouvements et congés.</em></span>
+										</h2>
+									</div>
+								</div>
+								
+								<div class="col-lg-7 col-md-7 col-sm-12" style="margin: auto; padding: auto;">
+									<form id="congesform" class="row g-3 w-75 m-auto" th:autocomplete="|false|" method = "post" th:action="@{/login.html}">	
+										
+										<div class="alert alert-danger" th:if="${param.error != null}">
+											<strong>La connexion a échouée.</strong>
+											<span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}"> 
+												<span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}">les identifiants de connexion sont invalides.</span>
+											</span>
+										</div>
+										<div class="alert alert-success" th:if="${param.logout != null}">
+											<strong>Vous avez quitté l'application avec succès.</strong>
+											<span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}"> 
+												<span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}">les identifiants de connexion sont invalides.</span>
+											</span>
+										</div>
+										
+										<fieldset>
+											<legende class="h4 mb-3 text-center">Connexion utilisateur</legende>
+											<hr>
+											<div class="col-6 mt-4 mb-3">
+												<label class="form-label" for="idconnexion" th:text="|Identifiant de connexion|">id</label>
+												<input type="text" autofocus="autofocus" id="idconnexion" name="idconnexion" class="form-control" required>
+											</div>
+											<div class="col-6 mb-2">
+												<label class="form-label" for="motdepasse" th:text="|Mot de passe|">mdp</label>
+												<input type="password" id="motdepasse" name="motdepasse" class="form-control" required>
+											</div>	
+										</fieldset>
+										<hr>
+										<div class="col-8 text-center">
+											<button type="submit" class="btn btn-primary" id="submit" name="submit">Connecter</button>
+											<button type="reset" class="btn btn-dark" id="reset" name="reset">Annuler</button>
+											<!--a class="btn btn-dark" th:href="@{/accueil.html}" formmethod="get" th:text="|Annuler|">Annuler</a-->
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>	
+        </div>
+		<footer class="d-flex" style="position: relative; background-color:#c2b280; padding: 0.5%; margin: auto;">
+	   		<div class="col-8 text-center"> <span th:text="|CRDE &#169; 2025|">barao</span> <span th:text="|Pour toute information, veuillez contacter Monsieur |"></span> <strong th:text="|DOUD Yves|"></strong></div>
+			<div class="col-4 text-left"> <strong style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></strong></div>
+	   	</footer>
+    </div>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
+	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+</body>
+</html> 
