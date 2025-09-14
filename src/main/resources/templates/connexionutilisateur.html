@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,7 +93,7 @@
 										</fieldset>
 										<hr>
 										<div class="col-8 text-center">
-											<button type="submit" class="btn btn-primary" id="submit" name="submit">Connecter</button>
+											<button type="submit" class="btn btn-primary" id="submit" name="submit">Se connecter</button>
 											<button type="reset" class="btn btn-dark" id="reset" name="reset">Annuler</button>
 											<!--a class="btn btn-dark" th:href="@{/accueil.html}" formmethod="get" th:text="|Annuler|">Annuler</a-->
 										</div>

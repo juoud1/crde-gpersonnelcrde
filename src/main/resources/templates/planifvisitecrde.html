@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,31 +38,31 @@
 					<ul class="navbar-nav m-auto">
 
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" th:href="@{/accueil.html}" th:text="|CRDE|">CRDE</a>
+							<a class="nav-link" aria-current="page" style="color:#e3f2fd;" th:href="@{/accueil.html}" th:text="|CRDE|">CRDE</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" th:text="|Gérer le personnel|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations au sein de la CRDE|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/conges-emp-crde.html}" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" th:text="|Absences et congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/missions-emp-crde.html}" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Gérer les missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/planif-visites-crde.html}" th:text="|Planifier visites|">Visites </a>
+							<a class="nav-link active" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Planifier visites|">Visites </a>
 						</li>
 						
 						<li class="nav-item dropdown ml-5">
-							<a class="nav-link dropdown-toggle ml-5" href="#gadmin" id="navbarDropdownMenuLink5" role="button" data-bs-toggle="dropdown">Administration</a>
+							<a class="nav-link dropdown-toggle ml-5" href="#gadmin" id="navbarDropdownMenuLink5" style="color:#e3f2fd;" role="button" data-bs-toggle="dropdown">Administration</a>
 							<ul class="dropdown-menu dropdown-menu-light ml-5">
 								<li><a class="dropdown-item" href="#gadminUser">Utilisateurs</a></li>
 								<li><a class="dropdown-item" href="#gadminChangePwd">Changer votre mot de passe</a></li>
@@ -76,9 +76,36 @@
 								<li><a class="dropdown-item" href="#gadminTconges">Types de congés</a></li>
 							</ul>
 						</li>
+					</ul>
 
-						<li class="nav-item pull-right">
-							<a id="navItemLogout" class="nav-link" style="color: orangered;" th:href="@{/logout}" th:text="|Déconnexion|">Quitter</a>
+					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="isAuthenticated()">
+						<li>
+							&nbsp; | &nbsp; 
+						</li>
+
+						<li>
+							<p class="navbar-text">
+								Bonjour <span class="navbar-text" th:text="${#authentication.name}">utilisateur</span>
+							</p> 
+						</li>
+						<li >
+							&nbsp; | &nbsp; 
+						</li>
+
+						<li>
+							<a id="navItemLogout" class="btn btn-info" role="button" style="color: orangered;" th:href="@{/logout}" th:text="|Déconnexion|">Quitter</a>
+						</li>
+						<li>
+							&nbsp; | &nbsp; 
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="!isAuthenticated()">
+						<li>
+							<a id="navItemLogin" class="btn btn-default" role="button" style="color: orangered;" th:href="@{/login.html}" th:text="|Se connecter|">connex</a>
+						</li>
+						<li>
+							&nbsp; | &nbsp; 
 						</li>
 					</ul>
 				</div>
