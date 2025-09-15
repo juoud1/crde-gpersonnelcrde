@@ -6,6 +6,7 @@ import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 public class ThymeleafConfig {
@@ -31,7 +32,9 @@ public class ThymeleafConfig {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(false);
+		
         return templateResolver;
     }
 
@@ -40,6 +43,7 @@ public class ThymeleafConfig {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(springSecurityDialect());
+		templateEngine.setEnableSpringELCompiler(true);
 
         return templateEngine;
     }

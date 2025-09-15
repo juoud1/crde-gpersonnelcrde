@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +55,7 @@
 						<div class="card-body">
 
 							<div class="row" style="position: relative; margin-top: 0em;">
-								<div class="col-lg-5 col-md-5 col-sm-12 desc" style="margin-bottom: 0.15em;" >
+								<div class="col-5" style="margin-bottom: 0.15em;" >
 									<div class="description" style="background-color: #e3f2fd; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
 										<p class="text-center align-items"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
 										<hr>
@@ -65,7 +65,7 @@
 									</div>
 								</div>
 								
-								<div class="col-lg-7 col-md-7 col-sm-12" style="margin: auto; padding: auto;">
+								<div class="col-7" style="margin: auto; padding: auto;">
 									<form id="congesform" class="row g-3 w-75 m-auto" th:autocomplete="|false|" method = "post" th:action="@{/login.html}">	
 										
 										<div class="alert alert-danger" th:if="${param.error != null}">

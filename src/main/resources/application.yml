@@ -18,7 +18,7 @@ spring:
       location: /crde/gprsnupload
       max-file-size: 200MB	
   mvc:
-    static-path-pattern: "/resources/**"
+    #static-path-pattern: "/resources/**"
     webjars-path-pattern: "/webjars/**"
   h2:
     console:
