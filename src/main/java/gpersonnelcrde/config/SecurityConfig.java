@@ -25,16 +25,17 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(authorize -> authorize
-					//.requestMatchers("/resources/static/css/**").permitAll()
-					//.requestMatchers("/resources/static/images/**").permitAll()
-					//.requestMatchers("/resources/static/scripts/**").permitAll()
-					
-					.requestMatchers("/css/**").permitAll()
+					.requestMatchers("/resources/static/css/**").permitAll()
+					.requestMatchers("/resources/static/images/**").permitAll()
+					.requestMatchers("/resources/static/scripts/**").permitAll()
+					.requestMatchers("/resources/static/sql/**").permitAll()
+
+					/* .requestMatchers("/css/**").permitAll()
 					.requestMatchers("/images/**").permitAll()
 					.requestMatchers("/scripts/**").permitAll()
-					.requestMatchers("/sql/**").permitAll()
+					.requestMatchers("/sql/**").permitAll()*/
 					//.requestMatchers("/flavicom.ico").permitAll()
-					.requestMatchers("/resources/**").permitAll()
+					//.requestMatchers("/resources/**").permitAll()
 					.requestMatchers("/webjars/**").permitAll()
 					.requestMatchers("/registry/**").permitAll()
 					.requestMatchers("/accueil.html").hasAnyRole("USER", "ADMIN")
@@ -45,7 +46,6 @@ public class SecurityConfig {
 					.requestMatchers("/admin/h2-console/**").access(new WebExpressionAuthorizationManager("isFullyAuthenticated() and hasRole('ADMIN')"))
 					.requestMatchers("/admin/").hasRole("ADMIN")
 					.requestMatchers("/**").hasRole("USER")
-
 				)
 				.exceptionHandling(exception -> exception.accessDeniedPage("/errors/403"))
 				.formLogin(form -> form
