@@ -123,80 +123,106 @@
 			<section id="gpersonnel">
 				<div class="card mb-4">
 					<div class="card-header">
-						<a class="btn" data-bs-toggle="collapse" href="#collapseGpernonnel" style="font-size: medium; font-weight: bold;">
+						<a class="btn"  href="#clpseGpernonnel" style="font-size: medium; font-weight: bold;">
 							GÉRER LES EMPLOYÉS ET/OU LEUR STATUS
 						</a>
 					</div>
-					<div id="collapseGpernonnel" class="collapse show" data-bs-parent="#main-app">
-						<div class="card-body">
-							<h2 class="h4 mb-3 text-center">Ajouter ou modifier un employé ou stagiaire</h2>
-							<form id="employee-form" class="row g-3">
-								<div class="col-md-3">
-									<input type="text" id="civiliteougradeemp" class="form-control" placeholder="Civilité ou grade" required>
-								</div>
-								<div class="col-md-4">
-									<input type="text" id="name" class="form-control" placeholder="Nom" required>
-								</div>
-								<div class="col-md-4">
-									<input type="text" id="firstname" class="form-control" placeholder="Prénom" required>
-								</div>
-								<div class="col-md-4">
-									<select id="typeemp" class="form-select" required>
-										<option value="">Sélectionner un type employé</option>
-    									<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
-									</select>
-								</div>
-								<div class="col-md-3">
-									<input type="text" id="matricule" class="form-control" placeholder="Matricule" required>
-								</div>
-							
-								<div class="col-md-6">
-									<input type="email" id="email" class="form-control" placeholder="Email" required>
-								</div>
-								<div class="col-md-4">
-									<input type="tel" id="phone" class="form-control" placeholder="Numéro de Téléphone" required>
-								</div>
-								<br>
-								<div class="col-md-4">
-									<select id="status" class="form-select" required>
-										<option value="">Sélectionner un status</option>
-    									<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
-									</select>
-								</div>
-								<div class="col-md-3" id="startDate-group">
-									<input type="date" id="startDate" class="form-control" placeholder="Date début" required>
-								</div>
-								<div class="col-md-3" id="endDate-group">
-									<input type="date" id="endDate" class="form-control" placeholder="Date fin" required>
-								</div>
-								<div class="col-md-4">
-									<select id="lieuaffect" class="form-select" required>
-										<option value="">Sélectionner un lieu d'affectation</option>
-    									<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
-									</select>
-								</div>
-								<div class="col-md-4">
-									<select id="fonction" class="form-select" required>
-										<option value="">Sélectionner une fonction</option>
-    									<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
-									</select>
-								</div>
+					<div id="clpseGpernonnel" data-bs-parent="#main-app">
+						<div class="card-body" style="margin: auto; padding: auto;">
+							<div class="row bg-light">
+							<div class="col-3 d-flex justify-content-start z-0 position-relative" style="margin: 0;">
+								<span class="h1" style="font-size: 75pt; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+							</div>
+							<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+								<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark">
+									<legende class="h4 mb-3 text-center">Ajouter ou modifier un employé ou stagiaire</legende>
+									<hr>
+									
+									<div class="col-3 mt-4">
+										<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
+										<input type="text" autofocus="autofocus" id="empcivilite" name="empCivilite" class="form-control" required>
+									</div>
+									<div class="col-4 mt-4">
+										<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
+										<input type="text" id="empnom" name="empnom" class="form-control" required>
+									</div>
+									<div class="col-4 mt-4">
+										<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
+										<input type="text" id="emppren" name="emppren" class="form-control"/>
+									</div>
+									
+									<div class="col-4">
+										<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
+										<select id="typeemp" name="typeemp" class="form-select" required>
+											<option value="">Sélectionner un type employé</option>
+											<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
+										</select>
+									</div>
+									<div class="col-3">
+										<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
+										<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
+									</div>
+								
+									<div class="col-6">
+										<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
+										<input type="email" id="empemail" name="empemail" class="form-control" />
+									</div>
+									<div class="col-4">
+										<label class="form-label h6" for="emptelephone" th:text="|Téléphone|">civ</label>
+										<input type="tel" id="emptelephone" name="emptelephone" class="form-control" />
+									</div>
+								
+									<div class="col-4">
+										<label class="form-label h6" for="status" th:text="|Status employé(e)|">civ</label>
+										<select id="status" name="status" class="form-select" required>
+											<option value="">Sélectionner un status</option>
+											<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
+										</select>
+									</div>
+									<div class="col-3" id="startDate-group">
+										<label class="form-label h6" for="empdatedebutstatus" th:text="|Du |">civ</label>
+										<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" class="form-control" required>
+									</div>
+									<div class="col-3" id="endDate-group">
+										<label class="form-label h6" for="empdatefinstatus" th:text="|Au |">civ</label>
+										<input type="date" id="empdatefinstatus" name="empdatefinstatus" class="form-control" placeholder="Date fin" required>
+									</div>
+								
+									<div class="col-4">
+										<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
+										<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
+											<option value="">Sélectionner un lieu d'affectation</option>
+											<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
+										</select>
+									</div>
+									<div class="col-4">
+										<label class="form-label h6" for="fonction" th:text="|Fonction|">civ</label>
+										<select id="fonction" nom="fonction" class="form-select" required>
+											<option value="">Sélectionner une fonction</option>
+											<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
+										</select>
+									</div>
 
-								<div class="col-md-2" id="startDate-group">
-									<input type="date" id="startDateAff" class="form-control" placeholder="Date début" required>
-								</div>
-								<div class="col-md-2" id="endDate-group">
-									<input type="date" id="endDateAff" class="form-control" placeholder="Date fin" required>
-								</div>
+									<div class="col-2" id="startDate-group">
+										<label class="form-label h6" for="datedebutaffect" th:text="|Du |">civ</label>
+										<input type="date" id="datedebutaffect" name="datedebutaffect" class="form-control" />
+									</div>
+									<div class="col-2" id="endDate-group">
+										<label class="form-label h6" for="datefinaffect" th:text="|Au |">civ</label>
+										<input type="date" id="datefinaffect" name="datefinaffect" class="form-control" />
+									</div>
+									<hr>
 
-								<div class="col-4 text-end">
-									<button type="submit" class="btn btn-primary">Ajouter</button>
-								</div>
-								<div class="col-2 text-start">
-									<button type="reset" class="btn btn-dark">Annuler</button>
-								</div>
-							</form>
-
+									<div class="col-8 text-center mb-4">
+										<button type="submit" class="btn btn-primary">Ajouter</button>
+										<button type="reset" class="btn btn-dark">Annuler</button>
+									</div>
+									<!--div class="col-2 text-start">
+										<button type="reset" class="btn btn-dark">Annuler</button>
+									</div-->
+								</form>
+							</div>
+							</div>
 							<hr>
 
 							<div class="container">
