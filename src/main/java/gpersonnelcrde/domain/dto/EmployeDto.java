@@ -14,10 +14,14 @@ public class EmployeDto {
 	private String status;
 	private String lieuAffectation;
 	private String fonction;
-	private String numNoteService;
-
+	private String empNumInterne;
 	private LocalDate empDateDebutStatus;
 	private LocalDate empDateFinStatus;
+
+	private String refDecretouArreteEntree;
+	private LocalDate dateDecretouArreteEntree;
+	private String refDecretouArreteDepart;
+	private LocalDate dateDecretouArreteDepart;
 	
 	public String getEmpMatricule() {
 		return empMatricule;
@@ -79,6 +83,12 @@ public class EmployeDto {
 	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
+	public String getEmpNumInterne() {
+		return empNumInterne;
+	}
+	public void setEmpNumInterne(String empNumInterne) {
+		this.empNumInterne = empNumInterne;
+	}
 	public LocalDate getEmpDateDebutStatus() {
 		return empDateDebutStatus;
 	}
@@ -90,6 +100,30 @@ public class EmployeDto {
 	}
 	public void setEmpDateFinStatus(LocalDate empDateFinStatus) {
 		this.empDateFinStatus = empDateFinStatus;
+	}
+	public String getRefDecretouArreteEntree() {
+		return refDecretouArreteEntree;
+	}
+	public void setRefDecretouArreteEntree(String refDecretouArreteEntree) {
+		this.refDecretouArreteEntree = refDecretouArreteEntree;
+	}
+	public LocalDate getDateDecretouArreteEntree() {
+		return dateDecretouArreteEntree;
+	}
+	public void setDateDecretouArreteEntree(LocalDate dateDecretouArreteEntree) {
+		this.dateDecretouArreteEntree = dateDecretouArreteEntree;
+	}
+	public String getRefDecretouArreteDepart() {
+		return refDecretouArreteDepart;
+	}
+	public void setRefDecretouArreteDepart(String refDecretouArreteDepart) {
+		this.refDecretouArreteDepart = refDecretouArreteDepart;
+	}
+	public LocalDate getDateDecretouArreteDepart() {
+		return dateDecretouArreteDepart;
+	}
+	public void setDateDecretouArreteDepart(LocalDate dateDecretouArreteDepart) {
+		this.dateDecretouArreteDepart = dateDecretouArreteDepart;
 	}
 	@Override
 	public int hashCode() {
@@ -105,8 +139,13 @@ public class EmployeDto {
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
+		result = prime * result + ((empNumInterne == null) ? 0 : empNumInterne.hashCode());
 		result = prime * result + ((empDateDebutStatus == null) ? 0 : empDateDebutStatus.hashCode());
 		result = prime * result + ((empDateFinStatus == null) ? 0 : empDateFinStatus.hashCode());
+		result = prime * result + ((refDecretouArreteEntree == null) ? 0 : refDecretouArreteEntree.hashCode());
+		result = prime * result + ((dateDecretouArreteEntree == null) ? 0 : dateDecretouArreteEntree.hashCode());
+		result = prime * result + ((refDecretouArreteDepart == null) ? 0 : refDecretouArreteDepart.hashCode());
+		result = prime * result + ((dateDecretouArreteDepart == null) ? 0 : dateDecretouArreteDepart.hashCode());
 		return result;
 	}
 	@Override
@@ -168,6 +207,11 @@ public class EmployeDto {
 				return false;
 		} else if (!fonction.equals(other.fonction))
 			return false;
+		if (empNumInterne == null) {
+			if (other.empNumInterne != null)
+				return false;
+		} else if (!empNumInterne.equals(other.empNumInterne))
+			return false;
 		if (empDateDebutStatus == null) {
 			if (other.empDateDebutStatus != null)
 				return false;
@@ -178,6 +222,26 @@ public class EmployeDto {
 				return false;
 		} else if (!empDateFinStatus.equals(other.empDateFinStatus))
 			return false;
+		if (refDecretouArreteEntree == null) {
+			if (other.refDecretouArreteEntree != null)
+				return false;
+		} else if (!refDecretouArreteEntree.equals(other.refDecretouArreteEntree))
+			return false;
+		if (dateDecretouArreteEntree == null) {
+			if (other.dateDecretouArreteEntree != null)
+				return false;
+		} else if (!dateDecretouArreteEntree.equals(other.dateDecretouArreteEntree))
+			return false;
+		if (refDecretouArreteDepart == null) {
+			if (other.refDecretouArreteDepart != null)
+				return false;
+		} else if (!refDecretouArreteDepart.equals(other.refDecretouArreteDepart))
+			return false;
+		if (dateDecretouArreteDepart == null) {
+			if (other.dateDecretouArreteDepart != null)
+				return false;
+		} else if (!dateDecretouArreteDepart.equals(other.dateDecretouArreteDepart))
+			return false;
 		return true;
 	}
 	@Override
@@ -185,14 +249,11 @@ public class EmployeDto {
 		return "EmployeDto [empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
 				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
 				+ ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation=" + lieuAffectation
-				+ ", fonction=" + fonction + ", empDateDebutStatus=" + empDateDebutStatus + ", empDateFinStatus="
-				+ empDateFinStatus + "]";
+				+ ", fonction=" + fonction + ", numNoteService=" + empNumInterne + ", empDateDebutStatus="
+				+ empDateDebutStatus + ", empDateFinStatus=" + empDateFinStatus + ", refDecretouArreteEntree="
+				+ refDecretouArreteEntree + ", dateDecretouArreteEntree=" + dateDecretouArreteEntree
+				+ ", refDecretouArreteDepart=" + refDecretouArreteDepart + ", dateDecretouArreteDepart="
+				+ dateDecretouArreteDepart + "]";
 	}
-	public String getNumNoteService() {
-		return numNoteService;
-	}
-	public void setNumNoteService(String numNoteService) {
-		this.numNoteService = numNoteService;
-	}
-	
+		
 }

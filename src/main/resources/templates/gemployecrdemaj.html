@@ -130,105 +130,126 @@
 					<div id="clpseGpernonnel" data-bs-parent="#main-app">
 						<div class="card-body z-0" style="margin: auto; padding: auto;">
 							<div class="row bg-light">
-							<div class="col-3 d-flex justify-content-start z-0 position-relative" style="margin: 0;">
-								<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
-							</div>
-							<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-								<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde.html}">
-									<legende class="h4 mb-3 text-center">Ajouter un employé ou stagiaire</legende>
-									<hr>
-									
-									<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
-										<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
-										<input type="text" autofocus="autofocus" id="empcivilite" name="empcivilite" class="form-control" required>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
-										<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
-										<input type="text" id="empnom" name="empnom" class="form-control" required>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
-										<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
-										<input type="text" id="emppren" name="emppren" class="form-control"/>
-									</div>
-									
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
-										<select id="typeemp" name="typeemp" class="form-select" required>
-											<option value="">Sélectionner un type employé</option>
-											<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
-										</select>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
-										<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
-									</div>
-								
-									<div class="col-6">
-										<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
-										<input type="email" id="empemail" name="empemail" class="form-control" />
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="emptelephone" th:text="|Téléphone|">civ</label>
-										<input type="tel" id="emptelephone" name="emptelephone" class="form-control" />
-									</div>
-								
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
-										<select id="sttus" name="sttus" class="form-select" required>
-											<option value="">Sélectionner un status</option>
-											<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
-										</select>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
-										<label class="form-label h6" for="empdatedebutstatus" th:text="|Du |">civ</label>
-										<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" class="form-control" required>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="endDate-group">
-										<label class="form-label h6" for="empdatefinstatus" th:text="|Au |">civ</label>
-										<input type="date" id="empdatefinstatus" name="empdatefinstatus" class="form-control" placeholder="Date fin" required>
-									</div>
-								
-									<div class="col-lg-5 col-md-5 col-sm-6">
-										<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
-										<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
-											<option value="">Sélectionner un lieu d'affectation</option>
-											<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
-										</select>
-									</div>
-									<div class="col-lg-5 col-md-5 col-sm-6">
-										<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
-										<select id="empfnction" name="empfnction" class="form-select" required>
-											<option value="">Sélectionner une fonction</option>
-											<option th:each="fction : ${allFonction}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
-										</select>
-									</div>
+								<div class="col-3 d-flex justify-content-start z-0 position-relative" style="margin: 0;">
+									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								</div>
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark">
+										<legende class="h4 mb-3 text-center">Modifier un employé ou stagiaire</legende>
+										<hr>
+										
+										<fieldset>
+											<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
+												<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
+												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
+											</div>
+										</fieldset>
 
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<label class="form-label h6" for="refdecretouarreteentree" th:text="|Réf. decret/Arr. d'entrée|">civ</label>
-										<input type="text" id="refdecretouarreteentree" name="refdecretouarreteentree" class="form-control" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
-										<label class="form-label h6" for="datedecretouarreteentree" th:text="|Decret/Arr. entrée du|">civ</label>
-										<input type="date" id="datedecretouarreteentree" name="datedecretouarreteentree" class="form-control" />
-									</div>
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
+											<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
+											<input type="text" autofocus="autofocus" id="empcivilite" name="empCivilite" th:value="${savedEmploye.empCivilite}" class="form-control" />
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+											<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
+											<input type="text" id="empnom" name="empnom" th:value="${savedEmploye.empNom}" class="form-control" />
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+											<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
+											<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" />
+										</div>
+										
+										<div class="col-lg-4 col-md-4 col-sm-6">
+											<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
+											<select id="typeemp" name="typeemp" class="form-select" required>
+												<option th:value="${savedEmploye.typeEmploye}" th:text="${savedEmploye.typeEmploye}">tpemp</option>
+												<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
+											</select>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
+											<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" />
+										</div>
 									
-									<hr>
+										<div class="col-6">
+											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
+											<input type="email" id="empemail" name="empemail" th:value="${savedEmploye.empEmail}" class="form-control" />
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6">
+											<label class="form-label h6" for="emptelephone" th:text="|Téléphone|">civ</label>
+											<input type="text" id="emptelephone" name="emptelephone" th:value="${savedEmploye.empTelephone}" class="form-control" />
+										</div>
+									
+										<div class="col-lg-4 col-md-4 col-sm-6">
+											<label class="form-label h6" for="status" th:text="|Status employé(e)|">civ</label>
+											<select id="sttus" name="sttus" class="form-select" required>
+												<option th:value="${savedEmploye.status}" th:text="${savedEmploye.status}">stts</option>
+												<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
+											</select>	
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
+											<label class="form-label h6" for="empdatedebutstatus" th:text="|Du |">civ</label>
+											<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" th:value="${savedEmploye.empDateDebutStatus}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6" id="endDate-group">
+											<label class="form-label h6" for="empdatefinstatus" th:text="|Au |">civ</label>
+											<input type="date" id="empdatefinstatus" name="empdatefinstatus" th:value="${savedEmploye.empDateFinStatus}" class="form-control" />
+										</div>
+									
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
+											<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
+												<option th:value="${savedEmploye.lieuAffectation}" th:text="${savedEmploye.lieuAffectation}">laffect</option>
+												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
+											</select>
+										</div>
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
+											<select id="empfnction" name="empfnction" class="form-select" required>
+												<option th:value="${savedEmploye.fonction}" th:text="${savedEmploye.fonction}">fonction</option>
+												<option th:each="fction : ${allFonction}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
+											</select>
+										</div>
 
-									<div class="col-8 text-center mb-4">
-										<button type="submit" class="btn btn-primary">Ajouter</button>
-										<button type="reset" class="btn btn-dark">Annuler</button>
-									</div>
-									<div class="col-3 text-start">
-										<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
-									</div>
-								</form>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="refdecretouarreteentree" th:text="|Réf. decret/Arr. d'entrée|">civ</label>
+											<input type="text" id="refdecretouarreteentree" name="refdecretouarreteentree" th:value="${savedEmploye.refDecretouArreteEntree}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
+											<label class="form-label h6" for="datedecretouarreteentree" th:text="|Decret/Arr. entrée du|">civ</label>
+											<input type="date" id="datedecretouarreteentree" name="datedecretouarreteentree" th:value="${savedEmploye.dateDecretouArreteEntree}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="refdecretouarretedepart" th:text="|Réf. decret/Arr. de départ|">civ</label>
+											<input type="text" id="refdecretouarretedepart" name="refdecretouarretedepart" th:value="${savedEmploye.refDecretouArreteDepart}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6" id="endDate-group">
+											<label class="form-label h6" for="datedecretouarretedepart" th:text="|Decret/Arr. de départ du|">civ</label>
+											<input type="date" id="datedecretouarretedepart" name="datedecretouarretedepart" th:value="${savedEmploye.dateDecretouArreteDepart}" class="form-control" />
+										</div>
+										<hr>
+
+										<div class="col-9 text-center mb-4">
+											<!--button type="submit" class="btn btn-primary">Ajouter</button>
+											<button type="reset" class="btn btn-dark">Annuler</button-->
+											<a class="btn btn-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Modifier|">Annuler</a>
+											<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
+										</div>
+										<div class="col-3 text-end">
+												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
+										</div>	
+										<!--div class="col-2 text-start">
+											<button type="reset" class="btn btn-dark">Annuler</button>
+										</div-->
+									</form>
+								</div>
 							</div>
 							
 						</div>
 					</div>
 				</div>
 			</section>
-			
+			<hr>
+		
         </div>
 		<footer class="d-flex" style="position: relative; background-color:#c2b280; padding: 0.5%; margin: auto;">
 	   		<div class="col-8 text-center"> <span th:text="|CRDE &#169; 2025|">barao</span> <span th:text="|Pour toute information, veuillez contacter Monsieur |"></span> <strong th:text="|DOUD Yves|"></strong></div>
