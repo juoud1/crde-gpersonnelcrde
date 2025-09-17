@@ -129,99 +129,85 @@
 					</div>
 					<div id="clpseGpernonnel" data-bs-parent="#main-app">
 						<div class="card-body z-0" style="margin: auto; padding: auto;">
-							<div class="row bg-light">
-							<div class="col-3 d-flex justify-content-start z-0 position-relative" style="margin: 0;">
-								<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
-							</div>
-							<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-								<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde.html}">
-									<legende class="h4 mb-3 text-center">Ajouter un employé ou stagiaire</legende>
-									<hr>
-									
-									<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
-										<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
-										<input type="text" autofocus="autofocus" id="empcivilite" name="empcivilite" class="form-control" required>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
-										<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
-										<input type="text" id="empnom" name="empnom" class="form-control" required>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
-										<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
-										<input type="text" id="emppren" name="emppren" class="form-control"/>
-									</div>
-									
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
-										<select id="typeemp" name="typeemp" class="form-select" required>
-											<option value="">Sélectionner un type employé</option>
-											<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
-										</select>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
-										<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
-									</div>
-								
-									<div class="col-6">
-										<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
-										<input type="email" id="empemail" name="empemail" class="form-control" />
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="emptelephone" th:text="|Téléphone|">civ</label>
-										<input type="tel" id="emptelephone" name="emptelephone" class="form-control" />
-									</div>
-								
-									<div class="col-lg-4 col-md-4 col-sm-6">
-										<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
-										<select id="sttus" name="sttus" class="form-select" required>
-											<option value="">Sélectionner un status</option>
-											<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
-										</select>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
-										<label class="form-label h6" for="empdatedebutstatus" th:text="|Du |">civ</label>
-										<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" class="form-control" required>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="endDate-group">
-										<label class="form-label h6" for="empdatefinstatus" th:text="|Au |">civ</label>
-										<input type="date" id="empdatefinstatus" name="empdatefinstatus" class="form-control" placeholder="Date fin" required>
-									</div>
-								
-									<div class="col-lg-5 col-md-5 col-sm-6">
-										<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
-										<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
-											<option value="">Sélectionner un lieu d'affectation</option>
-											<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
-										</select>
-									</div>
-									<div class="col-lg-5 col-md-5 col-sm-6">
-										<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
-										<select id="empfnction" name="empfnction" class="form-select" required>
-											<option value="">Sélectionner une fonction</option>
-											<option th:each="fction : ${allFonction}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
-										</select>
-									</div>
+							<div class="container">
+								<div>
+									<form id="employee-rech-form" class="row g-1 mb-2 p-2 text-start border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" style="align-items: flex-start;" th:autocomplete="|false|" method = "get" th:action="@{/employe-crde.html}">
+										<div class="col-lg-6 col-md-6 col-sm-9">
+											<!--label class="form-label h6" for="emprecherche" th:text="|Matricule/Nom employé|">civ</label-->
+											<input type="text" id="emprecherche" name="emprecherche" placeholder="Matricule ou nom employé" class="form-control" />
+										</div>
+										
+										<div class="col-lg-2 col-md-2 col-sm-3">
+											<button type="submit" class="btn btn-primary">Rechercher</button>
+										</div>
 
-									<div class="col-lg-3 col-md-3 col-sm-6">
-										<label class="form-label h6" for="refdecretouarreteentree" th:text="|Réf. decret/Arr. d'entrée|">civ</label>
-										<input type="text" id="refdecretouarreteentree" name="refdecretouarreteentree" class="form-control" />
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
-										<label class="form-label h6" for="datedecretouarreteentree" th:text="|Decret/Arr. entrée du|">civ</label>
-										<input type="date" id="datedecretouarreteentree" name="datedecretouarreteentree" class="form-control" />
-									</div>
-									
-									<hr>
+										<div class="col-lg-4 col-md-4 col-sm-12 text-end">
+												<a class="btn btn-primary" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter un nouvel employé|">Annuler</a>
+										</div>
+									</form>
+								</div>
+								<div class="mb-4 d-flex flex-wrap gap-1"><!-- style="align-items: flex-start;"-->
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="CABINET">CABINET</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION SECURITE EXTERIEURE">DIRECTION SECURITE EXTERIEURE</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION BANGUI">DIRECTION BANGUI</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="DIRECTION PREFECTURES">DIRECTION PREFECTURES</button>
+									<button type="button" class="btn btn-outline-primary direction-filter" data-direction="ALL">Tous</button>
+								</div>
+								<hr>
 
-									<div class="col-8 text-center mb-4">
-										<button type="submit" class="btn btn-primary">Ajouter</button>
-										<button type="reset" class="btn btn-dark">Annuler</button>
-									</div>
-									<div class="col-3 text-start">
-										<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
-									</div>
-								</form>
+								<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
+									<button type="button" class="btn btn-info ms-auto" id="print-personnel" th:onclick="printPersonnel()">Imprimer la liste</button>
+									<button type="button" class="btn btn-info" id="print-conges">Imprimer les congés</button>
+									<button type="button" class="btn btn-info" id="print-missions">Imprimer les missions</button>
+									<button type="button" class="btn btn-info" id="print-stagiaires">Imprimer les stagiaires</button>
+								</div>
+								<hr>
+
+								<h2 class="h4 mb-3 text-center print-underline">Liste du personnel</h2>
+								<table class="table table-striped" id="employee-table">
+									<thead>
+										<tr>
+											<th>Matricule</th>
+											<th class="col-nom">Nom</th>
+											<th>Prénom</th>
+											<th>Civilité</th>
+											<th>Téléphone</th>
+											<th class="col-email">Email</th>
+											<th>Type employé</th>
+											<th>Statut</th>
+											<th>Date début</th>
+											<th>Date fin</th>
+											<th>Affectation</th>
+											<th>Fonction</th>
+											<th class="col-action">
+												Actions
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Les employés seront ajoutés ici dynamiquement -->
+										<tr th:each="employe: ${allEmployes}">
+											<td th:text="${employe.empMatricule}">nom</td>
+											<td th:text="${employe.empNom}">prenom</td>
+											<td th:text="${employe.empPren}">prenom</td>
+											<td th:text="${employe.empCivilite}">prenom</td>
+											<td th:text="${employe.empTelephone}">email</td>
+											<td th:text="${employe.empEmail}">email</td>
+											<td th:text="${employe.typeEmploye}">tel</td>
+											<td th:text="${employe.status}">role</td>
+											<td th:text="${employe.empDateDebutStatus}">date</td>
+											<td th:text="${employe.empDateFinStatus}">date</td>
+											<td th:text="${employe.lieuAffectation}">status</td>
+											<td th:text="${employe.fonction}">status</td>
+											<td style="padding-left: 0; padding-right: 0;">
+												<button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br> 
+												<form method = "get" th:action="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}">
+													<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|MAJ|">Mise à jour</button>
+												</form>
+											</td>
+										</tr>	
+									</tbody>
+								</table>
 							</div>
 							
 						</div>

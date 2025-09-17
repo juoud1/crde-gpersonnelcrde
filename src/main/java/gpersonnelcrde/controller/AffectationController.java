@@ -52,7 +52,7 @@ public class AffectationController {
 					 @RequestParam("fonctioncode") String fonction, @RequestParam("commenataireaffect") String commenataireAffect, HttpServletRequest request, Model model){
 		
 		var savedAffectation = new AffectationDto(); // congeService.saveCongeEmploye(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge, dateDepartAutorisatSortie, dateRetourAutorisatSortie, villeAutorisatSortie, paysAutorisatSortie);
-		
+		savedAffectation.setEmployeNom(affectEmpMatricule);
 		if (Objects.nonNull(savedAffectation)){
 			model.addAttribute("resultTraitement", "Création d'Affectation effectuée avec succès.");
 		}
@@ -67,7 +67,10 @@ public class AffectationController {
 		var savedAffectation = affectationService.getAffectByByNumNoteService(numNoteServiceAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);
-							
+		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
+						
 		return "gaffectationcrdeMaj"; //gaffectationcrdeMaj
 	}
 

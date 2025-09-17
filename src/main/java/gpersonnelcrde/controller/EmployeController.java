@@ -1,9 +1,19 @@
 package gpersonnelcrde.controller;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import gpersonnelcrde.domain.dto.EmployeDto;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.FonctionService;
 import gpersonnelcrde.service.LieuAffectationService;
@@ -41,6 +51,70 @@ public class EmployeController {
 			.toList()
 		);
 
+		return "gemployecrdelist";
+	}
+
+	@GetMapping ("/employe-crde.html")
+	public String addEmploye(HttpServletRequest request, Model model){
+
 		return "gemployecrde";
 	}
+
+	@PostMapping ("/employe-crde.html")
+	public String addEmploye(@RequestParam("empcivilite") String empCivilite, 
+					@RequestParam("empnom") String empNom,
+					@RequestParam("emppren") String empPren,
+					@RequestParam("typeemp") String typeEmploye, 
+					@RequestParam("empmatricule") String empMatricule, 
+					@RequestParam("empemail") String empEmail,
+					@RequestParam("emptelephone") String empTelephone, 
+					@RequestParam("sttus") String status,
+					@RequestParam("empfnction") String empFonction,
+					@RequestParam("refdecretouarreteentree") String refDecretouArreteEntree,
+					@RequestParam("lieuaffectation") String lieuAffectation,
+					//@RequestParam("refdecretouarretedepart") String refDecretouArreteDepart,
+					@RequestParam("empdatedebutstatus") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateDebutStatus,
+					@RequestParam("empdatefinstatus") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
+					@RequestParam("datedecretouarreteentree") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
+					//@RequestParam("datedecretouarretedepart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
+					HttpServletRequest request, Model model){
+		
+		var savedEmploye = new EmployeDto();
+		savedEmploye.setEmpNom(empNom);
+		savedEmploye.setEmpPren(empPren);
+		savedEmploye.setFonction(empFonction);
+		if (Objects.nonNull(savedEmploye)) {
+			model.addAttribute("resultTraitement", "Création d'employé effectuée avec succès.");
+		}
+
+		model.addAttribute("savedEmploye", savedEmploye);
+
+		return "gemployecrderecap";
+	}
+
+	@GetMapping ("/employe-crde-m.html/{empMatricule}")
+	public String getEmployeByNumInterne(@PathVariable String empMatricule, HttpServletRequest request, Model model){
+		var savedEmploye = employeService.getEmployeByMatricule(empMatricule)
+							.orElseGet(EmployeDto::new);
+		model.addAttribute("savedEmploye", savedEmploye);
+		model.addAttribute("allStatus", statusService.getAllStatus());
+		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
+		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+							
+		return "gemployecrdemaj";
+	}
+
+	@DeleteMapping ("/employe-crde-m.html/{empMatricule}")
+	public String deleteEmployeByNumInterne(@PathVariable String empMatricule, HttpServletRequest request, Model model){
+
+		return "redirect:/employes-crde.html";
+	}
+
+	@PutMapping ("/employe-crde-m.html/{empMatricule}")
+	public String putEmployeByNumInterne(@PathVariable String empMatricule, HttpServletRequest request, Model model){
+
+		return "redirect:/employes-crde.html";
+	}
+
 }

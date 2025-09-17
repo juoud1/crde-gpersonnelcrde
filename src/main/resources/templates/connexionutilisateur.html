@@ -52,9 +52,9 @@
 					</div>
 
 					<div id="clpseAcrde" data-bs-parent="#main-app">
-						<div class="card-body pt-0 pb-0">
+						<div class="card-body pt-0 pb-0 z-0">
 
-							<div class="row" style="position: relative; margin-top: 0em;">
+							<div class="row z-0" style="position: relative; margin-top: 0em;">
 								<!--div class="col-5" style="margin-bottom: 0.15em;" >
 									<div class="description" style="background-color: #e3f2fd; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
 										<p class="text-center align-items"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
@@ -65,10 +65,10 @@
 									</div>
 								</div-->
 								<div class="col-4 d-flex z-0 position-relative justify-content-start m-auto p-auto border-end bg-light">
-									<span class="h1 bg-transparent" style="font-size: 75pt; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+									<span class="h1 bg-transparent m-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-8 z-0 position-relative m-auto p-auto bd-highlight">
-									<form id="congesform" class="row g-3 w-75 m-auto z-12 position-relative rounded-3" th:autocomplete="|false|" method = "post" th:action="@{/login.html}">	
+									<form id="congesform" class="row g-3 w-75 m-auto z-3 position-relative rounded-3" th:autocomplete="|false|" method = "post" th:action="@{/login.html}">	
 										
 										<div class="alert alert-danger  w-75 m-auto text-center" th:if="${param.error != null}">
 											<strong>La connexion a échouée.</strong>
@@ -86,17 +86,17 @@
 										<fieldset>
 											<legende class="h4 mb-3 text-center">Connexion utilisateur</legende>
 											<hr>
-											<div class="col-6 mt-4 mb-3">
+											<div class="col-lg-8 col-md-8 col-sm-10 mt-4 mb-3">
 												<label class="form-label" for="idconnexion" th:text="|Identifiant|">id</label>
 												<input type="text" autofocus="autofocus" id="idconnexion" name="idconnexion" class="form-control" required>
 											</div>
-											<div class="col-6 mb-2">
+											<div class="col-lg-8 col-md-8 col-sm-10 mb-2">
 												<label class="form-label" for="motdepasse" th:text="|Mot de passe|">mdp</label>
 												<input type="password" id="motdepasse" name="motdepasse" class="form-control" required>
 											</div>	
 										</fieldset>
 										<hr>
-										<div class="col-8 mb-5 text-center">
+										<div class="col-lg-8 col-md-8 col-sm-12 mb-5 text-center">
 											<button type="submit" class="btn btn-primary" id="submit" name="submit">Se connecter</button>
 											<button type="reset" class="btn btn-dark" id="reset" name="reset">Annuler</button>
 											<!--a class="btn btn-dark" th:href="@{/accueil.html}" formmethod="get" th:text="|Annuler|">Annuler</a-->

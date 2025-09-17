@@ -203,6 +203,11 @@ public class EmployeService {
 		eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new).getStatus());
 		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
 		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
+		eDto.setEmpNumInterne(String.valueOf(employe.getId()));
+		eDto.setRefDecretouArreteEntree(null);
+		eDto.setDateDecretouArreteEntree(null);
+		eDto.setRefDecretouArreteDepart(null);
+		eDto.setDateDecretouArreteDepart(null);
 
 		var optAffectationEmploye = checktatusEncoursEmploye(employe);
 		var optCongeEmploye = checkCongeEncoursEmploye(employe);
