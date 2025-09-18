@@ -214,13 +214,14 @@
 									
 									<hr>
 
-									<div class="col-8 text-center mb-4">
+									<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 										<button type="submit" class="btn btn-primary">Ajouter</button>
 										<button type="reset" class="btn btn-dark">Annuler</button>
+										<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 									</div>
-									<div class="col-3 text-start">
-										<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
-									</div>
+									<!--div class="col-3 text-start" style="padding-right: 0.75em;">
+										<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
+									</div-->
 								</form>
 							</div>
 							

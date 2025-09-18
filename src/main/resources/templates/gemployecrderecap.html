@@ -221,11 +221,11 @@
 										</div>
 										<hr>
 
-										<div class="col-9 text-center mb-4">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 											<!--button type="submit" class="btn btn-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button-->
 											<a class="btn btn-primary" th:href="@{/employe-crde-m.html} + |/| + ${savedEmploye.empMatricule}" formmethod="get" th:text="|Modifier|">Annuler</a>
-											<a class="btn btn-dark" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Ajouter un nouvel employé|">Annuler</a>
+											<a class="btn btn-dark" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Ajouter nouvel employé|">Annuler</a>
 											<a class="btn btn-primary" th:href="@{/employes-crdes.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
 										<div class="col-3 text-end">
