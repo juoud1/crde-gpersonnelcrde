@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="author" content="Yves DOUD">
 	<meta name="description" content="CRDE, CRDE RCA, Gestion du personnel de la CRDE RCA">
     <title>GESTION DU PERSONNEL DE LA CRDE</title>
@@ -13,7 +13,7 @@
 	<!--link rel="stylesheet" href="@{css/style.css}"-->
 	<link rel="preconnect" href="https://fonts.gstatic.com/" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/>
-<body>
+<body class="d-flex flex-column h-100">
 	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
 			<div class="container-fluid">
@@ -36,7 +36,7 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
+	<div id="main-app" class="flex-shrink-0">
         <div class="container py-5">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
@@ -112,11 +112,14 @@
 				</div>
 			</section>	
         </div>
-		<footer class="d-flex" style="position: relative; background-color:#c2b280; padding: 0.5%; margin: auto;">
-	   		<div class="col-8 text-center"> <span th:text="|CRDE &#169; 2025|">barao</span> <span th:text="|Pour toute information, veuillez contacter Monsieur |"></span> <strong th:text="|DOUD Yves|"></strong></div>
-			<div class="col-4 text-left"> <strong style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></strong></div>
-	   	</footer>
+		
     </div>
+	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
+		<div class="d-flex justify-content-center gap-5"> 
+			<div><span th:text="|CRDE &#169; 2025 - Pour toute information, veuillez contacter Monsieur |"> </span><strong th:text="|DOUD Yves|"></strong></div>  
+			<span style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></span> 
+		</div>
+	</footer>
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
