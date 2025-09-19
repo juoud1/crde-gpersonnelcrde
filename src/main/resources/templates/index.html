@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="fr" class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 	<!--link rel="stylesheet" href="@{/css/style.css}"-->
 	<link rel="preconnect" href="https://fonts.gstatic.com/" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/>
-<body>
+<body class="d-flex flex-column h-100">
 	<!--div class="container position-fixed mw-100"-->
 	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
@@ -526,14 +526,16 @@
 			</div>
 			<hr>
         </div>
-		<footer class="d-flex" style="position: relative; background-color:#c2b280; padding: 0.5%; margin: auto;">
-	   		<div class="col-8 text-center"> <span th:text="|CRDE &#169; 2025|">barao</span> <span th:text="|Pour toute information, veuillez contacter Monsieur |"></span> <strong th:text="|DOUD Yves|"></strong></div>
-			<div class="col-4 text-left"> <strong style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></strong></div>
-	   	</footer>
+		
     </div>
     </div>
-    <button id="open-change-password" class="btn btn-link position-fixed top-0 end-0 m-3" style="z-index:1000;display:none;">Changer le mot de passe</button>
-    <!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
+    <footer class="footer mt-auto py-3" style="background-color:#c2b280;">
+		<div class="d-flex justify-content-center gap-5"> 
+			<div><span th:text="|CRDE &#169; 2025 - Pour toute information, veuillez contacter Monsieur |"> </span><strong th:text="|DOUD Yves|"></strong></div>  
+			<span style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></span> 
+		</div>
+	</footer>
+	<!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
 	<!-- Placed at the end of the document so the pages load faster -->
 	
 	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
