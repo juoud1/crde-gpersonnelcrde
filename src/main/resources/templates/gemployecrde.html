@@ -199,7 +199,7 @@
 										<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
 										<select id="empfnction" name="empfnction" class="form-select" required>
 											<option value="">Sélectionner une fonction</option>
-											<option th:each="fction : ${allFonction}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
+											<option th:each="fction : ${allFonctions}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
 										</select>
 									</div>
 

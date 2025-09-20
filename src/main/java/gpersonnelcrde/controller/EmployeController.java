@@ -43,7 +43,7 @@ public class EmployeController {
 	public String getEmployes(HttpServletRequest request, Model model){
 		model.addAttribute("allStatus", statusService.getAllStatus());
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
-		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -56,7 +56,11 @@ public class EmployeController {
 
 	@GetMapping ("/employe-crde.html")
 	public String addEmploye(HttpServletRequest request, Model model){
-
+		model.addAttribute("allStatus", statusService.getAllStatus());
+		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
+		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+		//model.addAttribute("allEmployes", employeService.getAllEmploye());
 		return "gemployecrde";
 	}
 
@@ -65,17 +69,17 @@ public class EmployeController {
 					@RequestParam("empnom") String empNom,
 					@RequestParam("emppren") String empPren,
 					@RequestParam("typeemp") String typeEmploye, 
-					@RequestParam("empmatricule") String empMatricule, 
+					@RequestParam(value="empmatricule", required=false) String empMatricule, 
 					@RequestParam("empemail") String empEmail,
-					@RequestParam("emptelephone") String empTelephone, 
+					@RequestParam(value="emptelephone", required=false) String empTelephone, 
 					@RequestParam("sttus") String status,
 					@RequestParam("empfnction") String empFonction,
-					@RequestParam("refdecretouarreteentree") String refDecretouArreteEntree,
+					@RequestParam(value="refdecretouarreteentree", required=false) String refDecretouArreteEntree,
 					@RequestParam("lieuaffectation") String lieuAffectation,
 					//@RequestParam("refdecretouarretedepart") String refDecretouArreteDepart,
 					@RequestParam("empdatedebutstatus") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateDebutStatus,
-					@RequestParam("empdatefinstatus") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
-					@RequestParam("datedecretouarreteentree") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
+					@RequestParam(value="empdatefinstatus", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
+					@RequestParam(value="datedecretouarreteentree", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
 					//@RequestParam("datedecretouarretedepart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
 					HttpServletRequest request, Model model){
 		
@@ -84,7 +88,8 @@ public class EmployeController {
 		savedEmploye.setEmpPren(empPren);
 		savedEmploye.setFonction(empFonction);
 		if (Objects.nonNull(savedEmploye)) {
-			model.addAttribute("resultTraitement", "Création d'employé effectuée avec succès.");
+			model.addAttribute("traitement", "création du nouvel employé ou stagiaire");
+			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
 		}
 
 		model.addAttribute("savedEmploye", savedEmploye);
@@ -99,7 +104,7 @@ public class EmployeController {
 		model.addAttribute("savedEmploye", savedEmploye);
 		model.addAttribute("allStatus", statusService.getAllStatus());
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
-		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 							
 		return "gemployecrdemaj";
@@ -111,10 +116,36 @@ public class EmployeController {
 		return "redirect:/employes-crde.html";
 	}
 
-	@PutMapping ("/employe-crde-m.html/{empMatricule}")
-	public String putEmployeByNumInterne(@PathVariable String empMatricule, HttpServletRequest request, Model model){
+	@PostMapping ("/employe-crde-m.html") //PUT de modification
+	public String updateEmployeByNumInterne(
+					@RequestParam("empcivilite") String empCivilite, 
+					@RequestParam("empnom") String empNom,
+					@RequestParam(value="emppren", required=false) String empPren,
+					@RequestParam("typeemp") String typeEmploye, 
+					@RequestParam(value="empmatricule", required=false) String empMatricule, 
+					@RequestParam("empemail") String empEmail,
+					@RequestParam(value="emptelephone", required=false) String empTelephone, 
+					@RequestParam("sttus") String status,
+					@RequestParam("empfnction") String empFonction,
+					@RequestParam(value="refdecretouarreteentree", required=false) String refDecretouArreteEntree,
+					@RequestParam("lieuaffectation") String lieuAffectation,
+					@RequestParam(value="refdecretouarretedepart", required=false) String refDecretouArreteDepart,
+					@RequestParam("empdatedebutstatus") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateDebutStatus,
+					@RequestParam(value="empdatefinstatus", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
+					@RequestParam(value="datedecretouarreteentree", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
+					@RequestParam(value="datedecretouarretedepart", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
+	 				HttpServletRequest request, Model model){
 
-		return "redirect:/employes-crde.html";
+		var savedEmploye = new EmployeDto();
+		savedEmploye.setEmpMatricule(empMatricule);
+		if (Objects.nonNull(savedEmploye)) {
+			model.addAttribute("traitement", "modification de l'employé/stagiaire " + empMatricule);
+			model.addAttribute("resultTraitement", "Modification de l'employé effectuée avec succès.");
+		}
+
+		model.addAttribute("savedEmploye", savedEmploye);
+
+		return "gemployecrderecap"; //"redirect:/employes-crde.html";
 	}
 
 }

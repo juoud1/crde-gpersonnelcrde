@@ -134,7 +134,7 @@
 									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark">
+									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" method = "post" th:action="@{/employe-crde-m.html}">
 										<legende class="h4 mb-3 text-center">Modifier un employé ou stagiaire</legende>
 										<hr>
 										
@@ -147,7 +147,7 @@
 
 										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
 											<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
-											<input type="text" autofocus="autofocus" id="empcivilite" name="empCivilite" th:value="${savedEmploye.empCivilite}" class="form-control" />
+											<input type="text" autofocus="autofocus" id="empcivilite" name="empcivilite" th:value="${savedEmploye.empCivilite}" class="form-control" />
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
@@ -206,7 +206,7 @@
 											<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
 											<select id="empfnction" name="empfnction" class="form-select" required>
 												<option th:value="${savedEmploye.fonction}" th:text="${savedEmploye.fonction}">fonction</option>
-												<option th:each="fction : ${allFonction}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
+												<option th:each="fction : ${allFonctions}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
 											</select>
 										</div>
 
@@ -229,10 +229,10 @@
 										<hr>
 
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
-											<!--button type="submit" class="btn btn-primary">Ajouter</button>
-											<button type="reset" class="btn btn-dark">Annuler</button-->
-											<a class="btn btn-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Modifier|">Annuler</a>
-											<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
+											<button type="submit" class="btn btn-primary">Modifier</button>
+											<!--button type="reset" class="btn btn-dark">Annuler</button-->
+											<!--a type="hidden" name="_method" value="put" class="btn btn-primary" th:text="|Modifier|">Annuler</a-->
+											<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>
 										<div class="col-3 text-end">
 												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
