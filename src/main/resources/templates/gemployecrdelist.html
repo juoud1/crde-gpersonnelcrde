@@ -131,9 +131,9 @@
 						<div class="card-body z-0" style="margin: auto; padding: auto;">
 							<div class="container">
 								<div>
-									<form id="employee-rech-form" class="d-flex g-1 mb-2 p-2 w-65 text-start border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" style="align-items: flex-start;" th:autocomplete="|false|" method = "get" th:action="@{/employe-crde.html}">
-										<input class="form-control me-2 w-75" type="search" id="emprecherche" name="emprecherche" placeholder="Entrez le matricule ou nom employé" aria-label="Search">
-        								<button class="btn btn-success ms-auto" type="submit">Rechercher</button>
+									<form id="employee-rech-form" class="d-flex g-1 mb-2 p-2 w-65 text-start border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" style="align-items: flex-start;" th:autocomplete="|false|">
+										<input class="form-control me-2 w-75" autofocus="autofocus" type="search" id="emprecherche" name="emprecherche" placeholder="Entrez le début du matricule ou nom employé" aria-label="Search">
+        								<button class="btn btn-success ms-auto" id="brechercheemploye" type="button">Rechercher</button>
 									</form>
 								</div>
 								<div class="mb-4 d-flex flex-wrap gap-1"><!-- style="align-items: flex-start;"-->
@@ -142,7 +142,7 @@
 									<button type="button" class="btn btn-outline-success direction-filter" data-direction="DIRECTION BANGUI">DIRECTION BANGUI</button>
 									<button type="button" class="btn btn-outline-success direction-filter" data-direction="DIRECTION PRÉFECTURES">DIRECTION PREFECTURES</button>
 									<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">Tous</button>
-									<a class="btn btn-primary ms-auto" style="display: inline-block" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter un nouvel employé|">Annuler</a>
+									<a class="btn btn-primary ms-auto" id="bajoutemploye" style="display: inline-block" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter un nouvel employé|">Annuler</a>
 								</div>
 								<hr>
 
@@ -191,12 +191,7 @@
 											<td th:text="${employe.lieuAffectation}">status</td>
 											<td th:text="${employe.fonction}">status</td>
 											<td class="text-center">
-												<!--button type="button" class="btn btn-info align-items" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|NS|">Note de service</button> <br> 
-												<form method = "get" th:action="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}">
-													<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|MAJ|">Mise à jour</button>
-												</form-->
-
-												<button type="button" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
+												<button type="button" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|... | + ${employe.empMatricule}">
 													action
 												</button>
 
@@ -337,35 +332,40 @@
         window.addEventListener('DOMContentLoaded', toggleDateFields);*/
 
 		const tableBody = document.querySelector('#employee-table tbody');
+		const employerecherche = document.getElementById('emprecherche');
 		
 		let allEmployees = [[${allEmployes}]];
         let allMissions = [[${allMissions}]];
         let allAffectations = [[${allAffectations}]];
 		let allConges = [[${allConges}]];
+		let allFonctions = [[${allFonctions}]];
+		let allStatus = [[${allStatus}]];
+		let allTypeEmployes = [[${allTypeEmp}]];
+		let allLieuxAffectation = [[${allLieuAffect}]];
 
 		let currentAffectation = 'ALL';
+
+
+		// Bouton rechercher un employé
+		const rechercheEmployetBtn = document.getElementById('brechercheemploye');
+		if (rechercheEmployetBtn) {
+			rechercheEmployetBtn.addEventListener('click', function() {
+				currentAffectation = 'Cabinet';
+				//alert('employerecherche.value = ' + employerecherche.value.trim());
+				renderEmployees(employerecherche.value.trim(), true);
+			});
+		}
 
 		// Gestion du filtrage par affectation
 		const affectationButtons = document.querySelectorAll('.direction-filter');
 		affectationButtons.forEach(btn => {
 			btn.addEventListener('click', function() {
 				currentAffectation = this.getAttribute('data-direction');
-				renderEmployees();
+				renderEmployees(currentAffectation, false);
 			});
 		});
 
-		// Bouton Cabinet sous la liste du personnel
-		const filterCabinetBtn = document.getElementById('filter-cabinet');
-		if (filterCabinetBtn) {
-			filterCabinetBtn.addEventListener('click', function() {
-				currentAffectation = 'Cabinet';
-				renderEmployees();
-			});
-		}
-
 		function formatAffectation(aff) {
-			//alert('aff' + aff);
-			//alert(aff.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' '));
 			return aff.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 		}
 
@@ -373,24 +373,37 @@
 			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
 		}
 
-		function renderEmployees() {
-			//const employees = getEmployees();
-			tableBody.innerHTML = '';
-			const order = [
-				"Cabinet",
-				"Direction Sécurité Extérieure",
-				"Direction Bangui",
-				"Direction Préfectures"
-			];
-			const fonctionOrder = [
-				"Ministre",
-				"Assistant",
-				"Directeur",
-				"Chef de Service",
-				"Chef de Bureau"
-			];
-			allEmployees
-				.filter(employe => currentAffectation === 'ALL' || formatAffectation(employe.lieuAffectation) === formatAffectation(currentAffectation))
+		function getFonctions(){
+			let resultFctions = [];
+			allFonctions.forEach(fction => resultFctions.push(fction.fonction));
+			return resultFctions;
+		}
+
+		function getLieuxAffectations(){
+			let resultLieuxAffect = [];
+			allLieuxAffectation.forEach(lAffect => resultLieuxAffect.push(lAffect.lieuAffect));
+			return resultLieuxAffect;
+		}
+
+		function renderEmployees(rechercheParam, isRechercheEmploye) {
+			let employees = getEmployees();
+			const order = getLieuxAffectations();
+			const fonctionOrder = getFonctions();
+			tableBody.innerHTML = ''; 
+			
+			let isRechEmp = Boolean(isRechercheEmploye);
+			if (isRechEmp) {
+				if (rechercheParam) {
+					rechercheParam = rechercheParam.toUpperCase();
+					employees = allEmployees
+								.filter(employe => employe.empMatricule.toUpperCase().startsWith(rechercheParam) || employe.empNom.toUpperCase().startsWith(rechercheParam));
+				}
+			} else {
+				employees = allEmployees
+								.filter(employe => currentAffectation === 'ALL' || formatAffectation(employe.lieuAffectation) === formatAffectation(currentAffectation));			
+			}
+			
+			employees
 				.sort((a, b) => { //Ici on trie par AFFECTATION
 					const affA = order.indexOf(formatAffectation(a.lieuAffectation));
 					const affB = order.indexOf(formatAffectation(b.lieuAffectation));
