@@ -175,67 +175,13 @@
 										</div>
 										<hr>
 										
-										<div class="col-4 text-end">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
-										</div>
-										<div class="col-2 text-start">
 											<button type="reset" class="btn btn-dark">Annuler</button>
+											<a class="btn btn-outline-primary ms-auto" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>
-										<!--div class="col-1 text-end">
-											
-										</div>
-										<div class="col-5 text-center">
-											<button type="button" class="btn btn-warning" id="print-noteserv-affect">Imprimer la note de service</button>
-										</div-->
 										
 									</form>
-
-									<hr>
-
-									<div class="container">
-										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-affectations" th:onclick="printAffectations()">Imprimer les affectations</button>
-											<button type="button" class="btn btn-info" id="print-affectations-p">Imprimer les affectations par Direction</button>
-										</div>
-										<hr>
-
-										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
-										<table class="table table-striped" id="conges-table">
-											<thead>
-												<tr>
-												    <th>Num. note srvce</th>
-													<th>Matricule</th>
-													<th style="width: 120px;">Employé</th>
-													<th>Date debut</th>
-													<th>Date fin</th>
-													<th>Prise srvce</th>
-													<th style="width: 140px;">Fonction</th>
-													<th style="width: 150px;">Lieu affectation</th>
-													<th style="width: 110px; padding-left: 0; padding-right: 0;">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les affectations seront ajoutées ici dynamiquement -->
-												<tr th:each="affectation: ${allAffectations}">
-													<td th:text="${affectation.numNoteService}">status</td>
-													<td th:text="${affectation.employeMatricule}">nom</td>
-													<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
-													<td th:text="${affectation.dateDebutAffect}">prenom</td>
-													<td th:text="${affectation.dateFinAffect}">email</td>
-													<td th:text="${affectation.datePriseService}">email</td>
-													<td th:text="${affectation.fonction}">tel</td>
-													<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">lieu</td>
-													<td style="padding-left: 0; padding-right: 0;">
-														<button type="button" class="btn btn-info align-items" id="${affectation.numNoteService}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Note svce|">NS</button> <br> 
-														<form method = "get" th:action="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}">
-															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
-														</form>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
 								</div>
 							</div>
 						</div>

@@ -177,58 +177,10 @@
 
 										<div class="col-4 text-end">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
-										</div>
-										<div class="col-2 text-start">
 											<button type="reset" class="btn btn-dark">Annuler</button>
+											<a class="btn btn-outline-primary ms-auto" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>
-										
 									</form>
-
-									<hr>
-
-									<div class="container">
-										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-conges" th:onclick="printConges()" th:text="|Imprimer tous les congés|">Imprimer</button>
-											<button type="button" class="btn btn-info" id="print-conges-p" th:text="|Imprimer congés en cours|">Imprimer</button>
-										</div>
-										<hr>
-
-										<h2 class="h4 mb-3 text-center">Liste d'absences et de congés des employés</h2>
-										<table class="table table-striped" id="missions-table">
-											<thead>
-												<tr>
-													<th style="width: 150px;">Employé</th>
-													<th tyle="width: 180px;">Fonction</th>
-													<th>Date début</th>
-													<th>Date fin</th>
-													<th tyle="width: 180px;">Détails</th>
-													<th tyle="width: 120px;">Status</th>
-													<th>Num note service</th>
-													<th style="width: 120px; padding-left: 0; padding-right: 0;">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les congés seront ajoutées ici dynamiquement -->
-												<tr th:each="conge: ${allConges}">
-													<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
-													<td th:text="${conge.employeFonction}">nom</td>
-													<td th:text="${conge.dateDebutConge}">email</td>
-													<td th:text="${conge.dateFinConge}">tel</td>
-													<td th:text="${conge.infoSupplementaires}">role</td>
-													<td th:text="${conge.statusConge} + |, | + ${conge.dateStatusConge}">role</td>
-													<td th:text="${conge.numNoteServiceConge}">status</td>
-													<td style="padding-left: 0; padding-right: 0;">
-														<button type="button" class="btn btn-info align-items" id="${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0;" th:onclick="printNoteServiceConge([[${conge}]])" th:text="|NS|">Note de srvce</button>
-														<button type="button" class="btn btn-info align-items" id="${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|A sort|">Autorisation</button> <br> 
-														<form method = "get" th:action="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}">
-															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">Supprimer</button>
-														</form>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
 								</div>
 							</div>
 						</div>
