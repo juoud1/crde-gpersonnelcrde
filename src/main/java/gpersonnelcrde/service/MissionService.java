@@ -73,10 +73,20 @@ public class MissionService {
 			return Collections.emptyList();
 		}
 		final List<MissionDto> mDtos = new ArrayList<>();
-		var missions = missionRepository.findByNumOrdreMission(numOrdreMission);
-		missions.forEach(m -> mDtos.add(missionToDtoMapper(m)));
+		/*var missions = missionRepository.findByNumOrdreMission(numOrdreMission);
+		missions.forEach(m -> mDtos.add(missionToDtoMapper(m)));*/
 
 		return mDtos;//missionMapper(optionalMission);
+	}
+
+	public Optional<MissionDto> getMissionByNumOm (String numOrdreMission){
+		if (StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
+			return Optional.empty();
+		}
+		
+		var optionalMission = missionRepository.findByNumOrdreMission(numOrdreMission);
+		
+		return missionMapper(optionalMission);
 	}
 
 	public Optional<MissionDto> getMissionByNumOrdreMissionAndMatriculeEmp (final String numOrdreMission, final String empMatricule){
