@@ -29,7 +29,15 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conges-emp-crde.html")
-	public String getConges(HttpServletRequest request, Model model){
+	public String getGestConges(HttpServletRequest request, Model model){
+	    model.addAttribute("allConges", congeService.getAllConges());
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		//request.getSession().setAttribute("modelMission", model);
+	    return "gcongecrdelist";
+	}
+
+	@GetMapping ("/conge-emp-crde.html")
+	public String getConge(HttpServletRequest request, Model model){
 	    model.addAttribute("allConges", congeService.getAllConges());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		//request.getSession().setAttribute("modelMission", model);
