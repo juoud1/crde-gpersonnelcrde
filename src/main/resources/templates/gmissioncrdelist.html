@@ -131,100 +131,61 @@
 								</a>
 							</div>
 							<div id="collapseMissions" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une mission à l'intérieur et l'extérieur</h2>
-									<form id="missionsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
-										<hr>
-										<div class="col-md-2">
-											<input type="text" id="numordremiss" name="numordremiss" class="form-control" placeholder="num ordre mission">
-										</div>
-										<div class="col-md-6">
-											<select id="typeordremission" name="typeordremission" class="form-select" required>
-											<option value="" th:text="|Sélectionner un type de mission|">type de mission</option>
-												<option th:value="|ordre-mission|" th:text="|Ordre de mission|">type de mission</option>
-												<option th:value="|ordre-mission-collectif|" th:text="|Ordre de mission collectif|">type de mission</option>
-											</select>
-										</div>
-										
-										<div class="col-md-8">
-											<select id="missEmpNom" name="missempmatricule" class="form-select" multiple>
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
-										</div>
-										<!--div class="col-md-3">
-											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
-										</div-->
-										
-										<div class="col-md-5">
-											<select id="naturedeplacement" name="naturedeplacement" class="form-select" required>
-												<option value="" th:text="|Nature de déplacement|">Nature de déplacement</option>
-												<option th:value="|Mission intérieur RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
-												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
-											</select>
-										</div>
-
-										<div class="col-md-3">
-											<input type="text" id="cadremission" name="cadremission" class="form-control" placeholder="Le cadre de la mission" required>
-											<!--select id="cadremission" class="form-select" required>
-												<option value="">Cadre de la mission</option>
-												<option value="cooperation">Coopération</option>
-												<option value="formation">Formation</option>
-												<option value="suivi">Suivi et évaluation</option>
-												<option value="autremission">Autre</option>
-											</select-->
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="datedepartmiss" name="datedepartmiss" class="form-control" placeholder="Date du départ" required>
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="dateretourmiss" name="dateretourmiss" class="form-control" placeholder="Date de retour" >
-										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="destville" name="destville" class="form-control" placeholder="Ville de destination" required>
-										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="destpays" name="destpays" class="form-control" placeholder="Pays de destination" required>
-										</div>
-
-										<div class="col-md-3">
-											<select id="motifmission" name="motifmission" class="form-select" required>
-												<option value="" th:text="|Sélectionner le motif de la mission|">Motif</option>
-												<option th:value="|Mission officielle|" th:text="|Mission officielle|">officielle</option>
-												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
-											</select>
-										</div>
+								<div class="card-body" style="margin: auto; padding: auto;">
 								
-										<div class="col-md-9">
-											<input type="text" id="infosupplmission" name="infosupplmission" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
-										</div>
-										<hr>
-										
-										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary">Ajouter</button>
-										</div>
-										<div class="col-2 text-start">
-											<button type="reset" class="btn btn-dark">Annuler</button>
-										</div>
-										
-									</form>
-
-									<hr>
-
 									<div class="container">
-										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-missions" th:onclick="printMissions()">Imprimer toutes les missions</button>
-											<button type="button" class="btn btn-info" id="print-missions-p">Imprimer missions en cours </button>
+										<div class="mb-2 d-flex flex-wrap gap-2">
+											<div class="w-75">
+												<form id="mission-rech-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+													
+													<div class="col-lg-3 col-md-3 col-sm-6" id="startdate-group">
+														<label class="form-label h6" for="datedebutmiss" th:text="|Du |">civ</label>
+														<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" class="form-control" required>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-6" id="enddate-group">
+														<label class="form-label h6" for="datefinmiss" th:text="|Au |">civ</label>
+														<input type="date" id="empdatefinstatus" name="empdatefinstatus" class="form-control" placeholder="Date fin" required>
+													</div>
+													<div class="col-lg-4 col-md-4 col-sm-8" id="missrecherchee-group">
+														<label class="form-label h6" for="missionrecherchee" th:text="|Employé ou N° mission|">civ</label>
+														<input class="form-control me-2" autofocus="autofocus" type="search" id="missionrecherchee" name="missionrecherchee" placeholder="Entrez le (début du) matricule ou nom employé" aria-label="Search">
+													</div>
+													<div class="col-lg-2 col-md-2 col-sm-4 text-center pt-4" >
+														<button class="btn btn-success" id="brecherchemission" type="button">Rechercher</button>
+													</div>
+												</form>
+											</div>
+											<div class="row text-center w-25">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+													<a class="btn btn-outline-primary mb-1" id="bajoutmissiongroupe" style="display: inline-block" th:href="@{/mission-grpe-emp-crde.html}" formmethod="get" th:text="|Ajouter une mission de groupe|">Annuler</a>
+												</div>
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+													<a class="btn btn-outline-primary" id="bajoutmissionindiv" style="display: inline-block" th:href="@{/mission-indiv-emp-crde.html}" formmethod="get" th:text="|Ajouter une mission indiv.|">Annuler</a>
+												</div>
+											</div>
+										</div>
+										<div class="mb-4 d-flex flex-wrap gap-1 w-75"><!-- style="align-items: flex-start;"-->
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS EN ATTENTE">MISSIONS EN ATTENTE</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS APPROUVÉES">MISSIONS APPROUVÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS ENCOURS">MISSIONS ENCOURS</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS ANNULÉES">MISSIONS ANNULÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUTES</button>
 										</div>
 										<hr>
 
-										<h2 class="h4 mb-3 text-center">Liste des missions</h2>
-										<table class="table table-striped" id="missions-table">
+										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
+											<button type="button" class="btn btn-info" id="print-missions-individuel" th:onclick="printMissionsIndiv()">Imprimer missions individuelles</button>
+											<button type="button" class="btn btn-info" id="print-missions-groupe" th:onclick="printMissionsGroupe()">Imprimer missions de groupe</button>
+											<button type="button" class="btn btn-info" id="print-missions-encours" th:onclick="printMissionsEncours()">Imprimer missions encours</button>
+											<button type="button" class="btn btn-info" id="print-missions" th:onclick="printMissions()">Imprimer toutes les missions</button>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center print-underline">Liste des missions</h2>
+										<table class="table-responsive table-bordered" id="missions-table">
 											<thead>
 												<tr>
-													<th style="width: 85px;">Num OM</th>
+													<th style="width: 85px;">N° OM</th>
 													<th style="width: 100px;">Type OM</th>
 													<th style="width: 120px;">Employé</th>
 													<th class="col-nom">Fonction</th>
@@ -236,7 +197,7 @@
 													<th>Pays</th>
 													<th>Ville</th>
 													<th style="width: 120px;">Status</th>
-													<th style="width: 110px; padding-left: 0; padding-right: 0;">Actions</th>
+													<th class="text-center">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -253,11 +214,51 @@
 													<td th:text="${mission.paysMission}">role</td>
 													<td th:text="${mission.villeMission}">status</td>
 													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
-													<td style="padding-left: 0; padding-right: 0;">
-														<button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
+													<td class="text-center">
+														<!--button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
 														<form method = "get" th:action="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}+ |/| + ${mission.employeMatricule}">
 															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
-														</form>
+														</form-->
+														
+														<button type="button" id="${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
+															action
+														</button>
+
+														<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h1 class="modal-title fs-5" id="staticBackdropLabel">Actions disponibles</h1>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="container-fluid">
+																			<div class="card mb-4">
+																				<div class="card-header">
+																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|MISSION N° | + ${mission.numOrdreMission}">
+																						AC
+																					</span>
+																				</div>
+																				<div id="collapseFonctions" data-bs-parent="#">
+																					<div class="card-body">
+																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
+																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier les données de la mission N° | + ${mission.numOrdreMission}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Annuler/Suspendre la mission N° | + ${mission.numOrdreMission}">Annuler</a>
+																							<button type="button" class="btn btn-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer l'ordre de mission|">Note de service</button>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+
 													</td>
 												</tr>
 											</tbody>

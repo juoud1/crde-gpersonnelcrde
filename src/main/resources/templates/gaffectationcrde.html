@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html class="h-100" lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 	<!--link rel="stylesheet" href="@{resourses/static/css/style.css}"-->
 	<link rel="preconnect" href="https://fonts.gstatic.com/" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/>
-<body>
+<body class="d-flex flex-column h-100">
 	<!--div class="container position-fixed mw-100"-->
 	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
@@ -112,7 +112,7 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
+	<div id="main-app">
         <div class="container py-5">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">

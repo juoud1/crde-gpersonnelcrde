@@ -35,6 +35,61 @@ public class MissionController {
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
+		//request.getSession().setAttribute("modelMission", model);
+	    return "gmissioncrdelist";
+	}
+
+	/*@GetMapping ("/missions-emp-crde.html")
+	public String getissions(HttpServletRequest request, Model model){
+	    model.addAttribute("allMissions", missionService.getAllMissions()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
+		request.getSession().setAttribute("modelMission", model);
+	    return "gmissioncrde";
+	}*/
+
+	@GetMapping ("/mission-grpe-emp-crde.html")
+	public String getMissionGroupe(HttpServletRequest request, Model model){
+	    model.addAttribute("allMissions", missionService.getAllMissions()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
+		//request.getSession().setAttribute("modelMission", model);
+	    return "gmissioncrde";
+	}
+
+	@GetMapping ("/mission-indiv-emp-crde.html")
+	public String getMissionIndividuelle(HttpServletRequest request, Model model){
+	    model.addAttribute("allMissions", missionService.getAllMissions()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
+		//request.getSession().setAttribute("modelMission", model);
+	    return "gmissioncrde";
+	}
+
+	//@PostMapping ("/mission-grpe-emp-crde.html")
+	public String addMissionGroupe(HttpServletRequest request, Model model){
+	    model.addAttribute("allMissions", missionService.getAllMissions()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
+		request.getSession().setAttribute("modelMission", model);
+	    return "gmissioncrde";
+	}
+
+	//@PostMapping ("/mission-indiv-emp-crde.html")
+	public String addMissionIndividuelle(HttpServletRequest request, Model model){
+	    model.addAttribute("allMissions", missionService.getAllMissions()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
 		request.getSession().setAttribute("modelMission", model);
 	    return "gmissioncrde";
 	}
@@ -79,6 +134,16 @@ public class MissionController {
 	public String getMissionByNumOrdreAndEmpMatricule(@PathVariable String numOrderMission, @PathVariable String missEmpMatricule, HttpServletRequest request, Model model){
 	    var savedMission = missionService.getMissionByNumOrdreMissionAndMatriculeEmp(numOrderMission, missEmpMatricule)
 								.orElseGet(MissionDto::new);
+		model.addAttribute("savedMission", savedMission);
+
+		return "gmissioncrdeMaj";
+	}
+
+	@GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
+	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model){
+	    var savedMission = missionService.getMissionByNumOm(numOrderMission)
+								.orElseGet(MissionDto::new);
+								
 		model.addAttribute("savedMission", savedMission);
 
 		return "gmissioncrdeMaj";
