@@ -131,7 +131,7 @@
 								</a>
 							</div>
 							<div id="collapseMissions" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body" style="margin: auto; padding: auto;">
+								<div class="card-body">
 								
 									<div class="container">
 										<div class="mb-2 d-flex flex-wrap gap-2">
@@ -182,7 +182,7 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline">Liste des missions</h2>
-										<table class="table-responsive table-bordered" id="missions-table">
+										<table class="table table-responsive table-bordered" id="missions-table">
 											<thead>
 												<tr>
 													<th style="width: 85px;">N° OM</th>
@@ -244,7 +244,7 @@
 																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
 																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier les données de la mission N° | + ${mission.numOrdreMission}">Annuler</a>
 																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Annuler/Suspendre la mission N° | + ${mission.numOrdreMission}">Annuler</a>
-																							<button type="button" class="btn btn-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer l'ordre de mission|">Note de service</button>
+																							<button type="button" class="btn btn-info align-items ms-auto" id="|OM|+${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
 																						</div>
 																					</div>
 																				</div>
@@ -257,7 +257,6 @@
 																</div>
 															</div>
 														</div>
-
 
 													</td>
 												</tr>

@@ -36,7 +36,17 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectations-emp-crde.html")
-	public String getAffectations(HttpServletRequest request, Model model){
+	public String getGestAffectations(HttpServletRequest request, Model model){
+		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		
+	    return "gaffectationcrdelist";
+	}
+
+	@GetMapping ("/affectation-emp-crde.html")
+	public String getAffectation(HttpServletRequest request, Model model){
 		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());

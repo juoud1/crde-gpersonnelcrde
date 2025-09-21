@@ -202,68 +202,13 @@
 										</div>
 										<hr>
 										
-										<div class="col-4 text-end">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
-										</div>
-										<div class="col-2 text-start">
 											<button type="reset" class="btn btn-dark">Annuler</button>
+											<a class="btn btn-outline-primary ms-auto" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>
 										
 									</form>
-
-									<hr>
-
-									<div class="container">
-										<div class="mb-3 d-flex flex-wrap gap-2" style="align-items: flex-end;">
-											<button type="button" class="btn btn-info ms-auto" id="print-missions" th:onclick="printMissions()">Imprimer toutes les missions</button>
-											<button type="button" class="btn btn-info" id="print-missions-p">Imprimer missions en cours </button>
-										</div>
-										<hr>
-
-										<h2 class="h4 mb-3 text-center">Liste des missions</h2>
-										<table class="table table-striped" id="missions-table">
-											<thead>
-												<tr>
-													<th style="width: 85px;">Num OM</th>
-													<th style="width: 100px;">Type OM</th>
-													<th style="width: 120px;">Employé</th>
-													<th class="col-nom">Fonction</th>
-													<th class="col-nom">Cadre de mission </th>
-													<!--th>Nature de mission</th-->
-													<th class="col-nom">Motif</th>
-													<th>Date départ</th>
-													<th>Date retour</th>
-													<th>Pays</th>
-													<th>Ville</th>
-													<th style="width: 120px;">Status</th>
-													<th style="width: 110px; padding-left: 0; padding-right: 0;">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="mission: ${allMissions}">
-													<td th:text="${mission.numOrdreMission}">Num.</td>
-													<td th:text="${mission.typeOrdreMission}">type</td>
-													<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
-													<td th:text="${mission.employeFonction}">nom</td>
-													<td th:text="${mission.cadreMission} + |; | + ${mission.natureMission}">prenom</td>
-													<td th:text="${mission.motifMission} + |; | + ${mission.infoSupplementaires}">prenom</td>
-													<td th:text="${mission.dateDepart}">email</td>
-													<td th:text="${mission.dateRetour}">tel</td>
-													<td th:text="${mission.paysMission}">role</td>
-													<td th:text="${mission.villeMission}">status</td>
-													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
-													<td style="padding-left: 0; padding-right: 0;">
-														<button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
-														<form method = "get" th:action="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}+ |/| + ${mission.employeMatricule}">
-															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
-														</form>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
 								</div>
 							</div>
 						</div>
