@@ -42,11 +42,11 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
@@ -54,7 +54,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link active" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
@@ -160,7 +160,7 @@
 													<a class="btn btn-outline-primary mb-1" id="bajoutmissiongrpe" style="display: inline-block" th:href="@{/mission-grpe-emp-crde.html}" formmethod="get" th:text="|Ajouter mission de groupe|">Annuler</a>
 												</div>
 												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-													<a class="btn btn-outline-primary" id="bajoutmission" style="display: inline-block" th:href="@{/mission-indiv-emp-crde.html}" formmethod="get" th:text="|Ajouter mission à 1 pers.|">Annuler</a>
+													<a class="btn btn-outline-primary" id="bajoutmission" style="display: inline-block" th:href="@{/mission-emp-crde.html}" formmethod="get" th:text="|Ajouter mission à 1 pers.|">Annuler</a>
 												</div>
 											</div>
 										</div>
@@ -242,7 +242,8 @@
 																				<div id="collapseFonctions" data-bs-parent="#">
 																					<div class="card-body">
 																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier les données de la mission N° | + ${mission.numOrdreMission}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier la mission N° | + ${mission.numOrdreMission}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission N° | + ${mission.numOrdreMission}">Annuler</a>
 																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Annuler/Suspendre la mission N° | + ${mission.numOrdreMission}">Annuler</a>
 																							<button type="button" class="btn btn-info align-items ms-auto" id="|OM|+${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
 																						</div>

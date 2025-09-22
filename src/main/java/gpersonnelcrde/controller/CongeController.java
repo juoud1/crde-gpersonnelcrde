@@ -67,6 +67,11 @@ public class CongeController {
 		var savedConge = congeService.getCongeByNumNoteService(numNoteServiceConge)
 							.orElseGet(CongeDto::new);
 		model.addAttribute("savedConge", savedConge);
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
 							
 		return "gcongecrdeMaj";
 	}
@@ -79,7 +84,7 @@ public class CongeController {
 
 	@PutMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
 	public String putCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
-
+		
 		return "redirect:/conges-emp-crde.html";
 	}
 }

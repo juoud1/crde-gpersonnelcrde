@@ -42,11 +42,11 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Employés et Stagiaires</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
@@ -54,7 +54,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
@@ -226,7 +226,8 @@
 																				<div id="collapseFonctions" data-bs-parent="#">
 																					<div class="card-body">
 																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Modifier les données de congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Modifier le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
 																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Annuler/Suspendre le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
 																							<button type="button" class="btn btn-info align-items ms-auto" id="|NS|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
 																							<button type="button" class="btn btn-info align-items ms-auto" id=" |AS|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>

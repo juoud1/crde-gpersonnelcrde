@@ -61,7 +61,7 @@ public class MissionController {
 	    return "gmissioncrde";
 	}
 
-	@GetMapping ("/mission-indiv-emp-crde.html")
+	@GetMapping ("/mission-emp-crde.html")
 	public String getMissionIndividuelle(HttpServletRequest request, Model model){
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -135,7 +135,8 @@ public class MissionController {
 	    var savedMission = missionService.getMissionByNumOrdreMissionAndMatriculeEmp(numOrderMission, missEmpMatricule)
 								.orElseGet(MissionDto::new);
 		model.addAttribute("savedMission", savedMission);
-
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		
 		return "gmissioncrdeMaj";
 	}
 
@@ -145,7 +146,8 @@ public class MissionController {
 								.orElseGet(MissionDto::new);
 								
 		model.addAttribute("savedMission", savedMission);
-
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		
 		return "gmissioncrdeMaj";
 	}
 

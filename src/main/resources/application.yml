@@ -30,14 +30,24 @@ spring:
     url: jdbc:h2:~/crde/crdedb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL #;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;        # jdbc:h2:~/olibilldb;AUTO_SERVER=TRUE
     username: admin
     password: admin123
-    driverClassName: org.h2.Driver  
+    driver-class-name: org.h2.Driver
+  hikari:
+      pool-name: crdeHikariPool
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 40000
+      max-lifetime: 2000000
+      connection-timeout: 40000
+      leak-detection-threshold: 3000
+      validation-timeout: 4000	  
      # platform: h2
        # data: classpath:data/taxes.sql, classpath:data/provinces.sql, classpath:data/taxesprovinces.sql #, classpath:reviews.sql
   jpa:
      database-platform: org.hibernate.dialect.H2Dialect
      defer-datasource-initialization: true
      hibernate:
-       ddl-auto: create-drop #update 
+       ddl-auto: create-drop #update
+     show-sql: false 
   sql:
      init:
        platform: h2
