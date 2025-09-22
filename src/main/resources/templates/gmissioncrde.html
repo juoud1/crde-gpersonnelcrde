@@ -113,59 +113,55 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
-        <div class="container py-5">
+	<div id="main-app" class="w-100 z-0">
+        <div class="container py-5 z-0">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
 			</div>
 			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
 
-			<div class="row" style="position: relative;">
-				<div class="col-lg-12 col-md-12 col-sm-12 desc">
-					<!-- Nouvelle section pour la gestion de missions -->
-					<section id="gmissions">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" style="font-size: small; font-weight: bold;">
-									MISSIONS ET DÉPLACEMENTS DES EMPLOYÉS
-								</a>
-							</div>
-							<div id="collapseMissions" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une mission à l'intérieur et l'extérieur</h2>
-									<form id="missionsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
+			<section id="gmissions">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="btn" href="#collapseMissions" style="font-size: medium; font-weight: bold;">
+							GÉRER LES MISSIONS/DÉPLACEMENTS DES EMPLOYÉS
+						</a>
+					</div>
+					<div id="collapseMissions" data-bs-parent="#main-app">
+						<div class="card-body z-0 p-auto m-auto">
+							<div class="row bg-light">
+								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
+									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								</div>
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+									<form id="missionsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
+										<legende class="h4 mb-3 text-center">Ajouter une mission de groupe</legende>
 										<hr>
-										<div class="col-md-2">
-											<input type="text" id="numordremiss" name="numordremiss" class="form-control" placeholder="num ordre mission">
+										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+											<label class="form-label h6" for="numordremiss" th:text="|N°|">num</label>
+											<input type="text" id="numordremiss" name="numordremiss" class="form-control">
 										</div>
-										<div class="col-md-6">
-											<select id="typeordremission" name="typeordremission" class="form-select" required>
-											<option value="" th:text="|Sélectionner un type de mission|">type de mission</option>
-												<option th:value="|ordre-mission|" th:text="|Ordre de mission|">type de mission</option>
-												<option th:value="|ordre-mission-collectif|" th:text="|Ordre de mission collectif|">type de mission</option>
+										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+											<label class="form-label h6" for="typeordremission" th:text="|Type de mission|">civ</label>
+											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" required>
+												<option value="" th:text="|Sélectionner un type de mission|">type de mission</option>
+												<option th:value="|mission|" th:text="|Mission à une personne|">type de mission</option>
+												<option th:value="|Mission de groupe|" th:text="|Mission de groupe|">type de mission</option>
 											</select>
 										</div>
 										
-										<div class="col-md-8">
-											<select id="missEmpNom" name="missempmatricule" class="form-select" multiple>
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
-										</div>
-										<!--div class="col-md-3">
-											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
-										</div-->
-										
-										<div class="col-md-5">
+										<div class="col-lg-4 col-md-4 col-sm-4 mt-4">
+											<label class="form-label h6" for="naturedeplacement" th:text="|Portée de la mission|">civ</label>
 											<select id="naturedeplacement" name="naturedeplacement" class="form-select" required>
-												<option value="" th:text="|Nature de déplacement|">Nature de déplacement</option>
+												<option value="" th:text="|Sélectionner une portée|">Nature de déplacement</option>
 												<option th:value="|Mission intérieur RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
 												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
 										</div>
 
-										<div class="col-md-3">
-											<input type="text" id="cadremission" name="cadremission" class="form-control" placeholder="Le cadre de la mission" required>
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="cadremission" th:text="|Cadre de la mission|">civ</label>
+											<input type="text" id="cadremission" name="cadremission" class="form-control" required>
 											<!--select id="cadremission" class="form-select" required>
 												<option value="">Cadre de la mission</option>
 												<option value="cooperation">Coopération</option>
@@ -174,31 +170,57 @@
 												<option value="autremission">Autre</option>
 											</select-->
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="datedepartmiss" name="datedepartmiss" class="form-control" placeholder="Date du départ" required>
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="dateretourmiss" name="dateretourmiss" class="form-control" placeholder="Date de retour" >
-										</div>
 
-										<div class="col-md-4">
-											<input type="text" id="destville" name="destville" class="form-control" placeholder="Ville de destination" required>
-										</div>
-
-										<div class="col-md-4">
-											<input type="text" id="destpays" name="destpays" class="form-control" placeholder="Pays de destination" required>
-										</div>
-
-										<div class="col-md-3">
+										<div class="col-lg-4 col-md-4 col-sm-8">
+											<label class="form-label h6" for="motifmission" th:text="|Motif de la mission|">civ</label>
 											<select id="motifmission" name="motifmission" class="form-select" required>
-												<option value="" th:text="|Sélectionner le motif de la mission|">Motif</option>
+												<option value="" th:text="|Sélectionner un motif|">Motif</option>
 												<option th:value="|Mission officielle|" th:text="|Mission officielle|">officielle</option>
 												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
-								
-										<div class="col-md-9">
-											<input type="text" id="infosupplmission" name="infosupplmission" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedepartmiss" th:text="|Date départ|">civ</label>
+											<input type="date" id="datedepartmiss" name="datedepartmiss" class="form-control" required>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="dateretourmiss" th:text="|Date retour|">civ</label>
+											<input type="date" id="dateretourmiss" name="dateretourmiss" class="form-control" required>
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
+											<input type="text" id="destville" name="destville" class="form-control" >
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
+											<input type="text" id="destpays" name="destpays" class="form-control" >
+										</div>
+
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
+											<select id="missempnom" name="missempmatricule" class="form-select" multiple>
+												<option value="">Sélectionner un ou plusieurs employés</option>
+												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select>
+										</div>
+
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="empchefmissionmatricule" th:text="|Chef de mission|">civ</label>
+											<select id="empchefmissionmatricule" name="empchefmissionmatricule" class="form-select">
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select>
+										</div>
+										<!--div class="col-md-3">
+											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
+										</div-->
+										
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
+											<input type="text" id="infosupplmission" name="infosupplmission" class="form-control" >
 										</div>
 										<hr>
 										
@@ -210,11 +232,11 @@
 										
 									</form>
 								</div>
-							</div>
+							</div>	
 						</div>
-					</section>
+					</div>
 				</div>
-			</div>
+			</section>
 			
         </div>
     </div>

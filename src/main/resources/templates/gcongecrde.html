@@ -112,83 +112,103 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
-        <div class="container py-5">
+	<div id="main-app" class="w-100 z-0">
+        <div class="container py-5 z-0">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
 			</div>
 			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
 
-			<div class="row" style="position: relative;">
-				<div class="col-lg-12 col-md-12 col-sm-12 desc">
-					<!-- Nouvelle section pour la gestion de missions -->
-					<section id="gconges">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
-									ABSENCES ET CONGÉS DES EMPLOYÉS
-								</a>
-							</div>
-							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou un congé d'un employé</h2>
-									<form id="congesform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
-										 <hr>
-										<div class="col-md-2">
-											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control" placeholder="num. note de service" disabled>
+			<section id="gconges">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="collapsed btn" href="#collapseConges" style="font-size: small; font-weight: bold;">
+							ABSENCES ET CONGÉS DES EMPLOYÉS
+						</a>
+					</div>
+					<div id="collapseConges" data-bs-parent="#main-app">
+						<div class="card-body z-0 p-auto m-auto">
+							<div class="row bg-light">
+								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
+									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								</div>
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+									<form id="congesform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
+										<legende class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
+										<hr>
+										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+											<label class="form-label h6" for="numnoteserviceconge" th:text="|Congé N°|">num</label>
+											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control">
 										</div>
-										<div class="col-md-6">
+										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
+											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" required>
+												<option value="" th:text="|Sélectionner un type de demande|">type de mission</option>
+												<option th:value="|Congé avec autorisation de sortie|" th:text="|Congé avec autorisation de sortie|">type de mission</option>
+												<option th:value="|Congé sans autorisation de sortie|" th:text="|Congé sans autorisation de sortie|">type de mission</option>
+											</select>
+										</div>
+
+										<div class="col-lg-10 col-md-10 col-sm-10">
+											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
 										
-										<div class="col-md-2">
-											<input type="date" id="datedebconge" name="datedebconge" class="form-control" placeholder="Date début congé" required>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedebconge" th:text="|Date de début|">num</label>
+											<input type="date" id="datedebconge" name="datedebconge" class="form-control" required>
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="datefinconge" name="datefinconge" class="form-control" placeholder="Date fin congé" required>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datefinconge" th:text="|Date de début|">num</label>
+											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
 										
-										<div class="col-md-9">
-											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
+											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
 										</div>
 										<hr>
 										
-										<div class="col-md-2">
-											<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control" placeholder="num. autorisation sortie" disabled>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
+											<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control">
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control" placeholder="Date départ autorisée">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
+											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control">
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control" placeholder="Date retour autorisée">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
+											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control">
 										</div>
 										
-										<div class="col-md-3">
-											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" placeholder="Ville autorisation de sortie">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
+											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
 										</div>
 
-										<div class="col-md-3">
-											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" placeholder="Pays autorisation de sortie">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
+											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
 										</div>
 										<hr>
 
-										<div class="col-4 text-end">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button>
 											<a class="btn btn-outline-primary ms-auto" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>
 									</form>
 								</div>
-							</div>
+							</div>		
 						</div>
-					</section>
+					</div>
 				</div>
-			</div>
+			</section>
         </div>
-		
     </div>
 	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
 		<div class="d-flex justify-content-center gap-5"> 
