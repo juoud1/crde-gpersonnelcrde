@@ -112,66 +112,91 @@
 		</nav>
 	</header>
 	
-	<div id="main-app">
-        <div class="container py-5">
+	<div id="main-app" class="w-100 z-0">
+        <div class="container py-5 z-0">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
 			</div>
 			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
 
-			<div class="row" style="position: relative;">
-				<div class="col-12 desc">
-					<!-- Nouvelle section pour la gestion des affectations au sein de la CRDE -->
-					<section id="gaffectations">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
-									AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
-								</a>
-							</div>
-							<div id="collapseAffectations" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un mouvement d'affectation d'un employé</h2>
-									<form id="affectationsform" class="row g-3" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
+			<section id="gaffectations">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="collapsed btn" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
+							GÉRER LES AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
+						</a>
+					</div>
+					<div id="collapseAffectations" data-bs-parent="#main-app">
+						<div class="card-body">
+							<div class="row bg-light">
+								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
+									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								</div>
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
+										<legende class="h4 mb-3 text-center">Ajouter une affectation à l'international</legende>
 										<hr>
-										<div class="col-md-2">
-											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" class="form-control" placeholder="num note de service affectation">
+										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+											<label class="form-label h6" for="numnoteserviceaffect" th:text="|Affectation N°|">civ</label>
+											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" class="form-control">
 										</div>
-										
-										<div class="col-md-7">
+										<div class="col-lg-6 col-md-6 col-sm-6 mt-4">
+											<label class="form-label h6" for="porteeaffect" th:text="|Portée de l'affectation|">civ</label>
+											<select id="porteeaffect" autofocus="autofocus" name="porteeaffect" class="form-select" required>
+												<option value="" th:text="|Sélectionner une portée|">Nature de déplacement</option>
+												<option th:value="|Affectation intérieur RCA|" th:text="|Affectation à l'intérieur de la RCA|">Mission intérieur</option>
+												<option th:value="|Affectation international|" th:text="|Affectation à l'international|">Mission extérieur</option>
+											</select>
+										</div>
+
+										<div class="col-lg-5 col-md- col-sm-6">
+											<label class="form-label h6" for="destville" th:text="|Ville résidence|">civ</label>
+											<input type="text" id="villeresidence" name="destville" class="form-control" >
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
+											<input type="text" id="destpays" name="destpays" class="form-control" >
+										</div>
+
+										<div class="col-lg-9 col-md-9 col-sm-10">
+											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
 											<select id="affectEmpNom" name="affectempmatricule" class="form-select" required>
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
 									
-										<div class="col-md-4">
+										<div class="col-lg-4 col-md-4 col-sm-6">
+											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
 												<option value="">Sélectionner un lieu d'affectation</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>
 										</div>
-										<div class="col-md-5">
-											<input type="text" id="emplacementaffect" name="emplacementaffect" class="form-control" placeholder="Emplacement affectation">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="emplacementaffect" th:text="|Emplacement précis|">civ</label>
+											<input type="text" id="emplacementaffect" name="emplacementaffect" class="form-control">
 										</div>
 										
-										<div class="col-md-6">
+										<div class="col-lg-5 col-md-5 col-sm-9">
+											<label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
 											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
 												<option value="">Sélectionner une fonction</option>
 												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
 											</select>
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="datedebaffect" name="datedebaffect" class="form-control" placeholder="Date affectation" required>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedebaffect" th:text="|Date de début|">civ</label>
+											<input type="date" id="datedebaffect" name="datedebaffect" class="form-control" required>
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="datepriseservice" name="datepriseservice" class="form-control" placeholder="Date prise de service" >
-										</div>
-										<div class="col-md-2">
-											<input type="date" id="datefinaffect" name="datefinaffect" class="form-control" placeholder="Date fin de service">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datepriseservice" th:text="|Date prise service |">civ</label>
+											<input type="date" id="datepriseservice" name="datepriseservice" class="form-control">
 										</div>
 										<div class="col-md-10">
-											<input type="text" id="commenataireaffect" name="commenataireaffect" class="form-control" placeholder="Commentaires">
+											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
+											<input type="text" id="commenataireaffect" name="commenataireaffect" class="form-control">
 										</div>
 										<hr>
 										
@@ -185,9 +210,10 @@
 								</div>
 							</div>
 						</div>
-					</section>
+					</div>
 				</div>
-			</div>	
+			</section>
+				
         </div>
     </div>
 	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">

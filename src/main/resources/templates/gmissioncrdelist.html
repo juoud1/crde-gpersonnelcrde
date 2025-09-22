@@ -130,7 +130,7 @@
 									MISSIONS ET DÉPLACEMENTS DES EMPLOYÉS
 								</a>
 							</div>
-							<div id="collapseMissions" class="collapse show" data-bs-parent="#main-app">
+							<div id="collapseMissions" data-bs-parent="#main-app">
 								<div class="card-body">
 								
 									<div class="container">
@@ -157,10 +157,10 @@
 											</div>
 											<div class="row text-center w-25">
 												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-													<a class="btn btn-outline-primary mb-1" id="bajoutmissiongroupe" style="display: inline-block" th:href="@{/mission-grpe-emp-crde.html}" formmethod="get" th:text="|Ajouter une mission de groupe|">Annuler</a>
+													<a class="btn btn-outline-primary mb-1" id="bajoutmissiongrpe" style="display: inline-block" th:href="@{/mission-grpe-emp-crde.html}" formmethod="get" th:text="|Ajouter mission de groupe|">Annuler</a>
 												</div>
 												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-													<a class="btn btn-outline-primary" id="bajoutmissionindiv" style="display: inline-block" th:href="@{/mission-indiv-emp-crde.html}" formmethod="get" th:text="|Ajouter une mission indiv.|">Annuler</a>
+													<a class="btn btn-outline-primary" id="bajoutmission" style="display: inline-block" th:href="@{/mission-indiv-emp-crde.html}" formmethod="get" th:text="|Ajouter mission à 1 pers.|">Annuler</a>
 												</div>
 											</div>
 										</div>
@@ -174,7 +174,7 @@
 										<hr>
 
 										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
-											<button type="button" class="btn btn-info ms-auto" id="print-missions-individuel" th:onclick="printMissionsIndiv()">Imprimer missions individuelles</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-missions-individuel" th:onclick="printMissionsIndiv()">Imprimer missions à une personne</button>
 											<button type="button" class="btn btn-info" id="print-missions-groupe" th:onclick="printMissionsGroupe()">Imprimer missions de groupe</button>
 											<button type="button" class="btn btn-info" id="print-missions-encours" th:onclick="printMissionsEncours()">Imprimer missions encours</button>
 											<button type="button" class="btn btn-info" id="print-missions" th:onclick="printMissions()">Imprimer toutes les missions</button>
