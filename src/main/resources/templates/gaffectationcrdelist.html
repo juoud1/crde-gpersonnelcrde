@@ -42,11 +42,11 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Affectations au sein de la CRDE|">Affectations</a>
+							<a class="nav-link active" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Affectations|">Affectations</a>
 						</li>
 
 						<li class="nav-item">
@@ -54,7 +54,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Gérer les missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
@@ -227,7 +227,8 @@
 																				<div id="collapseAffectation" data-bs-parent="#">
 																					<div class="card-body">
 																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier les données de l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
+																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
 																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Annuler/Suspendre l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
 																							<button type="button" class="btn btn-info align-items ms-auto" id="|NS|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
 																						</div>

@@ -3,6 +3,7 @@ package gpersonnelcrde.domain.dto;
 import java.time.LocalDate;
 
 public class CongeDto {
+	private String typeDemandeConge;
 	private LocalDate dateDebutConge;
 	private LocalDate dateFinConge;
 	private String infoSupplementaires;
@@ -20,6 +21,12 @@ public class CongeDto {
 	private String villeAutorisatSortie;
 	private String paysAutorisatSortie;
 	
+	public String getTypeDemandeConge() {
+		return typeDemandeConge;
+	}
+	public void setTypeDemandeConge(String typeDemandeConge) {
+		this.typeDemandeConge = typeDemandeConge;
+	}
 	public LocalDate getDateDebutConge() {
 		return dateDebutConge;
 	}
@@ -74,6 +81,12 @@ public class CongeDto {
 	public void setEmployeCivilite(String employeCivilite) {
 		this.employeCivilite = employeCivilite;
 	}
+	public String getEmployeFonction() {
+		return employeFonction;
+	}
+	public void setEmployeFonction(String employeFonction) {
+		this.employeFonction = employeFonction;
+	}
 	public LocalDate getDateDepartAutorisatSortie() {
 		return dateDepartAutorisatSortie;
 	}
@@ -102,13 +115,21 @@ public class CongeDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((typeDemandeConge == null) ? 0 : typeDemandeConge.hashCode());
 		result = prime * result + ((dateDebutConge == null) ? 0 : dateDebutConge.hashCode());
 		result = prime * result + ((dateFinConge == null) ? 0 : dateFinConge.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((numNoteServiceConge == null) ? 0 : numNoteServiceConge.hashCode());
+		result = prime * result + ((statusConge == null) ? 0 : statusConge.hashCode());
+		result = prime * result + ((dateStatusConge == null) ? 0 : dateStatusConge.hashCode());
 		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
 		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
 		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
+		result = prime * result + ((employeFonction == null) ? 0 : employeFonction.hashCode());
+		result = prime * result + ((dateDepartAutorisatSortie == null) ? 0 : dateDepartAutorisatSortie.hashCode());
+		result = prime * result + ((dateRetourAutorisatSortie == null) ? 0 : dateRetourAutorisatSortie.hashCode());
+		result = prime * result + ((villeAutorisatSortie == null) ? 0 : villeAutorisatSortie.hashCode());
+		result = prime * result + ((paysAutorisatSortie == null) ? 0 : paysAutorisatSortie.hashCode());
 		return result;
 	}
 	@Override
@@ -120,6 +141,11 @@ public class CongeDto {
 		if (getClass() != obj.getClass())
 			return false;
 		CongeDto other = (CongeDto) obj;
+		if (typeDemandeConge == null) {
+			if (other.typeDemandeConge != null)
+				return false;
+		} else if (!typeDemandeConge.equals(other.typeDemandeConge))
+			return false;
 		if (dateDebutConge == null) {
 			if (other.dateDebutConge != null)
 				return false;
@@ -140,6 +166,16 @@ public class CongeDto {
 				return false;
 		} else if (!numNoteServiceConge.equals(other.numNoteServiceConge))
 			return false;
+		if (statusConge == null) {
+			if (other.statusConge != null)
+				return false;
+		} else if (!statusConge.equals(other.statusConge))
+			return false;
+		if (dateStatusConge == null) {
+			if (other.dateStatusConge != null)
+				return false;
+		} else if (!dateStatusConge.equals(other.dateStatusConge))
+			return false;
 		if (employeMatricule == null) {
 			if (other.employeMatricule != null)
 				return false;
@@ -155,19 +191,43 @@ public class CongeDto {
 				return false;
 		} else if (!employeCivilite.equals(other.employeCivilite))
 			return false;
+		if (employeFonction == null) {
+			if (other.employeFonction != null)
+				return false;
+		} else if (!employeFonction.equals(other.employeFonction))
+			return false;
+		if (dateDepartAutorisatSortie == null) {
+			if (other.dateDepartAutorisatSortie != null)
+				return false;
+		} else if (!dateDepartAutorisatSortie.equals(other.dateDepartAutorisatSortie))
+			return false;
+		if (dateRetourAutorisatSortie == null) {
+			if (other.dateRetourAutorisatSortie != null)
+				return false;
+		} else if (!dateRetourAutorisatSortie.equals(other.dateRetourAutorisatSortie))
+			return false;
+		if (villeAutorisatSortie == null) {
+			if (other.villeAutorisatSortie != null)
+				return false;
+		} else if (!villeAutorisatSortie.equals(other.villeAutorisatSortie))
+			return false;
+		if (paysAutorisatSortie == null) {
+			if (other.paysAutorisatSortie != null)
+				return false;
+		} else if (!paysAutorisatSortie.equals(other.paysAutorisatSortie))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "CongeDto [dateDebutConge=" + dateDebutConge + ", dateFinConge=" + dateFinConge
-				+ ", infoSupplementaires=" + infoSupplementaires + ", numNoteServiceConge=" + numNoteServiceConge
-				+ ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom + ", employeCivilite="
-				+ employeCivilite + "]";
+		return "CongeDto [typeDemandeConge=" + typeDemandeConge + ", dateDebutConge=" + dateDebutConge
+				+ ", dateFinConge=" + dateFinConge + ", infoSupplementaires=" + infoSupplementaires
+				+ ", numNoteServiceConge=" + numNoteServiceConge + ", statusConge=" + statusConge + ", dateStatusConge="
+				+ dateStatusConge + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom
+				+ ", employeCivilite=" + employeCivilite + ", employeFonction=" + employeFonction
+				+ ", dateDepartAutorisatSortie=" + dateDepartAutorisatSortie + ", dateRetourAutorisatSortie="
+				+ dateRetourAutorisatSortie + ", villeAutorisatSortie=" + villeAutorisatSortie
+				+ ", paysAutorisatSortie=" + paysAutorisatSortie + "]";
 	}
-	public String getEmployeFonction() {
-		return employeFonction;
-	}
-	public void setEmployeFonction(String employeFonction) {
-		this.employeFonction = employeFonction;
-	} 
+	
 }
