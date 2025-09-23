@@ -3,6 +3,7 @@ package gpersonnelcrde.domain.dto;
 import java.time.LocalDate;
 
 public class AffectationDto {
+	private String categorieAffect;
 	private String referenceAffect;
 	private String emplacementAffect;
 	private LocalDate dateDebutAffect;
@@ -17,7 +18,13 @@ public class AffectationDto {
 	private String employeCivilite;
 	private String lieuAffectation;
 	private String fonction;
-
+	
+	public String getCategorieAffect() {
+		return categorieAffect;
+	}
+	public void setCategorieAffect(String categorieAffect) {
+		this.categorieAffect = categorieAffect;
+	}
 	public String getReferenceAffect() {
 		return referenceAffect;
 	}
@@ -25,7 +32,7 @@ public class AffectationDto {
 		this.referenceAffect = referenceAffect;
 	}
 	public String getEmplacementAffect() {
-		return this.emplacementAffect;
+		return emplacementAffect;
 	}
 	public void setEmplacementAffect(String emplacementAffect) {
 		this.emplacementAffect = emplacementAffect;
@@ -60,6 +67,18 @@ public class AffectationDto {
 	public void setNumNoteService(String numNoteService) {
 		this.numNoteService = numNoteService;
 	}
+	public String getStatusAffect() {
+		return statusAffect;
+	}
+	public void setStatusAffect(String statusAffect) {
+		this.statusAffect = statusAffect;
+	}
+	public LocalDate getDateStatusAffect() {
+		return dateStatusAffect;
+	}
+	public void setDateStatusAffect(LocalDate dateStatusAffect) {
+		this.dateStatusAffect = dateStatusAffect;
+	}
 	public String getEmployeMatricule() {
 		return employeMatricule;
 	}
@@ -90,22 +109,12 @@ public class AffectationDto {
 	public void setFonction(String fonction) {
 		this.fonction = fonction;
 	}
-	public String getStatusAffect() {
-		return statusAffect;
-	}
-	public void setStatusAffect(String statusAffect) {
-		this.statusAffect = statusAffect;
-	}
-	public LocalDate getDateStatusAffect() {
-		return dateStatusAffect;
-	}
-	public void setDateStatusAffect(LocalDate dateStatusAffect) {
-		this.dateStatusAffect = dateStatusAffect;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((categorieAffect == null) ? 0 : categorieAffect.hashCode());
 		result = prime * result + ((referenceAffect == null) ? 0 : referenceAffect.hashCode());
 		result = prime * result + ((emplacementAffect == null) ? 0 : emplacementAffect.hashCode());
 		result = prime * result + ((dateDebutAffect == null) ? 0 : dateDebutAffect.hashCode());
@@ -113,6 +122,8 @@ public class AffectationDto {
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
+		result = prime * result + ((statusAffect == null) ? 0 : statusAffect.hashCode());
+		result = prime * result + ((dateStatusAffect == null) ? 0 : dateStatusAffect.hashCode());
 		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
 		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
 		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
@@ -129,6 +140,11 @@ public class AffectationDto {
 		if (getClass() != obj.getClass())
 			return false;
 		AffectationDto other = (AffectationDto) obj;
+		if (categorieAffect == null) {
+			if (other.categorieAffect != null)
+				return false;
+		} else if (!categorieAffect.equals(other.categorieAffect))
+			return false;
 		if (referenceAffect == null) {
 			if (other.referenceAffect != null)
 				return false;
@@ -164,6 +180,16 @@ public class AffectationDto {
 				return false;
 		} else if (!numNoteService.equals(other.numNoteService))
 			return false;
+		if (statusAffect == null) {
+			if (other.statusAffect != null)
+				return false;
+		} else if (!statusAffect.equals(other.statusAffect))
+			return false;
+		if (dateStatusAffect == null) {
+			if (other.dateStatusAffect != null)
+				return false;
+		} else if (!dateStatusAffect.equals(other.dateStatusAffect))
+			return false;
 		if (employeMatricule == null) {
 			if (other.employeMatricule != null)
 				return false;
@@ -191,14 +217,16 @@ public class AffectationDto {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "AffectationDto [referenceAffect=" + referenceAffect + ", EmplacementAffect=" + emplacementAffect
-				+ ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect + ", datePriseService="
-				+ datePriseService + ", infoSupplementaires=" + infoSupplementaires + ", numNoteService="
-				+ numNoteService + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom
-				+ ", employeCivilite=" + employeCivilite + ", lieuAffectation=" + lieuAffectation + ", fonction="
-				+ fonction + "]";
+		return "AffectationDto [categorieAffect=" + categorieAffect + ", referenceAffect=" + referenceAffect
+				+ ", emplacementAffect=" + emplacementAffect + ", dateDebutAffect=" + dateDebutAffect
+				+ ", dateFinAffect=" + dateFinAffect + ", datePriseService=" + datePriseService
+				+ ", infoSupplementaires=" + infoSupplementaires + ", numNoteService=" + numNoteService
+				+ ", statusAffect=" + statusAffect + ", dateStatusAffect=" + dateStatusAffect + ", employeMatricule="
+				+ employeMatricule + ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite
+				+ ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + "]";
 	}
 	
 }

@@ -131,7 +131,7 @@
 						<div class="card-body z-0 p-auto m-auto">
 							<div class="row bg-light">
 								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
-									<span class="h1" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
@@ -216,14 +216,14 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-4">
-											<button type="submit" class="btn btn-primary" th:text="|Modifier le congé|"> Modif</button>
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier le congé|"> Modif</button>
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
-											<a class="btn btn-dark" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+											<a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-4">	
-											<button type="button" class="btn btn-warning" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
-											<button type="button" class="btn btn-warning" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">	
+											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>
 										
 									</form>
