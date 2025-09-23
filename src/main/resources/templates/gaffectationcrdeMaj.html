@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html class="h-100" lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 	<!--link rel="stylesheet" href="@{css/style.css}"-->
 	<link rel="preconnect" href="https://fonts.gstatic.com/" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/>
-<body>
+<body class="d-flex flex-column h-100">
 	<!--div class="container position-fixed mw-100"-->
 	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
 		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
@@ -112,85 +112,122 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
-        <div class="container py-5">
+	<div id="main-app" class="w-100 z-0">
+        <div class="container py-5 z-0">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
 			</div>
 			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
-
-			<div class="row" style="position: relative;">
-				<div class="col-12 desc">
-					<!-- Nouvelle section pour la gestion des affectations au sein de la CRDE -->
-					<section id="gaffectations">
-						<div class="card mb-4">
-							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
-									AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
-								</a>
-							</div>
-							<div id="collapseAffectations" class="collapse show" data-bs-parent="#main-app">
-								<div class="card-body">
-									<h2 class="h4 mb-3 text-center">Ajouter ou modifier un mouvement d'affectation d'un employé</h2>
-									<form id="affectationsform" class="row g-3" th:autocomplete="|false|">
+			
+			<section id="gaffectations">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAffectations" style="font-size: small; font-weight: bold;">
+							GÉRER LES AFFECTATIONS DES EMPLOYÉS AU SEIN DE LA CRDE
+						</a>
+					</div>
+					<div id="collapsemajaffectations" data-bs-parent="#main-app">
+						<div class="card-body">
+							<div class="row bg-light">
+								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
+									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								</div>
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+										<legende class="h4 mb-3 text-center">Mettre à jour les données de l'affectation</legende>
 										<hr>
-										<div class="col-md-2">
+										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+											<label class="form-label h6" for="numnoteserviceconge" th:text="|Affectation N°|">num</label>
 											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" th:value="${savedAffectation.numNoteService}" class="form-control" placeholder="num note de service affectation">
 										</div>
-										
-										<div class="col-md-8">
+										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+											<label class="form-label h6" for="categorieaffect" th:text="|Catégorie|">civ</label>
+											<select id="categorieaffect" autofocus="autofocus" name="categorieaffect" class="form-select" required>
+												<option th:value="${savedAffectation.categorieAffect}" th:text="${savedAffectation.categorieAffect}">type de mission</option>
+												<option th:value="|Affectation à l'international|" th:text="|Affectation à l'international|">type de mission</option>
+												<option th:value="|Affectation à l'interieur de RCA|" th:text="|Affectation à l'interieur de RCA|">type de mission</option>
+											</select>
+										</div>
+
+										<div class="col-lg-10 col-md-10 col-sm-10">
+											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
 											<select id="affectEmpNom" name="affectempmatricule" class="form-select" required>
 												<option th:value="${savedAffectation.employeNom}" th:text="${savedAffectation.employeNom}">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>	
 										</div>
 									
-										<div class="col-md-4">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
 												<option th:value="${savedAffectation.lieuAffectation}" th:text="${savedAffectation.lieuAffectation}">Sélectionner un employé</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>	
 										</div>
-										<div class="col-md-5">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="emplacementaff" th:text="|Emplacemet précis|">civ</label>
 											<input type="text" id="emplacementaff" name="emplacementaff" th:value="${savedAffectation.emplacementAffect}" class="form-control" placeholder="Emplacement affectation">
 										</div>
 										
-										<div class="col-md-6">
+										<div class="col-lg-10 col-md-10 col-sm-10">
+											<label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
 											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
 												<option th:value="${savedAffectation.fonction}" th:text="${savedAffectation.fonction}">Sélectionner un employé</option>
 												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
 											</select>	
 										</div>
-										<div class="col-md-2">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedebaffect" th:text="|Date début|">civ</label>
 											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" placeholder="Date affectation">
 										</div>
-										<div class="col-md-2">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datepriseservice" th:text="|Date prise de service|">civ</label>
 											<input type="date" id="datepriseservice" th:value="${savedAffectation.datePriseService}" name="datepriseservice" class="form-control" placeholder="Date prise de service">
 										</div>
-										<div class="col-md-2">
-											<input type="date" id="dateprisesce" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control" placeholder="Date fin de service">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datefinaffect" th:text="|Date fin|">civ</label>
+											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control" placeholder="Date fin de service">
 										</div>
-										<div class="col-md-10">
+										<div class="col-lg-10 col-md-10 col-sm-10">
+											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control" placeholder="Commentaires">
 										</div>
 										<hr>
 										
-										<div class="col-4 text-end">
-											<button type="submit" class="btn btn-primary" th:text="|Modifier|"> Modif</button>
-											<!--button type="submit" class="btn btn-primary">Ajouter</button-->
-											<a class="btn btn-dark" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+										<div class="col-lg-4 col-md-4 col-sm-6">
+											<label class="form-label h6" for="statusaffect" th:text="|Status affectation|">civ</label>
+											<select id="statusaffect" name="statusaffect" class="form-select">
+												<option th:value="${savedAffectation.statusAffect}" th:text="${savedAffectation.statusAffect}">status</option>
+												<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+												<option th:value="|Approuvée par la hiérarchie|" th:text="|Approuvée par la hiérarchie|">officielle</option>
+												<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+												<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+												<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+											</select>
 										</div>
-										<div class="col-7 text-end">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datestatusaffect" th:text="|Date status|">civ</label>
+											<input type="date" id="datestatusaffect" name="datestatusaffect" class="form-control" th:value="${savedAffectation.dateStatusAffect}" >
+										</div>
+										<hr>
+
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier|"> Modif</button>
+											<!--button type="submit" class="btn btn-primary">Ajouter</button-->
+											<a class="btn btn-outline-dark mb-1" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">
 											<button type="button" class="btn btn-warning" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
 										</div>	
 									</form>
-									
 								</div>
-							</div>
+							</div>	
 						</div>
-					</section>
+					</div>
 				</div>
-			</div>	
+			</section>
+				
         </div>
     </div>
 	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
