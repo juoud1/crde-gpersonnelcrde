@@ -76,6 +76,14 @@ public class CongeController {
 		return "gcongecrdeMaj";
 	}
 
+	@GetMapping ("/conges-emp-crde.html/{employeMatricule}")
+	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, HttpServletRequest request, Model model){
+	    var savedCongessEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
+		model.addAttribute("savedCongessEmploye", savedCongessEmploye);
+
+		return "gcongecrdeMaj";
+	}
+
 	@DeleteMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
 	public String deleteCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
 
@@ -84,7 +92,7 @@ public class CongeController {
 
 	@PutMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
 	public String putCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
-		
+
 		return "redirect:/conges-emp-crde.html";
 	}
 }

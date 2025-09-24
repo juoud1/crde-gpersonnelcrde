@@ -3,6 +3,7 @@ package gpersonnelcrde.controller;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -140,6 +141,18 @@ public class MissionController {
 		return "gmissioncrdeMaj";
 	}
 
+	@GetMapping ("/missions-emp-crde.html/{missEmpMatricule}/{choixStr}")
+	public String getMissionsByEmpMatricule(@PathVariable String missEmpMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
+	    var savedMissionsEmploye = missionService.getMissionByEmployeMatricule(missEmpMatricule);								
+		model.addAttribute("savedMissionsEmploye", savedMissionsEmploye);
+		model.addAttribute("missEmpMatricule", missEmpMatricule);
+		if (StringUtils.isNotBlank(choixStr) && !"hist".equalsIgnoreCase(choixStr)){
+			model.addAttribute("savedChoixStr", choixStr);
+		}
+
+		return "gmissionsemphistoriq";
+	}
+
 	@GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
 	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model){
 	    var savedMission = missionService.getMissionByNumOm(numOrderMission)
@@ -153,12 +166,6 @@ public class MissionController {
 
 	@DeleteMapping("/mission-emp-crde-m.html/{numOrderMission}")
 	public String deleteMissionByNumOrdr(@PathVariable String numOrdreMission, HttpServletRequest request, Model model){
-	    
-		return "redirect:/missions-emp-crde.html";
-	}
-
-	@PutMapping("/mission-emp-crde-m.html/{numOrderMission}")
-	public String updateMissionByNumOrdr(@PathVariable String numOrdreMission, HttpServletRequest request, Model model){
 	    
 		return "redirect:/missions-emp-crde.html";
 	}
