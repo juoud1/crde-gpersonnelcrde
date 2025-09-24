@@ -81,7 +81,15 @@ public class AffectationController {
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
 						
-		return "gaffectationcrdeMaj"; //gaffectationcrdeMaj
+		return "gaffectationcrdeMaj";
+	}
+
+	@GetMapping ("/affectations-emp-crde.html/{employeMatricule}")
+	public String getAffectationsByEmpMatricule(@PathVariable String employeMatricule, HttpServletRequest request, Model model){
+	    var savedAffectationsEmploye = affectationService.getAffectationByEmployeMatricule(employeMatricule);								
+		model.addAttribute("savedAffectationsEmploye", savedAffectationsEmploye);
+
+		return "gaffectationcrdeMaj";
 	}
 
 	@DeleteMapping ("/affectation-emp-crde-m.html/{numNoteServiceAffect}")

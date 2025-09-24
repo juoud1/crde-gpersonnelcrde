@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="h-100" lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Yves DOUD">
+	<meta name="description" content="CRDE, CRDE RCA, Gestion du personnel de la CRDE RCA">
+    <title>GESTION DU PERSONNEL DE LA CRDE</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css}">
+
+	<script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+	<!--link rel="stylesheet" href="@{css/style.css}"-->
+	<link rel="preconnect" href="https://fonts.gstatic.com/" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"/>
+<body class="d-flex flex-column h-100">
+	<!--div class="container position-fixed mw-100"-->
+	<header class=" container position-fixed mw-100" id="app-h" style="margin-bottom: 1.5em; z-index:1000; background-color:#198754;">
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: green;" id="app-h-nav">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img th:src="@{/images/blason.png}" alt="Logo CRDE " style="width:40px;" class="rounded-pill"> 
+				</a>
+			
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarTogglercrde"
+					aria-controls="navbarTogglercrde"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarTogglercrde">
+					<ul class="navbar-nav m-auto">
+
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" style="color:#e3f2fd;" th:href="@{/accueil.html}" th:text="|CRDE|">CRDE</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/affectations-emp-crde.html}" style="color:#e3f2fd;" th:text="|Affectations|">Affectations</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" th:text="|Absences et congés|">Congés</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Missions|">missions</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd;" th:text="|Planifier visites|">Visites </a>
+						</li>
+						
+						<li class="nav-item dropdown ml-5">
+							<a class="nav-link dropdown-toggle ml-5" href="#gadmin" id="navbarDropdownMenuLink5" style="color:#e3f2fd;" role="button" data-bs-toggle="dropdown">Administration</a>
+							<ul class="dropdown-menu dropdown-menu-light ml-5">
+								<li><a class="dropdown-item" href="#gadminUser">Utilisateurs</a></li>
+								<li><a class="dropdown-item" href="#gadminChangePwd">Changer votre mot de passe</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminStatus">Status employés</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminLaffectation">Lieux Affectation</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminFonctions">Fonctions</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#gadminTconges">Types de congés</a></li>
+							</ul>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="isAuthenticated()">
+						<li>
+							&nbsp; | &nbsp; 
+						</li>
+
+						<li>
+							<p class="navbar-text">
+								Bonjour <span class="navbar-text" th:text="${#authentication.name}">utilisateur</span>
+							</p> 
+						</li>
+						<li >
+							&nbsp; | &nbsp; 
+						</li>
+
+						<li>
+							<a id="navItemLogout" class="btn btn-info" role="button" style="color: orangered;" th:href="@{/logout}" th:text="|Déconnexion|">Quitter</a>
+						</li>
+						<li>
+							&nbsp; | &nbsp; 
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="!isAuthenticated()">
+						<li>
+							<a id="navItemLogin" class="btn btn-default" role="button" style="color: orangered;" th:href="@{/login.html}" th:text="|Se connecter|">connex</a>
+						</li>
+						<li>
+							&nbsp; | &nbsp; 
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<div id="main-app" class="w-100">
+        <div class="container py-5">
+			<div class="text-center my-3">
+				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
+			</div>
+			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
+
+			<div class="row" style="position: relative;">
+				<div class="col-lg-12 col-md-12 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion de missions -->
+					<section id="gmissions">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" th:text="|MISSIONS ET DÉPLACEMENTS DE L'EMPLOYÉ | + ${missEmpMatricule}" style="font-size: small; font-weight: bold;">
+									MISSIONS ET DÉPLACEMENTS DE L'EMPLOYÉ
+								</a>
+							</div>
+							<div id="collapseMissions" data-bs-parent="#main-app">
+								<div class="card-body">
+								
+									<div class="container">
+										<div class="mb-4 d-flex flex-wrap gap-1"><!-- style="align-items: flex-start;"-->
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS EN ATTENTE">MISSIONS EN ATTENTE</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS APPROUVÉES">MISSIONS APPROUVÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS SUSPENDUES">MISSIONS SUSPENDUES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="MISSIONS ANNULÉES">MISSIONS ANNULÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUTES</button>
+											<a class="btn btn-outline-dark ms-auto" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des missions de | + ${missEmpMatricule}">Historique des missions</h2>
+										<table class="table table-responsive table-bordered" id="missions-table">
+											<thead>
+												<tr>
+													<th style="width: 75px;">N°</th>
+													<th style="width: 100px;">Type mission</th>
+													<th style="width: 130px;">Employé</th>
+													<th class="col-nom">Fonction</th>
+													<th class="col-nom">Cadre de mission </th>
+													<!--th>Nature de mission</th-->
+													<th class="col-nom">Motif</th>
+													<th>Dates</th>
+													<th>Destination</th>
+													<th style="width: 120px;">Status actuel</th>
+													<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les missions seront ajoutées ici dynamiquement -->
+												<tr th:each="mission: ${savedMissionsEmploye}">
+													<td th:text="${mission.numOrdreMission}">Num.</td>
+													<td th:text="${mission.typeOrdreMission}">type</td>
+													<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
+													<td th:text="${mission.employeFonction}">nom</td>
+													<td th:text="${mission.cadreMission} + |; | + ${mission.natureMission}">prenom</td>
+													<td th:text="${mission.motifMission} + |; | + ${mission.infoSupplementaires}">prenom</td>
+													<td th:text="|Du: | + ${mission.dateDepart} + |  Au: | + ${mission.dateRetour}" >email</td>
+													<td th:text="${mission.paysMission} + | / | + ${mission.villeMission}">role</td>
+													<td th:text="${mission.statusMission} + | depuis le | + ${mission.dateStatusMission}">prenom</td>
+													<td class="text-center" th:if="${savedChoixStr != null}">
+														<div class="m-1 d-flex flex-wrap gap-1">
+															<select id="statusmission" name="statusmission" class="form-select">
+																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+																<option th:value="|Approuvée par la hiérarchie|" th:text="|Approuvée par la hiérarchie|">officielle</option>
+																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+																<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+															</select>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+			
+        </div>
+    </div>
+	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
+		<div class="d-flex justify-content-center gap-5"> 
+			<div><span th:text="|CRDE &#169; 2025 - Pour toute information, veuillez contacter Monsieur |"> </span><strong th:text="|DOUD Yves|"></strong></div>  
+			<span style="color: blue;" th:text="|Waaa yiiii hooo Kwa ayèké goué ti lo goué ngo :)|"></span> 
+		</div>
+	</footer>
+	<!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
+	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script  th:inline="javascript">
+        let allMissions = [[${allMissions}]];
+
+		// Impression principale et tri personnalisée
+		function printMissions() {
+			const printBtn = document.getElementById('print-missions');
+			
+			if (printBtn) {
+				//const employees = getEmployees();
+					
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
+					
+					allMissions.forEach(miss => {
+						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
+					});
+
+					tableHtml += `</tbody></table>`;
+
+					const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(tableHtml);
+					win.document.write(getPrintableFooter());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();
+			}
+		}
+
+		function printOrdreMissions(savedMission) {
+			if (undefined !== savedMission) {
+				let divHtml ='';
+
+				if ('ordre-mission' == savedMission.typeOrdreMission) {
+				
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+					
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
+						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
+					divHtml += `</div><div class="col-1"></div></div>`;
+
+					/*const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(divHtml);
+					win.document.write(getPrintableFooterNoteSvce());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();*/
+				} else {
+				
+				
+				}
+
+				const win = window.open('', '', 'height=700,width=900');
+				win.document.write('<html><head>');
+				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+				win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+				win.document.write('</head><body>');
+				win.document.write(getPrintableHeader());
+				win.document.write(divHtml);
+				win.document.write(getPrintableFooterNoteSvce());
+				win.document.write('</body></html>');
+				win.document.close();
+				win.print();
+			}
+		}
+
+		// Fonction utilitaire pour l'en-tête imprimable
+		function getPrintableHeader() {
+			return `
+			<table style='width:100%;border-collapse:collapse;margin-bottom:20px;'>
+			<tr>
+				<th style='width:42%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>PRESIDENCE DE LA REPUBLIQUE</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>DIRECTION DE CABINET</div>
+				<div>***************</div>
+				<div style='font-weight:bold;'>COORDINATION <br/>DE RENSEIGNEMENTS ET<br/> DE LA DOCUMENTATION D'ETAT.</div>
+				<div>***********</div>
+				<div style='font-weight:bold;'>SECRETARIAT PARTICULIER</div>
+				<div>**********</div>
+				<div style='margin-bottom:10px;'>
+					<span style='text-decoration:underline;'>N°</span>
+					<span>_______</span>
+					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 25</span>
+				</div>
+				</th>
+				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
+				<img src='images/blason.png' alt='Blason RCA' style='max-height:120px;max-width:90%;margin:auto;display:block;'>
+				</th>
+				<th style='width:40%;text-align:center;font-size:1.1em;border:1px dotted #333;vertical-align:top;'>
+				<div style='font-weight:bold;font-size:1.15em;margin-bottom:2px;'>REPUBLIQUE CENTRAFRICAINE</div>
+				<div>Unité – Dignité – Travail</div>
+				<div>***********</div>
+				<div style='height:40px;'></div>
+				<p style='font-weight:bold;font-size:14pt;margin:4px;'>Bangui le,</p>
+				</th>
+			</tr>
+			</table>
+			<div style='height:60px;'></div>
+			`;
+		}
+
+		// Fonction utilitaire pour le pied de page
+		const signataireDoc = `<br>
+			<div style='width:80%;margin-top:40px; margin-right:10%;'>
+			<div style='float:right;text-align:center;'>
+				<span>Le Ministre Conseiller Spécial en charge</span><br/>
+				<span>de la Coordination de Renseignements et </span><br/>
+				<span>de la Documentation d'Etat</span><br/><br/><br/><br/>
+
+				<span style='font-style:italic;'>Le Général d'Armée</span><br/>
+				<span style='font-weight:bold;text-decoration:underline;font-size:1.1em;'>Henri WANZET LINGUISSARA</span>
+			</div>
+			</div>
+			`;
+
+		const ampliDoc = `<br> <br>
+			<div style='float:left;text-align:left;'>
+				<span style='font-weight:bold;text-decoration:underline;font-size:14pt;'>Ampliation</span><br/>
+				<ul>
+                     <li>M.E DIRCAB……(ATCR) ;</li>
+					 <li>Intéressé…………..(01) ;</li>
+					 <li>Archive / Chrono.</li>
+				</ul>
+			</div>
+			`;
+
+		function getPrintableFooter() {
+			return signataireDoc;
+		}
+
+		function getPrintableFooterNoteSvce() {
+			return `
+			<div class="row" style="position: relative;">
+			<div class="col-6">` + 
+			ampliDoc +
+			`</div>
+			<div class="col-6">` +
+			signataireDoc +
+			`</div>
+			</div>
+			`;
+		}
+
+    </script>
+</body>
+</html> 
