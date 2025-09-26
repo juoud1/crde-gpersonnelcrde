@@ -3,6 +3,7 @@ package gpersonnelcrde.controller;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,6 +91,18 @@ public class AffectationController {
 		model.addAttribute("savedAffectationsEmploye", savedAffectationsEmploye);
 
 		return "gaffectationcrdeMaj";
+	}
+
+	@GetMapping ("/affectations-emp-crde.html/{employeMatricule}/{choixStr}")
+	public String getMissionsByEmpMatricule(@PathVariable String employeMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
+	    var savedAffectationsEmploye = affectationService.getAffectationByEmployeMatricule(employeMatricule);								
+		model.addAttribute("savedAffectationsEmploye", savedAffectationsEmploye);
+		model.addAttribute("affectEmpMatricule", employeMatricule);
+		if (StringUtils.isNotBlank(choixStr) && !"hist".equalsIgnoreCase(choixStr)){
+			model.addAttribute("savedChoixStr", choixStr);
+		}
+
+		return "gaffectationsemphistoriq";
 	}
 
 	@DeleteMapping ("/affectation-emp-crde-m.html/{numNoteServiceAffect}")

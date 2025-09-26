@@ -42,7 +42,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Gérer le personnel|">Employés et Stagiaires</a>
+							<a class="nav-link active" th:href="@{/employes-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
@@ -50,7 +50,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" th:text="|Absences et congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
@@ -77,6 +77,7 @@
 							</ul>
 						</li>
 					</ul>
+
 					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="isAuthenticated()">
 						<li>
 							&nbsp; | &nbsp; 
@@ -122,131 +123,64 @@
 			<div class="row" style="position: relative;">
 				<div class="col-lg-12 col-md-12 col-sm-12 desc">
 					<!-- Nouvelle section pour la gestion de missions -->
-					<section id="gconges">
+					<section id="gcongeshistoriq">
 						<div class="card mb-4">
 							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
-									ABSENCES ET CONGÉS DES EMPLOYÉS
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapsecongeshistoriq" th:text="|CONGÉS ET ABSENCES DE L'EMPLOYÉ | + ${congeEmpMatricule}" style="font-size: small; font-weight: bold;">
+									CONGÉS ET ABSENCES DE L'EMPLOYÉ
 								</a>
 							</div>
-							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
+							<div id="collapsecongeshistoriq" data-bs-parent="#main-app">
 								<div class="card-body">
-									
+								
 									<div class="container">
-										<div class="mb-2 d-flex flex-wrap gap-2">
-											<div class="w-75">
-												<form id="conge-rech-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-													
-													<div class="col-lg-3 col-md-3 col-sm-6" id="startdate-group">
-														<label class="form-label h6" for="datedebutconge" th:text="|Congé du |">civ</label>
-														<input type="date" id="datedebutconge" name="datedebutconge" class="form-control" required>
-													</div>
-													<div class="col-lg-3 col-md-3 col-sm-6" id="enddate-group">
-														<label class="form-label h6" for="datefinconge" th:text="|au |">civ</label>
-														<input type="date" id="datefinconge" name="datefinconge" class="form-control" placeholder="Date fin" required>
-													</div>
-													<div class="col-lg-4 col-md-4 col-sm-8" id="congerecherche-group">
-														<label class="form-label h6" for="congerecherche" th:text="|Employé ou N° congé|">civ</label>
-														<input class="form-control me-2" autofocus="autofocus" type="search" id="congerecherche" name="congerecherche" placeholder="Entrez le n° de congé ou le matricule ou nom employé" aria-label="Search">
-													</div>
-													<div class="col-lg-2 col-md-2 col-sm-4 text-center pt-4" >
-														<button class="btn btn-success" id="brechercheconge" type="button">Rechercher</button>
-													</div>
-												</form>
-											</div>
-											<div class="row text-center w-25">
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-													<a class="btn btn-outline-primary mb-1" id="bajoutcongeavecas" style="display: inline-block" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé + aut. sortie|">Annuler</a>
-												</div>
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-													<a class="btn btn-outline-primary mb-1" id="bajoutcongesansas" style="display: inline-block" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
-												</div>
-											</div>
-										</div>
-
-										<div class="mb-4 d-flex flex-wrap gap-1 w-75"><!-- style="align-items: flex-start;"-->
+										<div class="mb-4 d-flex flex-wrap gap-1"><!-- style="align-items: flex-start;"-->
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES EN ATTENTE">CONGÉS EN ATTENTE</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES APPROUVÉS">CONGÉS APPROUVÉS</button>
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES ENCOURS">CONGÉS ENCOURS</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES SUSPENDUS">CONGÉS SUSPENDUS</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES ANNULÉS">CONGÉS ANNULÉS</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUS</button>
+											<a class="btn btn-outline-dark ms-auto" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
 										<hr>
 
-										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
-											<button type="button" class="btn btn-info ms-auto" id="print-conges-encours" th:onclick="printCongesEncours()" th:text="|Imprimer congés encours|">Congés encours</button>
-											<button type="button" class="btn btn-info" id="print-conges" th:onclick="printConges()" th:text="|Imprimer tous les congés|">Tous les congés</button>
-										</div>
-										<hr>
-
-										<h2 class="h4 mb-3 text-center print-underline">Liste d'absences et de congés des employés</h2>
-										<table class="table table-responsive table-bordered" id="conges-table">
+										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des congés et absences de | + ${congeEmpMatricule}">Historique des congés</h2>
+										<table class="table table-responsive table-bordered" id="congeshistoriq-table">
 											<thead>
 												<tr>
 													<th>N°</th>
 													<th>Type demande</th>
-													<th style="width: 150px;">Employé</th>
-													<th tyle="width: 150px;">Fonction</th>
-													<th>Date début</th>
-													<th>Date fin</th>
-													<th tyle="width: 180px;">Détails</th>
-													<th tyle="width: 120px;">Status</th>
-													<th class="text-center">Actions</th>
+													<th style="width: 120px;">Employé</th>
+													<th style="width: 120px;">Fonction</th>
+													<th>Dates</th>
+													<th>Détails</th>
+													<th style="width: 140px;">Autorisation sortie</th>
+													<th style="width: 100px;">Status actuel</th>
+													<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
 												</tr>
 											</thead>
 											<tbody>
-												<!-- Les congés seront ajoutées ici dynamiquement -->
-												<tr th:each="conge: ${allConges}">
-													<td th:text="${conge.numNoteServiceConge}">status</td>
-													<td th:text="${conge.typeDemandeConge}">status</td>
+												<!-- Les missions seront ajoutées ici dynamiquement -->
+												<tr th:each="conge: ${savedCongesEmploye}">
+													<td th:text="${conge.numNoteServiceConge}">Num.</td>
+													<td th:text="${conge.typeDemandeConge}">type</td>
 													<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
 													<td th:text="${conge.employeFonction}">nom</td>
-													<td th:text="${conge.dateDebutConge}">email</td>
-													<td th:text="${conge.dateFinConge}">tel</td>
+													<td th:text="|Du: | + ${conge.dateDebutConge} + |  Au: | + ${conge.dateFinConge}" >email</td>
 													<td th:text="${conge.infoSupplementaires}">role</td>
-													<td th:text="${conge.statusConge} + |, | + ${conge.dateStatusConge}">role</td>
-													<td class="text-center">
-														<button type="button" id="${conge.numNoteServiceConge}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
-															action
-														</button>
-
-														<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-															<div class="modal-dialog">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" id="staticBackdropLabel">Actions disponibles</h1>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																	</div>
-																	<div class="modal-body">
-																		<div class="container-fluid">
-																			<div class="card mb-4">
-																				<div class="card-header">
-																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|CONGÉ N° | + ${conge.numNoteServiceConge}">
-																						AC
-																					</span>
-																				</div>
-																				<div id="collapseFonctions" data-bs-parent="#">
-																					<div class="card-body">
-																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Modifier le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Annuler/Suspendre le congé N° | + ${conge.numNoteServiceConge}">Annuler</a>
-																							<button type="button" class="btn btn-info align-items ms-auto" id="|NS|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
-																							<button type="button" class="btn btn-info align-items ms-auto" id=" |AS|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
-																	</div>
-																</div>
-															</div>
+													<td th:text="${conge.paysAutorisatSortie} + |/ | + ${conge.villeAutorisatSortie} + |; du | + ${conge.dateDepartAutorisatSortie} + | au | + ${conge.dateRetourAutorisatSortie}">prenom</td>
+													<td th:text="${conge.statusConge} + | depuis le | + ${conge.dateStatusConge}">prenom</td>
+													<td class="text-center" th:if="${savedChoixStr != null}">
+														<div class="m-1 d-flex flex-wrap gap-1">
+															<select id="statusconge" name="statusconge" class="form-select">
+																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+																<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
+																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+																<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+															</select>
 														</div>
-
-
 													</td>
 												</tr>
 											</tbody>
@@ -259,8 +193,8 @@
 					</section>
 				</div>
 			</div>
+			
         </div>
-		
     </div>
 	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
 		<div class="d-flex justify-content-center gap-5"> 
@@ -275,20 +209,20 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
-        let allConges = [[${allConges}]];
+        let allMissions = [[${allMissions}]];
 
 		// Impression principale et tri personnalisée
-		function printConges() {
-			const printBtn = document.getElementById('print-conges');
+		function printMissions() {
+			const printBtn = document.getElementById('print-missions');
 			
 			if (printBtn) {
 				//const employees = getEmployees();
 					
-					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES CONGES</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
-						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date début</th><th>Date fin</th><th class='print-col-email'>Détails</th><th class='print-col-email'>Status</th><th>Num. note de srvce</th></tr></thead><tbody>`;
+					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
 					
-					allConges.forEach(conge => {
-						tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br> ${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><td>${conge.statusConge}<br> ${conge.dateStatusConge}</td><td>${conge.numNoteServiceConge }</td></tr>`;
+					allMissions.forEach(miss => {
+						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
 					});
 
 					tableHtml += `</tbody></table>`;
@@ -307,17 +241,39 @@
 			}
 		}
 
-		function printNoteServiceConge(savedConge) {
-			if (undefined !== savedConge) {
-				//const employees = getEmployees();
-				let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">NOTE DE SERVICE</h2><br><br>` +
-					`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
-				
-				divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Conformément aux textes du code du travail en vigueur, ${savedConge.employeCivilite} ` +
-					` <b> ${savedConge.employeNom},</b> ${savedConge.employeFonction} est en congé(e) ou sera absent(e) du <b>${savedConge.dateDebutConge}</b> au <b>${savedConge.dateFinConge}</b>.</p>` +
-					`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente note est établie pour servir et valoir ce que de droit.</p>`;
+		function printOrdreMissions(savedMission) {
+			if (undefined !== savedMission) {
+				let divHtml ='';
 
-				divHtml += `</div><div class="col-1"></div></div>`;
+				if ('ordre-mission' == savedMission.typeOrdreMission) {
+				
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+					
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
+						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
+					divHtml += `</div><div class="col-1"></div></div>`;
+
+					/*const win = window.open('', '', 'height=700,width=900');
+					win.document.write('<html><head>');
+					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
+					win.document.write('</head><body>');
+					win.document.write(getPrintableHeader());
+					win.document.write(divHtml);
+					win.document.write(getPrintableFooterNoteSvce());
+					win.document.write('</body></html>');
+					win.document.close();
+					win.print();*/
+				} else {
+				
+				
+				}
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');
