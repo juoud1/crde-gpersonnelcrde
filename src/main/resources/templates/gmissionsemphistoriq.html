@@ -42,7 +42,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
+							<a class="nav-link active" th:href="@{/employes-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
@@ -54,7 +54,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Missions|">missions</a>
+							<a class="nav-link" th:href="@{/missions-emp-crde.html}" style="color:#e3f2fd;" th:text="|Missions|">missions</a>
 						</li>
 
 						<li class="nav-item">
@@ -126,11 +126,11 @@
 					<section id="gmissions">
 						<div class="card mb-4">
 							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" th:text="|MISSIONS ET DÉPLACEMENTS DE L'EMPLOYÉ | + ${missEmpMatricule}" style="font-size: small; font-weight: bold;">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapsemissionshistoriq" th:text="|MISSIONS ET DÉPLACEMENTS DE L'EMPLOYÉ | + ${missEmpMatricule}" style="font-size: small; font-weight: bold;">
 									MISSIONS ET DÉPLACEMENTS DE L'EMPLOYÉ
 								</a>
 							</div>
-							<div id="collapseMissions" data-bs-parent="#main-app">
+							<div id="collapsemissionshistoriq" data-bs-parent="#main-app">
 								<div class="card-body">
 								
 									<div class="container">
@@ -145,7 +145,7 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des missions de | + ${missEmpMatricule}">Historique des missions</h2>
-										<table class="table table-responsive table-bordered" id="missions-table">
+										<table class="table table-responsive table-bordered" id="missionshistoriq-table">
 											<thead>
 												<tr>
 													<th style="width: 75px;">N°</th>
@@ -177,7 +177,7 @@
 														<div class="m-1 d-flex flex-wrap gap-1">
 															<select id="statusmission" name="statusmission" class="form-select">
 																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-																<option th:value="|Approuvée par la hiérarchie|" th:text="|Approuvée par la hiérarchie|">officielle</option>
+																<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
 																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
 																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
 																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>

@@ -203,55 +203,6 @@
 											<td th:text="${employe.lieuAffectation}">status</td>
 											<td th:text="${employe.fonction}">status</td>
 											<td class="text-center" id="actionemp" style="width: 18%;">
-
-												<!--div class="card m-auto">
-													<div class="card-header btn bg-warning">
-														<a class="collapsed" data-bs-toggle="collapse" th:href="|#clpseemp| + ${employe.empMatricule}" style="font-size: small; font-weight: bold;">
-															...
-														</a>
-													</div>
-													<div th:id="|clpseemp| + ${employe.empMatricule}" class="collapse" data-bs-parent="#main-app">
-														<div class="card-body p-0 m-0">
-															<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-																<h6>Données emp/stgaire</h6>
-																<a class="btn btn-outline-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|MAJ|">Annuler</a>
-																<a class="btn btn-outline-danger" th:id="|inqdepartemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Dép|">Annuler</a>
-																<button th:id="|imprecapifemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp|">Note de service</button>
-															</div>
-															<hr>
-
-															<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-																<h6>Affectations</h6>
-																<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Ann.|">Annuler</a>
-																<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/affectation-emp-crde.html}" formmethod="get" th:text="|Ajouter|">Annuler</a>
-																<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historiq.|">Annuler</a>
-																<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. NS|">Note de service</button>
-															</div>
-															<hr>
-															
-															<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-																<h6>Missions</h6>
-																<a th:id="|approuvmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann.|">Annuler</a>
-																<a th:id="|ajoutmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/mission-emp-crde.html}" formmethod="get" th:text="|Ajouter|">Annuler</a>
-																<a th:id="|histmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historiq.|">Annuler</a>
-																<button th:id="|impordremissionemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. OM|">Note de service</button>
-															</div>
-															<hr>
-
-															<div class="d-flex flex-wrap border gap-1 p-1 bg-secondary-subtle">
-																<h6>Congés</h6>
-																<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Ann.|">Annuler</a>
-																<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter|">Annuler</a>
-																<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary m-auto" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historiq.|">Annuler</a>
-																<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. NS|">Note de service</button>
-																<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. AS|">Note de service</button>
-															</div>
-
-														</div>
-													</div>
-												</div-->	
-												
-
 												<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
 													action
 												</button>
@@ -277,9 +228,9 @@
 																<div class="border p-1 mb-2 bg-secondary-subtle">
 																	<header class="h6 mb-1 text-start">Affectations</header>
 																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
+																		<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
 																		<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html}" formmethod="get" th:text="|Ajouter une affectation|">Annuler</a>
-																		<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historique affectations|">Annuler</a>
+																		<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique affectations|">Annuler</a>
 																		<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
 																	</div>
 																</div>
@@ -299,87 +250,13 @@
 																<div class="border p-1 mb-2 bg-secondary-subtle">
 																	<header class="h6 mb-1 text-start">Congés</header>
 																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Ann. congé|">Annuler</a>
+																		<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. congé|">Annuler</a>
 																		<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
-																		<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historique congés|">Annuler</a>
+																		<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique congés|">Annuler</a>
 																		<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
 																		<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. autorisat. de sortie|">Note de service</button>
 																	</div>
 																</div>
-
-																<!--div class="container-fluid">
-																	<div class="card mb-4">
-																		<div class="card-header">
-																			<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|EMPLOYÉ(E)/STAGIAIRE | + ${employe.empMatricule}">
-																				AC
-																			</span>
-																		</div>
-																		<div id="collapseEmploye" data-bs-parent="#actionemp">
-																			<div class="card-body">
-																				<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																					<a class="btn btn-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Modifier les données de | + ${employe.empMatricule}">Annuler</a>
-																					<a class="btn btn-danger" th:id="|inqdepartemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Indiquer le départ de | + ${employe.empMatricule} + | de la CRDE|">Annuler</a>
-																					<button th:id="|imprecapifemp| + ${employe.empMatricule}" type="button" class="btn btn-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imprimer le récapitulatif|">Note de service</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="card mb-4">
-																		<div class="card-header">
-																			<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|AFFECTATIONS de l'employé(é)/stagiaire | + ${employe.empMatricule}">
-																				AC
-																			</span>
-																		</div>
-																		<div id="collapseAffect" data-bs-parent="#actionemp">
-																			<div class="card-body">
-																				<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																					<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Annuler une affectation|">Annuler</a>
-																					<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html}" formmethod="get" th:text="|Affecter l'employé(e)|">Annuler</a>
-																					<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historique des affectations|">Annuler</a>
-																					<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imprimer la dernière note de service|">Note de service</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="card mb-4">
-																		<div class="card-header">
-																			<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|MISSIONS/DÉPLACEMENTS de l'employé(é)/stagiaire | + ${employe.empMatricule}">
-																				AC
-																			</span>
-																		</div>
-																		<div id="collapseMissions" data-bs-parent="#actionemp">
-																			<div class="card-body">
-																				<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																					<a th:id="|approuvmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}" formmethod="get" th:text="|Approuver/Annuler une mission|">Annuler</a>
-																					<a th:id="|ajoutmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/mission-emp-crde.html" formmethod="get" th:text="|Ajouter une mission|">Annuler</a>
-																					<a th:id="|histmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}" formmethod="get" th:text="|Historique des missions|">Annuler</a>
-																					<button th:id="|impordremissionemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imprimer le dernier ordre de mission|">Note de service</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	
-																	<div class="card mb-4">
-																		<div class="card-header">
-																			<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|ABSENCES/CONGÉS de l'employé(é)/stagiaire | + ${employe.empMatricule}">
-																				AC
-																			</span>
-																		</div>
-																		<div id="collapseConges" data-bs-parent="#actionemp">
-																			<div class="card-body">
-																				<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																					<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Approuver/Annuler un congé|">Annuler</a>
-																					<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
-																					<a th:id="|ajoutcongeemp| + ${employe.empMatricule}"class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Historique des congés|">Annuler</a>
-																					<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imprimer la dernière note de service|">Note de service</button>
-																					<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imprimer la dernière autorisation de sortie|">Note de service</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div-->
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
@@ -537,53 +414,69 @@
 						<td>${employe.lieuAffectation}</td>
 						<td>${employe.fonction}</td>
 						<td class="text-center" style="width: 18%;">
-							
-							<div class="card m-auto">
-								<div class="card-header btn bg-warning">
-									<a class="collapsed" data-bs-toggle="collapse" href="#clpseemp-${employe.empMatricule}" style="font-size: small; font-weight: bold;">
-										...
-									</a>
-								</div>
-								<div id="clpseemp-${employe.empMatricule}" class="collapse" data-bs-parent="#main-app">
-									<div class="card-body p-0 m-0">
-										<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-											<h6>Données emp/stgaire</h6>
-											<a class="btn btn-outline-primary m-auto" id="modifemp-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">MAJ</a>
-											<a class="btn btn-outline-danger m-auto" id="inqdepartemp-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Dép</a>
-											<button id="imprecapifemp-${employe.empMatricule}" type="button" class="btn btn-info align-items m-auto" id="NS-${employe.numNoteService}" onclick="printNoteDeService([[${employe}]])">Imp</button>
-										</div>
-										<hr>
+						
+							<button type="button" class="btn btn-warning" id="bt1-${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde1-${employe.empMatricule}" >
+								...
+							</button>
 
-										<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-											<h6>Affectations</h6>
-											<a id="approuvaffectemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/affectations-emp-crde.html/${employe.empMatricule}" formmethod="get">Approuv./Ann.</a>
-											<a id="affectemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/affectation-emp-crde.html" formmethod="get">Ajouter</a>
-											<a id="histaffectemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/affectations-emp-crde.html/ + ${employe.empMatricule}" formmethod="get">Historiq.</a>
-											<button id="impaffectemp-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="NSA-${employe.numNoteService}" onclick="printNoteDeService([[${employe}]])">Imp. NS</button>
+							<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde1-${employe.empMatricule}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="staticBackdropLabel1-${employe.empMatricule}">Actions disponibles sur Employé/Stagiaire: ${employe.empMatricule}</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<hr>
-										
-										<div class="d-flex flex-wrap border gap-1 p-1 mb-2 bg-secondary-subtle">
-											<h6>Missions</h6>
-											<a id="approuvmissionemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}/valid" formmethod="get">Approuver/Ann.</a>
-											<a id="ajoutmissionemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/mission-emp-crde.html" formmethod="get">Ajouter</a>
-											<a id="histmissionemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}/hist" formmethod="get">Historiq.</a>
-											<button id="impordremissionemp-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="NSM-${employe.numNoteService}" onclick="printNoteDeService([[${employe}]])">Imp. OM</button>
-										</div>
-										<hr>
+										<div class="modal-body">
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a class="btn btn-outline-primary" id="modifemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Mettre à jour</a>
+													<a class="btn btn-outline-danger" id="inqdepartemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Indiquer le départ</a>
+													<button id="imprecapifemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. récapitulatif</button>
+												</div>
+											</div>
+											<hr>
 
-										<div class="d-flex flex-wrap border gap-1 p-1 bg-secondary-subtle">
-											<h6>Congés</h6>
-											<a id="approuvcongeemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/conges-emp-crde.html/${employe.empMatricule}" formmethod="get">Approuver/Ann.</a>
-											<a id="ajoutcongeemp-${employe.empMatricule}" class="btn btn-outline-primary m-auto" href="/crde/gpsnel/conge-emp-crde.html" formmethod="get">Ajouter</a>
-											<a id="ajoutcongeemp-${employe.empMatricule}"class="btn btn-outline-primary m-auto" href="/crde/gpsnel/conges-emp-crde.html/${employe.empMatricule}" formmethod="get">Historiq.</a>
-											<button id="impnotesvcecongeemp-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="NSC-${employe.numNoteService}" onclick="printNoteDeService([[${employe}]])">Imp. NS</button>
-											<button id="impautosortiecongeemp-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items m-auto" id="ASC-${employe.numNoteService}" onclick="printNoteDeService([[${employe}]])">Imp. AS</button>
-										</div>
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Affectations</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a id="approuvaffectemp1- ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectations-emp-crde.html/${employe.empMatricule}" formmethod="get">Approuver/Ann. affectation</a>
+													<a id="affectemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectation-emp-crde.html" formmethod="get">Ajouter une affectation</a>
+													<a id="histaffectemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectations-emp-crde.html/${employe.empMatricule}" formmethod="get">Historique affectations</a>
+													<button id="impaffectemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. note de service</button>
+												</div>
+											</div>
+											<hr>
+											
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Missions</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a id="approuvmissionemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}/valid" formmethod="get">Approuver/Ann. mission</a>
+													<a id="ajoutmissionemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/mission-emp-crde.html" formmethod="get">Ajouter une mission</a>
+													<a id="histmissionemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/missions-emp-crde.html/${employe.empMatricule}/hist" formmethod="get">Historique missions</a>
+													<button id="impordremissionemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. ordre de mission</button>
+												</div>
+											</div>
+											<hr>
 
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Congés</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a id="approuvcongeemp1- ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conges-emp-crde.html}/${employe.empMatricule}" formmethod="get">Approuver/Ann. congé</a>
+													<a id="ajoutcongeemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conge-emp-crde.html}" formmethod="get">Ajouter un congé</a>
+													<a id="ajoutcongeemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conges-emp-crde.html}/${employe.empMatricule}" formmethod="get">Historique congés</a>
+													<button id="impnotesvcecongeemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. note de service</button>
+													<button id="impautosortiecongeemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" onclick="printNoteDeService([[${employe}]])">Imp. autorisat. de sortie</button>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+										</div>
 									</div>
 								</div>
 							</div>
+
 						</td>
 					`;
 					tableBody.appendChild(row);

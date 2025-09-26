@@ -3,6 +3,7 @@ package gpersonnelcrde.controller;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,9 +80,21 @@ public class CongeController {
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}")
 	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, HttpServletRequest request, Model model){
 	    var savedCongessEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
-		model.addAttribute("savedCongessEmploye", savedCongessEmploye);
+		model.addAttribute("savedCongesEmploye", savedCongessEmploye);
 
 		return "gcongecrdeMaj";
+	}
+
+	@GetMapping ("/conges-emp-crde.html/{employeMatricule}/{choixStr}")
+	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
+	    var savedCongesEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
+		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
+		model.addAttribute("congeEmpMatricule", employeMatricule);
+		if (StringUtils.isNotBlank(choixStr) && !"hist".equalsIgnoreCase(choixStr)){
+			model.addAttribute("savedChoixStr", choixStr);
+		}
+
+		return "gcongesemphistoriq";
 	}
 
 	@DeleteMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
