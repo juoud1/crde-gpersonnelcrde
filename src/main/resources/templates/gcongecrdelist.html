@@ -191,7 +191,7 @@
 													<th>Date fin</th>
 													<th tyle="width: 180px;">Détails</th>
 													<th tyle="width: 120px;">Status</th>
-													<th class="text-center">Actions</th>
+													<th class="p-auto">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -205,20 +205,31 @@
 													<td th:text="${conge.dateFinConge}">tel</td>
 													<td th:text="${conge.infoSupplementaires}">role</td>
 													<td th:text="${conge.statusConge} + |, | + ${conge.dateStatusConge}">role</td>
-													<td class="text-center">
-														<button type="button" id="${conge.numNoteServiceConge}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
+													<td class="p-auto" style="width: 5%;">
+														<button type="button" th:id="|bt-| + ${conge.numNoteServiceConge}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${conge.numNoteServiceConge}" th:text="|...|">
 															action
 														</button>
 
-														<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${conge.numNoteServiceConge}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" id="staticBackdropLabel">Actions disponibles</h1>
+																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${conge.numNoteServiceConge}" th:text="|Actions disponibles sur congé: | + ${conge.numNoteServiceConge}">Actions disponibles</h1>
 																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																	</div>
 																	<div class="modal-body">
-																		<div class="container-fluid">
+																		<div class="border p-1 mb-2 bg-secondary-subtle">
+																			<header class="h6 mb-1 text-start" th:text="|Données de congé N° | + ${conge.numNoteServiceConge}">Données de l'affectation</header>
+																			<div class="d-flex flex-wrap gap-2 p-2">
+																				<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Modifier le congé|">Annuler</a>
+																				<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé|">Annuler</a>
+																				<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Annuler/Suspendre le congé|">Annuler</a>
+																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
+																				<button type="button" class="btn btn-info align-items ms-auto" th:id=" |AS-|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>
+																			</div>
+																		</div>
+
+																		<!--div class="container-fluid">
 																			<div class="card mb-4">
 																				<div class="card-header">
 																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|CONGÉ N° | + ${conge.numNoteServiceConge}">
@@ -237,7 +248,7 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>
+																		</div-->
 																	</div>
 																	<div class="modal-footer">
 																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
