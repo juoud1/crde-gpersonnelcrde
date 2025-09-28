@@ -125,11 +125,11 @@
 					<section id="gconges">
 						<div class="card mb-4">
 							<div class="card-header">
-								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
+								<a class="collapsed btn" href="#clpseconges" style="font-size: small; font-weight: bold;">
 									ABSENCES ET CONGÉS DES EMPLOYÉS
 								</a>
 							</div>
-							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
+							<div id="clpseconges" data-bs-parent="#main-app">
 								<div class="card-body">
 									
 									<div class="container">
@@ -155,10 +155,10 @@
 												</form>
 											</div>
 											<div class="row text-center w-25">
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="ajoutcgeetauto-group">
 													<a class="btn btn-outline-primary mb-1" id="bajoutcongeavecas" style="display: inline-block" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé + aut. sortie|">Annuler</a>
 												</div>
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="ajoutcge-group">
 													<a class="btn btn-outline-primary mb-1" id="bajoutcongesansas" style="display: inline-block" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
 												</div>
 											</div>
@@ -167,14 +167,14 @@
 										<div class="mb-4 d-flex flex-wrap gap-1 w-75"><!-- style="align-items: flex-start;"-->
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES EN ATTENTE">CONGÉS EN ATTENTE</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES APPROUVÉS">CONGÉS APPROUVÉS</button>
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES ENCOURS">CONGÉS ENCOURS</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="PROCHAINS CONGES">PROCHAINS CONGÉS</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="CONGES ANNULÉS">CONGÉS ANNULÉS</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUS</button>
 										</div>
 										<hr>
 
 										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
-											<button type="button" class="btn btn-info ms-auto" id="print-conges-encours" th:onclick="printCongesEncours()" th:text="|Imprimer congés encours|">Congés encours</button>
+											<button type="button" class="btn btn-info ms-auto" id="print-conges-encours" th:onclick="printCongesEncours()" th:text="|Imprimer prochains congés|">Congés encours</button>
 											<button type="button" class="btn btn-info" id="print-conges" th:onclick="printConges()" th:text="|Imprimer tous les congés|">Tous les congés</button>
 										</div>
 										<hr>
