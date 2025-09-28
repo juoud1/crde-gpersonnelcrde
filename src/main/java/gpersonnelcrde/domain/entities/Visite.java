@@ -3,30 +3,40 @@ package gpersonnelcrde.domain.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Visite {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String civiliteVisiteur;
 	private String nomVisiteur;
 	private String prenomVisiteur;
 	private String fonctionVisiteur;
 	private String paysVisiteur;
-	private Integer duree;
-	private LocalDate dateDebut;
-	private LocalDate dateFin;
+	private Integer dureeVisite;
+	private LocalDate dateDebutVisite;
+	private LocalDate dateFinVisite;
 	private String butVisite;
-	private Boolean visiteEstAcceptee;
-	private LocalDate visiteEstAccepteeLe;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Employe employe;
+	
+	private String statusVisite;
+	private LocalDate dateStatusVisite;
 	private LocalDateTime visiteCreeeLe;
 	private String visiteCreeePar;
 	private LocalDateTime visiteModifieeLe;
 	private String visiteModifieePar;
+
 	public Long getId() {
 		return id;
 	}
@@ -63,23 +73,23 @@ public class Visite {
 	public void setPaysVisiteur(String paysVisiteur) {
 		this.paysVisiteur = paysVisiteur;
 	}
-	public Integer getDuree() {
-		return duree;
+	public Integer getDureeVisite() {
+		return dureeVisite;
 	}
-	public void setDuree(Integer duree) {
-		this.duree = duree;
+	public void setDureeVisite(Integer dureeVisite) {
+		this.dureeVisite = dureeVisite;
 	}
-	public LocalDate getDateDebut() {
-		return dateDebut;
+	public LocalDate getDateDebutVisite() {
+		return dateDebutVisite;
 	}
-	public void setDateDebut(LocalDate dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setDateDebutVisite(LocalDate dateDebutVisite) {
+		this.dateDebutVisite = dateDebutVisite;
 	}
-	public LocalDate getDateFin() {
-		return dateFin;
+	public LocalDate getDateFinVisite() {
+		return dateFinVisite;
 	}
-	public void setDateFin(LocalDate dateFin) {
-		this.dateFin = dateFin;
+	public void setDateFinVisite(LocalDate dateFinVisite) {
+		this.dateFinVisite = dateFinVisite;
 	}
 	public String getButVisite() {
 		return butVisite;
@@ -87,17 +97,23 @@ public class Visite {
 	public void setButVisite(String butVisite) {
 		this.butVisite = butVisite;
 	}
-	public Boolean getVisiteEstAcceptee() {
-		return visiteEstAcceptee;
+	public Employe getEmploye() {
+		return employe;
 	}
-	public void setVisiteEstAcceptee(Boolean visiteEstAcceptee) {
-		this.visiteEstAcceptee = visiteEstAcceptee;
+	public void setEmploye(Employe employe) {
+		this.employe = employe;
 	}
-	public LocalDate getVisiteEstAccepteeLe() {
-		return visiteEstAccepteeLe;
+	public String getStatusVisite() {
+		return statusVisite;
 	}
-	public void setVisiteEstAccepteeLe(LocalDate visiteEstAccepteeLe) {
-		this.visiteEstAccepteeLe = visiteEstAccepteeLe;
+	public void setStatusVisite(String statusVisite) {
+		this.statusVisite = statusVisite;
+	}
+	public LocalDate getDateStatusVisite() {
+		return dateStatusVisite;
+	}
+	public void setDateStatusVisite(LocalDate dateStatusVisite) {
+		this.dateStatusVisite = dateStatusVisite;
 	}
 	public LocalDateTime getVisiteCreeeLe() {
 		return visiteCreeeLe;
@@ -123,6 +139,7 @@ public class Visite {
 	public void setVisiteModifieePar(String visiteModifieePar) {
 		this.visiteModifieePar = visiteModifieePar;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,13 +150,17 @@ public class Visite {
 		result = prime * result + ((prenomVisiteur == null) ? 0 : prenomVisiteur.hashCode());
 		result = prime * result + ((fonctionVisiteur == null) ? 0 : fonctionVisiteur.hashCode());
 		result = prime * result + ((paysVisiteur == null) ? 0 : paysVisiteur.hashCode());
-		result = prime * result + ((duree == null) ? 0 : duree.hashCode());
-		result = prime * result + ((dateDebut == null) ? 0 : dateDebut.hashCode());
-		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
+		result = prime * result + ((dureeVisite == null) ? 0 : dureeVisite.hashCode());
+		result = prime * result + ((dateDebutVisite == null) ? 0 : dateDebutVisite.hashCode());
+		result = prime * result + ((dateFinVisite == null) ? 0 : dateFinVisite.hashCode());
 		result = prime * result + ((butVisite == null) ? 0 : butVisite.hashCode());
-		result = prime * result + ((visiteEstAcceptee == null) ? 0 : visiteEstAcceptee.hashCode());
-		result = prime * result + ((visiteEstAccepteeLe == null) ? 0 : visiteEstAccepteeLe.hashCode());
+		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
+		result = prime * result + ((statusVisite == null) ? 0 : statusVisite.hashCode());
+		result = prime * result + ((dateStatusVisite == null) ? 0 : dateStatusVisite.hashCode());
+		result = prime * result + ((visiteCreeeLe == null) ? 0 : visiteCreeeLe.hashCode());
 		result = prime * result + ((visiteCreeePar == null) ? 0 : visiteCreeePar.hashCode());
+		result = prime * result + ((visiteModifieeLe == null) ? 0 : visiteModifieeLe.hashCode());
+		result = prime * result + ((visiteModifieePar == null) ? 0 : visiteModifieePar.hashCode());
 		return result;
 	}
 	@Override
@@ -181,50 +202,73 @@ public class Visite {
 				return false;
 		} else if (!paysVisiteur.equals(other.paysVisiteur))
 			return false;
-		if (duree == null) {
-			if (other.duree != null)
+		if (dureeVisite == null) {
+			if (other.dureeVisite != null)
 				return false;
-		} else if (!duree.equals(other.duree))
+		} else if (!dureeVisite.equals(other.dureeVisite))
 			return false;
-		if (dateDebut == null) {
-			if (other.dateDebut != null)
+		if (dateDebutVisite == null) {
+			if (other.dateDebutVisite != null)
 				return false;
-		} else if (!dateDebut.equals(other.dateDebut))
+		} else if (!dateDebutVisite.equals(other.dateDebutVisite))
 			return false;
-		if (dateFin == null) {
-			if (other.dateFin != null)
+		if (dateFinVisite == null) {
+			if (other.dateFinVisite != null)
 				return false;
-		} else if (!dateFin.equals(other.dateFin))
+		} else if (!dateFinVisite.equals(other.dateFinVisite))
 			return false;
 		if (butVisite == null) {
 			if (other.butVisite != null)
 				return false;
 		} else if (!butVisite.equals(other.butVisite))
 			return false;
-		if (visiteEstAcceptee == null) {
-			if (other.visiteEstAcceptee != null)
+		if (employe == null) {
+			if (other.employe != null)
 				return false;
-		} else if (!visiteEstAcceptee.equals(other.visiteEstAcceptee))
+		} else if (!employe.equals(other.employe))
 			return false;
-		if (visiteEstAccepteeLe == null) {
-			if (other.visiteEstAccepteeLe != null)
+		if (statusVisite == null) {
+			if (other.statusVisite != null)
 				return false;
-		} else if (!visiteEstAccepteeLe.equals(other.visiteEstAccepteeLe))
+		} else if (!statusVisite.equals(other.statusVisite))
+			return false;
+		if (dateStatusVisite == null) {
+			if (other.dateStatusVisite != null)
+				return false;
+		} else if (!dateStatusVisite.equals(other.dateStatusVisite))
+			return false;
+		if (visiteCreeeLe == null) {
+			if (other.visiteCreeeLe != null)
+				return false;
+		} else if (!visiteCreeeLe.equals(other.visiteCreeeLe))
 			return false;
 		if (visiteCreeePar == null) {
 			if (other.visiteCreeePar != null)
 				return false;
 		} else if (!visiteCreeePar.equals(other.visiteCreeePar))
 			return false;
+		if (visiteModifieeLe == null) {
+			if (other.visiteModifieeLe != null)
+				return false;
+		} else if (!visiteModifieeLe.equals(other.visiteModifieeLe))
+			return false;
+		if (visiteModifieePar == null) {
+			if (other.visiteModifieePar != null)
+				return false;
+		} else if (!visiteModifieePar.equals(other.visiteModifieePar))
+			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "Visite [id=" + id + ", civiliteVisiteur=" + civiliteVisiteur + ", nomVisiteur=" + nomVisiteur
 				+ ", prenomVisiteur=" + prenomVisiteur + ", fonctionVisiteur=" + fonctionVisiteur + ", paysVisiteur="
-				+ paysVisiteur + ", duree=" + duree + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin
-				+ ", butVisite=" + butVisite + ", visiteEstAcceptee=" + visiteEstAcceptee + ", visiteEstAccepteeLe="
-				+ visiteEstAccepteeLe + "]";
+				+ paysVisiteur + ", dureeVisite=" + dureeVisite + ", dateDebutVisite=" + dateDebutVisite
+				+ ", dateFinVisite=" + dateFinVisite + ", butVisite=" + butVisite + ", employe=" + employe
+				+ ", statusVisite=" + statusVisite + ", dateStatusVisite=" + dateStatusVisite + ", visiteCreeeLe="
+				+ visiteCreeeLe + ", visiteCreeePar=" + visiteCreeePar + ", visiteModifieeLe=" + visiteModifieeLe
+				+ ", visiteModifieePar=" + visiteModifieePar + "]";
 	}
-		
+	
 }

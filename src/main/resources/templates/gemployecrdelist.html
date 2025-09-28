@@ -177,9 +177,9 @@
 											<th class="border-end">Téléphone</th>
 											<th class="col-email border-end">Email</th>
 											<th class="border-end">Type employé</th>
-											<th class="border-end">Statut</th>
-											<th class="border-end">Date début</th>
-											<th class="border-end">Date fin</th>
+											<th class="border-end">Status</th>
+											<th class="border-end">Dates status</th>
+											<!--th class="border-end">Date fin</th-->
 											<th class="border-end">Affectation</th>
 											<th class="border-end">Fonction</th>
 											<th id="col-action " class="text-center">
@@ -198,11 +198,11 @@
 											<td th:text="${employe.empEmail}">email</td>
 											<td th:text="${employe.typeEmploye}">tel</td>
 											<td th:text="${employe.status}">role</td>
-											<td th:text="${employe.empDateDebutStatus}">date</td>
-											<td th:text="${employe.empDateFinStatus}">date</td>
+											<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}">date</td>
+											<!--td th:text="${employe.empDateFinStatus}">date</td-->
 											<td th:text="${employe.lieuAffectation}">status</td>
 											<td th:text="${employe.fonction}">status</td>
-											<td class="text-center" id="actionemp" style="width: 18%;">
+											<td class="text-center" id="actionemp" style="width: 5%;">
 												<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
 													action
 												</button>
@@ -409,11 +409,10 @@
 						<td>${employe.empEmail}</td>
 						<td>${employe.typeEmploye}</td>
 						<td>${employe.status}</td>
-						<td>${employe.empDateDebutStatus}</td>
-						<td>${employe.empDateFinStatus}</td>
+						<td>du: ${employe.empDateDebutStatus}; au: ${employe.empDateFinStatus}</td>
 						<td>${employe.lieuAffectation}</td>
 						<td>${employe.fonction}</td>
-						<td class="text-center" style="width: 18%;">
+						<td class="text-center" style="width: 5%;">
 						
 							<button type="button" class="btn btn-warning" id="bt1-${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde1-${employe.empMatricule}" >
 								...

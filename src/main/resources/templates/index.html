@@ -113,92 +113,178 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100">
-        <div class="container py-5">
-				<div class="text-center my-3">
-					<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
-				</div>
-				<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
+	<div id="main-app" class="w-100 z-0">
+        <div class="container py-5 z-0">
+			<div class="text-center my-3">
+				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
+			</div>
+			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
 
-				<section id="accueilCrde">
-					<div class="card mb-4">
-						<div class="card-header">
-							<a class="btn" data-bs-toggle="collapse" href="#collapseAcrde" style="font-size: medium; font-weight: bold;">
-								CRDE
-							</a>
-						</div>
+			<section id="accueilCrde">
+				<div class="card mb-4">
+					<div class="card-header">
+						<a class="btn" data-bs-toggle="collapse" href="#collapseAcrde" style="font-size: medium; font-weight: bold;">
+							CRDE
+						</a>
+					</div>
 
-						<div id="collapseAcrde" class="collapse show" data-bs-parent="#main-app">
-							<div class="card-body">
+					<div id="collapseAcrde" class="collapse show" data-bs-parent="#main-app">
+						<div class="card-body">
 
-								<div class="row" style="position: relative; margin-top: 0em;">
-									<div class="col-lg-5 col-md-5 col-sm-5 desc" style="margin-bottom: 0.15em;" >
-										<div class="description  rounded-2" style="background-color: #cef0e4; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
-											<p class="text-center align-items p-4 m-4"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
-											<hr>
-											<h2 style="color: #A92900;">Baraooooo, vous êtes la bienvenue sur <em>ePortail-CRDE</em>
-												<span style="color: #B9867A; font-size: 22px; width:100%; line-height: 1.5;"><em> pour la gestion de tous les employés et stagiaires de la CRDE ainsi que de leur status, mouvements et congés.</em></span>
-											</h2>
-										</div>
+							<div class="row" style="position: relative; margin-top: 0em;">
+								<div class="col-lg-5 col-md-5 col-sm-5 desc" style="margin-bottom: 0.15em;" >
+									<div class="description  rounded-2" style="background-color: #cef0e4; width: 100%; padding-top: 1.75em; padding-bottom: auto; padding-left: 0.75em; padding-right: 0.75em; min-height: 100%;">
+										<p class="text-center align-items p-4 m-4"><img th:src="@{/images/WANZET.jpg}" class="img-fluid w-15 rounded d-block mx-auto" alt="|Ministre|" style="height: 30%; width: 30%"> Son Excellence, Monsieur Le Ministre Conseiller Spécial, Le Général d'armée <em>Henri WANZET-LINGUISSARA</em></p> 
+										<hr>
+										<h2 style="color: #A92900;">Baraooooo, vous êtes la bienvenue sur <em>ePortail-CRDE</em>
+											<span style="color: #B9867A; font-size: 22px; width:100%; line-height: 1.5;"><em> pour la gestion de tous les employés et stagiaires de la CRDE ainsi que de leur status, mouvements et congés.</em></span>
+										</h2>
 									</div>
-									
-									<div class="col-lg-7 col-md-7 col-sm-7" style="margin: auto; padding: auto;">
-										<div id="carouselIndicatorscrde" class="carousel slide" data-bs-ride="carousel">
+								</div>
+								
+								<div class="col-lg-7 col-md-7 col-sm-7" style="margin: auto; padding: auto;">
+									<div id="carouselIndicatorscrde" class="carousel slide" data-bs-ride="carousel">
 
-											<div class="carousel-indicators">
-												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="1" aria-label="Slide 1"></button>
-												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="2" aria-label="Slide 2"></button>
-												<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="3" aria-label="Slide 3"></button>
-											</div>
-											
-											<div class="carousel-inner" style="align-items: center; text-align: justify;">
-												<div class="carousel-item active" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
-													<div class="carousel-caption d-none d-md-block">
-														<h5 style="color: #fbfcfb;">Actualité 1</h5>
-														<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
-													</div>
-												</div>
-												<div class="carousel-item" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image2.jpg}" class="d-block w-100" alt="Actu2" style="margin: auto;">
-													<div class="carousel-caption d-none d-md-block">
-														<h5 style="color: yellow;">Actualité 2</h5>
-														<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
-													</div>
-												</div>
-												<div class="carousel-item" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image3.jpg}" class="d-block w-100" alt="Actu3" style="margin: auto;">
-													<div class="carousel-caption d-none d-md-block">
-														<h5 style="color: orangered;">Actualité 3</h5>
-														<p style="color: orangered;">Conférence des exprts à Doubaï (Émirats Arrabes Unis)</p>
-													</div>
-												</div>
-												<div class="carousel-item" style="align-items: center;">
-													<img th:src="@{/images/caroussel-image4.jpg}" class="d-block w-100" alt="Actu4" style="margin: auto;">
-													<div class="carousel-caption d-none d-md-block">
-														<h5 style="color: yellow;">Actualité 4</h5>
-														<p style="color: yellow;">... en Europe</p>
-													</div>
-												</div>
-											</div>
-											
-											<button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="prev">
-												<span class="carousel-control-prev-icon btn-warning" aria-hidden="true"></span>
-												<span class="visually-hidden">Précédent</span>
-											</button>
-											<button class="carousel-control-next" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="next">
-												<span class="carousel-control-next-icon btn-warning" aria-hidden="true"></span>
-												<span class="visually-hidden">Suivant</span>
-											</button>
+										<div class="carousel-indicators">
+											<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+											<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="1" aria-label="Slide 1"></button>
+											<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="2" aria-label="Slide 2"></button>
+											<button type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide-to="3" aria-label="Slide 3"></button>
 										</div>
+										
+										<div class="carousel-inner" style="align-items: center; text-align: justify;">
+											<div class="carousel-item active" style="align-items: center;">
+												<img th:src="@{/images/caroussel-image1.jpg}" class="d-block w-100" alt="Actu1" style="margin: auto;">
+												<div class="carousel-caption d-none d-md-block">
+													<h5 style="color: #fbfcfb;">Actualité 1</h5>
+													<p style="color: #fbfcfb;">Cérémonie de fin de stage à Naïrobie (Kenya)</p>
+												</div>
+											</div>
+											<div class="carousel-item" style="align-items: center;">
+												<img th:src="@{/images/caroussel-image2.jpg}" class="d-block w-100" alt="Actu2" style="margin: auto;">
+												<div class="carousel-caption d-none d-md-block">
+													<h5 style="color: yellow;">Actualité 2</h5>
+													<p style="color: yellow;">Visite de travail du SR égyptien à la Direction de la Sécurité Extérieure</p>
+												</div>
+											</div>
+											<div class="carousel-item" style="align-items: center;">
+												<img th:src="@{/images/caroussel-image3.jpg}" class="d-block w-100" alt="Actu3" style="margin: auto;">
+												<div class="carousel-caption d-none d-md-block">
+													<h5 style="color: orangered;">Actualité 3</h5>
+													<p style="color: orangered;">Conférence des exprts à Doubaï (Émirats Arrabes Unis)</p>
+												</div>
+											</div>
+											<div class="carousel-item" style="align-items: center;">
+												<img th:src="@{/images/caroussel-image4.jpg}" class="d-block w-100" alt="Actu4" style="margin: auto;">
+												<div class="carousel-caption d-none d-md-block">
+													<h5 style="color: yellow;">Actualité 4</h5>
+													<p style="color: yellow;">... en Europe</p>
+												</div>
+											</div>
+										</div>
+										
+										<button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="prev">
+											<span class="carousel-control-prev-icon btn-warning" aria-hidden="true"></span>
+											<span class="visually-hidden">Précédent</span>
+										</button>
+										<button class="carousel-control-next" type="button" data-bs-target="#carouselIndicatorscrde" data-bs-slide="next">
+											<span class="carousel-control-next-icon btn-warning" aria-hidden="true"></span>
+											<span class="visually-hidden">Suivant</span>
+										</button>
 									</div>
 								</div>
 							</div>
 						</div>
-					
+					</div>
+				</div>
 			</section>
 			<hr>
+			
+			<div class="row" style="position: relative;">
+				<!-- Nouvelle section pour prise de rendez-vous -->
+				<section id="gvisites">
+					<div class="card">
+						<div class="card-header">
+							<a class="collapsed btn" href="#clpsegvisites" style="font-size: small; font-weight: bold;">
+								PLANIFIER UNE VISITE
+							</a>
+						</div>
+						<div id="clpsegvisites" data-bs-parent="#main-app">
+							<div class="card-body z-0 p-auto m-auto">
+								<div class="row bg-light">
+									<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
+										<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+									</div>
+									<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
+										<form id="visit-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+											<legende class="h4 mb-3 text-center">Ajouter un rendez-vous</legende>
+											<hr>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<label class="form-label h6" for="civiliteougradevisit" th:text="|Civilité/Grade visiteur|">num</label>
+												<input type="text" id="civiliteougradevisit" name="civiliteougradevisit" class="form-control">
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-8">
+												<label class="form-label h6" for="nomvisiteur" th:text="|Nom visiteur|">num</label>
+												<input type="text" id="nomvisiteur" name="nomvisiteur" class="form-control" required>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-8">
+												<label class="form-label h6" for="prenomvisiteur" th:text="|Prénom visiteur|">num</label>
+												<input type="text" id="prenomvisiteur" name="prenomvisiteur" class="form-control">
+											</div>
+											<div class="col-lg-7 col-md-7 col-sm-10">
+												<label class="form-label h6" for="fonctvisiteur" th:text="|Fonction visiteur|">num</label>
+												<input type="text" id="fonctvisiteur" name="fonctvisiteur" class="form-control" required>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-8">
+												<label class="form-label h6" for="paysvisiteur" th:text="|Pays visiteur|">num</label>
+												<input type="text" id="paysvisiteur" name="paysvisiteur" class="form-control" required>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<label class="form-label h6" for="datedebutvisite" th:text="|Date début|">num</label>
+												<input type="date" id="datedebutvisite" name="datedebutvisite" class="form-control" required>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<label class="form-label h6" for="datefinvisite" th:text="|Date fin|">num</label>
+												<input type="date" id="datefinvisite" name="datefinvisite" class="form-control" required>
+											</div>
+											<div class="col-lg-2 col-md-2 col-sm-6">
+												<label class="form-label h6" for="dureevisite" th:text="|Durée (heures)|">num</label>
+												<input type="number" id="dureevisite" name="dureevisite" class="form-control" min="1" required>
+											</div>
+											<div class="col-lg-7 col-md-7 col-sm-10">
+												<label class="form-label h6" for="butvisite" th:text="|But de la visite|">num</label>
+												<input type="text" id="butvisite" name="butvisite" class="form-control" required>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-8">
+												<label class="form-label h6" for="matriculeempvisite" th:text="|Employé sollicité|">num</label>
+												<select id="matriculeempvisite" name="matriculeempvisite" class="form-select">
+													<option value="">Sélectionner un employé</option>
+													<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+												</select>
+												<!--label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
+												<select id="fonctioncode" name="fonctioncode" class="form-select" required>
+													<option value="">Sélectionner une fonction</option>
+													<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
+												</select-->
+											</div>
+											<hr>
+
+											<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
+												<button type="submit" class="btn btn-primary">Ajouter</button>
+												<button type="reset" class="btn btn-dark">Annuler</button>
+												<!--button type="button" class="btn btn-warning ms-auto" id="print-noteserv-affect">Imprimer le récapitulatif</button-->
+											</div>
+
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>	
+			<hr>
+
 
 			<div class="row" style="position: relative;">
 				<div class="col-lg-4 col-md-4 col-sm-12 desc">

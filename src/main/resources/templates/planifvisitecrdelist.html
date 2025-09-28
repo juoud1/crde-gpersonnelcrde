@@ -131,74 +131,114 @@
 								</a>
 							</div>
 							<div id="clpsegvisites" data-bs-parent="#main-app">
-								<div class="card-body z-0 p-auto m-auto">
-									<div class="row bg-light">
-										<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
-											<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								<div class="card-body">
+									<div class="container">
+										<div class="mb-2 d-flex flex-wrap gap-2">
+											<div class="w-75">
+												<form id="visit-rech-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+													
+													<div class="col-lg-3 col-md-3 col-sm-6" id="startdate-group">
+														<label class="form-label h6" for="datedebutvisite" th:text="|Visite du |">civ</label>
+														<input type="date" id="datedebutvisite" name="datedebutvisite" class="form-control">
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-6" id="enddate-group">
+														<label class="form-label h6" for="datefinvisite" th:text="|au |">civ</label>
+														<input type="date" id="datefinvisite" name="datefinvisite" class="form-control">
+													</div>
+													<div class="col-lg-4 col-md-4 col-sm-8" id="visiterecherche-group">
+														<label class="form-label h6" for="visiterecherche" th:text="|Visiteur|">civ</label>
+														<input class="form-control me-2" autofocus="autofocus" type="search" id="visiterecherche" name="visiterecherche" placeholder="Entrez le nom du visiteur" aria-label="Search">
+													</div>
+													<div class="col-lg-2 col-md-2 col-sm-4 text-center pt-4" >
+														<button class="btn btn-success" id="brecherchevisite" type="button">Rechercher</button>
+													</div>
+												</form>
+											</div>
+											<div class="row text-center w-25">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="ajoutvisite-group">
+													<a class="btn btn-outline-primary mb-1" id="bajoutvisite" style="display: inline-block" th:href="@{/planif-visite-crde.html}" formmethod="get" th:text="|Ajouter une visite|">Annuler</a>
+												</div>
+											</div>
 										</div>
-										<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-											<form id="visit-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-												<legende class="h4 mb-3 text-center">Ajouter un rendez-vous</legende>
-												<hr>
-												<div class="col-lg-3 col-md-3 col-sm-6">
-													<label class="form-label h6" for="civiliteougradevisit" th:text="|Civilité/Grade visiteur|">num</label>
-													<input type="text" id="civiliteougradevisit" name="civiliteougradevisit" class="form-control">
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-8">
-													<label class="form-label h6" for="nomvisiteur" th:text="|Nom visiteur|">num</label>
-													<input type="text" id="nomvisiteur" name="nomvisiteur" class="form-control" required>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-8">
-													<label class="form-label h6" for="prenomvisiteur" th:text="|Prénom visiteur|">num</label>
-													<input type="text" id="prenomvisiteur" name="prenomvisiteur" class="form-control">
-												</div>
-												<div class="col-lg-7 col-md-7 col-sm-10">
-													<label class="form-label h6" for="fonctvisiteur" th:text="|Fonction visiteur|">num</label>
-													<input type="text" id="fonctvisiteur" name="fonctvisiteur" class="form-control" required>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-8">
-													<label class="form-label h6" for="paysvisiteur" th:text="|Pays visiteur|">num</label>
-													<input type="text" id="paysvisiteur" name="paysvisiteur" class="form-control" required>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-6">
-													<label class="form-label h6" for="datedebutvisite" th:text="|Date début|">num</label>
-													<input type="date" id="datedebutvisite" name="datedebutvisite" class="form-control" required>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-6">
-													<label class="form-label h6" for="datefinvisite" th:text="|Date fin|">num</label>
-													<input type="date" id="datefinvisite" name="datefinvisite" class="form-control" required>
-												</div>
-												<div class="col-lg-2 col-md-2 col-sm-6">
-													<label class="form-label h6" for="dureevisite" th:text="|Durée (heures)|">num</label>
-													<input type="number" id="dureevisite" name="dureevisite" class="form-control" min="1" required>
-												</div>
-												<div class="col-lg-7 col-md-7 col-sm-10">
-													<label class="form-label h6" for="butvisite" th:text="|But de la visite|">num</label>
-													<input type="text" id="butvisite" name="butvisite" class="form-control" required>
-												</div>
-												<div class="col-lg-4 col-md-4 col-sm-8">
-													<label class="form-label h6" for="matriculeempvisite" th:text="|Employé sollicité|">num</label>
-													<select id="matriculeempvisite" name="matriculeempvisite" class="form-select">
-														<option value="">Sélectionner un employé</option>
-														<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-													</select>
-													<!--label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
-													<select id="fonctioncode" name="fonctioncode" class="form-select" required>
-														<option value="">Sélectionner une fonction</option>
-														<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
-													</select-->
-												</div>
-												<hr>
 
-												<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
-													<button type="submit" class="btn btn-primary">Ajouter</button>
-													<button type="reset" class="btn btn-dark">Annuler</button>
-													<a class="btn btn-outline-primary ms-auto" th:href="@{/planif-visites-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
-												</div>
-
-											</form>
+										<div class="mb-4 d-flex flex-wrap gap-1 w-75"><!-- style="align-items: flex-start;"-->
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="VISITES EN ATTENTE">VISITES EN ATTENTE</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="VISITES APPROUVÉS">VISITES APPROUVÉS</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="VISITES PROCHAINES">PROCHAINES VISITES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="VISITES ANNULÉS">VISITES ANNULÉS</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUTES</button>
 										</div>
+										<hr>
+
+										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
+											<button type="button" class="btn btn-info ms-auto" id="print-visites-prochaines" th:onclick="printProchVisites()" th:text="|Imprimer prochaines visites|">Imp prochaines</button>
+											<button type="button" class="btn btn-info" id="print-visites" th:onclick="printVisites()" th:text="|Imprimer toutes les visites|">Imp visites</button>		
+										</div>
+										<hr>
+
+										<h2 class="h4 mb-3 text-center">Liste des visites officielles</h2>
+										<table class="table table-striped" id="visit-table">
+											<thead>
+												<tr>
+													<th>N°</th>
+													<th style="width: 12%;">Nom visiteur</th>
+													<th>Fonction visiteur</th>
+													<th>Pays visiteur</th>
+													<th>Dates visite</th>
+													<th>Durée(h)</th>
+													<th style="width: 15%;">But visite</th>
+													<th style="width: 12%;">Employé sollicité</th>
+													<th>Status visite</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Les visites seront ajoutées ici dynamiquement -->
+												<tr th:each="visite: ${allVisites}">
+													<td th:text="${visite.numVisite}"></td>
+													<td th:text="${visite.nomVisiteur} + | | + ${visite.prenomVisiteur}"></td>
+													<td th:text="${visite.fonctionVisiteur}"></td>
+													<td th:text="${visite.paysVisiteur}"></td>
+													<td th:text="|du |+ ${visite.dateDebutVisite} + | au |+ ${visite.dateFinVisite}">Du:  ; au: </td>
+													<td th:text="${visite.dureeVisite}"></td>
+													<td th:text="${visite.butVisite}"></td>
+													<td th:text="${visite.employeSolliteCivilite} + | | + ${visite.employeSolliteNom} + |; | + ${visite.employeSolliteFonction}"></td>
+													<td th:text="${visite.statusVisite} + |; depuis le | + ${visite.dateStatusVisite}"> ; le </td>
+													<td class="p-auto" style="width: 5%;">
+														<button type="button" class="btn btn-warning" th:id="|bt-| + ${visite.numVisite}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${visite.numVisite}" th:text="|...|">
+															action
+														</button>
+
+														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-|+ ${visite.numVisite}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${visite.numVisite}" th:text="|Actions disponibles sur Employé/Stagiaire: |">Actions disponibles</h1>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																	</div>
+																	<div class="modal-body">
+																		<div class="border p-1 mb-2 bg-secondary-subtle">
+																			<header class="h6 mb-1 text-start">Données de la visite</header>
+																			<div class="d-flex flex-wrap gap-2 p-2">
+																				<a th:id="|approuvvisiteemp| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Approuver/Ann. visite|">Annuler</a>
+																				<a th:id="|majvisiteemp| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Mettre à jour la visite|">Annuler</a>
+																				<!--a th:id="|histvisiteemp|" class="btn btn-outline-primary" th:href="|#|" formmethod="get" th:text="|Historique visite|">Annuler</a>
+																				<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="#" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button-->
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
+
 								</div>
 							</div>
 						</div>

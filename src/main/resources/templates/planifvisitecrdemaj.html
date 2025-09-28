@@ -138,55 +138,72 @@
 										</div>
 										<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 											<form id="visit-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-												<legende class="h4 mb-3 text-center">Ajouter un rendez-vous</legende>
+												<legende class="h4 mb-3 text-center">Mettre à jour les données de rendez-vous</legende>
 												<hr>
+												<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+													<label class="form-label h6" for="numvisite" th:text="|Visite N°|">num</label>
+													<input type="text" id="numvisite" name="numvisite" th:value="${savedVisite.numVisite}" class="form-control" disabled>
+												</div>
 												<div class="col-lg-3 col-md-3 col-sm-6">
 													<label class="form-label h6" for="civiliteougradevisit" th:text="|Civilité/Grade visiteur|">num</label>
-													<input type="text" id="civiliteougradevisit" name="civiliteougradevisit" class="form-control">
+													<input type="text" id="civiliteougradevisit" name="civiliteougradevisit" th:value="${savedVisite.civiliteVisiteur}" class="form-control">
 												</div>
 												<div class="col-lg-4 col-md-4 col-sm-8">
 													<label class="form-label h6" for="nomvisiteur" th:text="|Nom visiteur|">num</label>
-													<input type="text" id="nomvisiteur" name="nomvisiteur" class="form-control" required>
+													<input type="text" id="nomvisiteur" name="nomvisiteur" th:value="${savedVisite.nomVisiteur}" class="form-control" required>
 												</div>
 												<div class="col-lg-4 col-md-4 col-sm-8">
 													<label class="form-label h6" for="prenomvisiteur" th:text="|Prénom visiteur|">num</label>
-													<input type="text" id="prenomvisiteur" name="prenomvisiteur" class="form-control">
+													<input type="text" id="prenomvisiteur" name="prenomvisiteur" th:value="${savedVisite.prenomVisiteur}" class="form-control">
 												</div>
 												<div class="col-lg-7 col-md-7 col-sm-10">
 													<label class="form-label h6" for="fonctvisiteur" th:text="|Fonction visiteur|">num</label>
-													<input type="text" id="fonctvisiteur" name="fonctvisiteur" class="form-control" required>
+													<input type="text" id="fonctvisiteur" name="fonctvisiteur" th:value="${savedVisite.fonctionVisiteur}" class="form-control" required>
 												</div>
 												<div class="col-lg-4 col-md-4 col-sm-8">
 													<label class="form-label h6" for="paysvisiteur" th:text="|Pays visiteur|">num</label>
-													<input type="text" id="paysvisiteur" name="paysvisiteur" class="form-control" required>
+													<input type="text" id="paysvisiteur" name="paysvisiteur" th:value="${savedVisite.paysVisiteur}" class="form-control" required>
 												</div>
 												<div class="col-lg-3 col-md-3 col-sm-6">
 													<label class="form-label h6" for="datedebutvisite" th:text="|Date début|">num</label>
-													<input type="date" id="datedebutvisite" name="datedebutvisite" class="form-control" required>
+													<input type="date" id="datedebutvisite" name="datedebutvisite" th:value="${savedVisite.dateDebutVisite}" class="form-control" required>
 												</div>
 												<div class="col-lg-3 col-md-3 col-sm-6">
 													<label class="form-label h6" for="datefinvisite" th:text="|Date fin|">num</label>
-													<input type="date" id="datefinvisite" name="datefinvisite" class="form-control" required>
+													<input type="date" id="datefinvisite" name="datefinvisite" th:value="${savedVisite.numVisite}" class="form-control" required>
 												</div>
 												<div class="col-lg-2 col-md-2 col-sm-6">
 													<label class="form-label h6" for="dureevisite" th:text="|Durée (heures)|">num</label>
-													<input type="number" id="dureevisite" name="dureevisite" class="form-control" min="1" required>
+													<input type="number" id="dureevisite" name="dureevisite" th:value="${savedVisite.dateFinVisite}" class="form-control" min="1" required>
 												</div>
 												<div class="col-lg-7 col-md-7 col-sm-10">
 													<label class="form-label h6" for="butvisite" th:text="|But de la visite|">num</label>
-													<input type="text" id="butvisite" name="butvisite" class="form-control" required>
+													<input type="text" id="butvisite" name="butvisite" th:value="${savedVisite.butVisite}" class="form-control" required>
 												</div>
 												<div class="col-lg-4 col-md-4 col-sm-8">
-													<label class="form-label h6" for="matriculeempvisite" th:text="|Employé sollicité|">num</label>
-													<select id="matriculeempvisite" name="matriculeempvisite" class="form-select">
-														<option value="">Sélectionner un employé</option>
+													<label class="form-label h6" for="employeSolliteMatricule" th:text="|Employé sollicité|">num</label>
+													<select id="missempnom" name="employeSolliteMatricule" class="form-select">
+														<option th:value="${savedVisite.employeSolliteMatricule}" th:text="${savedVisite.employeSolliteNom}">Sélectionner un employé</option>
 														<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 													</select>
-													<!--label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
-													<select id="fonctioncode" name="fonctioncode" class="form-select" required>
-														<option value="">Sélectionner une fonction</option>
-														<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
-													</select-->
+												</div>
+												<hr>
+
+												<div class="col-lg-4 col-md-4 col-sm-6">
+													<label class="form-label h6" for="statusvisite" th:text="|Status congé|">civ</label>
+													<select id="statusvisite" name="statusvisite" class="form-select">
+														<option th:value="${savedVisite.statusVisite}" th:text="${savedVisite.statusVisite}">status</option>
+														<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+														<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
+														<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+														<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+														<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+														<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+													</select>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<label class="form-label h6" for="datestatusvisite" th:text="|Date status|">civ</label>
+													<input type="date" id="datestatusvisite" name="datestatusvisite" th:value="${savedVisite.dateStatusVisite}" class="form-control">
 												</div>
 												<hr>
 
