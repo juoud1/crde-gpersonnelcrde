@@ -190,7 +190,7 @@
 													<th>Prise srvce</th>
 													<th style="width: 150px;">Fonction</th>
 													<th style="width: 150px;">Lieu affectation</th>
-													<th class="text-center">Actions</th>
+													<th class="p-auto">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -204,36 +204,26 @@
 													<td th:text="${affectation.datePriseService}">email</td>
 													<td th:text="${affectation.fonction}">tel</td>
 													<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">lieu</td>
-													<td class="text-center">
-														<button type="button" id="${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
+													<td class="p-auto" style="width: 5%;">
+														<button type="button" th:id="|bt-| + ${affectation.numNoteService}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${affectation.numNoteService}" th:text="|...|">
 															action
 														</button>
 
-														<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${affectation.numNoteService}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" id="staticBackdropLabel">Actions disponibles</h1>
+																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${affectation.numNoteService}" th:text="|Actions disponibles sur affectation: | + ${affectation.numNoteService}">Actions disponibles</h1>
 																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																	</div>
 																	<div class="modal-body">
-																		<div class="container-fluid">
-																			<div class="card mb-4">
-																				<div class="card-header">
-																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|AFFECTATION N° | + ${affectation.numNoteService}">
-																						AC
-																					</span>
-																				</div>
-																				<div id="collapseAffectation" data-bs-parent="#">
-																					<div class="card-body">
-																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Annuler/Suspendre l'affectation N° | + ${affectation.numNoteService}">Annuler</a>
-																							<button type="button" class="btn btn-info align-items ms-auto" id="|NS|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
-																						</div>
-																					</div>
-																				</div>
+																		<div class="border p-1 mb-2 bg-secondary-subtle">
+																			<header class="h6 mb-1 text-start" th:text="|Données de l'affectation N° | + ${affectation.numNoteService}">Données de l'affectation</header>
+																			<div class="d-flex flex-wrap gap-2 p-2">
+																				<a class="btn btn-primary" th:id="|modifaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier l'affectation|">Annuler</a>
+																				<a class="btn btn-primary" th:id="|approuvaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation|">Annuler</a>
+																				<a class="btn btn-primary" th:id="|annulaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Annuler/Suspendre l'affectation|">Annuler</a>
+																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
 																			</div>
 																		</div>
 																	</div>

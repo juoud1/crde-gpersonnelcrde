@@ -213,15 +213,15 @@
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${visite.numVisite}" th:text="|Actions disponibles sur Employé/Stagiaire: |">Actions disponibles</h1>
+																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${visite.numVisite}" th:text="|Actions disponibles sur visite: | + ${visite.numVisite}">Actions disponibles</h1>
 																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																	</div>
 																	<div class="modal-body">
 																		<div class="border p-1 mb-2 bg-secondary-subtle">
 																			<header class="h6 mb-1 text-start">Données de la visite</header>
 																			<div class="d-flex flex-wrap gap-2 p-2">
-																				<a th:id="|approuvvisiteemp| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Approuver/Ann. visite|">Annuler</a>
-																				<a th:id="|majvisiteemp| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Mettre à jour la visite|">Annuler</a>
+																				<a th:id="|approuvvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Approuver/Ann. visite|">Annuler</a>
+																				<a th:id="|majvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Mettre à jour la visite|">Annuler</a>
 																				<!--a th:id="|histvisiteemp|" class="btn btn-outline-primary" th:href="|#|" formmethod="get" th:text="|Historique visite|">Annuler</a>
 																				<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="#" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button-->
 																			</div>

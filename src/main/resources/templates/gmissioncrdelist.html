@@ -197,7 +197,7 @@
 													<th>Pays</th>
 													<th>Ville</th>
 													<th style="width: 120px;">Status</th>
-													<th class="text-center">Actions</th>
+													<th class="p-auto">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -214,25 +214,36 @@
 													<td th:text="${mission.paysMission}">role</td>
 													<td th:text="${mission.villeMission}">status</td>
 													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
-													<td class="text-center">
+													<td class="p-auto" style="width: 5%;">
 														<!--button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
 														<form method = "get" th:action="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}+ |/| + ${mission.employeMatricule}">
 															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
 														</form-->
 														
-														<button type="button" id="${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde" th:text="|...|">
+														<button type="button" th:id="|bt-| + ${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${mission.numOrdreMission}" th:text="|...|">
 															action
 														</button>
 
-														<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${mission.numOrdreMission}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" id="staticBackdropLabel">Actions disponibles</h1>
+																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${mission.numOrdreMission}" th:text="|Actions disponibles sur mission: | + ${mission.numOrdreMission}">Actions disponibles</h1>
 																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																	</div>
 																	<div class="modal-body">
-																		<div class="container-fluid">
+																		<div class="border p-1 mb-2 bg-secondary-subtle">
+																			<header class="h6 mb-1 text-start" th:text="|Données de la mission N° | + ${mission.numOrdreMission}">Données de la mission</header>
+																			<div class="d-flex flex-wrap gap-2 p-2">
+																				<a th:id="|modifmissemp-| + ${mission.numOrdreMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier la mission|">Annuler</a>
+																				<a th:id="|approuvmissemp-| + ${mission.numOrdreMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission|">Annuler</a>
+																				<a th:id="|annulmissemp-| + ${mission.numOrdreMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Annuler/Suspendre la mission|">Annuler</a>
+																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|OM-|+${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
+																			</div>
+																		</div>
+
+
+																		<!--div class="container-fluid">
 																			<div class="card mb-4">
 																				<div class="card-header">
 																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|MISSION N° | + ${mission.numOrdreMission}">
@@ -250,7 +261,7 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>
+																		</div-->
 																	</div>
 																	<div class="modal-footer">
 																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
