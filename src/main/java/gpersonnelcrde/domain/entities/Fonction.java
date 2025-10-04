@@ -1,9 +1,6 @@
 package gpersonnelcrde.domain.entities;
 
 import java.time.LocalDateTime;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

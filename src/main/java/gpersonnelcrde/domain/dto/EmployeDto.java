@@ -255,5 +255,9 @@ public class EmployeDto {
 				+ ", refDecretouArreteDepart=" + refDecretouArreteDepart + ", dateDecretouArreteDepart="
 				+ dateDecretouArreteDepart + "]";
 	}
+	public Object orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+	}
 		
 }

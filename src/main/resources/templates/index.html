@@ -78,6 +78,20 @@
 						</li>
 					</ul>
 
+					<div class="btn-group">
+						<button type="button" class="btn btn-danger">Action</button>
+						<button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+							<span class="visually-hidden">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Action</a></li>
+							<li><a class="dropdown-item" href="#">Another action</a></li>
+							<li><a class="dropdown-item" href="#">Something else here</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="#">Separated link</a></li>
+						</ul>
+					</div>
+
 					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="isAuthenticated()">
 						<li>
 							&nbsp; | &nbsp; 
@@ -217,7 +231,7 @@
 									</div>
 									<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 										<form id="visit-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-											<legende class="h4 mb-3 text-center">Ajouter un rendez-vous</legende>
+											<legende class="h4 mb-3 text-center">Prendre un rendez-vous</legende>
 											<hr>
 											<div class="col-lg-3 col-md-3 col-sm-6">
 												<label class="form-label h6" for="civiliteougradevisit" th:text="|Civilité/Grade visiteur|">num</label>
@@ -624,11 +638,13 @@
 	<!--script type="text/javascript" th:src="@{/scripts/app.js}"></script-->
 	<!-- Placed at the end of the document so the pages load faster -->
 	
-	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.js}"></script>
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+	<!-- IE10script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+	
+	< viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
     </script>
+	
 </body>
 </html> 

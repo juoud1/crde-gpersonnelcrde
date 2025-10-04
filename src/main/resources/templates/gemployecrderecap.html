@@ -135,7 +135,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark">
-										<legende class="h4 mb-3 text-center" th:text="'Récapitulatif de la ' + ${traitement}">Récap. de l'opération</legende>
+										<legende class="h4 mb-3 text-center" th:text="|Récapitulatif de la | + ${traitement}">Récap. de l'opération</legende>
 										<hr>
 										<fieldset>
 											<div class="col-lg-10 col-md-10 col-sm-12 alert alert-success w-75 m-auto text-center" th:if="${resultTraitement != null}">
@@ -229,7 +229,7 @@
 											<a class="btn btn-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
 										<div class="col-3 text-end">
-												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
+												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedEmploye}]])">NS</button>
 										</div>	
 										<!--div class="col-2 text-start">
 											<button type="reset" class="btn btn-dark">Annuler</button>

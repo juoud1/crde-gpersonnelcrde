@@ -33,13 +33,13 @@ spring:
     driver-class-name: org.h2.Driver
   hikari:
       pool-name: crdeHikariPool
-      maximum-pool-size: 15
-      minimum-idle: 5
-      idle-timeout: 40000
-      max-lifetime: 2000000
-      connection-timeout: 40000
-      leak-detection-threshold: 3000
-      validation-timeout: 4000	  
+      maximum-pool-size: 50
+      minimum-idle: 20
+      idle-timeout: 60000
+      max-lifetime: 1200000
+      connection-timeout: 5000
+      leak-detection-threshold: 2000
+      validation-timeout: 500	  
      # platform: h2
        # data: classpath:data/taxes.sql, classpath:data/provinces.sql, classpath:data/taxesprovinces.sql #, classpath:reviews.sql
   jpa:

@@ -19,6 +19,7 @@ import gpersonnelcrde.service.AffectationService;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.FonctionService;
 import gpersonnelcrde.service.LieuAffectationService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -57,15 +58,17 @@ public class AffectationController {
 	}
 
 	@PostMapping("/affectation-emp-crde.html")
-	public String addAffectation(@RequestParam("affectempmatricule") String affectEmpMatricule, @RequestParam("datedebaffect") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
-	                @RequestParam("datefinaffect") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, @RequestParam("datepriseservice") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
+	public String addAffectation(@RequestParam("affectempmatricule") String affectEmpMatricule, @RequestParam(name="datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
+	                @RequestParam(name = "datefinaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, @RequestParam("datepriseservice") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
 					@RequestParam("numnoteserviceaffect") String numNoteServiceAffect, @RequestParam("lieuaffect") String lieuAffect, @RequestParam("emplacementaffect") String emplacementAffect, 
-					 @RequestParam("fonctioncode") String fonction, @RequestParam("commenataireaffect") String commenataireAffect, HttpServletRequest request, Model model){
+					 @RequestParam("fonctioncode") String fonction, @RequestParam("porteeaffect") String categorieAffect, @RequestParam("commenataireaffect") String commenataireAffect, HttpServletRequest request, Model model) throws IllegalAccessException{
 		
-		var savedAffectation = new AffectationDto(); // congeService.saveCongeEmploye(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge, dateDepartAutorisatSortie, dateRetourAutorisatSortie, villeAutorisatSortie, paysAutorisatSortie);
-		savedAffectation.setEmployeNom(affectEmpMatricule);
+		var savedAffectation = affectationService.createAffectation(categorieAffect, affectEmpMatricule, dateDebAffect, dateFinAffect, datePriseService, numNoteServiceAffect, lieuAffect, emplacementAffect, fonction, commenataireAffect)
+										.orElseThrow(() -> new EntityNotFoundException("La création de l'affectation de l'employé a échouée."));
+		//savedAffectation.setEmployeNom(affectEmpMatricule);
 		if (Objects.nonNull(savedAffectation)){
-			model.addAttribute("resultTraitement", "Création d'Affectation effectuée avec succès.");
+			model.addAttribute("traitement", "création de nouvelle affectation");
+			model.addAttribute("resultTraitement", "Création de l'Affectation employé effectuée avec succès.");
 		}
 
 		model.addAttribute("savedAffectation", savedAffectation);
@@ -81,6 +84,7 @@ public class AffectationController {
 		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
+		model.addAttribute("allEmployes", employeService.getAllEmploye());
 						
 		return "gaffectationcrdeMaj";
 	}

@@ -161,7 +161,7 @@
 
 										<div class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
-											<select id="affectEmpNom" name="affectempmatricule" class="form-select" required>
+											<select id="affectempmatricule" name="affectempmatricule" class="form-select" required>
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
