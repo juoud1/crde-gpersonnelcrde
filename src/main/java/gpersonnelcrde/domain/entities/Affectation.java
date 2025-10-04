@@ -17,6 +17,7 @@ public class Affectation {
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String referenceAffect;
+	private String categorieAffect;
 	private String EmplacementAffect;
 	private LocalDate dateDebutAffect;
 	private LocalDate dateFinAffect;
@@ -42,6 +43,7 @@ public class Affectation {
 	private String affectCreeePar;
 	private LocalDateTime affectModifieeLe;
 	private String affectModifieePar;
+
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +55,12 @@ public class Affectation {
 	}
 	public void setReferenceAffect(String referenceAffect) {
 		this.referenceAffect = referenceAffect;
+	}
+	public String getCategorieAffect() {
+		return categorieAffect;
+	}
+	public void setCategorieAffect(String categorieAffect) {
+		this.categorieAffect = categorieAffect;
 	}
 	public String getEmplacementAffect() {
 		return EmplacementAffect;
@@ -144,12 +152,14 @@ public class Affectation {
 	public void setAffectModifieePar(String affectModifieePar) {
 		this.affectModifieePar = affectModifieePar;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((referenceAffect == null) ? 0 : referenceAffect.hashCode());
+		result = prime * result + ((categorieAffect == null) ? 0 : categorieAffect.hashCode());
 		result = prime * result + ((EmplacementAffect == null) ? 0 : EmplacementAffect.hashCode());
 		result = prime * result + ((dateDebutAffect == null) ? 0 : dateDebutAffect.hashCode());
 		result = prime * result + ((dateFinAffect == null) ? 0 : dateFinAffect.hashCode());
@@ -161,8 +171,13 @@ public class Affectation {
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((lieuAffectation == null) ? 0 : lieuAffectation.hashCode());
 		result = prime * result + ((fonction == null) ? 0 : fonction.hashCode());
+		result = prime * result + ((affectCreeeLe == null) ? 0 : affectCreeeLe.hashCode());
+		result = prime * result + ((affectCreeePar == null) ? 0 : affectCreeePar.hashCode());
+		result = prime * result + ((affectModifieeLe == null) ? 0 : affectModifieeLe.hashCode());
+		result = prime * result + ((affectModifieePar == null) ? 0 : affectModifieePar.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -181,6 +196,11 @@ public class Affectation {
 			if (other.referenceAffect != null)
 				return false;
 		} else if (!referenceAffect.equals(other.referenceAffect))
+			return false;
+		if (categorieAffect == null) {
+			if (other.categorieAffect != null)
+				return false;
+		} else if (!categorieAffect.equals(other.categorieAffect))
 			return false;
 		if (EmplacementAffect == null) {
 			if (other.EmplacementAffect != null)
@@ -237,16 +257,39 @@ public class Affectation {
 				return false;
 		} else if (!fonction.equals(other.fonction))
 			return false;
+		if (affectCreeeLe == null) {
+			if (other.affectCreeeLe != null)
+				return false;
+		} else if (!affectCreeeLe.equals(other.affectCreeeLe))
+			return false;
+		if (affectCreeePar == null) {
+			if (other.affectCreeePar != null)
+				return false;
+		} else if (!affectCreeePar.equals(other.affectCreeePar))
+			return false;
+		if (affectModifieeLe == null) {
+			if (other.affectModifieeLe != null)
+				return false;
+		} else if (!affectModifieeLe.equals(other.affectModifieeLe))
+			return false;
+		if (affectModifieePar == null) {
+			if (other.affectModifieePar != null)
+				return false;
+		} else if (!affectModifieePar.equals(other.affectModifieePar))
+			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "Affectation [id=" + id + ", referenceAffect=" + referenceAffect + ", EmplacementAffect="
-				+ EmplacementAffect + ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect
-				+ ", datePriseService=" + datePriseService + ", infoSupplementaires=" + infoSupplementaires
-				+ ", statusAffect=" + statusAffect + ", dateStatusAffect=" + dateStatusAffect + ", numNoteService="
-				+ numNoteService + ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction="
-				+ fonction + "]";
+		return "Affectation [id=" + id + ", referenceAffect=" + referenceAffect + ", categorieAffect=" + categorieAffect
+				+ ", EmplacementAffect=" + EmplacementAffect + ", dateDebutAffect=" + dateDebutAffect
+				+ ", dateFinAffect=" + dateFinAffect + ", datePriseService=" + datePriseService
+				+ ", infoSupplementaires=" + infoSupplementaires + ", statusAffect=" + statusAffect
+				+ ", dateStatusAffect=" + dateStatusAffect + ", numNoteService=" + numNoteService + ", employe="
+				+ employe + ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + ", affectCreeeLe="
+				+ affectCreeeLe + ", affectCreeePar=" + affectCreeePar + ", affectModifieeLe=" + affectModifieeLe
+				+ ", affectModifieePar=" + affectModifieePar + "]";
 	}
-			
+	
 }

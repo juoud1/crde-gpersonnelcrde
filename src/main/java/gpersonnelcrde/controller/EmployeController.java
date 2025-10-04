@@ -18,6 +18,7 @@ import gpersonnelcrde.service.FonctionService;
 import gpersonnelcrde.service.LieuAffectationService;
 import gpersonnelcrde.service.StatusService;
 import gpersonnelcrde.service.TypeEmployeService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -80,12 +81,12 @@ public class EmployeController {
 					@RequestParam(value="empdatefinstatus", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
 					@RequestParam(value="datedecretouarreteentree", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
 					//@RequestParam("datedecretouarretedepart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
-					HttpServletRequest request, Model model){
+					HttpServletRequest request, Model model) throws EntityNotFoundException, IllegalAccessException{
+
+		var savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
+										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
+										empDateDebutStatus, dateDecretouArreteEntree).orElseThrow(() -> new EntityNotFoundException("La création de l'employé a échouée."));
 		
-		var savedEmploye = new EmployeDto();
-		savedEmploye.setEmpNom(empNom);
-		savedEmploye.setEmpPren(empPren);
-		savedEmploye.setFonction(empFonction);
 		if (Objects.nonNull(savedEmploye)) {
 			model.addAttribute("traitement", "création du nouvel employé ou stagiaire");
 			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
