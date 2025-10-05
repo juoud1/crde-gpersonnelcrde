@@ -115,10 +115,6 @@ public class EmployeService {
 				.findFirst();
 		
 		return optEmp.isPresent();
-		
-		/*this.getAllEmploye().stream()
-				.filter(emp -> emp.getEmpNom().equalsIgnoreCase(employeDto.getEmpNom()) && emp.getEmpPren().equalsIgnoreCase(employeDto.getEmpPren()))
-				.findFirst().orElse(null);*/
 	}
 
 	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException {
@@ -128,7 +124,7 @@ public class EmployeService {
 		}
 
 		var empExistant = checkEmployeExistance(employeDto);
-		if (empExistant){ //Objects.nonNull(empExistant)){
+		if (empExistant){
 			logger.info("Impossible de créer l'employé car, il existe déjà dans la base de données.");
 			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
 		}
@@ -149,6 +145,8 @@ public class EmployeService {
 		employe.setEmpCivilite(employeDto.getEmpCivilite());
 		employe.setEmpCreeLe(LocalDateTime.now());
 		employe.setEmpCreePar("admin");
+		employe.setDateDecretEntree(employeDto.getDateDecretouArreteEntree());
+		//employe.setDateDecretSortie(employeDto.getDateDecretouArreteDepart());
 		employe.setEmpEmail(employeDto.getEmpEmail());
 		employe.setEmpFonction(fonct);
 		employe.setEmpLieuAffectation(lAffect);
@@ -160,6 +158,7 @@ public class EmployeService {
 		employe.setEmpStatus(sttus);
 		employe.setEmpTelephone(employeDto.getEmpTelephone());
 		employe.setNumNoteService(null);
+		employe.setReferenceDecretEntree(employeDto.getRefDecretouArreteEntree());
 		employe.setTypeEmploye(typeEmp);
 
 		// Persistance de données
@@ -184,7 +183,7 @@ public class EmployeService {
 
 	private void createInitialaffectation(final Employe employe){
 		if (Objects.isNull(employe)) {
-			throw new EntityNotFoundException("L'entité employé ne doit être null");
+			throw new EntityNotFoundException("L'entité employé dont on veut créer son affectation initiale ne doit être null");
 		}
 
 		Affectation initAffectation = new Affectation();
@@ -193,10 +192,10 @@ public class EmployeService {
 		initAffectation.setAffectCreeePar("admin");
 		initAffectation.setAffectModifieeLe(LocalDateTime.now());
 		initAffectation.setAffectModifieePar("admin");
-		initAffectation.setDateDebutAffect(LocalDate.now());
-		initAffectation.setDateFinAffect(LocalDate.now());
-		initAffectation.setDatePriseService(LocalDate.now());
-		initAffectation.setDateStatusAffect(LocalDate.now());
+		initAffectation.setDateDebutAffect(employe.getDateDecretEntree()); //date decret ou arreté d'entrée
+		initAffectation.setDateFinAffect(employe.getDateDecretEntree()); //par défaut, date decret ou arreté d'entrée
+		initAffectation.setDatePriseService(employe.getDateDecretEntree()); //date decret ou arreté d'entrée
+		initAffectation.setDateStatusAffect(employe.getDateDecretEntree()); //date decret ou arreté d'entrée
 		initAffectation.setEmplacementAffect(employe.getEmpLieuAffectation().getLieuAffect());
 		initAffectation.setEmploye(employe);
 		initAffectation.setFonction(employe.getEmpFonction());
@@ -204,8 +203,11 @@ public class EmployeService {
 		initAffectation.setInfoSupplementaires("Affectation initiale");
 		initAffectation.setLieuAffectation(employe.getEmpLieuAffectation());
 		initAffectation.setNumNoteService(employe.getNumNoteService());
-		initAffectation.setReferenceAffect(employe.getNumNoteService());
-		initAffectation.setStatusAffect("Approuvée");
+		initAffectation.setReferenceAffect(employe.getReferenceDecretEntree()); // référence decret ou arreté d'entrée
+		initAffectation.setStatusAffect("Approuvée"); // Approuvée d'office
+		initAffectation.setCategorieAffect("Affectation intérieur RCA"); //par défaut, inte
+		initAffectation.setVilleResidence("Bangui"); //par défaut, Bangui
+		initAffectation.setPaysResidence("RCA"); //par défaut, RCA
 
 		var affectat = affectationRepository.saveAndFlush(initAffectation);
 		logger.info("Affectation initiale de {}, {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), affectat.getId());
@@ -308,10 +310,10 @@ public class EmployeService {
 		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
 		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
 		eDto.setEmpNumInterne(String.valueOf(employe.getId()));
-		eDto.setRefDecretouArreteEntree(null);
-		eDto.setDateDecretouArreteEntree(null);
-		eDto.setRefDecretouArreteDepart(null);
-		eDto.setDateDecretouArreteDepart(null);
+		eDto.setRefDecretouArreteEntree(employe.getReferenceDecretEntree());
+		eDto.setDateDecretouArreteEntree(employe.getDateDecretEntree());
+		eDto.setRefDecretouArreteDepart(employe.getReferenceDecretSortie());
+		eDto.setDateDecretouArreteDepart(employe.getDateDecretSortie());
 
 		var optAffectationEmploye = checktatusEncoursEmploye(employe);
 		var optCongeEmploye = checkCongeEncoursEmploye(employe);

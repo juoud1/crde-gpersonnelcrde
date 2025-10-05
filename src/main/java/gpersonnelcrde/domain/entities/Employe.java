@@ -1,5 +1,6 @@
 package gpersonnelcrde.domain.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,11 +40,16 @@ public class Employe {
 	@ManyToOne
 	private Fonction empFonction;
 
+	private String referenceDecretEntree;
+	private LocalDate dateDecretEntree;
+	private String referenceDecretSortie;
+	private LocalDate dateDecretSortie;
+
 	private LocalDateTime empCreeLe;
 	private String empCreePar;
 	private LocalDateTime empModifieLe;
 	private String empModifiePar;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -116,6 +122,30 @@ public class Employe {
 	public void setEmpFonction(Fonction empFonction) {
 		this.empFonction = empFonction;
 	}
+	public String getReferenceDecretEntree() {
+		return referenceDecretEntree;
+	}
+	public void setReferenceDecretEntree(String referenceDecretEntree) {
+		this.referenceDecretEntree = referenceDecretEntree;
+	}
+	public LocalDate getDateDecretEntree() {
+		return dateDecretEntree;
+	}
+	public void setDateDecretEntree(LocalDate dateDecretEntree) {
+		this.dateDecretEntree = dateDecretEntree;
+	}
+	public String getReferenceDecretSortie() {
+		return referenceDecretSortie;
+	}
+	public void setReferenceDecretSortie(String referenceDecretSortie) {
+		this.referenceDecretSortie = referenceDecretSortie;
+	}
+	public LocalDate getDateDecretSortie() {
+		return dateDecretSortie;
+	}
+	public void setDateDecretSortie(LocalDate dateDecretSortie) {
+		this.dateDecretSortie = dateDecretSortie;
+	}
 	public LocalDateTime getEmpCreeLe() {
 		return empCreeLe;
 	}
@@ -140,6 +170,7 @@ public class Employe {
 	public void setEmpModifiePar(String empModifiePar) {
 		this.empModifiePar = empModifiePar;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -151,12 +182,22 @@ public class Employe {
 		result = prime * result + ((empCivilite == null) ? 0 : empCivilite.hashCode());
 		result = prime * result + ((empTelephone == null) ? 0 : empTelephone.hashCode());
 		result = prime * result + ((empEmail == null) ? 0 : empEmail.hashCode());
+		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
 		result = prime * result + ((typeEmploye == null) ? 0 : typeEmploye.hashCode());
 		result = prime * result + ((empStatus == null) ? 0 : empStatus.hashCode());
 		result = prime * result + ((empLieuAffectation == null) ? 0 : empLieuAffectation.hashCode());
 		result = prime * result + ((empFonction == null) ? 0 : empFonction.hashCode());
+		result = prime * result + ((referenceDecretEntree == null) ? 0 : referenceDecretEntree.hashCode());
+		result = prime * result + ((dateDecretEntree == null) ? 0 : dateDecretEntree.hashCode());
+		result = prime * result + ((referenceDecretSortie == null) ? 0 : referenceDecretSortie.hashCode());
+		result = prime * result + ((dateDecretSortie == null) ? 0 : dateDecretSortie.hashCode());
+		result = prime * result + ((empCreeLe == null) ? 0 : empCreeLe.hashCode());
+		result = prime * result + ((empCreePar == null) ? 0 : empCreePar.hashCode());
+		result = prime * result + ((empModifieLe == null) ? 0 : empModifieLe.hashCode());
+		result = prime * result + ((empModifiePar == null) ? 0 : empModifiePar.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -201,6 +242,11 @@ public class Employe {
 				return false;
 		} else if (!empEmail.equals(other.empEmail))
 			return false;
+		if (numNoteService == null) {
+			if (other.numNoteService != null)
+				return false;
+		} else if (!numNoteService.equals(other.numNoteService))
+			return false;
 		if (typeEmploye == null) {
 			if (other.typeEmploye != null)
 				return false;
@@ -221,13 +267,59 @@ public class Employe {
 				return false;
 		} else if (!empFonction.equals(other.empFonction))
 			return false;
+		if (referenceDecretEntree == null) {
+			if (other.referenceDecretEntree != null)
+				return false;
+		} else if (!referenceDecretEntree.equals(other.referenceDecretEntree))
+			return false;
+		if (dateDecretEntree == null) {
+			if (other.dateDecretEntree != null)
+				return false;
+		} else if (!dateDecretEntree.equals(other.dateDecretEntree))
+			return false;
+		if (referenceDecretSortie == null) {
+			if (other.referenceDecretSortie != null)
+				return false;
+		} else if (!referenceDecretSortie.equals(other.referenceDecretSortie))
+			return false;
+		if (dateDecretSortie == null) {
+			if (other.dateDecretSortie != null)
+				return false;
+		} else if (!dateDecretSortie.equals(other.dateDecretSortie))
+			return false;
+		if (empCreeLe == null) {
+			if (other.empCreeLe != null)
+				return false;
+		} else if (!empCreeLe.equals(other.empCreeLe))
+			return false;
+		if (empCreePar == null) {
+			if (other.empCreePar != null)
+				return false;
+		} else if (!empCreePar.equals(other.empCreePar))
+			return false;
+		if (empModifieLe == null) {
+			if (other.empModifieLe != null)
+				return false;
+		} else if (!empModifieLe.equals(other.empModifieLe))
+			return false;
+		if (empModifiePar == null) {
+			if (other.empModifiePar != null)
+				return false;
+		} else if (!empModifiePar.equals(other.empModifiePar))
+			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
 				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
-				+ ", typeEmploye=" + typeEmploye + ", empStatus=" + empStatus + ", empLieuAffectation="
-				+ empLieuAffectation + ", empFonction=" + empFonction + "]";
-	}			
+				+ ", numNoteService=" + numNoteService + ", typeEmploye=" + typeEmploye + ", empStatus=" + empStatus
+				+ ", empLieuAffectation=" + empLieuAffectation + ", empFonction=" + empFonction
+				+ ", referenceDecretEntree=" + referenceDecretEntree + ", dateDecretEntree=" + dateDecretEntree
+				+ ", referenceDecretSortie=" + referenceDecretSortie + ", dateDecretSortie=" + dateDecretSortie
+				+ ", empCreeLe=" + empCreeLe + ", empCreePar=" + empCreePar + ", empModifieLe=" + empModifieLe
+				+ ", empModifiePar=" + empModifiePar + "]";
+	}
+				
 }

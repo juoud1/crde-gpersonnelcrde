@@ -61,9 +61,9 @@ public class AffectationController {
 	public String addAffectation(@RequestParam("affectempmatricule") String affectEmpMatricule, @RequestParam(name="datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
 	                @RequestParam(name = "datefinaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, @RequestParam("datepriseservice") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
 					@RequestParam("numnoteserviceaffect") String numNoteServiceAffect, @RequestParam("lieuaffect") String lieuAffect, @RequestParam("emplacementaffect") String emplacementAffect, 
-					 @RequestParam("fonctioncode") String fonction, @RequestParam("porteeaffect") String categorieAffect, @RequestParam("commenataireaffect") String commenataireAffect, HttpServletRequest request, Model model) throws IllegalAccessException{
+					 @RequestParam("fonctioncode") String fonction, @RequestParam("porteeaffect") String categorieAffect, @RequestParam(name="commenataireaffect", required = false) String commenataireAffect, @RequestParam(name="villeresidence", required = false) String villeResidence, @RequestParam(name="paysresidence", required = false) String paysResidence, HttpServletRequest request, Model model) throws IllegalAccessException{
 		
-		var savedAffectation = affectationService.createAffectation(categorieAffect, affectEmpMatricule, dateDebAffect, dateFinAffect, datePriseService, numNoteServiceAffect, lieuAffect, emplacementAffect, fonction, commenataireAffect)
+		var savedAffectation = affectationService.createAffectation(categorieAffect, affectEmpMatricule, dateDebAffect, dateFinAffect, datePriseService, numNoteServiceAffect, lieuAffect, emplacementAffect, fonction, commenataireAffect, villeResidence, paysResidence)
 										.orElseThrow(() -> new EntityNotFoundException("La création de l'affectation de l'employé a échouée."));
 		//savedAffectation.setEmployeNom(affectEmpMatricule);
 		if (Objects.nonNull(savedAffectation)){

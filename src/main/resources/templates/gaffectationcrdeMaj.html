@@ -140,13 +140,23 @@
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|Affectation N°|">num</label>
 											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" th:value="${savedAffectation.numNoteService}" class="form-control" placeholder="num note de service affectation">
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+										<div class="col-lg-6 col-md-6 col-sm-8 mt-4">
 											<label class="form-label h6" for="categorieaffect" th:text="|Catégorie|">civ</label>
 											<select id="categorieaffect" autofocus="autofocus" name="categorieaffect" class="form-select" required>
 												<option th:value="${savedAffectation.categorieAffect}" th:text="${savedAffectation.categorieAffect}">type de mission</option>
-												<option th:value="|Affectation à l'international|" th:text="|Affectation à l'international|">type de mission</option>
-												<option th:value="|Affectation à l'interieur de RCA|" th:text="|Affectation à l'interieur de RCA|">type de mission</option>
+												<option th:value="|Affectation international|" th:text="|Affectation à l'international|">type de mission</option>
+												<option th:value="|Affectation interieur de RCA|" th:text="|Affectation à l'interieur de RCA|">type de mission</option>
 											</select>
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
+											<input type="text" id="villeresidence" name="villeresidence" th:value="${savedAffectation.villeResidence}" class="form-control" >
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
+											<input type="text" id="paysresidence" name="paysresidence" th:value="${savedAffectation.paysResidence}" class="form-control" >
 										</div>
 
 										<div class="col-lg-10 col-md-10 col-sm-10">
@@ -166,7 +176,7 @@
 										</div>
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="emplacementaff" th:text="|Emplacemet précis|">civ</label>
-											<input type="text" id="emplacementaff" name="emplacementaff" th:value="${savedAffectation.emplacementAffect}" class="form-control" placeholder="Emplacement affectation">
+											<input type="text" id="emplacementaff" name="emplacementaff" th:value="${savedAffectation.emplacementAffect}" class="form-control">
 										</div>
 										
 										<div class="col-lg-10 col-md-10 col-sm-10">
@@ -178,19 +188,19 @@
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedebaffect" th:text="|Date début|">civ</label>
-											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" placeholder="Date affectation">
+											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" >
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datepriseservice" th:text="|Date prise de service|">civ</label>
-											<input type="date" id="datepriseservice" th:value="${savedAffectation.datePriseService}" name="datepriseservice" class="form-control" placeholder="Date prise de service">
+											<input type="date" id="datepriseservice" th:value="${savedAffectation.datePriseService}" name="datepriseservice" class="form-control">
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datefinaffect" th:text="|Date fin|">civ</label>
-											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control" placeholder="Date fin de service">
+											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control">
 										</div>
 										<div class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
-											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control" placeholder="Commentaires">
+											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control">
 										</div>
 										<hr>
 										

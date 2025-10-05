@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class AffectationDto {
 	private String categorieAffect;
+	private String villeResidence;
+	private String paysResidence;
 	private String referenceAffect;
 	private String emplacementAffect;
 	private LocalDate dateDebutAffect;
@@ -24,6 +26,18 @@ public class AffectationDto {
 	}
 	public void setCategorieAffect(String categorieAffect) {
 		this.categorieAffect = categorieAffect;
+	}
+	public String getVilleResidence() {
+		return villeResidence;
+	}
+	public void setVilleResidence(String villeResidence) {
+		this.villeResidence = villeResidence;
+	}
+	public String getPaysResidence() {
+		return paysResidence;
+	}
+	public void setPaysResidence(String paysResidence) {
+		this.paysResidence = paysResidence;
 	}
 	public String getReferenceAffect() {
 		return referenceAffect;
@@ -115,6 +129,8 @@ public class AffectationDto {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categorieAffect == null) ? 0 : categorieAffect.hashCode());
+		result = prime * result + ((villeResidence == null) ? 0 : villeResidence.hashCode());
+		result = prime * result + ((paysResidence == null) ? 0 : paysResidence.hashCode());
 		result = prime * result + ((referenceAffect == null) ? 0 : referenceAffect.hashCode());
 		result = prime * result + ((emplacementAffect == null) ? 0 : emplacementAffect.hashCode());
 		result = prime * result + ((dateDebutAffect == null) ? 0 : dateDebutAffect.hashCode());
@@ -144,6 +160,16 @@ public class AffectationDto {
 			if (other.categorieAffect != null)
 				return false;
 		} else if (!categorieAffect.equals(other.categorieAffect))
+			return false;
+		if (villeResidence == null) {
+			if (other.villeResidence != null)
+				return false;
+		} else if (!villeResidence.equals(other.villeResidence))
+			return false;
+		if (paysResidence == null) {
+			if (other.paysResidence != null)
+				return false;
+		} else if (!paysResidence.equals(other.paysResidence))
 			return false;
 		if (referenceAffect == null) {
 			if (other.referenceAffect != null)
@@ -220,13 +246,14 @@ public class AffectationDto {
 	
 	@Override
 	public String toString() {
-		return "AffectationDto [categorieAffect=" + categorieAffect + ", referenceAffect=" + referenceAffect
-				+ ", emplacementAffect=" + emplacementAffect + ", dateDebutAffect=" + dateDebutAffect
-				+ ", dateFinAffect=" + dateFinAffect + ", datePriseService=" + datePriseService
-				+ ", infoSupplementaires=" + infoSupplementaires + ", numNoteService=" + numNoteService
-				+ ", statusAffect=" + statusAffect + ", dateStatusAffect=" + dateStatusAffect + ", employeMatricule="
-				+ employeMatricule + ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite
-				+ ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + "]";
+		return "AffectationDto [categorieAffect=" + categorieAffect + ", villeResidence=" + villeResidence
+				+ ", paysResidence=" + paysResidence + ", referenceAffect=" + referenceAffect + ", emplacementAffect="
+				+ emplacementAffect + ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect
+				+ ", datePriseService=" + datePriseService + ", infoSupplementaires=" + infoSupplementaires
+				+ ", numNoteService=" + numNoteService + ", statusAffect=" + statusAffect + ", dateStatusAffect="
+				+ dateStatusAffect + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom
+				+ ", employeCivilite=" + employeCivilite + ", lieuAffectation=" + lieuAffectation + ", fonction="
+				+ fonction + "]";
 	}
 	
 }

@@ -18,6 +18,8 @@ public class Affectation {
    	private Long id;
 	private String referenceAffect;
 	private String categorieAffect;
+	private String villeResidence;
+	private String paysResidence;
 	private String EmplacementAffect;
 	private LocalDate dateDebutAffect;
 	private LocalDate dateFinAffect;
@@ -43,7 +45,7 @@ public class Affectation {
 	private String affectCreeePar;
 	private LocalDateTime affectModifieeLe;
 	private String affectModifieePar;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,6 +63,18 @@ public class Affectation {
 	}
 	public void setCategorieAffect(String categorieAffect) {
 		this.categorieAffect = categorieAffect;
+	}
+	public String getVilleResidence() {
+		return villeResidence;
+	}
+	public void setVilleResidence(String villeResidence) {
+		this.villeResidence = villeResidence;
+	}
+	public String getPaysResidence() {
+		return paysResidence;
+	}
+	public void setPaysResidence(String paysResidence) {
+		this.paysResidence = paysResidence;
 	}
 	public String getEmplacementAffect() {
 		return EmplacementAffect;
@@ -160,6 +174,8 @@ public class Affectation {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((referenceAffect == null) ? 0 : referenceAffect.hashCode());
 		result = prime * result + ((categorieAffect == null) ? 0 : categorieAffect.hashCode());
+		result = prime * result + ((villeResidence == null) ? 0 : villeResidence.hashCode());
+		result = prime * result + ((paysResidence == null) ? 0 : paysResidence.hashCode());
 		result = prime * result + ((EmplacementAffect == null) ? 0 : EmplacementAffect.hashCode());
 		result = prime * result + ((dateDebutAffect == null) ? 0 : dateDebutAffect.hashCode());
 		result = prime * result + ((dateFinAffect == null) ? 0 : dateFinAffect.hashCode());
@@ -201,6 +217,16 @@ public class Affectation {
 			if (other.categorieAffect != null)
 				return false;
 		} else if (!categorieAffect.equals(other.categorieAffect))
+			return false;
+		if (villeResidence == null) {
+			if (other.villeResidence != null)
+				return false;
+		} else if (!villeResidence.equals(other.villeResidence))
+			return false;
+		if (paysResidence == null) {
+			if (other.paysResidence != null)
+				return false;
+		} else if (!paysResidence.equals(other.paysResidence))
 			return false;
 		if (EmplacementAffect == null) {
 			if (other.EmplacementAffect != null)
@@ -283,13 +309,13 @@ public class Affectation {
 	@Override
 	public String toString() {
 		return "Affectation [id=" + id + ", referenceAffect=" + referenceAffect + ", categorieAffect=" + categorieAffect
-				+ ", EmplacementAffect=" + EmplacementAffect + ", dateDebutAffect=" + dateDebutAffect
-				+ ", dateFinAffect=" + dateFinAffect + ", datePriseService=" + datePriseService
-				+ ", infoSupplementaires=" + infoSupplementaires + ", statusAffect=" + statusAffect
-				+ ", dateStatusAffect=" + dateStatusAffect + ", numNoteService=" + numNoteService + ", employe="
-				+ employe + ", lieuAffectation=" + lieuAffectation + ", fonction=" + fonction + ", affectCreeeLe="
-				+ affectCreeeLe + ", affectCreeePar=" + affectCreeePar + ", affectModifieeLe=" + affectModifieeLe
-				+ ", affectModifieePar=" + affectModifieePar + "]";
+				+ ", villeResidence=" + villeResidence + ", paysResidence=" + paysResidence + ", EmplacementAffect="
+				+ EmplacementAffect + ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect
+				+ ", datePriseService=" + datePriseService + ", infoSupplementaires=" + infoSupplementaires
+				+ ", statusAffect=" + statusAffect + ", dateStatusAffect=" + dateStatusAffect + ", numNoteService="
+				+ numNoteService + ", employe=" + employe + ", lieuAffectation=" + lieuAffectation + ", fonction="
+				+ fonction + ", affectCreeeLe=" + affectCreeeLe + ", affectCreeePar=" + affectCreeePar
+				+ ", affectModifieeLe=" + affectModifieeLe + ", affectModifieePar=" + affectModifieePar + "]";
 	}
-	
+
 }
