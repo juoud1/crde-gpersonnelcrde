@@ -12,10 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.AffectationDto;
 import gpersonnelcrde.domain.entities.Affectation;
@@ -54,11 +52,11 @@ public class AffectationService {
 	}
 
 	public Optional<AffectationDto> createAffectation(String categorieAffect, String affectEmpMatricule, LocalDate dateDebAffect, LocalDate dateFinAffect, LocalDate datePriseService,
-					String numNoteServiceAffect, String lieuAffect, String emplacementAffect, String fonction, String commenataireAffect) throws IllegalAccessException{
+					String numNoteServiceAffect, String lieuAffect, String emplacementAffect, String fonction, String commenataireAffect, String villeResidence, String paysResidence) throws IllegalAccessException{
 	
 		AffectationDto aDto = new AffectationDto();
 		aDto.setCategorieAffect(categorieAffect);
-		aDto.setDateDebutAffect(datePriseService);
+		aDto.setDateDebutAffect(dateDebAffect);
 		aDto.setDateFinAffect(dateFinAffect);
 		aDto.setDatePriseService(datePriseService);
 		aDto.setDateStatusAffect(datePriseService);
@@ -71,6 +69,9 @@ public class AffectationService {
 		aDto.setLieuAffectation(lieuAffect);
 		aDto.setNumNoteService(numNoteServiceAffect);
 		aDto.setReferenceAffect(null);
+		aDto.setVilleResidence(villeResidence);
+		aDto.setPaysResidence(paysResidence);
+		aDto.setStatusAffect("En attente");
 
 		return createAffectation(aDto);
 	}
@@ -139,7 +140,7 @@ public class AffectationService {
 		affectat.setDateDebutAffect(affectationDto.getDateDebutAffect());
 		affectat.setDateFinAffect(affectationDto.getDateDebutAffect());
 		affectat.setDatePriseService(affectationDto.getDatePriseService());
-		affectat.setDateStatusAffect(LocalDate.now());
+		affectat.setDateStatusAffect(affectationDto.getDateStatusAffect());
 		affectat.setEmplacementAffect(affectationDto.getEmplacementAffect());
 		affectat.setEmploye(emp);
 		affectat.setFonction(fonct);
@@ -149,7 +150,9 @@ public class AffectationService {
 		affectat.setNumNoteService(affectationDto.getNumNoteService());
 		affectat.setReferenceAffect(affectationDto.getReferenceAffect());
 		affectat.setCategorieAffect(affectationDto.getCategorieAffect());
-		affectat.setStatusAffect("En attente de validation");
+		affectat.setStatusAffect(affectationDto.getStatusAffect());
+		affectat.setVilleResidence(affectationDto.getVilleResidence());
+		affectat.setPaysResidence(affectationDto.getPaysResidence());
 		
 		//Mise à jour des données de l'affecation encours
 		updateCurrentAffectation(affectationDto.getEmployeMatricule(), affectationDto.getDateDebutAffect());
@@ -223,6 +226,11 @@ public class AffectationService {
 		aDto.setLieuAffectation(affectLieuAffectation.orElseThrow(EntityNotFoundException::new).getLieuAffect());
 		aDto.setReferenceAffect(affectation.getReferenceAffect());
 		aDto.setNumNoteService(String.valueOf(affectation.getId())); ///Formule à détermier
+		aDto.setCategorieAffect(affectation.getCategorieAffect());
+		aDto.setVilleResidence(affectation.getVilleResidence());
+		aDto.setPaysResidence(affectation.getPaysResidence());
+		aDto.setStatusAffect(affectation.getStatusAffect());
+		aDto.setDateStatusAffect(affectation.getDateStatusAffect());
 
 		return aDto;
 	}
