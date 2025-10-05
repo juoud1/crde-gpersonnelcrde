@@ -2,6 +2,7 @@ package gpersonnelcrde.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -266,6 +267,11 @@ public class EmployeService {
 					}
 				}
 			}
+
+			// Fonction et lieu d'affectation encours
+			employeDto.setFonction(affectationEmploye.getFonction().getFonction());
+			employeDto.setLieuAffectation(affectationEmploye.getLieuAffectation().getLieuAffect());
+
 		});
 	}
 
@@ -305,44 +311,47 @@ public class EmployeService {
 		eDto.setEmpPren(employe.getEmpPren());
 		eDto.setEmpTelephone(employe.getEmpTelephone());
 		eDto.setEmpEmail(employe.getEmpEmail());
-		eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new).getFonction());
+		eDto.setFonction(empFonct.orElseThrow(EntityNotFoundException::new).getFonction()); //fonction initiale
 		eDto.setStatus(empStatus.orElseThrow(EntityNotFoundException::new).getStatus());
 		eDto.setTypeEmploye(empTypeEmp.orElseThrow(EntityNotFoundException::new).getTypeEmp());
-		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect());
+		eDto.setLieuAffectation(empLieuAffect.orElseThrow(EntityNotFoundException::new).getLieuAffect()); //lieu affectation initial
 		eDto.setEmpNumInterne(String.valueOf(employe.getId()));
 		eDto.setRefDecretouArreteEntree(employe.getReferenceDecretEntree());
 		eDto.setDateDecretouArreteEntree(employe.getDateDecretEntree());
 		eDto.setRefDecretouArreteDepart(employe.getReferenceDecretSortie());
 		eDto.setDateDecretouArreteDepart(employe.getDateDecretSortie());
 
-		var optAffectationEmploye = checktatusEncoursEmploye(employe);
-		var optCongeEmploye = checkCongeEncoursEmploye(employe);
-		var optMissionEmploye = checkMissionEncoursEmploye(employe);
+		var optAffectationEmploye = gettatusEncoursEmploye(employe);
+		var optCongeEmploye = getCongeEncoursEmploye(employe);
+		var optMissionEmploye = getMissionEncoursEmploye(employe);
 		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
 
 		return eDto;
 	}
 
-	private final Optional<Affectation> checktatusEncoursEmploye(final Employe employe) {
+	private final Optional<Affectation> gettatusEncoursEmploye(final Employe employe) {
 
 		return affectationRepository.findByEmploye(employe).stream()
-								.sorted((a1, a2) -> a2.getId().compareTo(a1.getId()))
+								.sorted(Comparator.comparing(Affectation::getId).reversed())
+								//.sorted((a1, a2) -> a2.getId().compareTo(a1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
 								.findFirst();
 	}
 
-	private final Optional<Conge> checkCongeEncoursEmploye(final Employe employe) {
+	private final Optional<Conge> getCongeEncoursEmploye(final Employe employe) {
 
 		return congeRepository.findByEmploye(employe).stream()
-								.sorted((c1, c2) -> c2.getId().compareTo(c1.getId()))
+								.sorted(Comparator.comparing(Conge::getId).reversed())
+								//.sorted((c1, c2) -> c2.getId().compareTo(c1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
 								.findFirst();
 	}
 
-	private final Optional<Mission> checkMissionEncoursEmploye(final Employe employe) {
+	private final Optional<Mission> getMissionEncoursEmploye(final Employe employe) {
 
 		return missionRepository.findByEmploye(employe).stream()
-								.sorted((m1, m2) -> m2.getId().compareTo(m1.getId()))
+								.sorted(Comparator.comparing(Mission::getId).reversed())
+								//.sorted((m1, m2) -> m2.getId().compareTo(m1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
 								.findFirst();
 	}

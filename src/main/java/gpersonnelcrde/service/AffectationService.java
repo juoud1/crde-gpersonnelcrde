@@ -95,7 +95,7 @@ public class AffectationService {
 		var currentAffectation = affectationRepository.findByEmploye(emp).stream()
 									.sorted(Comparator.comparingLong(Affectation::getId).reversed())
 									.findFirst().orElseThrow(() -> new EntityNotFoundException("Aucunne affectation pour cet employé"));
-		logger.info("currentAffectation de {} est {}", employeMatricule, currentAffectation.toString());
+		logger.info("Affectation encours de {} est le n° {}", employeMatricule, currentAffectation.getId());
 		
 		return currentAffectation;
 	}
