@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
-										<legende class="h4 mb-3 text-center">Ajouter une affectation à l'international</legende>
+										<legende class="h4 mb-3 text-center" id="legaffectationsform" th:text="|Ajouter une | + ${categAffectText}">Ajouter une affectation à l'international</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numnoteserviceaffect" th:text="|Affectation N°|">civ</label>
@@ -142,10 +142,11 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 mt-4">
 											<label class="form-label h6" for="porteeaffect" th:text="|Portée de l'affectation|">civ</label>
-											<select id="porteeaffect" autofocus="autofocus" name="porteeaffect" class="form-select" required>
-												<option value="" th:text="|Sélectionner une portée|">Nature de déplacement</option>
-												<option th:value="|Affectation intérieur RCA|" th:text="|Affectation à l'intérieur de la RCA|">Mission intérieur</option>
-												<option th:value="|Affectation international|" th:text="|Affectation à l'international|">Mission extérieur</option>
+											<select id="porteeaffect" autofocus="autofocus" name="porteeaffect" class="form-select" onchange="porteeAffectSelectChange()" required>
+												<!--option value="" th:text="|Sélectionner une portée|">Nature de déplacement</option-->
+												<option th:value="${categAffectValue}" th:text="${categAffectText}">categ</option>
+												<option th:value="|Affectation intérieure RCA|" th:text="|Affectation à l'intérieur de la RCA|">Mission intérieur</option>
+												<option th:value="|Affectation internationale|" th:text="|Affectation à l'international|">Mission extérieur</option>
 											</select>
 										</div>
 
@@ -156,7 +157,7 @@
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
-											<input type="text" id="paysresidence" name="paysresidence" class="form-control" >
+											<input type="text" id="paysresidence" name="paysresidence" th:value="${paysResidenceText} + | |" class="form-control" >
 										</div>
 
 										<div class="col-lg-9 col-md-9 col-sm-10">
@@ -230,6 +231,24 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allAffectations = [[${allAffectations}]];
+		let paysResidenceTxt = [[${paysResidenceText}]];
+
+		const porteeAffectSelect = document.getElementById('porteeaffect');
+		const paysResidenceText = document.getElementById('paysresidence');
+		const legendeFormText = document.getElementById('legaffectationsform');
+
+		window.addEventListener('DOMContentLoaded', porteeAffectSelectChange);
+		function porteeAffectSelectChange() {
+			//alert('paysResidenceTxt : ' + paysResidenceTxt);
+			paysResidenceText.value = paysResidenceTxt;
+			if (porteeAffectSelect.options[porteeAffectSelect.selectedIndex].value !== 'Affectation intérieure RCA') {
+				paysResidenceText.value ='';
+				legendeFormText.innerText='Ajouter une Affectation à l\'international';
+			} else {
+				paysResidenceText.value = 'Rép. Centrafricaine'; 
+				legendeFormText.innerText='Ajouter une Affectation à l\'intérieur de la RCA';
+			}
+		}
 
 		// Impression principale et tri personnalisée
 		function printAffectations() {
