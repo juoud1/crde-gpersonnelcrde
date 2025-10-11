@@ -47,13 +47,25 @@ public class AffectationController {
 	    return "gaffectationcrdelist";
 	}
 
-	@GetMapping ("/affectation-emp-crde.html")
-	public String getAffectation(HttpServletRequest request, Model model){
+	@GetMapping ("/affectation-emp-crde.html/{categAffect}")
+	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model){
 		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		
+		if (StringUtils.isNotBlank(categAffect)){
+			if ("aff-ext".equalsIgnoreCase(categAffect)) {
+				model.addAttribute("categAffectValue", "Affectation internationale");
+				model.addAttribute("categAffectText", "Affectation à l'international");
+				model.addAttribute("paysResidenceText", "");
+			} else {
+				model.addAttribute("categAffectValue", "Affectation intérieure RCA");
+				model.addAttribute("categAffectText", "Affectation à l'intérieur de la RCA");
+				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
+			}
+		}
+
 	    return "gaffectationcrde";
 	}
 
