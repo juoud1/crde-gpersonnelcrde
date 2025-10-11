@@ -39,8 +39,8 @@ public class AffectationController {
 
 	@GetMapping ("/affectations-emp-crde.html")
 	public String getGestAffectations(HttpServletRequest request, Model model){
-		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
-		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuxAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		

@@ -89,8 +89,8 @@ public class EmployeService {
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
 		eDto.setEmpCivilite(empCivilite);
-		eDto.setEmpDateDebutStatus(empDateDebutStatus);
-		eDto.setEmpDateFinStatus(empDateFinStatus);
+		eDto.setEmpDateDebutStatus(dateDecretouArreteEntree);
+		eDto.setEmpDateFinStatus(dateDecretouArreteEntree);
 		eDto.setEmpEmail(empEmail);
 		eDto.setEmpMatricule(empMatricule);
 		eDto.setEmpNom(empNom);
