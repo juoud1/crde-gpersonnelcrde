@@ -180,8 +180,8 @@
 										</div>
 									
 										<div class="col-lg-4 col-md-4 col-sm-6">
-											<label class="form-label h6" for="status" th:text="|Status employé(e)|">civ</label>
-											<select id="sttus" name="sttus" class="form-select" required>
+											<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
+											<select id="sttus" name="sttus" class="form-select" onchange="statusEmployeSelectChange()" required>
 												<option th:value="${savedEmploye.status}" th:text="${savedEmploye.status}">stts</option>
 												<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
 											</select>	
@@ -287,6 +287,21 @@
         let allAffectations = [[${allAffectations}]];
 		let allConges = [[${allConges}]];
 
+		const statusEmployeSelect = document.getElementById('sttus');
+		const dateDebutStatusEmploye = document.getElementById('empdatedebutstatus');
+		const dateFinStatusEmploye = document.getElementById('empdatefinstatus');
+		
+		window.addEventListener('DOMContentLoaded', statusEmployeSelectChange);
+		function statusEmployeSelectChange() {
+			if (statusEmployeSelect.options[statusEmployeSelect.selectedIndex].text.toUpperCase() !== 'NON ACTIF') {
+				dateDebutStatusEmploye.disabled = true;
+				dateFinStatusEmploye.disabled = true;
+			} else { // l'employé quitte définitivement CRDE
+				dateDebutStatusEmploye.disabled = false;
+				dateFinStatusEmploye.disabled = false;
+			}
+		}  
+		
 		function getEmployees() {
 			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
 		}

@@ -162,7 +162,7 @@
 											<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
 										</div>
 									
-										<div class="col-6">
+										<div class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
 											<input type="email" id="empemail" name="empemail" class="form-control" />
 										</div>
@@ -171,14 +171,14 @@
 											<input type="tel" id="emptelephone" name="emptelephone" class="form-control" />
 										</div>
 									
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-8">
 											<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
-											<select id="sttus" name="sttus" class="form-select" required>
+											<select id="sttus" name="sttus" class="form-select" onchange="statusEmployeSelectChange()" required>
 												<option value="">Sélectionner un status</option>
 												<option th:each="sttus : ${allStatus}" th:value="${sttus.statusCode}" th:text="${sttus.status}"></option>
 											</select>
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6" id="startDate-group">
+										<div class="col-lg-3 col-md-3 col-sm-4" id="startDate-group">
 											<label class="form-label h6" for="empdatedebutstatus" th:text="|Du |">civ</label>
 											<input type="date" id="empdatedebutstatus" name="empdatedebutstatus" class="form-control" required>
 										</div>
@@ -262,13 +262,32 @@
                 document.getElementById('endDate').required = true;
             }
         }
-        statusField.addEventListener('change', toggleDateFields);
-        window.addEventListener('DOMContentLoaded', toggleDateFields);*/
+        statusField.addEventListener('change', toggleDateFields);*/
+        
+		const statemploye = document.getElementById('sttus');
+		const datedebutstatemploye = document.getElementById('empdatedebutstatus');
+		const datefinstatemploye = document.getElementById('empdatefinstatus');
+		
 
 		let allEmployees = [[${allEmployes}]];
         let allMissions = [[${allMissions}]];
         let allAffectations = [[${allAffectations}]];
 		let allConges = [[${allConges}]];
+
+		const statusEmployeSelect = document.getElementById('sttus');
+		const dateDebutStatusEmploye = document.getElementById('empdatedebutstatus');
+		const dateFinStatusEmploye = document.getElementById('empdatefinstatus');
+
+		window.addEventListener('DOMContentLoaded', statusEmployeSelectChange);
+		function statusEmployeSelectChange() {
+			if (statusEmployeSelect.options[statusEmployeSelect.selectedIndex].text.toUpperCase() !== 'NON ACTIF') {
+				dateDebutStatusEmploye.disabled = true;
+				dateFinStatusEmploye.disabled = true;
+			} else { // l'employé quitte définitivement CRDE
+				dateDebutStatusEmploye.disabled = false;
+				dateFinStatusEmploye.disabled = false;
+			}
+		}  
 
 		function getEmployees() {
 			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');

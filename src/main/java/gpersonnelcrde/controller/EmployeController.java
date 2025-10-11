@@ -1,6 +1,7 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.entities.Fonction;
+import gpersonnelcrde.domain.entities.LieuAffectation;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.FonctionService;
 import gpersonnelcrde.service.LieuAffectationService;
@@ -42,6 +45,9 @@ public class EmployeController {
 	@GetMapping ("/employes-crde.html")
 	public String getEmployes(HttpServletRequest request, Model model){
 		model.addAttribute("allStatus", statusService.getAllStatus());
+											/*.sorted(Comparator.comparing(LieuAffectation::getId))
+											.sorted(Comparator.comparing(Fonction::getId))
+											.toList());*/
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
 		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());

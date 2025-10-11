@@ -146,8 +146,8 @@
 														<input type="date" id="datefinaffect" name="datefinaffect" class="form-control" placeholder="Date fin" required>
 													</div>
 													<div class="col-lg-4 col-md-4 col-sm-8" id="affectrecherchee-group">
-														<label class="form-label h6" for="affectrecherchee" th:text="|Employé ou N° affectation|">civ</label>
-														<input class="form-control me-2" autofocus="autofocus" type="search" id="affectrecherchee" name="affectrecherchee" placeholder="Entrez le n° mission ou le matricule ou nom employé" aria-label="Search">
+														<label class="form-label h6" for="affectrecherchee" th:text="|Employé (matricule ou nom)|">civ</label>
+														<input class="form-control me-2" autofocus="autofocus" type="search" id="affectrecherchee" name="affectrecherchee" placeholder="Entrez le matricule ou nom employé" aria-label="Search">
 													</div>
 													<div class="col-lg-2 col-md-2 col-sm-4 text-center pt-4" >
 														<button class="btn btn-success" id="brechercheaffectation" type="button">Rechercher</button>
@@ -164,10 +164,10 @@
 											</div>
 										</div>
 										<div class="mb-4 d-flex flex-wrap gap-1 w-75"><!-- style="align-items: flex-start;"-->
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="AFFECTATIONS EN ATTENTE">AFFECTATIONS EN ATTENTE</button>
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="AFFECTATIONS APPROUVÉES">AFFECTATIONS APPROUVÉES</button>
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="AFFECTATIONS ENCOURS">AFFECTATIONS ENCOURS</button>
-											<button type="button" class="btn btn-outline-success direction-filter" data-direction="AFFECTATIONS ANNULÉES">AFFECT. ANNULÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="EN ATTENTE">AFFECTATIONS EN ATTENTE</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="APPROUVÉE">AFFECTATIONS APPROUVÉES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="SUSPENDUE">AFFECT. SUSPENDUES</button>
+											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ANNULÉE">AFFECT. ANNULÉES</button>
 											<button type="button" class="btn btn-outline-success direction-filter" data-direction="ALL">TOUTES</button>
 										</div>
 										<hr>
@@ -179,18 +179,20 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
-										<table class="table table-responsive table-bordered" id="affectations-table">
+										<table class="table table-responsive table-bordered" id="affectat-table">
 											<thead>
-												<tr>
-												    <th>N°</th>
-													<th>Matricule</th>
-													<th style="width: 180px;">Employé</th>
-													<th>Date debut</th>
-													<th>Date fin</th>
-													<th>Prise srvce</th>
-													<th style="width: 150px;">Fonction</th>
-													<th style="width: 150px;">Lieu affectation</th>
-													<th class="p-auto">Actions</th>
+												<tr class="border border-secondary bg-secondary-subtle">
+												    <th style="width: 7.5%;">N°</th>
+													<th style="width: 7.5%;">Matricule</th>
+													<th style="width: 13%;">Employé</th>
+													<th style="width: 8.25%;">Date debut</th>
+													<th style="width: 8.25%;">Date fin</th>
+													<th style="width: 8.25%;">Prise srvce</th>
+													<th style="width: 14%;">Lieu affectation</th>
+													<th style="width: 10%;">Fonction</th>
+													<th>Résidence</th>
+													<th style="width: 8.25%;">Status aff.</th>
+													<th class="p-auto" style="width: 5%;">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -202,9 +204,11 @@
 													<td th:text="${affectation.dateDebutAffect}">prenom</td>
 													<td th:text="${affectation.dateFinAffect}">email</td>
 													<td th:text="${affectation.datePriseService}">email</td>
+													<td th:text="${affectation.lieuAffectation} + | / | + ${affectation.emplacementAffect}">lieu</td>
 													<td th:text="${affectation.fonction}">tel</td>
-													<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">lieu</td>
-													<td class="p-auto" style="width: 5%;">
+													<td th:text="${affectation.villeResidence} + | / | + ${affectation.paysResidence}">lieu</td>
+													<td th:text="${affectation.statusAffect} + | depuis le | + ${affectation.dateStatusAffect}">sttus</td>
+													<td class="p-auto text-center" style="width: 5%;">
 														<button type="button" th:id="|bt-| + ${affectation.numNoteService}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${affectation.numNoteService}" th:text="|...|">
 															action
 														</button>
@@ -261,7 +265,170 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
+		const tableBody = document.querySelector('#affectat-table tbody');
+		const datedebutaffect = document.getElementById('datedebutaffect');
+		const datefinaffect = document.getElementById('datefinaffect');
+		const empaffectrecherchee = document.getElementById('affectrecherchee');
+
         let allAffectations = [[${allAffectations}]];
+		let allFonctions = [[${allFonctions}]];
+		let allStatus = [[${allStatus}]];
+		let allLieuxAffectation = [[${allLieuxAffect}]];
+
+		let currentAffectationStatus = 'ALL';
+		
+		//Bouton rechercher une affectation
+		rechercheaffectationBtn = document.getElementById('brechercheaffectation');
+		if (rechercheaffectationBtn) {
+			rechercheaffectationBtn.addEventListener('click', function(){
+				renderAffectations(datedebutaffect.value.trim(), datefinaffect.value.trim(), empaffectrecherchee.value.trim(), true);
+			});
+		}
+
+		// Gestion du filtrage par status affectation
+		const affectationStatusButtons = document.querySelectorAll('.direction-filter');
+		affectationStatusButtons.forEach(btn => {
+			btn.addEventListener('click', function() {
+			    currentAffectationStatus = this.getAttribute('data-direction');
+				renderAffectations(null, null, currentAffectationStatus, false);
+			});
+		});
+
+		function getFonctions(){
+			//alert('getFonctions intérieure: ' + JSON.stringify(allFonctions));
+			let resultFctions = [];
+			allFonctions.forEach(fction => resultFctions.push(fction.fonction));
+			//alert('getFonctions intérieure avec resultFctions: ' + JSON.stringify(resultFctions));
+			return resultFctions;
+		}
+
+		function getStatusAffectations(){
+			const resulStatusAffect = ['En attente'.toUpperCase(), 'Approuvée'.toUpperCase(), 'Annulée'.toUpperCase(), 'Suspendue'.toUpperCase(), 'Reportée'.toUpperCase(), 'Autre'.toUpperCase()];
+			//alert('getStatusAffectations intérieure: ' + JSON.stringify(resulStatusAffect));
+			return resulStatusAffect;
+		}
+
+		function getLieuxAffectations(){
+			//alert('getLieuxAffectations intérieure: ' + JSON.stringify(allLieuxAffectation));
+			let resultLieuxAffect = [];
+			allLieuxAffectation.forEach(lAffect => resultLieuxAffect.push(lAffect.lieuAffect));
+			//alert('getLieuxAffectations intérieure avec resultLieuxAffect: ' + JSON.stringify(resultLieuxAffect));
+			return resultLieuxAffect;
+		}
+
+		function getAffectations() {
+			//alert('getAffectations intérieure: ' + JSON.stringify(allAffectations));
+			return allAffectations; //JSON.parse(localStorage.getItem('employees') || '[]');
+		}
+
+		function formatAffectation(aff) {
+			return aff.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+		}
+
+		function getDateAAAAMMJJ(str){
+			return str.split('-');
+		}
+		
+		function renderAffectations(rechercheDatDebAffectParam, rechercheDatFinAffectParam, rechercheEmployeParam, isRechercheAffectation) {
+			let affectations = getAffectations();
+			const statusAffectOrder = getStatusAffectations();
+			const lieuAffectationOrder = getLieuxAffectations();
+			const fonctionOrder = getFonctions();
+			tableBody.innerHTML = ''; 
+			const isRechAffect = Boolean(isRechercheAffectation);
+			if (isRechAffect) {
+				if (rechercheEmployeParam) {
+					rechercheEmployeParam = rechercheEmployeParam.toUpperCase();
+					affectations = allAffectations
+								.filter(affectation => affectation.employeMatricule.toUpperCase().startsWith(rechercheEmployeParam) || affectation.employeNom.toUpperCase().startsWith(rechercheEmployeParam));
+				} else {
+					const datedeb = new Date(datedebutaffect.value.trim());//+'T00:00:00');
+					const datefin = new Date(datefinaffect.value.trim());
+					if (datefin >= datedeb) {
+						affectations = allAffectations
+								.filter(affectation => {
+									const affdatedeb = new Date(affectation.dateDebutAffect.trim());
+									return affdatedeb >= datedeb && affdatedeb <= datefin;
+								});
+					}
+				}
+			} else {
+				affectations = allAffectations
+								.filter(aff => currentAffectationStatus === 'ALL' || formatAffectation(aff.statusAffect) === formatAffectation(currentAffectationStatus));			
+			}
+			
+			affectations
+				.sort((a, b) => { //Ici on trie par AFFECTATION
+					const affA = lieuAffectationOrder.indexOf(formatAffectation(a.lieuAffectation));
+					const affB = lieuAffectationOrder.indexOf(formatAffectation(b.lieuAffectation));
+					if (affA !== affB) return affA - affB;
+				})
+				.sort((a, b) => { //Ici on trie par FONCTION
+					const fA = fonctionOrder.indexOf(a.fonction);
+					const fB = fonctionOrder.indexOf(b.fonction);
+					if (fA === -1 && fB === -1) return 0;
+					if (fA === -1) return 1;
+					if (fB === -1) return -1;
+					return fA - fB;
+				})
+				.sort((a, b) => { //Ici on trie par status affectation
+					const affStatA = statusAffectOrder.indexOf(formatAffectation(a.statusAffect));
+					const affStatB = statusAffectOrder.indexOf(formatAffectation(b.statusAffect));
+					if (affStatA === -1 && affStatB === -1) return 0;
+					if (affStatA === -1) return 1;
+					if (affStatB === -1) return -1;
+					return affStatA - affStatB;
+				})
+				.forEach((affectation, index) => {
+					//alert('affectation  n° ' + index + ' : '+ JSON.stringify(affectation));
+					const row = document.createElement('tr');
+					row.innerHTML = `
+						<td>${affectation.numNoteService}</td>
+						<td>${affectation.employeMatricule}</td>
+						<td>${affectation.employeCivilite} ${affectation.employeNom} </td>
+						<td>${affectation.dateDebutAffect}</td>
+						<td>${affectation.dateFinAffect}</td>
+						<td>${affectation.datePriseService}</td>
+						<td>${affectation.lieuAffectation} / ${affectation.emplacementAffect}</td>
+						<td>${affectation.fonction}</td>
+						<td>${affectation.villeResidence} / ${affectation.paysResidence}</td>
+						<td>${affectation.statusAffect} depuis le ${affectation.dateStatusAffect}</td>
+						<td class="p-auto" style="width: 5%;">
+						
+							<button type="button" class="btn btn-warning" id="bt1-${affectation.numNoteService}" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde1-${affectation.numNoteService}" >
+								...
+							</button>
+
+							<div class="modal modal-xl fade bg-transparent" id="staticBckdpCrde1-${affectation.numNoteService}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="staticBackdropLabel1-${affectation.numNoteService}">Actions disponibles sur affectation: ${affectation.numNoteService}</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Données de l'affectation N° ${affectation.numNoteService}</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a class="btn btn-outline-primary" id="modifaffect1-${affectation.numNoteService}" href="/crde/gpsnel/affectation-emp-crde-m.html/${affectation.numNoteService}" formmethod="get">Modifier l'affectation</a>
+													<a class="btn btn-outline-danger" id="approuvaffect1-${affectation.numNoteService}" href="/crde/gpsnel/affectation-emp-crde-m.html/${affectation.numNoteService}" formmethod="get">Approuver/Désapprouver l'affectation</a>
+													<a class="btn btn-outline-danger" id="annulaffect1-${affectation.numNoteService}" href="/crde/gpsnel/affectation-emp-crde-m.html/${affectation.numNoteService}" formmethod="get">Annuler/Suspendre l'affectation</a>
+													<button id="NS1-${affectation.numNoteService}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${affectation}]])">Imprimer note de service</button>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</td>
+					`;
+					tableBody.appendChild(row);
+				});
+		}
 
 		// Impression principale et tri personnalisée
 		function printAffectations() {

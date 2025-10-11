@@ -255,6 +255,16 @@
     <script  th:inline="javascript">
         let allAffectations = [[${allAffectations}]];
 
+		function statusEmployeSelectChange() {
+			if (statusEmployeSelect.options[statusEmployeSelect.selectedIndex].text.toUpperCase() !== 'NON ACTIF') {
+				dateDebutStatusEmploye.disabled = true;
+				dateFinStatusEmploye.disabled = true;
+			} else { // l'employé quitte définitivement CRDE
+				dateDebutStatusEmploye.disabled = false;
+				dateFinStatusEmploye.disabled = false;
+			}
+		}
+
 		// Impression principale et tri personnalisée
 		function printAffectations() {
 			const printBtn = document.getElementById('print-affectations');
