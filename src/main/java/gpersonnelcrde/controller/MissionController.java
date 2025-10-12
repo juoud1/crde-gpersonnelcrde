@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
@@ -51,7 +50,7 @@ public class MissionController {
 	    return "gmissioncrde";
 	}*/
 
-	@GetMapping ("/mission-grpe-emp-crde.html")
+	/*@GetMapping ("/mission-grpe-emp-crde.html")
 	public String getMissionGroupe(HttpServletRequest request, Model model){
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -60,15 +59,28 @@ public class MissionController {
 		);
 		//request.getSession().setAttribute("modelMission", model);
 	    return "gmissioncrde";
-	}
+	}*/
 
-	@GetMapping ("/mission-emp-crde.html")
-	public String getMissionIndividuelle(HttpServletRequest request, Model model){
+	@GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
+	public String getMissionIndividuelle(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model){
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
+
+		if (StringUtils.isNotBlank(typOrdMiss)){
+			if ("miss-grpe".equalsIgnoreCase(typOrdMiss)) {
+				model.addAttribute("typMissValue", "Mission de groupe");
+				model.addAttribute("typMissText", "Mission de groupe");
+				model.addAttribute("paysResidenceText", "");
+			} else {
+				model.addAttribute("typMissValue", "Mission");
+				model.addAttribute("typMissText", "Mission d'un employé");
+				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
+			}
+		}
+
 		//request.getSession().setAttribute("modelMission", model);
 	    return "gmissioncrde";
 	}

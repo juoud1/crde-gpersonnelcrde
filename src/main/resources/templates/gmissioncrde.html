@@ -135,7 +135,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
-										<legende class="h4 mb-3 text-center">Ajouter une mission de groupe</legende>
+										<legende id="legmissionsform" class="h4 mb-3 text-center">Ajouter une mission de groupe</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numordremiss" th:text="|N°|">num</label>
@@ -143,16 +143,17 @@
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
 											<label class="form-label h6" for="typeordremission" th:text="|Type de mission|">civ</label>
-											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" required>
-												<option value="" th:text="|Sélectionner un type de mission|">type de mission</option>
-												<option th:value="|mission|" th:text="|Mission à une personne|">type de mission</option>
+											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" onchange="typeOrdreMissSelectChange()" required>
+												<!--option value="" th:text="|Sélectionner un type de mission|">type de mission</option-->
+												<option th:value="${typMissValue}" th:text="${typMissText}">type miss</option>
+												<option th:value="|Mission|" th:text="|Mission d'un employé|">type de mission</option>
 												<option th:value="|Mission de groupe|" th:text="|Mission de groupe|">type de mission</option>
 											</select>
 										</div>
 										
 										<div class="col-lg-4 col-md-4 col-sm-4 mt-4">
 											<label class="form-label h6" for="naturedeplacement" th:text="|Portée de la mission|">civ</label>
-											<select id="naturedeplacement" name="naturedeplacement" class="form-select" required>
+											<select id="naturedeplacement" name="naturedeplacement" class="form-select" onchange="natureDeplacementSelectChange()" required>
 												<option value="" th:text="|Sélectionner une portée|">Nature de déplacement</option>
 												<option th:value="|Mission intérieur RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
 												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
@@ -199,7 +200,7 @@
 											<input type="text" id="destpays" name="destpays" class="form-control" >
 										</div>
 
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<div id="employesautorises" class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											<select id="missempnom" name="missempmatricule" class="form-select" multiple>
 												<option value="">Sélectionner un ou plusieurs employés</option>
@@ -208,7 +209,7 @@
 										</div>
 
 										<div class="col-lg-9 col-md-9 col-sm-10">
-											<label class="form-label h6" for="empchefmissionmatricule" th:text="|Chef de mission|">civ</label>
+											<label id="empchefmissionmatriculelabel" class="form-label h6" for="empchefmissionmatricule" th:text="|Employé, chef de mission|">civ</label>
 											<select id="empchefmissionmatricule" name="empchefmissionmatricule" class="form-select">
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
@@ -254,6 +255,41 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allMissions = [[${allMissions}]];
+
+		const employesAutorisesBoite = document.getElementById('employesautorises');
+		const natureDeplacementSelect = document.getElementById('naturedeplacement');
+		const typeOrdreMissionSelect = document.getElementById('typeordremission');
+		const destPaysText = document.getElementById('destpays');
+		const legendeFormText = document.getElementById('legmissionsform');
+		const empChefMissionMatriculeLabelText = document.getElementById('empchefmissionmatriculelabel');
+		
+		window.addEventListener('DOMContentLoaded', typeOrdreMissSelectChange);
+		function typeOrdreMissSelectChange() {
+			//alert('paysResidenceTxt : ' + paysResidenceTxt);
+			//paysResidenceText.value = paysResidenceTxt;
+			if (typeOrdreMissionSelect.options[typeOrdreMissionSelect.selectedIndex].value !== 'Mission') {
+				//paysResidenceText.value ='';
+				legendeFormText.innerText='Ajouter une Mission de groupe';
+				employesAutorisesBoite.style.display='';
+				empChefMissionMatriculeLabelText.innerText='Employé, chef de mission';
+			} else {
+				//paysResidenceText.value = 'Rép. Centrafricaine'; 
+				legendeFormText.innerText='Ajouter une Mission';
+				employesAutorisesBoite.style.display='none';
+				empChefMissionMatriculeLabelText.innerText='Employé autorisé';
+			}
+		}
+
+		function natureDeplacementSelectChange() {
+			//alert('natureDeplacementSelect Allo');
+			//paysResidenceText.value = paysResidenceTxt;
+			if (natureDeplacementSelect.options[natureDeplacementSelect.selectedIndex].value !== 'Mission extérieur') {
+				//alert('natureDeplacementSelect Allo Allo');
+				destPaysText.value ='Rép. Centrafricaine';
+			} else {
+				destPaysText.value = '';
+			}
+		}
 
 		// Impression principale et tri personnalisée
 		function printMissions() {
