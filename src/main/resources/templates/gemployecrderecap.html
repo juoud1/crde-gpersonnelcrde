@@ -224,16 +224,13 @@
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 											<!--button type="submit" class="btn btn-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button-->
-											<a class="btn btn-primary" th:href="@{/employe-crde-m.html} + |/| + ${savedEmploye.empMatricule}" formmethod="get" th:text="|Modifier|">Annuler</a>
-											<a class="btn btn-dark" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Ajouter nouvel employé|">Annuler</a>
+											<a class="btn btn-outline-primary" th:href="@{/employe-crde-m.html} + |/| + ${savedEmploye.empMatricule}" formmethod="get" th:text="|Modifier|">Annuler</a>
+											<a class="btn btn-outline-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Ajouter nouvel employé|">Annuler</a>
 											<a class="btn btn-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
 										<div class="col-3 text-end">
-												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedEmploye}]])">NS</button>
-										</div>	
-										<!--div class="col-2 text-start">
-											<button type="reset" class="btn btn-dark">Annuler</button>
-										</div-->
+											<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedEmploye}]])">NS</button>
+										</div>
 									</form>
 								</div>
 							</div>

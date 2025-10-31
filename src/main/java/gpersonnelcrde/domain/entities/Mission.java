@@ -2,6 +2,11 @@ package gpersonnelcrde.domain.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Mission {
@@ -29,14 +35,20 @@ public class Mission {
 	private String statusMission;
 	private LocalDate dateStatusMission;
 
-	@JsonIgnore
+	/*@JsonIgnore
 	@ManyToOne
-	private Employe employe;
+	private Employe employe;*/
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.mission", cascade = {jakarta.persistence.CascadeType.PERSIST, jakarta.persistence.CascadeType.MERGE})
+	@Cascade(CascadeType.REFRESH)
+	private List<MissionEmploye> missionEmployes = new ArrayList<>();
 	
 	private LocalDateTime missionCreeeLe;
 	private String missionCreeePar;
 	private LocalDateTime missionModifieeLe;
 	private String missionModifieePar;
+	
 	public Long getId() {
 		return id;
 	}
@@ -115,11 +127,11 @@ public class Mission {
 	public void setDateStatusMission(LocalDate dateStatusMission) {
 		this.dateStatusMission = dateStatusMission;
 	}
-	public Employe getEmploye() {
-		return employe;
+	public List<MissionEmploye> getMissionEmployes() {
+		return missionEmployes;
 	}
-	public void setEmploye(Employe employe) {
-		this.employe = employe;
+	public void setMissionEmployes(List<MissionEmploye> missionEmployes) {
+		this.missionEmployes = missionEmployes;
 	}
 	public LocalDateTime getMissionCreeeLe() {
 		return missionCreeeLe;
@@ -145,6 +157,7 @@ public class Mission {
 	public void setMissionModifieePar(String missionModifieePar) {
 		this.missionModifieePar = missionModifieePar;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -162,13 +175,13 @@ public class Mission {
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((statusMission == null) ? 0 : statusMission.hashCode());
 		result = prime * result + ((dateStatusMission == null) ? 0 : dateStatusMission.hashCode());
-		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((missionCreeeLe == null) ? 0 : missionCreeeLe.hashCode());
 		result = prime * result + ((missionCreeePar == null) ? 0 : missionCreeePar.hashCode());
 		result = prime * result + ((missionModifieeLe == null) ? 0 : missionModifieeLe.hashCode());
 		result = prime * result + ((missionModifieePar == null) ? 0 : missionModifieePar.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -243,11 +256,6 @@ public class Mission {
 				return false;
 		} else if (!dateStatusMission.equals(other.dateStatusMission))
 			return false;
-		if (employe == null) {
-			if (other.employe != null)
-				return false;
-		} else if (!employe.equals(other.employe))
-			return false;
 		if (missionCreeeLe == null) {
 			if (other.missionCreeeLe != null)
 				return false;
@@ -270,15 +278,16 @@ public class Mission {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Mission [id=" + id + ", numOrdreMission=" + numOrdreMission + ", typeOrdreMission=" + typeOrdreMission
 				+ ", natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart=" + dateDepart
 				+ ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission=" + villeMission
 				+ ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires + ", statusMission="
-				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employe=" + employe
+				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", missionEmployes=" + missionEmployes
 				+ ", missionCreeeLe=" + missionCreeeLe + ", missionCreeePar=" + missionCreeePar + ", missionModifieeLe="
 				+ missionModifieeLe + ", missionModifieePar=" + missionModifieePar + "]";
 	}
-		
+	
 }

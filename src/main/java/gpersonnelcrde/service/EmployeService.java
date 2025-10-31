@@ -2,6 +2,7 @@ package gpersonnelcrde.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -10,20 +11,14 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
 import gpersonnelcrde.domain.entities.Affectation;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.domain.entities.Employe;
-import gpersonnelcrde.domain.entities.Fonction;
-import gpersonnelcrde.domain.entities.LieuAffectation;
 import gpersonnelcrde.domain.entities.Mission;
-import gpersonnelcrde.domain.entities.Status;
-import gpersonnelcrde.domain.entities.TypeEmploye;
 import gpersonnelcrde.repository.AffectationRepository;
 import gpersonnelcrde.repository.CongeRepository;
 import gpersonnelcrde.repository.EmployeRepository;
@@ -79,6 +74,31 @@ public class EmployeService {
 					return eDto;
 				})
 				.toList();
+	}
+
+	@Transactional
+	protected List<Employe> getEmployesFromEmpMatricules(final List<EmployeDto> empMatricules) {
+		if (null==empMatricules ||  empMatricules.isEmpty()) {
+			throw new IllegalArgumentException("La liste des employés autorisés à effectuer la mission ne doit être null ou vide.");
+		}
+
+		var matricules = empMatricules.stream()
+			.map(EmployeDto::getEmpMatricule)
+			.sorted()
+			.toList();
+		
+		return getEmployesFromMatricules(matricules);
+	}
+
+	private List<Employe> getEmployesFromMatricules(final List<String> empMatricules) {
+		if (null==empMatricules ||  empMatricules.isEmpty()) {
+			throw new IllegalArgumentException("La liste de matricules des employés autorisés à effectuer la mission ne doit être null ou vide.");
+		}
+		
+		return employeRepository.findAll().stream()
+			.sorted(Comparator.comparing(Employe::getEmpMatricule))
+			.filter(eDto -> empMatricules.contains(eDto.getEmpMatricule()))
+			.toList();
 	}
 
 	public Optional<EmployeDto> createEmploye (String empCivilite, String empNom, String empPren, String typeEmploye, 
@@ -173,7 +193,8 @@ public class EmployeService {
 		return employeMapper(Optional.ofNullable(employe));
 	}
 
-	private Employe saveEmploye(final Employe employe){
+	@Transactional
+	protected Employe saveEmploye(final Employe employe){
 		if (Objects.isNull(employe)) {
 			throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
@@ -219,11 +240,11 @@ public class EmployeService {
 			Conge congeEmploye = null;
 			Mission missionEmploye = null;
 			
-			if (optConge.isPresent()){
+			if (Objects.nonNull(optConge) && optConge.isPresent()){
 				congeEmploye = optConge.get();
 			}
 
-			if (optMission.isPresent()){
+			if (Objects.nonNull(optMission) && optMission.isPresent()){
 				missionEmploye = optMission.get();
 			}
 
@@ -323,9 +344,9 @@ public class EmployeService {
 
 		var optAffectationEmploye = gettatusEncoursEmploye(employe);
 		var optCongeEmploye = getCongeEncoursEmploye(employe);
-		var optMissionEmploye = getMissionEncoursEmploye(employe);
-		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
-
+		////var optMissionEmploye = getMissionEncoursEmploye(employe);
+		////computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
+		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, null, eDto);
 		return eDto;
 	}
 
@@ -347,12 +368,12 @@ public class EmployeService {
 								.findFirst();
 	}
 
-	private final Optional<Mission> getMissionEncoursEmploye(final Employe employe) {
+	/*private final Optional<Mission> getMissionEncoursEmploye(final Employe employe) {
 
 		return missionRepository.findByEmploye(employe).stream()
 								.sorted(Comparator.comparing(Mission::getId).reversed())
 								//.sorted((m1, m2) -> m2.getId().compareTo(m1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
 								.findFirst();
-	}
+	}*/
 }

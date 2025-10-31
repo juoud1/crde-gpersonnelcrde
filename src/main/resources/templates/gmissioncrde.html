@@ -138,7 +138,7 @@
 										<legende id="legmissionsform" class="h4 mb-3 text-center">Ajouter une mission de groupe</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numordremiss" th:text="|N°|">num</label>
+											<label class="form-label h6" for="numordremiss" th:text="|N° OM|">num</label>
 											<input type="text" id="numordremiss" name="numordremiss" class="form-control">
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
@@ -265,15 +265,11 @@
 		
 		window.addEventListener('DOMContentLoaded', typeOrdreMissSelectChange);
 		function typeOrdreMissSelectChange() {
-			//alert('paysResidenceTxt : ' + paysResidenceTxt);
-			//paysResidenceText.value = paysResidenceTxt;
 			if (typeOrdreMissionSelect.options[typeOrdreMissionSelect.selectedIndex].value !== 'Mission') {
-				//paysResidenceText.value ='';
 				legendeFormText.innerText='Ajouter une Mission de groupe';
 				employesAutorisesBoite.style.display='';
 				empChefMissionMatriculeLabelText.innerText='Employé, chef de mission';
-			} else {
-				//paysResidenceText.value = 'Rép. Centrafricaine'; 
+			} else { 
 				legendeFormText.innerText='Ajouter une Mission';
 				employesAutorisesBoite.style.display='none';
 				empChefMissionMatriculeLabelText.innerText='Employé autorisé';
@@ -281,10 +277,7 @@
 		}
 
 		function natureDeplacementSelectChange() {
-			//alert('natureDeplacementSelect Allo');
-			//paysResidenceText.value = paysResidenceTxt;
 			if (natureDeplacementSelect.options[natureDeplacementSelect.selectedIndex].value !== 'Mission extérieur') {
-				//alert('natureDeplacementSelect Allo Allo');
 				destPaysText.value ='Rép. Centrafricaine';
 			} else {
 				destPaysText.value = '';

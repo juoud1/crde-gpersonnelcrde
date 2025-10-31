@@ -1,13 +1,14 @@
 package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MissionDto {
+public class MissionEmployesDto {
 	private String natureMission;
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
-
 	private String paysMission;
 	private String villeMission;
 	private String motifMission;
@@ -18,10 +19,12 @@ public class MissionDto {
 	private String statusMission;
 	private LocalDate dateStatusMission;
 
-	private String employeMatricule;
-	private String employeNom;
-	private String employeCivilite;
-	private String employeFonction;
+	private String employeChefDeMissMatricule;
+	private String employeChefDeMissNom;
+	private String employeChefDeMissCivilite;
+	private String employeChefDeMissFonction;
+	private List<EmployeDto> employesMission = new ArrayList<>();
+
 	public String getNatureMission() {
 		return natureMission;
 	}
@@ -76,15 +79,12 @@ public class MissionDto {
 	public void setNumOrdreMission(String numOrdreMission) {
 		this.numOrdreMission = numOrdreMission;
 	}
-
 	public String getNumMission() {
 		return numMission;
 	}
 	public void setNumMission(String numMission) {
 		this.numMission = numMission;
 	}
-
-
 	public String getTypeOrdreMission() {
 		return typeOrdreMission;
 	}
@@ -103,30 +103,37 @@ public class MissionDto {
 	public void setDateStatusMission(LocalDate dateStatusMission) {
 		this.dateStatusMission = dateStatusMission;
 	}
-	public String getEmployeMatricule() {
-		return employeMatricule;
+	public String getEmployeChefDeMissMatricule() {
+		return employeChefDeMissMatricule;
 	}
-	public void setEmployeMatricule(String employeMatricule) {
-		this.employeMatricule = employeMatricule;
+	public void setEmployeChefDeMissMatricule(String employeChefDeMissMatricule) {
+		this.employeChefDeMissMatricule = employeChefDeMissMatricule;
 	}
-	public String getEmployeNom() {
-		return employeNom;
+	public String getEmployeChefDeMissNom() {
+		return employeChefDeMissNom;
 	}
-	public void setEmployeNom(String employeNom) {
-		this.employeNom = employeNom;
+	public void setEmployeChefDeMissNom(String employeChefDeMissNom) {
+		this.employeChefDeMissNom = employeChefDeMissNom;
 	}
-	public String getEmployeCivilite() {
-		return employeCivilite;
+	public String getEmployeChefDeMissCivilite() {
+		return employeChefDeMissCivilite;
 	}
-	public void setEmployeCivilite(String employeCivilite) {
-		this.employeCivilite = employeCivilite;
+	public void setEmployeChefDeMissCivilite(String employeChefDeMissCivilite) {
+		this.employeChefDeMissCivilite = employeChefDeMissCivilite;
 	}
-	public String getEmployeFonction() {
-		return employeFonction;
+	public String getEmployeChefDeMissFonction() {
+		return employeChefDeMissFonction;
 	}
-	public void setEmployeFonction(String employeFonction) {
-		this.employeFonction = employeFonction;
+	public void setEmployeChefDeMissFonction(String employeChefDeMissFonction) {
+		this.employeChefDeMissFonction = employeChefDeMissFonction;
 	}
+	public List<EmployeDto> getEmployesMission() {
+		return employesMission;
+	}
+	public void setEmployesMission(List<EmployeDto> employesMission) {
+		this.employesMission = employesMission;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -139,15 +146,16 @@ public class MissionDto {
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
-		result = prime * result + ((numMission == null) ? 0 : numMission.hashCode());
 		result = prime * result + ((numOrdreMission == null) ? 0 : numOrdreMission.hashCode());
+		result = prime * result + ((numMission == null) ? 0 : numMission.hashCode());
 		result = prime * result + ((typeOrdreMission == null) ? 0 : typeOrdreMission.hashCode());
 		result = prime * result + ((statusMission == null) ? 0 : statusMission.hashCode());
 		result = prime * result + ((dateStatusMission == null) ? 0 : dateStatusMission.hashCode());
-		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
-		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
-		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
-		result = prime * result + ((employeFonction == null) ? 0 : employeFonction.hashCode());
+		result = prime * result + ((employeChefDeMissMatricule == null) ? 0 : employeChefDeMissMatricule.hashCode());
+		result = prime * result + ((employeChefDeMissNom == null) ? 0 : employeChefDeMissNom.hashCode());
+		result = prime * result + ((employeChefDeMissCivilite == null) ? 0 : employeChefDeMissCivilite.hashCode());
+		result = prime * result + ((employeChefDeMissFonction == null) ? 0 : employeChefDeMissFonction.hashCode());
+		result = prime * result + ((employesMission == null) ? 0 : employesMission.hashCode());
 		return result;
 	}
 	@Override
@@ -158,7 +166,7 @@ public class MissionDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MissionDto other = (MissionDto) obj;
+		MissionEmployesDto other = (MissionEmployesDto) obj;
 		if (natureMission == null) {
 			if (other.natureMission != null)
 				return false;
@@ -224,38 +232,44 @@ public class MissionDto {
 				return false;
 		} else if (!dateStatusMission.equals(other.dateStatusMission))
 			return false;
-		if (employeMatricule == null) {
-			if (other.employeMatricule != null)
+		if (employeChefDeMissMatricule == null) {
+			if (other.employeChefDeMissMatricule != null)
 				return false;
-		} else if (!employeMatricule.equals(other.employeMatricule))
+		} else if (!employeChefDeMissMatricule.equals(other.employeChefDeMissMatricule))
 			return false;
-		if (employeNom == null) {
-			if (other.employeNom != null)
+		if (employeChefDeMissNom == null) {
+			if (other.employeChefDeMissNom != null)
 				return false;
-		} else if (!employeNom.equals(other.employeNom))
+		} else if (!employeChefDeMissNom.equals(other.employeChefDeMissNom))
 			return false;
-		if (employeCivilite == null) {
-			if (other.employeCivilite != null)
+		if (employeChefDeMissCivilite == null) {
+			if (other.employeChefDeMissCivilite != null)
 				return false;
-		} else if (!employeCivilite.equals(other.employeCivilite))
+		} else if (!employeChefDeMissCivilite.equals(other.employeChefDeMissCivilite))
 			return false;
-		if (employeFonction == null) {
-			if (other.employeFonction != null)
+		if (employeChefDeMissFonction == null) {
+			if (other.employeChefDeMissFonction != null)
 				return false;
-		} else if (!employeFonction.equals(other.employeFonction))
+		} else if (!employeChefDeMissFonction.equals(other.employeChefDeMissFonction))
+			return false;
+		if (employesMission == null) {
+			if (other.employesMission != null)
+				return false;
+		} else if (!employesMission.equals(other.employesMission))
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "MissionDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
+		return "MissionEmployesDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
 				+ dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission="
 				+ villeMission + ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires
-				+ ", numMission=" + numMission + ", numOrdreMission=" + numOrdreMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
-				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employeMatricule=" + employeMatricule
-				+ ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite + ", employeFonction="
-				+ employeFonction + "]";
+				+ ", numOrdreMission=" + numOrdreMission + ", numMission=" + numMission + ", typeOrdreMission="
+				+ typeOrdreMission + ", statusMission=" + statusMission + ", dateStatusMission=" + dateStatusMission
+				+ ", employeChefDeMissMatricule=" + employeChefDeMissMatricule + ", employeChefDeMissNom="
+				+ employeChefDeMissNom + ", employeChefDeMissCivilite=" + employeChefDeMissCivilite
+				+ ", employeChefDeMissFonction=" + employeChefDeMissFonction + ", employesMission=" + employesMission
+				+ "]";
 	}
-	
-		
 }
