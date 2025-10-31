@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,15 +22,18 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MissionController {
+	private final static Logger logger = LoggerFactory.getLogger(MissionController.class);
+
 	private final MissionService missionService;
 	private final EmployeService employeService;
 
 	public MissionController(MissionService missionService, EmployeService employeService) {
 		this.missionService = missionService;
 		this.employeService = employeService;
+		logger.info("composant-de-présenataion de mission initialisé avec succès!");
 	}
     
-	@GetMapping ("/missions-emp-crde.html")
+	////// VOIR miss-emp @GetMapping ("/missions-emp-crde.html")
 	public String getGestMissions(HttpServletRequest request, Model model){
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -61,7 +66,7 @@ public class MissionController {
 	    return "gmissioncrde";
 	}*/
 
-	@GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
+	////// VOIR miss-emp @GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
 	public String getMissionIndividuelle(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model){
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -108,13 +113,13 @@ public class MissionController {
 	}
 
 	//@PostMapping ("/mission-emp-crde.html")
-	public String addMission(@RequestParam("missempmatricule") String missEmpMatricule, @RequestParam("naturedeplacement") String natureDeplacement, 
+	public String addMission(@RequestParam("naturedeplacement") String natureDeplacement, 
 							@RequestParam("cadremission") String cadreMission, @RequestParam("datedepartmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDepartMiss, 
 							@RequestParam("dateretourmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRetourMiss, 
 							@RequestParam("destville") String destVille, @RequestParam("destpays") String destPays,
 							@RequestParam("motifmission") String motifMission, @RequestParam("infosupplmission") String infoSupplmission, @RequestParam("numordremiss") String numOrdreMiss,  @RequestParam("typeordremission") String typeOrdreMission,  HttpServletRequest request, Model model) {
 		
-		var savedMission = missionService.saveMissionEmploye(missEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, numOrdreMiss, typeOrdreMission);
+		var savedMission = missionService.saveMission(natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, numOrdreMiss, typeOrdreMission);
 		
 		if (Objects.nonNull(savedMission)){
 			model.addAttribute("resultTraitement", "Création de mission effectuée avec succès.");
@@ -125,14 +130,21 @@ public class MissionController {
 		return "gmissioncrdeRecap";
 	}
 
-	@PostMapping ("/mission-emp-crde.html")
+	////// VOIR miss-emp @PostMapping ("/mission-emp-crde.html")
 	public String addMission(@RequestParam("naturedeplacement") String natureDeplacement, 
-							@RequestParam("cadremission") String cadreMission, @RequestParam("datedepartmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDepartMiss, 
-							@RequestParam("dateretourmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRetourMiss, @RequestParam("typeordremission") String typeOrdreMission,
-							@RequestParam("destville") String destVille, @RequestParam("destpays") String destPays, @RequestParam("numordremiss") String numOrdreMiss,
-							@RequestParam("motifmission") String motifMission, @RequestParam("infosupplmission") String infoSupplmission, HttpServletRequest request, Model model, @RequestParam("missempmatricule") String... missEmpMatricules) {
+							@RequestParam("cadremission") String cadreMission, 
+							@RequestParam("datedepartmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDepartMiss, 
+							@RequestParam("dateretourmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRetourMiss, 
+							@RequestParam("typeordremission") String typeOrdreMission,
+							@RequestParam("destville") String destVille, @RequestParam("destpays") String destPays, 
+							@RequestParam("numordremiss") String numOrdreMiss, 
+							@RequestParam("motifmission") String motifMission, 
+							@RequestParam("infosupplmission") String infoSupplmission,
+							@RequestParam("empchefmissionmatricule") String missEmpChefMissMatricule, 
+							HttpServletRequest request, Model model,
+							@RequestParam("missempmatricule") String... missEmpMatricules) {
 		
-		var savedMissions = missionService.saveMissionEmployes(numOrdreMiss, typeOrdreMission, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, missEmpMatricules);
+		var savedMissions = missionService.saveMissionEmployes(numOrdreMiss, typeOrdreMission, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, missEmpChefMissMatricule, missEmpMatricules);
 		//model = (Model) request.getSession().getAttribute("modelMission");
 		if (!savedMissions.isEmpty()){
 			model.addAttribute("resultTraitement", "Création de mission effectuée avec succès.");
@@ -143,7 +155,7 @@ public class MissionController {
 		return "gmissioncrdeRecap";
 	}
 
-	@GetMapping ("/mission-emp-crde-m.html/{numOrderMission}/{missEmpMatricule}")
+	////// VOIR miss-emp @GetMapping ("/mission-emp-crde-m.html/{numOrderMission}/{missEmpMatricule}")
 	public String getMissionByNumOrdreAndEmpMatricule(@PathVariable String numOrderMission, @PathVariable String missEmpMatricule, HttpServletRequest request, Model model){
 	    var savedMission = missionService.getMissionByNumOrdreMissionAndMatriculeEmp(numOrderMission, missEmpMatricule)
 								.orElseGet(MissionDto::new);
@@ -153,7 +165,7 @@ public class MissionController {
 		return "gmissioncrdeMaj";
 	}
 
-	@GetMapping ("/missions-emp-crde.html/{missEmpMatricule}/{choixStr}")
+	////// VOIR miss-emp @GetMapping ("/missions-emp-crde.html/{missEmpMatricule}/{choixStr}")
 	public String getMissionsByEmpMatricule(@PathVariable String missEmpMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
 	    var savedMissionsEmploye = missionService.getMissionByEmployeMatricule(missEmpMatricule);								
 		model.addAttribute("savedMissionsEmploye", savedMissionsEmploye);
@@ -165,7 +177,7 @@ public class MissionController {
 		return "gmissionsemphistoriq";
 	}
 
-	@GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
+	////// VOIR miss-emp @GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
 	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model){
 	    var savedMission = missionService.getMissionByNumOm(numOrderMission)
 								.orElseGet(MissionDto::new);
@@ -176,7 +188,7 @@ public class MissionController {
 		return "gmissioncrdeMaj";
 	}
 
-	@DeleteMapping("/mission-emp-crde-m.html/{numOrderMission}")
+	////// VOIR miss-emp @DeleteMapping("/mission-emp-crde-m.html/{numOrderMission}")
 	public String deleteMissionByNumOrdr(@PathVariable String numOrdreMission, HttpServletRequest request, Model model){
 	    
 		return "redirect:/missions-emp-crde.html";

@@ -185,40 +185,36 @@
 										<table class="table table-responsive table-bordered" id="missions-table">
 											<thead>
 												<tr>
-													<th style="width: 85px;">N° OM</th>
-													<th style="width: 100px;">Type OM</th>
-													<th style="width: 120px;">Employé</th>
-													<th class="col-nom">Fonction</th>
-													<th class="col-nom">Cadre de mission </th>
+													<th style="width: 6%;">N° miss</th>
+													<th style="width: 8%;">Type OM</th>
+													<th style="width: 13%;">Employé</th>
+													<th style="width: 12%;">Fonction</th>
+													<th style="width: 14%;">Cadre mission </th>
 													<!--th>Nature de mission</th-->
-													<th class="col-nom">Motif</th>
-													<th>Date départ</th>
-													<th>Date retour</th>
+													<th style="width: 10.5%;">Motif</th>
+													<th style="width: 8.25%;">Dates</th>
+													<!--th style="width: 8.25%;">Date retour</th-->
 													<th>Pays</th>
 													<th>Ville</th>
-													<th style="width: 120px;">Status</th>
-													<th class="p-auto">Actions</th>
+													<th style="width: 7%;">Status</th>
+													<th class="p-auto text-center" style="width: 4.5%;">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
 												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="mission: ${allMissions}">
-													<td th:text="${mission.numOrdreMission}">Num.</td>
+												<tr th:each="mission: ${allMissionsEmployes}">
+													<td th:text="${mission.numMission}">Num.</td>
 													<td th:text="${mission.typeOrdreMission}">type</td>
 													<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
 													<td th:text="${mission.employeFonction}">nom</td>
 													<td th:text="${mission.cadreMission} + |; | + ${mission.natureMission}">prenom</td>
 													<td th:text="${mission.motifMission} + |; | + ${mission.infoSupplementaires}">prenom</td>
-													<td th:text="${mission.dateDepart}">email</td>
-													<td th:text="${mission.dateRetour}">tel</td>
+													<td th:text="|du | + ${mission.dateDepart} + | au | + ${mission.dateRetour}">email</td>
+													<!--td th:text="${mission.dateRetour}">tel</td-->
 													<td th:text="${mission.paysMission}">role</td>
 													<td th:text="${mission.villeMission}">status</td>
 													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
-													<td class="p-auto" style="width: 5%;">
-														<!--button type="button" class="btn btn-info align-items" id="${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Ordre miss.|">OM</button> <br> 
-														<form method = "get" th:action="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}+ |/| + ${mission.employeMatricule}">
-															<button class="btn btn-secondary btn-warning align-items" type="submit" style="margin-left: 0; margin-right: 0;" th:text="|Mise à jour|">MAJ</button>
-														</form-->
+													<td class="p-auto text-center" style="width: 4.5%;">
 														
 														<button type="button" th:id="|bt-| + ${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${mission.numOrdreMission}" th:text="|...|">
 															action
@@ -242,26 +238,6 @@
 																			</div>
 																		</div>
 
-
-																		<!--div class="container-fluid">
-																			<div class="card mb-4">
-																				<div class="card-header">
-																					<span class="collapsed btn" style="font-size: small; font-weight: bold;" th:text="|MISSION N° | + ${mission.numOrdreMission}">
-																						AC
-																					</span>
-																				</div>
-																				<div id="collapseFonctions" data-bs-parent="#">
-																					<div class="card-body">
-																						<div class="d-flex flex-wrap border gap-1 p-1" style="align-items: flex-start;">
-																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Modifier la mission N° | + ${mission.numOrdreMission}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission N° | + ${mission.numOrdreMission}">Annuler</a>
-																							<a class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numOrdreMission}" formmethod="get" th:text="|Annuler/Suspendre la mission N° | + ${mission.numOrdreMission}">Annuler</a>
-																							<button type="button" class="btn btn-info align-items ms-auto" id="|OM|+${mission.numOrdreMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</div-->
 																	</div>
 																	<div class="modal-footer">
 																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
@@ -298,7 +274,7 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
-        let allMissions = [[${allMissions}]];
+        let allMissionsEmployes = [[${allMissionsEmployes}]];
 
 		// Impression principale et tri personnalisée
 		function printMissions() {
@@ -310,7 +286,7 @@
 					let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
 						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
 					
-					allMissions.forEach(miss => {
+					allMissionsEmployes.forEach(miss => {
 						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
 					});
 

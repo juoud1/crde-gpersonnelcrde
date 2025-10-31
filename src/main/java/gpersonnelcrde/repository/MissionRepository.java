@@ -13,7 +13,7 @@ import gpersonnelcrde.domain.entities.Mission;
 @Repository
 @Transactional
 public interface MissionRepository extends JpaRepository<Mission, Long> {
-	List<Mission> findByEmploye(Employe employe);
+	//List<Mission> findByEmploye(Employe employe);
 	List<Mission> findByMotifMission(String motifMission);
 	Optional<Mission> findByNumOrdreMission (String numOrdreMission);
 	//Optional<Mission> findByNumOrdreMissionAndEmployeMatricule(String numOrdreMission, String employeMatricule);

@@ -139,12 +139,12 @@
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numordremiss" th:text="|N°|">num</label>
-											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMission.numOrdreMission}" class="form-control" disabled>
+											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMissionEmployes.numOrdreMission}" class="form-control" disabled>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
 											<label class="form-label h6" for="typeordremission" th:text="|Type de mission|">civ</label>
 											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" required>
-												<option th:value="${savedMission.typeOrdreMission}" th:text="${savedMission.typeOrdreMission}">type de mission</option>
+												<option th:value="${savedMissionEmployes.typeOrdreMission}" th:text="${savedMissionEmployes.typeOrdreMission}">type de mission</option>
 												<option th:value="|mission|" th:text="|Mission à une personne|">type de mission</option>
 												<option th:value="|Mission de groupe|" th:text="|Mission de groupe|">type de mission</option>
 											</select>
@@ -153,7 +153,7 @@
 										<div class="col-lg-4 col-md-4 col-sm-4 mt-4">
 											<label class="form-label h6" for="naturedeplacement" th:text="|Portée de la mission|">civ</label>
 											<select id="naturedeplacement" name="naturedeplacement" class="form-select" required>
-												<option th:value="${savedMission.natureMission}" th:text="${savedMission.natureMission}">Nature de déplacement</option>
+												<option th:value="${savedMissionEmployes.natureMission}" th:text="${savedMissionEmployes.natureMission}">Nature de déplacement</option>
 												<option th:value="|Mission intérieur RCA|" th:text="|Mission à l'intérieur de RCA|">Mission intérieur</option>
 												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
@@ -161,40 +161,40 @@
 
 										<div class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="cadremission" th:text="|Cadre de la mission|">civ</label>
-											<input type="text" id="cadremission" name="cadremission" th:value="${savedMission.cadreMission}" class="form-control" placeholder="Le cadre de la mission" required>
+											<input type="text" id="cadremission" name="cadremission" th:value="${savedMissionEmployes.cadreMission}" class="form-control" placeholder="Le cadre de la mission" required>
 										</div>
 
 										<div class="col-lg-4 col-md-4 col-sm-8">
 											<label class="form-label h6" for="motifmission" th:text="|Motif de la mission|">civ</label>
 											<select id="motifmission" name="motifmission" class="form-select" required>
-												<option th:value="${savedMission.motifMission}" th:text="${savedMission.motifMission}">Motif</option>
+												<option th:value="${savedMissionEmployes.motifMission}" th:text="${savedMissionEmployes.motifMission}">Motif</option>
 												<option th:value="|Mission officielle|" th:text="|Mission officielle|">officielle</option>
 												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedepartmiss" th:text="|Date départ|">civ</label>
-											<input type="date" id="datedepartmiss" name="datedepartmiss" th:value="${savedMission.dateDepart}" class="form-control" placeholder="Date du départ" required>
+											<input type="date" id="datedepartmiss" name="datedepartmiss" th:value="${savedMissionEmployes.dateDepart}" class="form-control" placeholder="Date du départ" required>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="dateretourmiss" th:text="|Date retour|">civ</label>
-											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMission.dateRetour}" class="form-control" placeholder="Date de retour" >
+											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMissionEmployes.dateRetour}" class="form-control" placeholder="Date de retour" >
 										</div>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
-											<input type="text" id="destville" name="destville" th:value="${savedMission.villeMission}" class="form-control" placeholder="Ville de destination" required>
+											<input type="text" id="destville" name="destville" th:value="${savedMissionEmployes.villeMission}" class="form-control" placeholder="Ville de destination" required>
 										</div>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
-											<input type="text" id="destpays" name="destpays" th:value="${savedMission.paysMission}" class="form-control" placeholder="Pays de destination" required>
+											<input type="text" id="destpays" name="destpays" th:value="${savedMissionEmployes.paysMission}" class="form-control" placeholder="Pays de destination" required>
 										</div>
 
 										<div class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											<select id="missempnom" name="missempmatricule" class="form-select" multiple>
-												<option th:value="${savedMission.employeMatricule}" th:text="${savedMission.employeNom}">Sélectionner un employé</option>
+												<option th:each="employeAutorise : ${savedMissionEmployes.employesMission}" th:value="${employeAutorise.empMatricule}" th:text="${employeAutorise.empNom} +|, | + ${employeAutorise.empPren}"></option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
@@ -202,7 +202,7 @@
 										<div class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="empchefmissionmatricule" th:text="|Chef de mission|">civ</label>
 											<select id="empchefmissionmatricule" name="empchefmissionmatricule" class="form-select">
-												<option th:value="${savedMission.employeMatricule}" th:text="${savedMission.employeNom}">Sélectionner un employé</option>
+												<option th:value="${savedMissionEmployes.employeChefDeMissMatricule}" th:text="${savedMissionEmployes.employeChefDeMissNom}">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
@@ -211,14 +211,14 @@
 										</div-->
 										<div class="col-lg-9 col-md-9 col-sm-10">
 											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
-											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMission.infoSupplementaires}" class="form-control" placeholder="informations supplémentaires s'il y a lieu">
+											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMissionEmployes.infoSupplementaires}" class="form-control">
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="statusmission" th:text="|Status mission|">civ</label>
 											<select id="statusmission" name="statusmission" class="form-select">
-												<option th:value="${savedMission.statusMission}" th:text="${savedMission.statusMission}">status</option>
-												<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-												<option th:value="|Approuvée par la hiérarchie|" th:text="|Approuvée par la hiérarchie|">officielle</option>
+												<option th:value="${savedMissionEmployes.statusMission}" th:text="${savedMissionEmployes.statusMission}">status</option>
+												<option th:value="|En attente|" th:text="|En attente|">officielle</option>
+												<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
 												<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
 												<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
 												<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
@@ -227,7 +227,7 @@
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datestatusmiss" th:text="|Date status|">civ</label>
-											<input type="date" id="datestatusmiss" name="datestatusmiss" class="form-control" th:value="${savedMission.dateStatusMission}" >
+											<input type="date" id="datestatusmiss" name="datestatusmiss" class="form-control" th:value="${savedMissionEmployes.dateStatusMission}" >
 										</div>
 										<hr>
 										
@@ -237,7 +237,7 @@
 											<a class="btn btn-outline-dark mb-1" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">	
-											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMission}]])">OM</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>
 										</div>
 										
 									</form>

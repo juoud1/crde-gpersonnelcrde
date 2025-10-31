@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +24,17 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 @Transactional
 public class MissionService {
+private final static Logger logger = LoggerFactory.getLogger(MissionService.class);
+
 	private final MissionRepository missionRepository;
 	private final EmployeRepository employeRepository;
+	//private final MissionEmployeRepository missionEmployeRepository;
 
 	public MissionService(MissionRepository missionRepository, EmployeRepository employeRepository) {
 		this.missionRepository = missionRepository;
 		this.employeRepository = employeRepository;
+	//	this.missionEmployeRepository = missionEmployeRepository;
+		logger.info("Service mission initialisé avec succès!");
 	}
 
 	public List<MissionDto> getAllMissions() {
@@ -40,32 +47,70 @@ public class MissionService {
 				.toList();
 	}
 
-	public MissionDto saveMissionEmploye(final String missEmpMatricule, String natureDeplacement, String cadreMission,
+	public MissionDto saveMission(String natureDeplacement, String cadreMission,
 												LocalDate dateDepartMiss, LocalDate dateRetourMiss, String destVille, String destPays, String motifMission, String infoSupplmission, final String numOrdreMiss, final String typeOrdreMission){
-		var missionDto = getMissionDtoFromWebParm(numOrdreMiss, typeOrdreMission, missEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission);
+		var missionDto = getMissionDtoFromWebParm(numOrdreMiss, typeOrdreMission, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission);
 		
-		return saveMissionEmploye(missionDto);
+		return saveMission(missionDto);
+	}
+
+	public MissionDto saveMission(final MissionDto missionDtoToSave){
+		//var missionToSave = missionDtoMapper(missionDtoToSave);
+		
+		var savedMission = saveMissionFromDto(missionDtoToSave);
+		missionDtoToSave.setNumMission(String.valueOf(savedMission.getId()));
+		return missionDtoToSave;
+	}
+
+	@Transactional
+	protected Mission saveMissionFromDto(final MissionDto missionDtoToSave){
+		var missionToSave = missionDtoMapper(missionDtoToSave);
+		missionToSave = missionRepository.save(missionToSave);
+		logger.info("Mission sauvegardée avec succès sous le n° {} à {}", missionToSave.getId(), missionToSave.getMissionCreeeLe().toLocalTime());
+		
+		return missionToSave;
+	}
+
+	private MissionDto getMissionDtoFromWebParm(final String numOrdreMiss, final String typeOrdreMission, String natureDeplacement, String cadreMission,
+												LocalDate dateDepartMiss, LocalDate dateRetourMiss, 
+												String destVille, String destPays, String motifMission, String infoSupplmission){
+		
+		//var missEmploye = employeRepository.findByEmpMatricule(missEmpMatricule);
+		var mDto = new MissionDto();
+
+		mDto.setTypeOrdreMission(typeOrdreMission);
+		mDto.setNumOrdreMission(numOrdreMiss);
+		mDto.setCadreMission(cadreMission);
+		mDto.setDateDepart(dateDepartMiss);
+		mDto.setDateRetour(dateRetourMiss);
+		/*mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
+		mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
+		mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
+				missEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));*/
+		mDto.setInfoSupplementaires(infoSupplmission);
+		mDto.setMotifMission(motifMission);
+		mDto.setNatureMission(natureDeplacement);
+		mDto.setPaysMission(destPays);
+		mDto.setVilleMission(destVille);
+		mDto.setStatusMission("En attente de validation");
+		mDto.setDateStatusMission(LocalDate.now());
+		//mDto.setNumOrderMission(String.valueOf(missEmploye.orElseThrow(EntityNotFoundException::new).getId())); ///Formule à determiner
+
+		return mDto;
 	}
 
 	public List<MissionDto> saveMissionEmployes(final String numOrdreMiss, final String typeOrdreMission, final String natureDeplacement, final String cadreMission,
-												final LocalDate dateDepartMiss, final LocalDate dateRetourMiss, final String destVille, final String destPays, final String motifMission,
-												final String infoSupplmission, final String... missEmpMatricules){
+												final LocalDate dateDepartMiss, final LocalDate dateRetourMiss, final String destVille, final String destPays, 
+												final String motifMission, final String infoSupplmission, 
+												final String missEmpChefMissMatricule, final String... missEmpMatricules){
 		
 		List<MissionDto> missionDtos = new ArrayList<>(); 
 		for (String missEmpMatricule : missEmpMatricules) {
-			var missionDto = saveMissionEmploye(missEmpMatricule, natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, numOrdreMiss, typeOrdreMission);
+			var missionDto = saveMission(natureDeplacement, cadreMission, dateDepartMiss, dateRetourMiss, destVille, destPays, motifMission, infoSupplmission, numOrdreMiss, typeOrdreMission);
 			missionDtos.add(missionDto);
 		} 
 		
 		return missionDtos;
-	}
-
-	public MissionDto saveMissionEmploye(final MissionDto missionDtoToSave){
-		var missionToSave = missionDtoMapper(missionDtoToSave);
-		//missionToSave.setId(computeNumOrdreMission());
-		missionToSave = missionRepository.save(missionToSave);
-		missionDtoToSave.setNumOrdreMission(String.valueOf(missionToSave.getId()));
-		return missionDtoToSave;
 	}
 
 	public List<MissionDto> getMissionByNumOrdreMission (String numOrdreMission){
@@ -111,35 +156,7 @@ public class MissionService {
 									.toList();
 	}
 	
-	private MissionDto getMissionDtoFromWebParm(final String numOrdreMiss, final String typeOrdreMission, final String missEmpMatricule, String natureDeplacement, String cadreMission,
-												LocalDate dateDepartMiss, LocalDate dateRetourMiss, 
-												String destVille, String destPays, String motifMission, String infoSupplmission){
-		
-		var missEmploye = employeRepository.findByEmpMatricule(missEmpMatricule);
-		var mDto = new MissionDto();
-
-		mDto.setTypeOrdreMission(typeOrdreMission);
-		mDto.setNumOrdreMission(numOrdreMiss);
-		mDto.setCadreMission(cadreMission);
-		mDto.setDateDepart(dateDepartMiss);
-		mDto.setDateRetour(dateRetourMiss);
-		mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
-		mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
-		mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
-				missEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
-		mDto.setInfoSupplementaires(infoSupplmission);
-		mDto.setMotifMission(motifMission);
-		mDto.setNatureMission(natureDeplacement);
-		mDto.setPaysMission(destPays);
-		mDto.setVilleMission(destVille);
-		mDto.setStatusMission("En attente de validation");
-		mDto.setDateStatusMission(LocalDate.now());
-		//mDto.setNumOrderMission(String.valueOf(missEmploye.orElseThrow(EntityNotFoundException::new).getId())); ///Formule à determiner
-
-		return mDto;
-	}
-
-	private Optional<MissionDto> missionMapper(Optional<Mission> optMission){
+	private Optional<MissionDto> missionMapper(final Optional<Mission> optMission){
 		if (!optMission.isPresent()){
 			return Optional.empty();
 		}
@@ -151,27 +168,28 @@ public class MissionService {
 
 	private MissionDto missionToDtoMapper(final Mission mission){
 	    if (Objects.isNull(mission)){
-            throw new EntityNotFoundException("L'entité mission ne doit être null");
+            throw new EntityNotFoundException("L'entité mission ne doit être vide");
 		}
 	    
-		var missEmploye = employeRepository.findByEmpMatricule(mission.getEmploye().getEmpMatricule());
+		////var missEmploye = employeRepository.findByEmpMatricule(mission.getEmploye().getEmpMatricule());
 		var mDto = new MissionDto();
 		mDto.setNumOrdreMission(mission.getNumOrdreMission());
 		mDto.setTypeOrdreMission(mission.getTypeOrdreMission());
 	    mDto.setCadreMission(mission.getCadreMission());
 		mDto.setDateDepart(mission.getDateDepart());
 		mDto.setDateRetour(mission.getDateRetour());
-		mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
-		mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
-		mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
-				missEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
-		mDto.setEmployeFonction(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpFonction().getFonction());
+		////mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
+		////mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
+		////mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
+		////		missEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
+		////mDto.setEmployeFonction(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpFonction().getFonction());
 		mDto.setInfoSupplementaires(mission.getInfoSupplementaires());
 		mDto.setMotifMission(mission.getMotifMission());
 		mDto.setNatureMission(mission.getNatureMission());
 		mDto.setPaysMission(mission.getPaysMission());
 		mDto.setVilleMission(mission.getVilleMission());
 		mDto.setNumOrdreMission(mission.getNumOrdreMission()); ///Formule à determiner
+		mDto.setNumMission(String.valueOf(mission.getId())); 
 		mDto.setStatusMission(mission.getStatusMission());
 		mDto.setDateStatusMission(mission.getDateStatusMission());
 
@@ -187,7 +205,7 @@ public class MissionService {
 		missionToSave.setCadreMission(missionDto.getCadreMission());
 		missionToSave.setDateDepart(missionDto.getDateDepart());
 		missionToSave.setDateRetour(missionDto.getDateRetour());
-		missionToSave.setEmploye(optEmploye.orElseThrow(EntityNotFoundException::new));
+		//missionToSave.setEmploye(optEmploye.orElseThrow(EntityNotFoundException::new));
 		missionToSave.setInfoSupplementaires(missionDto.getInfoSupplementaires());
 		missionToSave.setMotifMission(missionDto.getMotifMission());
 		missionToSave.setNatureMission(missionDto.getNatureMission());
@@ -197,7 +215,7 @@ public class MissionService {
 		if (Objects.nonNull(missionDto.getStatusMission())){
 			missionToSave.setStatusMission(missionDto.getStatusMission());
 		} else {
-			missionToSave.setStatusMission("En attente de validation");
+			missionToSave.setStatusMission("En attente");
 		}
 
 		missionToSave.setDateStatusMission(LocalDate.now());
