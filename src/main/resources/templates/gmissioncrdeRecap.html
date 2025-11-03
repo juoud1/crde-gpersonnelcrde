@@ -246,8 +246,38 @@
 	<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
-        let allMissions = [[${allMissions}]];
+        let allMissionsEmployes = [[${allMissionsEmployes}]];
+		let savedMissionEmployesAutorises = [[${savedMissionEmployes.employesMission}]];
 
+		const employesAutorisesBoite = document.getElementById('employesautorises');
+		const natureDeplacementSelect = document.getElementById('naturedeplacement');
+		const typeOrdreMissionSelect = document.getElementById('typeordremission');
+		const destPaysText = document.getElementById('destpays');
+		const legendeFormText = document.getElementById('legmissionsform');
+		const empChefMissionMatriculeLabelText = document.getElementById('empchefmissionmatriculelabel');
+		
+		window.addEventListener('DOMContentLoaded', typeOrdreMissSelectChange);
+		function typeOrdreMissSelectChange() {
+			if (typeOrdreMissionSelect.options[typeOrdreMissionSelect.selectedIndex].value !== 'Mission') {
+				legendeFormText.innerText='Ajouter une Mission de groupe';
+				employesAutorisesBoite.style.display='';
+				empChefMissionMatriculeLabelText.innerText='Employé, chef de mission';
+			} else { 
+				legendeFormText.innerText='Ajouter une Mission';
+				employesAutorisesBoite.style.display='none';
+				empChefMissionMatriculeLabelText.innerText='Employé autorisé';
+			}
+		}
+
+		function natureDeplacementSelectChange() {
+			if (natureDeplacementSelect.options[natureDeplacementSelect.selectedIndex].value !== 'Mission extérieur') {
+				destPaysText.value ='Rép. Centrafricaine';
+			} else {
+				destPaysText.value = '';
+			}
+		}
+
+		// Impression principale et tri personnalisée
 		// Impression principale et tri personnalisée
 		function printMissions() {
 			const printBtn = document.getElementById('print-missions');
@@ -258,7 +288,7 @@
 				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
 					`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
 				
-				allMissions.forEach(miss => {
+				allMissionsEmployes.forEach(miss => {
 					tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
 				});
 
@@ -278,43 +308,53 @@
 			}
 		}
 
-		function printOrdreMissions(savedMission) {
+		function printOrdreMissions(savedMissionEmp) {
 			//const btnId = 'print-ordre-mission' + numordremiss;
 			//const printOmBtn = document.getElementById(btnId);
 			//const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
 	
-			if (undefined !== savedMission) {
+			if (undefined !== savedMissionEmp) {
 				let divHtml ='';
 
-				if ('ordre-mission' == savedMission.typeOrdreMission) {
+				if ('Mission' == savedMissionEmp.typeOrdreMission) {
 				
 					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
 						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 					
-					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
-						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
-						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
-						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
-						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMissionEmp.employeCivilite}` +
+						` <b> ${savedMissionEmp.employeNom},</b> ${savedMissionEmp.employeFonction} de se rendre à ${savedMissionEmp.villeMission},  ${savedMissionEmp.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMissionEmp.dateDepart}<br> <b>Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMissionEmp.motifMission}</p>` +
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
 
-					divHtml += `</div><div class="col-1"></div></div>`;
+					//divHtml += `</div><div class="col-1"></div></div>`;
 
-					/*const win = window.open('', '', 'height=700,width=900');
-					win.document.write('<html><head>');
-					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
-					win.document.write('</head><body>');
-					win.document.write(getPrintableHeader());
-					win.document.write(divHtml);
-					win.document.write(getPrintableFooterNoteSvce());
-					win.document.write('</body></html>');
-					win.document.close();
-					win.print();*/
 				} else {
+					let tableEmployesAutorisesHtml = `<table class="table table-responsive table-bordered" style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+					`<th class='print-col-nom'>Grade/Civité</th><th class='print-col-nom'>Nom(s)</th><th class='print-col-nom'>Prénom</th></tr></thead><tbody>`;
 				
-				
+					savedMissionEmployesAutorises.forEach(empAutorise => {
+						tableEmployesAutorisesHtml += `<tr><td>${empAutorise.empCivilite}</td><td>${empAutorise.empNom}</td><td>${empAutorise.empPren}</td></tr>`;
+					});
+
+					tableEmployesAutorisesHtml += `</tbody></table>`;
+
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION COLLECTIF</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise les experts ci-dessous, à se rendre à ${savedMissionEmp.villeMission} (${savedMissionEmp.paysMission}) ` +
+						` pour ${savedMissionEmp.infoSupplementaires} d'une durée de ${savedMissionEmp.dureeNbreUniteEnLettre} (${savedMissionEmp.dureeNbreUnite}) ${savedMissionEmp.dureeUnite}. Il s'agit de : </p> <br>` + 
+						`<br>` + tableEmployesAutorisesHtml + `<br>` +
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b class="text-decoration-underline">Date du départ:</b> ${savedMissionEmp.dateDepart}  <b class="text-decoration-underline ms-5">Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
+						`<b class="text-decoration-underline">Motif:</b> ${savedMissionEmp.motifMission}<br>` +
+						`<b class="text-decoration-underline">NB : </b> ${savedMissionEmp.employeChefDeMissCivilite} ${savedMissionEmp.employeChefDeMissNom} est désigné(e) Chef(fe) de Mission.</p><br>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
 				}
+
+				divHtml += `</div><div class="col-1"></div></div>`;
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');

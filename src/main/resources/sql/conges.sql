@@ -11,4 +11,4 @@ conge_modifie_le TIMESTAMP(9) WITH TIME ZONE, conge_modifie_par VARCHAR(15),
 constraint fk_conge_emp FOREIGN key (employe_id) references employe(id)
 );
 insert into conge (date_debut_conge, date_fin_conge, info_supplementaires, status_conge, date_status_conge, employe_id) 
-values ('20250812', '20250912', 'Vaccances de 1 mois avec possibilité de faire un déplacemt à ext.', 'Approuvé par la hiérarchie', '20250806', 2L);
+values ('20250812', '20250912', 'Vaccances de 1 mois avec possibilité de faire un déplacemt à ext.', 'Approuvé', '20250806', 2L);

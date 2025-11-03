@@ -92,6 +92,7 @@ public class MissionEmployeController {
 			model.addAttribute("traitement", "création de nouvelle mission");
 		}
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
+		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes());
 		//request.getSession().setAttribute("modelMission", model);
 
 		return "gmissioncrdeRecap";
@@ -123,9 +124,14 @@ public class MissionEmployeController {
 	public String getMissionByNumOrdre(@PathVariable String numMission, HttpServletRequest request, Model model){
 	    var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
 								.orElseGet(MissionEmployesDto::new);
-								
+		
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
 		
 		return "gmissioncrdeMaj";
 	}
