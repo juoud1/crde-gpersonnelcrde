@@ -68,7 +68,7 @@ public class MissionEmployeService {
 													destVille, destPays, motifMission, infoSupplmission, 
 													missEmpMatricules);
 		
-		logger.info("Mission-employé-dto pour la sauvegarde: {}", meDto);
+		//logger.info("Mission-employé-dto pour la sauvegarde: {}", meDto);
 		
 		return saveMissionEmployes(meDto);
 	}
@@ -97,8 +97,8 @@ public class MissionEmployeService {
 		
 		missionEmployesDtoToSave.setNumMission(String.valueOf(savedMission.getId()));
 		logger.info("{} mission-employé(s) sauvegardée(s) avec succès", savedMissionsEmployes.size());
-		logger.info("Missions-employés sauvegardée(s): {}", savedMissionsEmployes);
-		logger.info("Mission-employé-dto mise à jour: {}", missionEmployesDtoToSave);
+		//logger.info("Missions-employés sauvegardée(s): {}", savedMissionsEmployes);
+		//logger.info("Mission-employé-dto mise à jour: {}", missionEmployesDtoToSave);
 		
 		return missionEmployesDtoToSave;
 	}
@@ -336,6 +336,7 @@ public class MissionEmployeService {
 		var meDto = new MissionEmployesDto();
 		meDto.setNumMission(numMission);
 		meDto.setNumOrdreMission(numMission);
+		meDto.setTypeOrdreMission("Mission");
 
 		return Optional.of(meDto); //missionMapper(optionalMission);
 	}

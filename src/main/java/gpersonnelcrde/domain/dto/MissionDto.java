@@ -7,7 +7,9 @@ public class MissionDto {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
-
+	private String dureeNbreUnite;
+	private String dureeNbreUniteEnLettre;
+	private String dureeUnite;
 	private String paysMission;
 	private String villeMission;
 	private String motifMission;
@@ -17,11 +19,7 @@ public class MissionDto {
 	private String typeOrdreMission;
 	private String statusMission;
 	private LocalDate dateStatusMission;
-
-	private String employeMatricule;
-	private String employeNom;
-	private String employeCivilite;
-	private String employeFonction;
+	
 	public String getNatureMission() {
 		return natureMission;
 	}
@@ -45,6 +43,24 @@ public class MissionDto {
 	}
 	public void setDateRetour(LocalDate dateRetour) {
 		this.dateRetour = dateRetour;
+	}
+	public String getDureeNbreUnite() {
+		return dureeNbreUnite;
+	}
+	public void setDureeNbreUnite(String dureeNbreUnite) {
+		this.dureeNbreUnite = dureeNbreUnite;
+	}
+	public String getDureeNbreUniteEnLettre() {
+		return dureeNbreUniteEnLettre;
+	}
+	public void setDureeNbreUniteEnLettre(String dureeNbreUniteEnLettre) {
+		this.dureeNbreUniteEnLettre = dureeNbreUniteEnLettre;
+	}
+	public String getDureeUnite() {
+		return dureeUnite;
+	}
+	public void setDureeUnite(String dureeUnite) {
+		this.dureeUnite = dureeUnite;
 	}
 	public String getPaysMission() {
 		return paysMission;
@@ -76,15 +92,12 @@ public class MissionDto {
 	public void setNumOrdreMission(String numOrdreMission) {
 		this.numOrdreMission = numOrdreMission;
 	}
-
 	public String getNumMission() {
 		return numMission;
 	}
 	public void setNumMission(String numMission) {
 		this.numMission = numMission;
 	}
-
-
 	public String getTypeOrdreMission() {
 		return typeOrdreMission;
 	}
@@ -103,30 +116,7 @@ public class MissionDto {
 	public void setDateStatusMission(LocalDate dateStatusMission) {
 		this.dateStatusMission = dateStatusMission;
 	}
-	public String getEmployeMatricule() {
-		return employeMatricule;
-	}
-	public void setEmployeMatricule(String employeMatricule) {
-		this.employeMatricule = employeMatricule;
-	}
-	public String getEmployeNom() {
-		return employeNom;
-	}
-	public void setEmployeNom(String employeNom) {
-		this.employeNom = employeNom;
-	}
-	public String getEmployeCivilite() {
-		return employeCivilite;
-	}
-	public void setEmployeCivilite(String employeCivilite) {
-		this.employeCivilite = employeCivilite;
-	}
-	public String getEmployeFonction() {
-		return employeFonction;
-	}
-	public void setEmployeFonction(String employeFonction) {
-		this.employeFonction = employeFonction;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,19 +125,18 @@ public class MissionDto {
 		result = prime * result + ((cadreMission == null) ? 0 : cadreMission.hashCode());
 		result = prime * result + ((dateDepart == null) ? 0 : dateDepart.hashCode());
 		result = prime * result + ((dateRetour == null) ? 0 : dateRetour.hashCode());
+		result = prime * result + ((dureeNbreUnite == null) ? 0 : dureeNbreUnite.hashCode());
+		result = prime * result + ((dureeNbreUniteEnLettre == null) ? 0 : dureeNbreUniteEnLettre.hashCode());
+		result = prime * result + ((dureeUnite == null) ? 0 : dureeUnite.hashCode());
 		result = prime * result + ((paysMission == null) ? 0 : paysMission.hashCode());
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
-		result = prime * result + ((numMission == null) ? 0 : numMission.hashCode());
 		result = prime * result + ((numOrdreMission == null) ? 0 : numOrdreMission.hashCode());
+		result = prime * result + ((numMission == null) ? 0 : numMission.hashCode());
 		result = prime * result + ((typeOrdreMission == null) ? 0 : typeOrdreMission.hashCode());
 		result = prime * result + ((statusMission == null) ? 0 : statusMission.hashCode());
 		result = prime * result + ((dateStatusMission == null) ? 0 : dateStatusMission.hashCode());
-		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
-		result = prime * result + ((employeNom == null) ? 0 : employeNom.hashCode());
-		result = prime * result + ((employeCivilite == null) ? 0 : employeCivilite.hashCode());
-		result = prime * result + ((employeFonction == null) ? 0 : employeFonction.hashCode());
 		return result;
 	}
 	@Override
@@ -178,6 +167,21 @@ public class MissionDto {
 			if (other.dateRetour != null)
 				return false;
 		} else if (!dateRetour.equals(other.dateRetour))
+			return false;
+		if (dureeNbreUnite == null) {
+			if (other.dureeNbreUnite != null)
+				return false;
+		} else if (!dureeNbreUnite.equals(other.dureeNbreUnite))
+			return false;
+		if (dureeNbreUniteEnLettre == null) {
+			if (other.dureeNbreUniteEnLettre != null)
+				return false;
+		} else if (!dureeNbreUniteEnLettre.equals(other.dureeNbreUniteEnLettre))
+			return false;
+		if (dureeUnite == null) {
+			if (other.dureeUnite != null)
+				return false;
+		} else if (!dureeUnite.equals(other.dureeUnite))
 			return false;
 		if (paysMission == null) {
 			if (other.paysMission != null)
@@ -224,38 +228,17 @@ public class MissionDto {
 				return false;
 		} else if (!dateStatusMission.equals(other.dateStatusMission))
 			return false;
-		if (employeMatricule == null) {
-			if (other.employeMatricule != null)
-				return false;
-		} else if (!employeMatricule.equals(other.employeMatricule))
-			return false;
-		if (employeNom == null) {
-			if (other.employeNom != null)
-				return false;
-		} else if (!employeNom.equals(other.employeNom))
-			return false;
-		if (employeCivilite == null) {
-			if (other.employeCivilite != null)
-				return false;
-		} else if (!employeCivilite.equals(other.employeCivilite))
-			return false;
-		if (employeFonction == null) {
-			if (other.employeFonction != null)
-				return false;
-		} else if (!employeFonction.equals(other.employeFonction))
-			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "MissionDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
-				+ dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission="
-				+ villeMission + ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires
-				+ ", numMission=" + numMission + ", numOrdreMission=" + numOrdreMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
-				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employeMatricule=" + employeMatricule
-				+ ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite + ", employeFonction="
-				+ employeFonction + "]";
+				+ dateDepart + ", dateRetour=" + dateRetour + ", dureeNbreUnite=" + dureeNbreUnite
+				+ ", dureeNbreUniteEnLettre=" + dureeNbreUniteEnLettre + ", dureeUnite=" + dureeUnite + ", paysMission="
+				+ paysMission + ", villeMission=" + villeMission + ", motifMission=" + motifMission
+				+ ", infoSupplementaires=" + infoSupplementaires + ", numOrdreMission=" + numOrdreMission
+				+ ", numMission=" + numMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
+				+ statusMission + ", dateStatusMission=" + dateStatusMission + "]";
 	}
-	
-		
 }

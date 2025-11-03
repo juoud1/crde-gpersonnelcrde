@@ -139,7 +139,7 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 			return Optional.empty();
 		}
 		var optMissionDto = getMissionByNumOrdreMission(numOrdreMission).stream()
-								.filter(mDto -> empMatricule.equalsIgnoreCase(mDto.getEmployeMatricule()))
+								////.filter(mDto -> empMatricule.equalsIgnoreCase(mDto.getEmployeMatricule()))
 								.findFirst();
 
 		return optMissionDto; //missionMapper(optionalMission);
@@ -151,7 +151,7 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		}
 		
 		return this.getAllMissions().stream()
-									.filter(m -> empMatricule.equalsIgnoreCase(m.getEmployeMatricule()))
+									/////.filter(m -> empMatricule.equalsIgnoreCase(m.getEmployeMatricule()))
 									.sorted((m1, m2) -> m2.getDateDepart().compareTo(m1.getDateDepart()))
 									.toList();
 	}
@@ -197,7 +197,7 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 	}
 
 	private Mission missionDtoMapper(MissionDto missionDto){
-		var optEmploye = employeRepository.findByEmpMatricule(missionDto.getEmployeMatricule());
+		//var optEmploye = employeRepository.findByEmpMatricule(missionDto.getEmployeMatricule());
 		
 		var missionToSave = new Mission();
 		missionToSave.setTypeOrdreMission(missionDto.getTypeOrdreMission());

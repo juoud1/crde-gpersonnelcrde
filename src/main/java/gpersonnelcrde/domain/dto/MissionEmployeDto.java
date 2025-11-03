@@ -7,6 +7,9 @@ public class MissionEmployeDto {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
+	private String dureeNbreUnite;
+	private String dureeNbreUniteEnLettre;
+	private String dureeUnite;
 
 	private String paysMission;
 	private String villeMission;
@@ -23,7 +26,7 @@ public class MissionEmployeDto {
 	private String employeCivilite;
 	private String employeFonction;
 	private Boolean isChefDeMission;
-
+	
 	public String getNatureMission() {
 		return natureMission;
 	}
@@ -47,6 +50,24 @@ public class MissionEmployeDto {
 	}
 	public void setDateRetour(LocalDate dateRetour) {
 		this.dateRetour = dateRetour;
+	}
+	public String getDureeNbreUnite() {
+		return dureeNbreUnite;
+	}
+	public void setDureeNbreUnite(String dureeNbreUnite) {
+		this.dureeNbreUnite = dureeNbreUnite;
+	}
+	public String getDureeNbreUniteEnLettre() {
+		return dureeNbreUniteEnLettre;
+	}
+	public void setDureeNbreUniteEnLettre(String dureeNbreUniteEnLettre) {
+		this.dureeNbreUniteEnLettre = dureeNbreUniteEnLettre;
+	}
+	public String getDureeUnite() {
+		return dureeUnite;
+	}
+	public void setDureeUnite(String dureeUnite) {
+		this.dureeUnite = dureeUnite;
 	}
 	public String getPaysMission() {
 		return paysMission;
@@ -132,7 +153,7 @@ public class MissionEmployeDto {
 	public void setIsChefDeMission(Boolean isChefDeMission) {
 		this.isChefDeMission = isChefDeMission;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -141,6 +162,9 @@ public class MissionEmployeDto {
 		result = prime * result + ((cadreMission == null) ? 0 : cadreMission.hashCode());
 		result = prime * result + ((dateDepart == null) ? 0 : dateDepart.hashCode());
 		result = prime * result + ((dateRetour == null) ? 0 : dateRetour.hashCode());
+		result = prime * result + ((dureeNbreUnite == null) ? 0 : dureeNbreUnite.hashCode());
+		result = prime * result + ((dureeNbreUniteEnLettre == null) ? 0 : dureeNbreUniteEnLettre.hashCode());
+		result = prime * result + ((dureeUnite == null) ? 0 : dureeUnite.hashCode());
 		result = prime * result + ((paysMission == null) ? 0 : paysMission.hashCode());
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
@@ -185,6 +209,21 @@ public class MissionEmployeDto {
 			if (other.dateRetour != null)
 				return false;
 		} else if (!dateRetour.equals(other.dateRetour))
+			return false;
+		if (dureeNbreUnite == null) {
+			if (other.dureeNbreUnite != null)
+				return false;
+		} else if (!dureeNbreUnite.equals(other.dureeNbreUnite))
+			return false;
+		if (dureeNbreUniteEnLettre == null) {
+			if (other.dureeNbreUniteEnLettre != null)
+				return false;
+		} else if (!dureeNbreUniteEnLettre.equals(other.dureeNbreUniteEnLettre))
+			return false;
+		if (dureeUnite == null) {
+			if (other.dureeUnite != null)
+				return false;
+		} else if (!dureeUnite.equals(other.dureeUnite))
 			return false;
 		if (paysMission == null) {
 			if (other.paysMission != null)
@@ -258,16 +297,17 @@ public class MissionEmployeDto {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "MissionEmployeDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
-				+ dateDepart + ", dateRetour=" + dateRetour + ", paysMission=" + paysMission + ", villeMission="
-				+ villeMission + ", motifMission=" + motifMission + ", infoSupplementaires=" + infoSupplementaires
-				+ ", numOrdreMission=" + numOrdreMission + ", numMission=" + numMission + ", typeOrdreMission="
-				+ typeOrdreMission + ", statusMission=" + statusMission + ", dateStatusMission=" + dateStatusMission
-				+ ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom + ", employeCivilite="
-				+ employeCivilite + ", employeFonction=" + employeFonction + ", isChefDeMission=" + isChefDeMission
-				+ "]";
+				+ dateDepart + ", dateRetour=" + dateRetour + ", dureeNbreUnite=" + dureeNbreUnite
+				+ ", dureeNbreUniteEnLettre=" + dureeNbreUniteEnLettre + ", dureeUnite=" + dureeUnite + ", paysMission="
+				+ paysMission + ", villeMission=" + villeMission + ", motifMission=" + motifMission
+				+ ", infoSupplementaires=" + infoSupplementaires + ", numOrdreMission=" + numOrdreMission
+				+ ", numMission=" + numMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
+				+ statusMission + ", dateStatusMission=" + dateStatusMission + ", employeMatricule=" + employeMatricule
+				+ ", employeNom=" + employeNom + ", employeCivilite=" + employeCivilite + ", employeFonction="
+				+ employeFonction + ", isChefDeMission=" + isChefDeMission + "]";
 	}	
 }

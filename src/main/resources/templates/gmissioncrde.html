@@ -146,7 +146,7 @@
 											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" onchange="typeOrdreMissSelectChange()" required>
 												<!--option value="" th:text="|Sélectionner un type de mission|">type de mission</option-->
 												<option th:value="${typMissValue}" th:text="${typMissText}">type miss</option>
-												<option th:value="|Mission|" th:text="|Mission d'un employé|">type de mission</option>
+												<option th:value="|Mission|" th:text="|Mission|">type de mission</option>
 												<option th:value="|Mission de groupe|" th:text="|Mission de groupe|">type de mission</option>
 											</select>
 										</div>
@@ -267,7 +267,7 @@
 		function typeOrdreMissSelectChange() {
 			if (typeOrdreMissionSelect.options[typeOrdreMissionSelect.selectedIndex].value !== 'Mission') {
 				legendeFormText.innerText='Ajouter une Mission de groupe';
-				employesAutorisesBoite.style.display='';
+				employesAutorisesBoite.style.display='block';
 				empChefMissionMatriculeLabelText.innerText='Employé, chef de mission';
 			} else { 
 				legendeFormText.innerText='Ajouter une Mission';

@@ -44,11 +44,6 @@ public class EmployeService {
 	private final StatusRepository statusRepository;
 	private final LieuAffectationRepository lieuAffectationRepository;
 
-	/*private final FonctionService fonctionService;
-	private final TypeEmployeService typeEmployeService;
-	private final StatusService statusService;
-	private final LieuAffectationService lieuAffectationService;*/
-
 	public EmployeService(EmployeRepository employeRepository, AffectationRepository affectationRepository, 
 	    MissionRepository missionRepository, CongeRepository congeRepository,
 		FonctionRepository fonctionRepository, TypeEmployeRepository typeEmployeRepository, 
@@ -63,7 +58,7 @@ public class EmployeService {
 		this.affectationRepository = affectationRepository;
 		this.missionRepository =missionRepository;
 		this.congeRepository = congeRepository;
-		//logger.info("composant employé service initialisé avec succès".toUpperCase());
+		logger.info("composant employé service initialisé avec succès".toUpperCase());
 	}
 
 	public List<EmployeDto> getAllEmploye(){
@@ -317,6 +312,7 @@ public class EmployeService {
     
     private EmployeDto employeToDtoMapper(Employe employe){
 	    if (Objects.isNull(employe)){
+			logger.warn("Impossible de faire le mappage car aucune donnée de l'employé n'est fournie");
             throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
 
