@@ -14,7 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -28,6 +27,7 @@ public class Mission {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
+	private String dureeEnLetMission;
 	private String paysMission;
 	private String villeMission;
 	private String motifMission;
@@ -91,6 +91,14 @@ public class Mission {
 	public void setDateRetour(LocalDate dateRetour) {
 		this.dateRetour = dateRetour;
 	}
+	
+	public String getDureeEnLetMission() {
+		return dureeEnLetMission;
+	}
+	public void setDureeEnLetMission(String dureeEnLetMission) {
+		this.dureeEnLetMission = dureeEnLetMission;
+	}
+
 	public String getPaysMission() {
 		return paysMission;
 	}

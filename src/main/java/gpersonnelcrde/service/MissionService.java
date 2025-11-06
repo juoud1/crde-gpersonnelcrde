@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.dto.MissionDto;
 import gpersonnelcrde.domain.entities.Mission;
-import gpersonnelcrde.repository.EmployeRepository;
 import gpersonnelcrde.repository.MissionRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -27,13 +26,10 @@ public class MissionService {
 private final static Logger logger = LoggerFactory.getLogger(MissionService.class);
 
 	private final MissionRepository missionRepository;
-	private final EmployeRepository employeRepository;
-	//private final MissionEmployeRepository missionEmployeRepository;
-
-	public MissionService(MissionRepository missionRepository, EmployeRepository employeRepository) {
+	
+	public MissionService(MissionRepository missionRepository) {
 		this.missionRepository = missionRepository;
-		this.employeRepository = employeRepository;
-	//	this.missionEmployeRepository = missionEmployeRepository;
+		
 		logger.info("Service mission initialisé avec succès!");
 	}
 
@@ -74,8 +70,6 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 	private MissionDto getMissionDtoFromWebParm(final String numOrdreMiss, final String typeOrdreMission, String natureDeplacement, String cadreMission,
 												LocalDate dateDepartMiss, LocalDate dateRetourMiss, 
 												String destVille, String destPays, String motifMission, String infoSupplmission){
-		
-		//var missEmploye = employeRepository.findByEmpMatricule(missEmpMatricule);
 		var mDto = new MissionDto();
 
 		mDto.setTypeOrdreMission(typeOrdreMission);
@@ -83,10 +77,6 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		mDto.setCadreMission(cadreMission);
 		mDto.setDateDepart(dateDepartMiss);
 		mDto.setDateRetour(dateRetourMiss);
-		/*mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
-		mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
-		mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
-				missEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));*/
 		mDto.setInfoSupplementaires(infoSupplmission);
 		mDto.setMotifMission(motifMission);
 		mDto.setNatureMission(natureDeplacement);
@@ -94,7 +84,6 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		mDto.setVilleMission(destVille);
 		mDto.setStatusMission("En attente de validation");
 		mDto.setDateStatusMission(LocalDate.now());
-		//mDto.setNumOrderMission(String.valueOf(missEmploye.orElseThrow(EntityNotFoundException::new).getId())); ///Formule à determiner
 
 		return mDto;
 	}
@@ -124,14 +113,31 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		return mDtos;//missionMapper(optionalMission);
 	}
 
-	public Optional<MissionDto> getMissionByNumOm (String numOrdreMission){
-		if (StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
+	@Transactional
+	public Optional<MissionDto> getMissionByNum (final String numMission){
+		/*if (StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
 			return Optional.empty();
 		}
 		
-		var optionalMission = missionRepository.findByNumOrdreMission(numOrdreMission);
+		var optionalMission = missionRepository.findByNumOrdreMission(numOrdreMission);*/
+		var optionalMission = getMissionByNumMiss(numMission);
+
+		return missionMapper(optionalMission); 
+	}
+
+	@Transactional
+	protected Optional<Mission> getMissionByNumMiss (String numMission){
+		if (StringUtils.isBlank(numMission)){
+			logger.error("{} n'est pas valide", numMission);
+			throw new IllegalArgumentException("Le n° de mission ne doit être null ou vide");
+		}
 		
-		return missionMapper(optionalMission);
+		if (!NumberUtils.isDigits(numMission)){
+			logger.error("{} n'est pas un nombre entier", numMission);
+			throw new IllegalArgumentException("Le n° de mission doit être un nombre");
+		}
+		
+		return missionRepository.findById(Long.valueOf(numMission));
 	}
 
 	public Optional<MissionDto> getMissionByNumOrdreMissionAndMatriculeEmp (final String numOrdreMission, final String empMatricule){
@@ -178,6 +184,7 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 	    mDto.setCadreMission(mission.getCadreMission());
 		mDto.setDateDepart(mission.getDateDepart());
 		mDto.setDateRetour(mission.getDateRetour());
+		mDto.setDureeEnLetMission(mission.getDureeEnLetMission());
 		////mDto.setEmployeMatricule(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
 		////mDto.setEmployeCivilite(missEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
 		////mDto.setEmployeNom(String.join(", ", missEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
@@ -205,6 +212,7 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		missionToSave.setCadreMission(missionDto.getCadreMission());
 		missionToSave.setDateDepart(missionDto.getDateDepart());
 		missionToSave.setDateRetour(missionDto.getDateRetour());
+		missionToSave.setDureeEnLetMission(missionDto.getDureeEnLetMission());
 		//missionToSave.setEmploye(optEmploye.orElseThrow(EntityNotFoundException::new));
 		missionToSave.setInfoSupplementaires(missionDto.getInfoSupplementaires());
 		missionToSave.setMotifMission(missionDto.getMotifMission());

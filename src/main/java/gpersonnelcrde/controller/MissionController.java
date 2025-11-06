@@ -179,7 +179,7 @@ public class MissionController {
 
 	////// VOIR miss-emp @GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
 	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model){
-	    var savedMission = missionService.getMissionByNumOm(numOrderMission)
+	    var savedMission = missionService.getMissionByNum(numOrderMission)
 								.orElseGet(MissionDto::new);
 								
 		model.addAttribute("savedMission", savedMission);
