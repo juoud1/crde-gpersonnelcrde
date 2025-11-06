@@ -145,49 +145,67 @@
 										</fieldset>
 
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numordremiss" th:text="|N° OM|">num</label>
-											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMissionEmployes.numOrdreMission}" class="form-control" placeholder="num ordre mission" disabled>
+											<label class="form-label h6" for="nummiss" th:text="|N° mission|">num</label>
+											<input type="text" id="nummiss" name="nummiss" th:value="${savedMissionEmployes.numMission}" class="form-control" disabled>
 										</div>
 
-										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+											<label class="form-label h6" for="numordremiss" th:text="|N° OM|">num</label>
+											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMissionEmployes.numOrdreMission}" class="form-control" disabled>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-8 mt-4">
 											<label class="form-label h6" for="typeordremission" th:text="|Type de mission|">civ</label>
-											<input type="text" id="typeordremission" name="typeordremission" th:value="${savedMissionEmployes.typeOrdreMission}" class="form-control" placeholder="num ordre mission" disabled>
+											<input type="text" id="typeordremission" name="typeordremission" th:value="${savedMissionEmployes.typeOrdreMission}" onchange="typeOrdreMissSelectChange()" class="form-control" disabled>
 										</div>
 
 										<div class="col-lg-4 col-md-4 col-sm-4 mt-4">
 											<label class="form-label h6" for="naturedeplacement" th:text="|Portée de la mission|">civ</label>
-											<input type="text" id="naturedeplacement" name="naturedeplacement" th:value="${savedMissionEmployes.natureMission}" class="form-control" placeholder="num ordre mission" disabled>
+											<input type="text" id="naturedeplacement" name="naturedeplacement" th:value="${savedMissionEmployes.natureMission}" onchange="natureDeplacementSelectChange()" class="form-control" disabled>
 										</div>
 
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<div class="col-lg-7 col-md-7 col-sm-10">
 											<label class="form-label h6" for="cadremission" th:text="|Cadre de la mission|">civ</label>
-											<input type="text" id="cadremission" name="cadremission" th:value="${savedMissionEmployes.cadreMission}" class="form-control" placeholder="Le cadre de la mission" disabled>
+											<input type="text" id="cadremission" name="cadremission" th:value="${savedMissionEmployes.cadreMission}" class="form-control" disabled>
 										</div>
 
 										<div class="col-lg-4 col-md-4 col-sm-8">
 											<label class="form-label h6" for="motifmission" th:text="|Motif de la mission|">civ</label>
-											<input type="text" id="motifmission" name="motifmission" th:value="${savedMissionEmployes.motifMission}" class="form-control" placeholder="num ordre mission" disabled>
+											<input type="text" id="motifmission" name="motifmission" th:value="${savedMissionEmployes.motifMission}" class="form-control" disabled>
+										</div>
+
+										<div class="col-lg-11 col-md-11 col-sm-10">
+											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
+											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMissionEmployes.infoSupplementaires}" class="form-control" disabled>
+										</div>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
+											<input type="text" id="destville" name="destville" th:value="${savedMissionEmployes.villeMission}" class="form-control" disabled>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
+											<input type="text" id="destpays" name="destpays" th:value="${savedMissionEmployes.paysMission}" class="form-control" disabled>
 										</div>
 
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedepartmiss" th:text="|Date départ|">civ</label>
-											<input type="date" id="datedepartmiss" name="datedepartmiss" th:value="${savedMissionEmployes.dateDepart}" class="form-control" placeholder="Date du départ" disabled>
+											<input type="date" id="datedepartmiss" name="datedepartmiss" th:value="${savedMissionEmployes.dateDepart}" class="form-control" disabled>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="dateretourmiss" th:text="|Date retour|">civ</label>
-											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMissionEmployes.dateRetour}" class="form-control" placeholder="Date de retour" disabled>
+											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMissionEmployes.dateRetour}" class="form-control" disabled>
 										</div>
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="dureeMiss" th:text="|Durée de la mission|">civ</label>
+											<input type="text" id="dureeMiss" name="dureeMiss" th:value="${savedMissionEmployes.dureeMiss}" class="form-control" disabled>
+										</div>
+										<!--div class="col-lg-2 col-md-2 col-sm-6">
+											<label class="form-label h6" for="nbreJrsMiss" th:text="|Nbre de mois|">civ</label>
+											<input type="text" id="nbreJrsMiss" name="nbreJrsMiss" th:value="${savedMissionEmployes.nbreJours}" class="form-control" disabled>
+										</div-->
 										
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
-											<input type="text" id="destville" name="destville" th:value="${savedMissionEmployes.villeMission}" class="form-control" placeholder="Ville de destination" disabled>
-										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
-											<input type="text" id="destpays" name="destpays" th:value="${savedMissionEmployes.paysMission}" class="form-control" placeholder="Pays de destination" disabled>
-										</div>
-
-										<div id="employesautorises" class="col-lg-9 col-md-9 col-sm-10">
+										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											<select id="missEmpNom" name="missEmpNom" class="form-select" multiple disabled>
 												<option th:each="employeAutorise : ${savedMissionEmployes.employesMission}" th:value="${employeAutorise.empMatricule}" th:text="${employeAutorise.empNom} +|, | + ${employeAutorise.empPren}"></option>
@@ -200,12 +218,12 @@
 											<input type="text" id="empchefmissionmatricule" name="empchefmissionmatricule" th:value="${savedMissionEmployes.employeChefDeMissCivilite} + | | + ${savedMissionEmployes.employeChefDeMissNom} + |, | + ${savedMissionEmployes.employeChefDeMissFonction}" class="form-control" disabled>
 										</div>
 										
-										<div class="col-lg-10 col-md-10 col-sm-12">
+										<!--div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMissionEmployes.infoSupplementaires}" class="form-control" disabled>
-										</div>
+										</div-->
 
-										<div class="col-lg-7 col-md-6 col-sm-8">
+										<div class="col-lg-7 col-md-7 col-sm-8">
 											<label class="form-label h6" for="statusmission" th:text="|Status mission|">civ</label>
 											<input type="text" id="statusmission" name="statusmission" th:value="${savedMissionEmployes.statusMission}" class="form-control" disabled>
 										</div>
@@ -221,7 +239,7 @@
 											<a class="btn btn-primary" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
 										<div class="col-3 text-end">
-											<button type="button" class="btn btn-warning" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>
 										</div>
 									</form>
 								</div>
@@ -259,11 +277,11 @@
 		window.addEventListener('DOMContentLoaded', typeOrdreMissSelectChange);
 		function typeOrdreMissSelectChange() {
 			if (typeOrdreMissionSelect.options[typeOrdreMissionSelect.selectedIndex].value !== 'Mission') {
-				legendeFormText.innerText='Ajouter une Mission de groupe';
-				employesAutorisesBoite.style.display='';
+				//legendeFormText.innerText='Ajouter une Mission de groupe';
+				employesAutorisesBoite.style.display='block';
 				empChefMissionMatriculeLabelText.innerText='Employé, chef de mission';
 			} else { 
-				legendeFormText.innerText='Ajouter une Mission';
+				//legendeFormText.innerText='Ajouter une Mission';
 				employesAutorisesBoite.style.display='none';
 				empChefMissionMatriculeLabelText.innerText='Employé autorisé';
 			}
@@ -323,7 +341,7 @@
 					
 					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
 						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMissionEmp.employeCivilite}` +
-						` <b> ${savedMissionEmp.employeNom},</b> ${savedMissionEmp.employeFonction} de se rendre à ${savedMissionEmp.villeMission},  ${savedMissionEmp.paysMission}.</p>` + 
+						` <b> ${savedMissionEmp.employeChefDeMissNom},</b> ${savedMissionEmp.employeChefDeMissFonction} de se rendre à ${savedMissionEmp.villeMission},  ${savedMissionEmp.paysMission}.</p>` + 
 						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMissionEmp.dateDepart}<br> <b>Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
 						`<b>Motif:</b> ${savedMissionEmp.motifMission}</p>` +
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
@@ -345,7 +363,7 @@
 
 					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
 						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise les experts ci-dessous, à se rendre à ${savedMissionEmp.villeMission} (${savedMissionEmp.paysMission}) ` +
-						` pour ${savedMissionEmp.infoSupplementaires} d'une durée de ${savedMissionEmp.dureeNbreUniteEnLettre} (${savedMissionEmp.dureeNbreUnite}) ${savedMissionEmp.dureeUnite}. Il s'agit de : </p> <br>` + 
+						` pour ${savedMissionEmp.infoSupplementaires} d'une durée de ${savedMissionEmp.dureeMiss}. Il s'agit de : </p> <br>` + 
 						`<br>` + tableEmployesAutorisesHtml + `<br>` +
 						`<p class='w-100' style="text-align:left; font-size:14pt;"><b class="text-decoration-underline">Date du départ:</b> ${savedMissionEmp.dateDepart}  <b class="text-decoration-underline ms-5">Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
 						`<b class="text-decoration-underline">Motif:</b> ${savedMissionEmp.motifMission}<br>` +

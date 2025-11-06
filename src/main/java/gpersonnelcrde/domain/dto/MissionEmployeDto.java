@@ -7,9 +7,9 @@ public class MissionEmployeDto {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
-	private String dureeNbreUnite;
-	private String dureeNbreUniteEnLettre;
-	private String dureeUnite;
+	//private String dureeNbreUnite;
+	private String dureeEnLettre;
+	//private String dureeUnite;
 
 	private String paysMission;
 	private String villeMission;
@@ -25,6 +25,9 @@ public class MissionEmployeDto {
 	private String employeNom;
 	private String employeCivilite;
 	private String employeFonction;
+
+	private MissionDto mission;
+	private EmployeDto employe;
 	private Boolean isChefDeMission;
 	
 	public String getNatureMission() {
@@ -51,24 +54,24 @@ public class MissionEmployeDto {
 	public void setDateRetour(LocalDate dateRetour) {
 		this.dateRetour = dateRetour;
 	}
-	public String getDureeNbreUnite() {
+	/*public String getDureeNbreUnite() {
 		return dureeNbreUnite;
 	}
 	public void setDureeNbreUnite(String dureeNbreUnite) {
 		this.dureeNbreUnite = dureeNbreUnite;
+	}*/
+	public String getDureeEnLettre() {
+		return dureeEnLettre;
 	}
-	public String getDureeNbreUniteEnLettre() {
-		return dureeNbreUniteEnLettre;
+	public void setDureeEnLettre(String dureeEnLettre) {
+		this.dureeEnLettre = dureeEnLettre;
 	}
-	public void setDureeNbreUniteEnLettre(String dureeNbreUniteEnLettre) {
-		this.dureeNbreUniteEnLettre = dureeNbreUniteEnLettre;
-	}
-	public String getDureeUnite() {
+	/*public String getDureeUnite() {
 		return dureeUnite;
 	}
 	public void setDureeUnite(String dureeUnite) {
 		this.dureeUnite = dureeUnite;
-	}
+	}*/
 	public String getPaysMission() {
 		return paysMission;
 	}
@@ -147,6 +150,21 @@ public class MissionEmployeDto {
 	public void setEmployeFonction(String employeFonction) {
 		this.employeFonction = employeFonction;
 	}
+
+	public MissionDto getMission() {
+		return mission;
+	}
+	public void setMission(MissionDto mission) {
+		this.mission = mission;
+	}
+
+	public EmployeDto getEmploye() {
+		return employe;
+	}
+	public void setEmploye(EmployeDto employe) {
+		this.employe = employe;
+	}
+
 	public Boolean getIsChefDeMission() {
 		return isChefDeMission;
 	}
@@ -162,9 +180,9 @@ public class MissionEmployeDto {
 		result = prime * result + ((cadreMission == null) ? 0 : cadreMission.hashCode());
 		result = prime * result + ((dateDepart == null) ? 0 : dateDepart.hashCode());
 		result = prime * result + ((dateRetour == null) ? 0 : dateRetour.hashCode());
-		result = prime * result + ((dureeNbreUnite == null) ? 0 : dureeNbreUnite.hashCode());
-		result = prime * result + ((dureeNbreUniteEnLettre == null) ? 0 : dureeNbreUniteEnLettre.hashCode());
-		result = prime * result + ((dureeUnite == null) ? 0 : dureeUnite.hashCode());
+		//result = prime * result + ((dureeNbreUnite == null) ? 0 : dureeNbreUnite.hashCode());
+		result = prime * result + ((dureeEnLettre == null) ? 0 : dureeEnLettre.hashCode());
+		//result = prime * result + ((dureeUnite == null) ? 0 : dureeUnite.hashCode());
 		result = prime * result + ((paysMission == null) ? 0 : paysMission.hashCode());
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
@@ -210,21 +228,21 @@ public class MissionEmployeDto {
 				return false;
 		} else if (!dateRetour.equals(other.dateRetour))
 			return false;
-		if (dureeNbreUnite == null) {
+		/*if (dureeNbreUnite == null) {
 			if (other.dureeNbreUnite != null)
 				return false;
 		} else if (!dureeNbreUnite.equals(other.dureeNbreUnite))
-			return false;
-		if (dureeNbreUniteEnLettre == null) {
-			if (other.dureeNbreUniteEnLettre != null)
+			return false;*/
+		if (dureeEnLettre == null) {
+			if (other.dureeEnLettre != null)
 				return false;
-		} else if (!dureeNbreUniteEnLettre.equals(other.dureeNbreUniteEnLettre))
+		} else if (!dureeEnLettre.equals(other.dureeEnLettre))
 			return false;
-		if (dureeUnite == null) {
+		/*if (dureeUnite == null) {
 			if (other.dureeUnite != null)
 				return false;
 		} else if (!dureeUnite.equals(other.dureeUnite))
-			return false;
+			return false;*/
 		if (paysMission == null) {
 			if (other.paysMission != null)
 				return false;
@@ -301,8 +319,8 @@ public class MissionEmployeDto {
 	@Override
 	public String toString() {
 		return "MissionEmployeDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
-				+ dateDepart + ", dateRetour=" + dateRetour + ", dureeNbreUnite=" + dureeNbreUnite
-				+ ", dureeNbreUniteEnLettre=" + dureeNbreUniteEnLettre + ", dureeUnite=" + dureeUnite + ", paysMission="
+				+ dateDepart + ", dateRetour=" + dateRetour //+ ", dureeNbreUnite=" + dureeNbreUnite ", dureeUnite=" + dureeUnite +
+				+ ", dureeEnLettre=" + dureeEnLettre + ", paysMission="
 				+ paysMission + ", villeMission=" + villeMission + ", motifMission=" + motifMission
 				+ ", infoSupplementaires=" + infoSupplementaires + ", numOrdreMission=" + numOrdreMission
 				+ ", numMission=" + numMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="

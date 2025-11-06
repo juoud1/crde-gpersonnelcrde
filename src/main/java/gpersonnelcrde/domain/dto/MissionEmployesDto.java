@@ -9,9 +9,11 @@ public class MissionEmployesDto {
 	private String cadreMission;
 	private LocalDate dateDepart;
 	private LocalDate dateRetour;
-	private String dureeNbreUnite;
-	private String dureeNbreUniteEnLettre;
-	private String dureeUnite;
+	private String dureeMiss;
+	//private String dureeNbreUniteEnLettre;
+	/*private String nbreMois;
+	private String nbreSemaines;
+	private String nbreJours;*/
 	private String paysMission;
 	private String villeMission;
 	private String motifMission;
@@ -27,7 +29,7 @@ public class MissionEmployesDto {
 	private String employeChefDeMissCivilite;
 	private String employeChefDeMissFonction;
 	private List<EmployeDto> employesMission = new ArrayList<>();
-
+	
 	public String getNatureMission() {
 		return natureMission;
 	}
@@ -52,23 +54,11 @@ public class MissionEmployesDto {
 	public void setDateRetour(LocalDate dateRetour) {
 		this.dateRetour = dateRetour;
 	}
-	public String getDureeNbreUnite() {
-		return dureeNbreUnite;
+	public String getDureeMiss() {
+		return dureeMiss;
 	}
-	public void setDureeNbreUnite(String dureeNbreUnite) {
-		this.dureeNbreUnite = dureeNbreUnite;
-	}
-	public String getDureeNbreUniteEnLettre() {
-		return dureeNbreUniteEnLettre;
-	}
-	public void setDureeNbreUniteEnLettre(String dureeNbreUniteEnLettre) {
-		this.dureeNbreUniteEnLettre = dureeNbreUniteEnLettre;
-	}
-	public String getDureeUnite() {
-		return dureeUnite;
-	}
-	public void setDureeUnite(String dureeUnite) {
-		this.dureeUnite = dureeUnite;
+	public void setDureeMiss(String dureeMiss) {
+		this.dureeMiss = dureeMiss;
 	}
 	public String getPaysMission() {
 		return paysMission;
@@ -163,9 +153,7 @@ public class MissionEmployesDto {
 		result = prime * result + ((cadreMission == null) ? 0 : cadreMission.hashCode());
 		result = prime * result + ((dateDepart == null) ? 0 : dateDepart.hashCode());
 		result = prime * result + ((dateRetour == null) ? 0 : dateRetour.hashCode());
-		result = prime * result + ((dureeNbreUnite == null) ? 0 : dureeNbreUnite.hashCode());
-		result = prime * result + ((dureeNbreUniteEnLettre == null) ? 0 : dureeNbreUniteEnLettre.hashCode());
-		result = prime * result + ((dureeUnite == null) ? 0 : dureeUnite.hashCode());
+		result = prime * result + ((dureeMiss == null) ? 0 : dureeMiss.hashCode());
 		result = prime * result + ((paysMission == null) ? 0 : paysMission.hashCode());
 		result = prime * result + ((villeMission == null) ? 0 : villeMission.hashCode());
 		result = prime * result + ((motifMission == null) ? 0 : motifMission.hashCode());
@@ -211,20 +199,10 @@ public class MissionEmployesDto {
 				return false;
 		} else if (!dateRetour.equals(other.dateRetour))
 			return false;
-		if (dureeNbreUnite == null) {
-			if (other.dureeNbreUnite != null)
+		if (dureeMiss == null) {
+			if (other.dureeMiss != null)
 				return false;
-		} else if (!dureeNbreUnite.equals(other.dureeNbreUnite))
-			return false;
-		if (dureeNbreUniteEnLettre == null) {
-			if (other.dureeNbreUniteEnLettre != null)
-				return false;
-		} else if (!dureeNbreUniteEnLettre.equals(other.dureeNbreUniteEnLettre))
-			return false;
-		if (dureeUnite == null) {
-			if (other.dureeUnite != null)
-				return false;
-		} else if (!dureeUnite.equals(other.dureeUnite))
+		} else if (!dureeMiss.equals(other.dureeMiss))
 			return false;
 		if (paysMission == null) {
 			if (other.paysMission != null)
@@ -298,12 +276,11 @@ public class MissionEmployesDto {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MissionEmployesDto [natureMission=" + natureMission + ", cadreMission=" + cadreMission + ", dateDepart="
-				+ dateDepart + ", dateRetour=" + dateRetour + ", dureeNbreUnite=" + dureeNbreUnite
-				+ ", dureeNbreUniteEnLettre=" + dureeNbreUniteEnLettre + ", dureeUnite=" + dureeUnite + ", paysMission="
+				+ dateDepart + ", dateRetour=" + dateRetour + ", dureeMiss=" + dureeMiss + ", paysMission="
 				+ paysMission + ", villeMission=" + villeMission + ", motifMission=" + motifMission
 				+ ", infoSupplementaires=" + infoSupplementaires + ", numOrdreMission=" + numOrdreMission
 				+ ", numMission=" + numMission + ", typeOrdreMission=" + typeOrdreMission + ", statusMission="
@@ -312,5 +289,5 @@ public class MissionEmployesDto {
 				+ ", employeChefDeMissCivilite=" + employeChefDeMissCivilite + ", employeChefDeMissFonction="
 				+ employeChefDeMissFonction + ", employesMission=" + employesMission + "]";
 	}
-
+		
 }

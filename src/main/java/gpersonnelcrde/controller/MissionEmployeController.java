@@ -1,6 +1,7 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,7 +36,9 @@ public class MissionEmployeController {
 
 	@GetMapping ("/missions-emp-crde.html")
 	public String getGestMissionsEmployes(HttpServletRequest request, Model model){
-	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes()); 
+	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes().stream()
+			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
+			.toList()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
@@ -46,7 +49,7 @@ public class MissionEmployeController {
 
 	@GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
 	public String getMissionEmployeForCreation(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model){
-	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes()); 
+	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
@@ -59,10 +62,12 @@ public class MissionEmployeController {
 				model.addAttribute("paysResidenceText", "");
 			} else {
 				model.addAttribute("typMissValue", "Mission");
-				model.addAttribute("typMissText", "Mission d'un employé");
+				model.addAttribute("typMissText", "Mission");
 				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
 			}
 		}
+
+		updateUI(typOrdMiss, model);
 
 		//request.getSession().setAttribute("modelMission", model);
 	    return "gmissioncrde";
@@ -75,15 +80,15 @@ public class MissionEmployeController {
 							@RequestParam("dateretourmiss") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRetourMiss, 
 							@RequestParam("typeordremission") String typeOrdreMission,
 							@RequestParam("destville") String destVille, @RequestParam("destpays") String destPays, 
-							@RequestParam("numordremiss") String numOrdreMiss, 
+							@RequestParam("numordremiss") String numOrdreMiss, @RequestParam(required = false) String dureeMiss,
 							@RequestParam("motifmission") String motifMission, 
-							@RequestParam(name ="infosupplmission", required = false) String infoSupplmission,
+							@RequestParam(name="infosupplmission", required = false) String infoSupplmission,
 							@RequestParam("empchefmissionmatricule") String missEmpChefMissMatricule, 
 							HttpServletRequest request, Model model,
-							@RequestParam("missempmatricule") String... missEmpMatricules) {
+							@RequestParam(name="missempmatricule", required = false) String... missEmpMatricules) {
 		
 		MissionEmployesDto savedMissionEmployes = missionEmployeService.saveMissionEmployes(numOrdreMiss, typeOrdreMission, natureDeplacement, 
-																cadreMission, dateDepartMiss, dateRetourMiss, 
+																cadreMission, dateDepartMiss, dateRetourMiss, dureeMiss, 
 																destVille, destPays, motifMission, infoSupplmission, 
 																missEmpChefMissMatricule, missEmpMatricules);
 		//model = (Model) request.getSession().getAttribute("modelMission");
@@ -92,19 +97,22 @@ public class MissionEmployeController {
 			model.addAttribute("traitement", "création de nouvelle mission");
 		}
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
-		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes());
-		//request.getSession().setAttribute("modelMission", model);
+		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes());
+		
+		updateUI(typeOrdreMission, model);
 
 		return "gmissioncrdeRecap";
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}/{empMatricule}") /// Il manque le cas d'appel èa partir de la formRécap
-	public String getMissionByNumOrdreAndEmpMatricule(@PathVariable String numMission, @PathVariable String empMatricule, HttpServletRequest request, Model model){
+	public String getMissionByNumAndEmpMatricule(@PathVariable String numMission, @PathVariable String empMatricule, HttpServletRequest request, Model model){
 	    var savedMissionEmploye = missionEmployeService.getMissionEmployeByNumMissAndMatriculeEmp(numMission, empMatricule)
 								.orElseGet(MissionEmployeDto::new);
 		model.addAttribute("savedMissionEmploye", savedMissionEmploye);
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		
+		updateUI(savedMissionEmploye.getTypeOrdreMission(), model);
+
 		return "gmissioncrdeMaj";
 	}
 
@@ -121,18 +129,34 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}")
-	public String getMissionByNumOrdre(@PathVariable String numMission, HttpServletRequest request, Model model){
+	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model){
 	    var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
 								.orElseGet(MissionEmployesDto::new);
 		
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
-		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionsEmployes()); 
+		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
 		
+		updateUI(savedMissionEmployes.getTypeOrdreMission(), model);
+
 		return "gmissioncrdeMaj";
+	}
+
+	private void updateUI(String typeOrdreMiss, Model model){
+		if (StringUtils.isNotBlank(typeOrdreMiss)){
+			if (typeOrdreMiss.equalsIgnoreCase("miss-grpe") || typeOrdreMiss.equalsIgnoreCase("Mission de groupe")) {
+				model.addAttribute("typMissValue", "Mission de groupe");
+				model.addAttribute("typMissText", "Mission de groupe");
+				model.addAttribute("paysResidenceText", "");
+			} else {
+				model.addAttribute("typMissValue", "Mission");
+				model.addAttribute("typMissText", "Mission");
+				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
+			}
+		}
 	}
 }
