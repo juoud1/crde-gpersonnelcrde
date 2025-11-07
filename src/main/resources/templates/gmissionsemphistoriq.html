@@ -163,7 +163,7 @@
 											</thead>
 											<tbody>
 												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="mission: ${savedMissionsEmploye}">
+												<tr th:each="mission: ${savedMissionsEmployes}">
 													<td th:text="${mission.numOrdreMission}">Num.</td>
 													<td th:text="${mission.typeOrdreMission}">type</td>
 													<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
