@@ -118,8 +118,8 @@ public class MissionEmployeController {
 
 	@GetMapping ("/missions-emp-crde.html/{missEmpMatricule}/{choixStr}")
 	public String getMissionsByEmpMatricule(@PathVariable String missEmpMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
-	    var savedMissionsEmploye = missionEmployeService.getMissionsEmployesByMatriculeEmp(missEmpMatricule);								
-		model.addAttribute("savedMissionsEmploye", savedMissionsEmploye);
+	    var savedMissionsEmployes = missionEmployeService.getMissionsEmployesByMatriculeEmp(missEmpMatricule);								
+		model.addAttribute("savedMissionsEmployes", savedMissionsEmployes);
 		model.addAttribute("missEmpMatricule", missEmpMatricule);
 		if (StringUtils.isNotBlank(choixStr) && !"hist".equalsIgnoreCase(choixStr)){
 			model.addAttribute("savedChoixStr", choixStr);

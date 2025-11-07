@@ -319,7 +319,7 @@ public class MissionEmployeService {
 		meDto.setEmployeCivilite(emp.getEmpCivilite());
 		meDto.setEmployeFonction(emp.getEmpFonction().getFonction());
 		meDto.setEmployeMatricule(emp.getEmpMatricule());
-		meDto.setEmployeNom(String.join(", ", emp.getEmpNom(), emp.getEmpPren()));
+		meDto.setEmployeNom(String.join(" ", emp.getEmpNom(), emp.getEmpPren()));
 		//meDto.setIsChefDeMission(missionEmploye.isEmployeChefMission());
 		meDto.setInfoSupplementaires(miss.getInfoSupplementaires());
 		meDto.setMotifMission(miss.getMotifMission());
@@ -348,14 +348,15 @@ public class MissionEmployeService {
 		return Optional.of(meDto);
 	}
 
-	public List<MissionEmployesDto> getMissionsEmployesByMatriculeEmp (final String empMatricule){
+	@Transactional
+	public List<MissionEmployeDto> getMissionsEmployesByMatriculeEmp (final String empMatricule){
 		if (StringUtils.isBlank(empMatricule)){
 			return List.of();
 		}
 
-		return getAllMissionEmployes().stream()
+		return getMissionsEmployes().stream()
 						//.sorted(Comparator.comparing(MissionEmployeDto::getIsChefDeMission).reversed())
-						.filter(meDto -> meDto.getEmployeChefDeMissMatricule().equalsIgnoreCase(empMatricule))
+						.filter(meDto -> meDto.getEmployeMatricule().equalsIgnoreCase(empMatricule))
 						.toList();
 	}
 

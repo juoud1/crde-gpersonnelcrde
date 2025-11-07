@@ -134,7 +134,7 @@
 									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-2 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
 										<legende id="legmissionsform" class="h4 mb-3 text-center">Mettre à jour les données de la mission</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
@@ -213,11 +213,19 @@
 											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											
 											<div class="mb-2 d-flex flex-wrap gap-2">
-												<select id="missempnom" name="missempmatricule" class="form-select" style="width: 92.5%;" multiple>
+												<select id="missempnom" name="missempmatricule" class="form-select" style="width: 88.5%;" multiple>
 													<option th:each="employeAutorise : ${savedMissionEmployes.employesMission}" th:value="${employeAutorise.empMatricule}" th:text="${employeAutorise.empNom} +|, | + ${employeAutorise.empPren}"></option>
 													<!--option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option-->
 												</select>
-											
+												
+												<div class="d-flex flex-wrap text-center gap-1 p-auto m-auto" style="width: 8%;">
+													<button type="button" th:id="|btAjoutEmp|" class="btn btn-outline-primary text-center" title="Ajouter d'autre employé" style="padding: auto; width: 40%;" th:text="|+|">
+														Ajouter emp
+													</button>
+													<button type="button" th:id="|btEnleveEmp|" class="btn btn-outline-danger text-center" title="Enlever certain employé" style="padding: auto; width: 40%;" th:text="|-|">
+														Ajouter emp
+													</button>
+												</div>
 												<!--div class="p-auto text-center" style="width: 4.5%;">
 													<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 														<div class="modal-dialog modal-dialog-centered">
@@ -251,19 +259,19 @@
 															</div>
 														</div>
 													</div>
-													<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
+													<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button-->
 
 
 
-													<button type="button" th:id="|bt-| + ${savedMissionEmployes.numMission}" class="btn btn-outline-primary" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${savedMissionEmployes.numMission}" th:text="|+|">
+													<!--button type="button" th:id="|bt-|" class="btn btn-outline-primary" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-|" th:text="|+|">
 														action
 													</button>
 
-													<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${savedMissionEmployes.numMission}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-														<div class="modal-dialog modal-dialog-centered">
-															<div class="modal-content">
+													<div class="modal modal-xl fade bg-transparent z-3" th:id="|staticBckdpCrde-|" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered z-3">
+															<div class="modal-content z-3">
 																<div class="modal-header">
-																	<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${savedMissionEmployes.numMission}" th:text="|Actions disponibles sur mission: | + ${savedMissionEmployes.numMission}">Actions disponibles</h1>
+																	<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-|" th:text="|Actions disponibles|">Actions disponibles</h1>
 																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																</div>
 																<div class="modal-body">
@@ -278,14 +286,31 @@
 																	</div>
 
 																</div>
+																<div class="modal-dialog modal-dialog-centered">
+																...
+																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
 																</div>
 															</div>
 														</div>
-													</div>
+													</div-->
 
-												</div-->
+													<!--div class="card mb-4">
+														<div class="card-header">
+															<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAjoutEmps" style="font-size: small; font-weight: bold;">
+																All
+															</a>
+														</div>
+														<div id="collapseAjoutEmps" class="collapse" data-bs-parent="#main-app">
+															<div class="card-body">
+																<h2 class="h4 mb-3 text-center">Ajouter ou modifier un lieu d'affectation</h2>
+																
+															</div>
+														</div>
+													</div-->
+
+												<!--/div-->
 											</div>
 										</div>
 
