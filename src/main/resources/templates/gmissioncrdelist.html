@@ -223,13 +223,12 @@
 													<td th:text="${mission.villeMission} + | ; | + ${mission.paysMission}">status</td>
 													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
 													<td class="p-auto text-center" style="width: 4.5%;">
-														
 														<button type="button" th:id="|bt-| + ${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${mission.numOrdreMission}" th:text="|...|">
 															action
 														</button>
 
 														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${mission.numOrdreMission}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-															<div class="modal-dialog">
+															<div class="modal-dialog modal-dialog-centered">
 																<div class="modal-content">
 																	<div class="modal-header">
 																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${mission.numMission}" th:text="|Actions disponibles sur mission: | + ${mission.numOrdreMission}">Actions disponibles</h1>
@@ -238,10 +237,14 @@
 																	<div class="modal-body">
 																		<div class="border p-1 mb-2 bg-secondary-subtle">
 																			<header class="h6 mb-1 text-start" th:text="|Données de la mission N° | + ${mission.numOrdreMission}">Données de la mission</header>
-																			<div class="d-flex flex-wrap gap-2 p-2">
+																			<div class="d-flex flex-wrap gap-1 p-1">
 																				<a th:id="|modifmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Modifier la mission|">Annuler</a>
 																				<a th:id="|approuvmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission|">Annuler</a>
-																				<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Annuler/Suspendre la mission|">Annuler</a>
+																				<div th:if="${mission.typeOrdreMission != 'Mission'}">
+																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Changer le chef de mission|">Annuler</a>
+																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Ajouter employé(s)|">Annuler</a>
+																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Enlever employé(s)|">Annuler</a>
+																				</div>
 																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|OM-|+${mission.numMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
 																			</div>
 																		</div>
@@ -295,7 +298,11 @@
 						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
 					
 					allMissionsEmployes.forEach(miss => {
-						tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
+						
+							tableHtml += `
+							 	${miss.typeOrdreMission} === "Mission" ?<tr><td>${miss.employeChefDeMissMatricule}</td><td>${miss.employeChefDeMissNom}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>
+								: <tr><td>....</td><td> ....</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>
+							`;
 					});
 
 					tableHtml += `</tbody></table>`;
@@ -314,39 +321,50 @@
 			}
 		}
 
-		function printOrdreMissions(savedMission) {
-			if (undefined !== savedMission) {
+		function printOrdreMissions(savedMissionEmp) {
+			
+			if (undefined !== savedMissionEmp) {
 				let divHtml ='';
 
-				if ('ordre-mission' == savedMission.typeOrdreMission) {
+				if ('Mission' == savedMissionEmp.typeOrdreMission) {
 				
 					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
 						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 					
-					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
-						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
-						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
-						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
-						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMissionEmp.employeCivilite}` +
+						` <b> ${savedMissionEmp.employeChefDeMissNom},</b> ${savedMissionEmp.employeChefDeMissFonction} de se rendre à ${savedMissionEmp.villeMission},  ${savedMissionEmp.paysMission}.</p>` + 
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMissionEmp.dateDepart}<br> <b>Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
+						`<b>Motif:</b> ${savedMissionEmp.motifMission}</p>` +
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
 
-					divHtml += `</div><div class="col-1"></div></div>`;
+					//divHtml += `</div><div class="col-1"></div></div>`;
 
-					/*const win = window.open('', '', 'height=700,width=900');
-					win.document.write('<html><head>');
-					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
-					win.document.write('</head><body>');
-					win.document.write(getPrintableHeader());
-					win.document.write(divHtml);
-					win.document.write(getPrintableFooterNoteSvce());
-					win.document.write('</body></html>');
-					win.document.close();
-					win.print();*/
 				} else {
+					let tableEmployesAutorisesHtml = `<table class="table table-responsive table-bordered" style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
+					`<th class='print-col-nom'>Grade/Civité</th><th class='print-col-nom'>Nom(s)</th><th class='print-col-nom'>Prénom</th></tr></thead><tbody>`;
 				
-				
+					savedMissionEmp.employesMission.forEach(empAutorise => {
+						tableEmployesAutorisesHtml += `<tr><td>${empAutorise.empCivilite}</td><td>${empAutorise.empNom}</td><td>${empAutorise.empPren}</td></tr>`;
+					});
+
+					tableEmployesAutorisesHtml += `</tbody></table>`;
+
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION COLLECTIF</h2><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
+						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise les experts ci-dessous, à se rendre à ${savedMissionEmp.villeMission} (${savedMissionEmp.paysMission}) ` +
+						` pour ${savedMissionEmp.infoSupplementaires} d'une durée de ${savedMissionEmp.dureeMiss}. Il s'agit de : </p> <br>` + 
+						`<br>` + tableEmployesAutorisesHtml + `<br>` +
+						`<p class='w-100' style="text-align:left; font-size:14pt;"><b class="text-decoration-underline">Date du départ:</b> ${savedMissionEmp.dateDepart}  <b class="text-decoration-underline ms-5">Date de retour:</b> ${savedMissionEmp.dateRetour}<br>` +
+						`<b class="text-decoration-underline">Motif:</b> ${savedMissionEmp.motifMission}<br>` +
+						`<b class="text-decoration-underline">NB : </b> ${savedMissionEmp.employeChefDeMissCivilite} ${savedMissionEmp.employeChefDeMissNom} est désigné(e) Chef(fe) de Mission.</p><br>` +
+						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
+
 				}
+
+				divHtml += `</div><div class="col-1"></div></div>`;
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');
