@@ -145,46 +145,48 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des congés et absences de | + ${congeEmpMatricule}">Historique des congés</h2>
-										<table class="table table-responsive table-bordered" id="congeshistoriq-table">
-											<thead>
-												<tr>
-													<th>N°</th>
-													<th>Type demande</th>
-													<th style="width: 120px;">Employé</th>
-													<th style="width: 120px;">Fonction</th>
-													<th>Dates</th>
-													<th>Détails</th>
-													<th style="width: 140px;">Autorisation sortie</th>
-													<th style="width: 100px;">Status actuel</th>
-													<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="conge: ${savedCongesEmploye}">
-													<td th:text="${conge.numNoteServiceConge}">Num.</td>
-													<td th:text="${conge.typeDemandeConge}">type</td>
-													<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
-													<td th:text="${conge.employeFonction}">nom</td>
-													<td th:text="|Du: | + ${conge.dateDebutConge} + |  Au: | + ${conge.dateFinConge}" >email</td>
-													<td th:text="${conge.infoSupplementaires}">role</td>
-													<td th:text="${conge.paysAutorisatSortie} + |/ | + ${conge.villeAutorisatSortie} + |; du | + ${conge.dateDepartAutorisatSortie} + | au | + ${conge.dateRetourAutorisatSortie}">prenom</td>
-													<td th:text="${conge.statusConge} + | depuis le | + ${conge.dateStatusConge}">prenom</td>
-													<td class="text-center" th:if="${savedChoixStr != null}">
-														<div class="m-1 d-flex flex-wrap gap-1">
-															<select id="statusconge" name="statusconge" class="form-select">
-																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-																<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
-																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
-																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
-																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
-																<option th:value="|Autre|" th:text="|Autre|">Autre</option>
-															</select>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="congeshistoriq-table">
+												<thead>
+													<tr>
+														<th>N°</th>
+														<th>Type demande</th>
+														<th style="width: 120px;">Employé</th>
+														<th style="width: 120px;">Fonction</th>
+														<th>Dates</th>
+														<th>Détails</th>
+														<th style="width: 140px;">Autorisation sortie</th>
+														<th style="width: 100px;">Status actuel</th>
+														<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les missions seront ajoutées ici dynamiquement -->
+													<tr th:each="conge: ${savedCongesEmploye}">
+														<td th:text="${conge.numNoteServiceConge}">Num.</td>
+														<td th:text="${conge.typeDemandeConge}">type</td>
+														<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
+														<td th:text="${conge.employeFonction}">nom</td>
+														<td th:text="|Du: | + ${conge.dateDebutConge} + |  Au: | + ${conge.dateFinConge}" >email</td>
+														<td th:text="${conge.infoSupplementaires}">role</td>
+														<td th:text="${conge.paysAutorisatSortie} + |/ | + ${conge.villeAutorisatSortie} + |; du | + ${conge.dateDepartAutorisatSortie} + | au | + ${conge.dateRetourAutorisatSortie}">prenom</td>
+														<td th:text="${conge.statusConge} + | depuis le | + ${conge.dateStatusConge}">prenom</td>
+														<td class="text-center" th:if="${savedChoixStr != null}">
+															<div class="m-1 d-flex flex-wrap gap-1">
+																<select id="statusconge" name="statusconge" class="form-select">
+																	<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+																	<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
+																	<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+																	<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+																	<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+																	<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>

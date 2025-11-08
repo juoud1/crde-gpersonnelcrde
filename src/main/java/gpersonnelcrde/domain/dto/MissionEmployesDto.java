@@ -29,6 +29,14 @@ public class MissionEmployesDto {
 	private String employeChefDeMissCivilite;
 	private String employeChefDeMissFonction;
 	private List<EmployeDto> employesMission = new ArrayList<>();
+
+	public void addEmploye(EmployeDto employe) {
+        this.employesMission.add(employe);
+    }
+
+	public void addEmployes(List<EmployeDto> employes) {
+        this.employesMission.addAll(employes);
+    }
 	
 	public String getNatureMission() {
 		return natureMission;

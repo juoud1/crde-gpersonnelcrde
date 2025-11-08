@@ -177,66 +177,72 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center">Liste des visites officielles</h2>
-										<table class="table table-striped" id="visit-table">
-											<thead>
-												<tr>
-													<th>N°</th>
-													<th style="width: 12%;">Nom visiteur</th>
-													<th>Fonction visiteur</th>
-													<th>Pays visiteur</th>
-													<th>Dates visite</th>
-													<th>Durée(h)</th>
-													<th style="width: 15%;">But visite</th>
-													<th style="width: 12%;">Employé sollicité</th>
-													<th>Status visite</th>
-													<th>Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les visites seront ajoutées ici dynamiquement -->
-												<tr th:each="visite: ${allVisites}">
-													<td th:text="${visite.numVisite}"></td>
-													<td th:text="${visite.nomVisiteur} + | | + ${visite.prenomVisiteur}"></td>
-													<td th:text="${visite.fonctionVisiteur}"></td>
-													<td th:text="${visite.paysVisiteur}"></td>
-													<td th:text="|du |+ ${visite.dateDebutVisite} + | au |+ ${visite.dateFinVisite}">Du:  ; au: </td>
-													<td th:text="${visite.dureeVisite}"></td>
-													<td th:text="${visite.butVisite}"></td>
-													<td th:text="${visite.employeSolliteCivilite} + | | + ${visite.employeSolliteNom} + |; | + ${visite.employeSolliteFonction}"></td>
-													<td th:text="${visite.statusVisite} + |; depuis le | + ${visite.dateStatusVisite}"> ; le </td>
-													<td class="p-auto" style="width: 5%;">
-														<button type="button" class="btn btn-warning" th:id="|bt-| + ${visite.numVisite}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${visite.numVisite}" th:text="|...|">
-															action
-														</button>
+										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
+											<span class="ms-auto" th:text="${#lists.size(allVisites)}"></span>
+											<span th:text="|visite(s)|"></span>
+										</div>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="visite-table">
+												<thead class="table-light">
+													<tr>
+														<th>N°</th>
+														<th style="width: 12%;">Nom visiteur</th>
+														<th>Fonction visiteur</th>
+														<th>Pays visiteur</th>
+														<th>Dates visite</th>
+														<th>Durée(h)</th>
+														<th style="width: 15%;">But visite</th>
+														<th style="width: 12%;">Employé sollicité</th>
+														<th>Status visite</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les visites seront ajoutées ici dynamiquement -->
+													<tr th:each="visite: ${allVisites}">
+														<td th:text="${visite.numVisite}"></td>
+														<td th:text="${visite.nomVisiteur} + | | + ${visite.prenomVisiteur}"></td>
+														<td th:text="${visite.fonctionVisiteur}"></td>
+														<td th:text="${visite.paysVisiteur}"></td>
+														<td th:text="|du |+ ${visite.dateDebutVisite} + | au |+ ${visite.dateFinVisite}">Du:  ; au: </td>
+														<td th:text="${visite.dureeVisite}"></td>
+														<td th:text="${visite.butVisite}"></td>
+														<td th:text="${visite.employeSolliteCivilite} + | | + ${visite.employeSolliteNom} + |; | + ${visite.employeSolliteFonction}"></td>
+														<td th:text="${visite.statusVisite} + |; depuis le | + ${visite.dateStatusVisite}"> ; le </td>
+														<td class="p-auto" style="width: 5%;">
+															<button type="button" class="btn btn-warning" th:id="|bt-| + ${visite.numVisite}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${visite.numVisite}" th:text="|...|">
+																action
+															</button>
 
-														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-|+ ${visite.numVisite}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-															<div class="modal-dialog">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${visite.numVisite}" th:text="|Actions disponibles sur visite: | + ${visite.numVisite}">Actions disponibles</h1>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																	</div>
-																	<div class="modal-body">
-																		<div class="border p-1 mb-2 bg-secondary-subtle">
-																			<header class="h6 mb-1 text-start">Données de la visite</header>
-																			<div class="d-flex flex-wrap gap-2 p-2">
-																				<a th:id="|approuvvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Approuver/Ann. visite|">Annuler</a>
-																				<a th:id="|majvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Mettre à jour la visite|">Annuler</a>
-																				<!--a th:id="|histvisiteemp|" class="btn btn-outline-primary" th:href="|#|" formmethod="get" th:text="|Historique visite|">Annuler</a>
-																				<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="#" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button-->
+															<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-|+ ${visite.numVisite}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${visite.numVisite}" th:text="|Actions disponibles sur visite: | + ${visite.numVisite}">Actions disponibles</h1>
+																			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																		</div>
+																		<div class="modal-body">
+																			<div class="border p-1 mb-2 bg-secondary-subtle">
+																				<header class="h6 mb-1 text-start">Données de la visite</header>
+																				<div class="d-flex flex-wrap gap-2 p-2">
+																					<a th:id="|approuvvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Approuver/Ann. visite|">Annuler</a>
+																					<a th:id="|majvisiteemp-| + ${visite.numVisite}" class="btn btn-outline-primary" th:href="@{/planif-visite-crde-m.html} + |/| + ${visite.numVisite}" formmethod="get" th:text="|Mettre à jour la visite|">Annuler</a>
+																					<!--a th:id="|histvisiteemp|" class="btn btn-outline-primary" th:href="|#|" formmethod="get" th:text="|Historique visite|">Annuler</a>
+																					<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="#" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button-->
+																				</div>
 																			</div>
 																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>

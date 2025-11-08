@@ -145,48 +145,50 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des affectations de | + ${employeMatricule}">Historique des affectations</h2>
-										<table class="table table-responsive table-bordered" id="affectationshistoriq-table">
-											<thead>
-												<tr>
-													<th style="width: 75px;">N° </th>
-													<th>Catégorie</th>
-													<th style="width: 130px;">Employé</th>
-													<th style="width: 150px;">Fonction</th>
-													<th style="width: 150px;">Lieu affectation</th>
-													<th>Dates</th>
-													<th>Prise service</th>
-													<th>Info suppl</th>
-													<th style="width: 120px;">Status actuel</th>
-													<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les affect seront ajoutées ici dynamiquement -->
-												<tr th:each="affectation: ${savedAffectationsEmploye}">
-													<td th:text="${affectation.numNoteService}">Num.</td>
-													<td th:text="${affectation.categorieAffect}">type</td>
-													<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
-													<td th:text="${affectation.fonction}">nom</td>
-													<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">prenom</td>
-													<td th:text="|Du: | + ${affectation.dateDebutAffect} + |  Au: | + ${affectation.dateFinAffect}" >email</td>
-													<td th:text="${affectation.datePriseService}">prenom</td>
-													<td th:text="${affectation.infoSupplementaires}">role</td>
-													<td th:text="${affectation.statusAffect} + | depuis le | + ${affectation.dateStatusAffect}">prenom</td>
-													<td class="text-center" th:if="${savedChoixStr != null}">
-														<div class="m-1 d-flex flex-wrap gap-1">
-															<select id="statusaffect" name="statusaffect" class="form-select">
-																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-																<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
-																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
-																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
-																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
-																<option th:value="|Autre|" th:text="|Autre|">Autre</option>
-															</select>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="affectationshistoriq-table">
+												<thead>
+													<tr>
+														<th style="width: 75px;">N° </th>
+														<th>Catégorie</th>
+														<th style="width: 130px;">Employé</th>
+														<th style="width: 150px;">Fonction</th>
+														<th style="width: 150px;">Lieu affectation</th>
+														<th>Dates</th>
+														<th>Prise service</th>
+														<th>Info suppl</th>
+														<th style="width: 120px;">Status actuel</th>
+														<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les affect seront ajoutées ici dynamiquement -->
+													<tr th:each="affectation: ${savedAffectationsEmploye}">
+														<td th:text="${affectation.numNoteService}">Num.</td>
+														<td th:text="${affectation.categorieAffect}">type</td>
+														<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
+														<td th:text="${affectation.fonction}">nom</td>
+														<td th:text="${affectation.lieuAffectation} + |; | + ${affectation.emplacementAffect}">prenom</td>
+														<td th:text="|Du: | + ${affectation.dateDebutAffect} + |  Au: | + ${affectation.dateFinAffect}" >email</td>
+														<td th:text="${affectation.datePriseService}">prenom</td>
+														<td th:text="${affectation.infoSupplementaires}">role</td>
+														<td th:text="${affectation.statusAffect} + | depuis le | + ${affectation.dateStatusAffect}">prenom</td>
+														<td class="text-center" th:if="${savedChoixStr != null}">
+															<div class="m-1 d-flex flex-wrap gap-1">
+																<select id="statusaffect" name="statusaffect" class="form-select">
+																	<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+																	<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
+																	<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+																	<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+																	<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+																	<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>
