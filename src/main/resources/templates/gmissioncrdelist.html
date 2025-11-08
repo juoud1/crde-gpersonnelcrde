@@ -173,7 +173,7 @@
 										</div>
 										<hr>
 
-										<div class="ms-auto mb-3 d-flex flex-wrap gap-2 ms-auto">
+										<div class="ms-auto mb-3 d-flex flex-wrap gap-2">
 											<button type="button" class="btn btn-info ms-auto" id="print-missions-individuel" th:onclick="printMissionsIndiv()">Imprimer missions à une personne</button>
 											<button type="button" class="btn btn-info" id="print-missions-groupe" th:onclick="printMissionsGroupe()">Imprimer missions de groupe</button>
 											<button type="button" class="btn btn-info" id="print-missions-encours" th:onclick="printMissionsEncours()">Imprimer missions encours</button>
@@ -182,85 +182,92 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline">Liste des missions</h2>
-										<table class="table table-responsive table-bordered" id="missions-table">
-											<thead>
-												<tr>
-													<th style="width: 6.5%;">N° miss</th>
-													<th style="width: 8.75%;">Type OM</th>
-													<th style="width: 16%;">Employé(s) autorisé(s)</th>
-													<!--th style="width: 12%;">Fonction</th-->
-													<th style="width: 15%;">Cadre mission </th>
-													<!--th>Nature de mission</th-->
-													<th style="width: 12%;">Motif</th>
-													<th style="width: 9%;">Dates</th>
-													<!--th style="width: 8.25%;">Date retour</th-->
-													<th>Durée</th>
-													<th style="width: 11.5%;">Destination</th>
-													<th style="width: 7.5%;">Status</th>
-													<th class="p-auto text-center" style="width: 4.5%;">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="mission: ${allMissionsEmployes}">
-													<td th:text="${mission.numMission}">Num.</td>
-													<td th:text="${mission.typeOrdreMission} + | ; OM n° | + ${mission.numOrdreMission}">type</td>
-													<!--td th:text="${mission.employeChefDeMissCivilite} + | | + ${mission.employeChefDeMissNom} + | ; | + ${mission.employeChefDeMissFonction}">mmmm</td-->
-													<td>	
-														<table class="table table-striped">
-															<!--th colspan="1">Nom & prénoms</th-->
-															<tr th:each="emp: ${mission.employesMission}">
-																<td th:text="${emp.empNom} + | | + ${emp.empPren}"></td>
-															</tr>
-														</table>	
-													</td>
-													<!--td th:text="${mission.employeFonction}">nom</td-->
-													<td th:text="${mission.cadreMission} + | ; | + ${mission.natureMission}">prenom</td>
-													<td th:text="${mission.motifMission} + | ; | + ${mission.infoSupplementaires}">prenom</td>
-													<td th:text="|du | + ${mission.dateDepart} + | au | + ${mission.dateRetour}">email</td>
-													<!--td th:text="${mission.dateRetour}">tel</td-->
-													<td th:text="${mission.dureeMiss}">role</td>
-													<td th:text="${mission.villeMission} + | ; | + ${mission.paysMission}">status</td>
-													<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
-													<td class="p-auto text-center" style="width: 4.5%;">
-														<button type="button" th:id="|bt-| + ${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${mission.numOrdreMission}" th:text="|...|">
-															action
-														</button>
+										
+										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
+											<span class="ms-auto" th:text="${#lists.size(allMissionsEmployes)}"></span>
+											<span th:text="|mission(s)|"></span>
+										</div>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="missions-table">
+												<thead class="table-light">
+													<tr>
+														<th style="width: 6.5%;">N° miss</th>
+														<th style="width: 8.75%;">Type OM</th>
+														<th style="width: 16%;">Employé(s) autorisé(s)</th>
+														<!--th style="width: 12%;">Fonction</th-->
+														<th style="width: 15%;">Cadre mission </th>
+														<!--th>Nature de mission</th-->
+														<th style="width: 12%;">Motif</th>
+														<th style="width: 9%;">Dates</th>
+														<!--th style="width: 8.25%;">Date retour</th-->
+														<th>Durée</th>
+														<th style="width: 11.5%;">Destination</th>
+														<th style="width: 7.5%;">Status</th>
+														<th class="p-auto text-center" style="width: 4.5%;">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les missions seront ajoutées ici dynamiquement -->
+													<tr th:each="mission: ${allMissionsEmployes}">
+														<td th:text="${mission.numMission}">Num.</td>
+														<td th:text="${mission.typeOrdreMission} + | ; OM n° | + ${mission.numOrdreMission}">type</td>
+														<!--td th:text="${mission.employeChefDeMissCivilite} + | | + ${mission.employeChefDeMissNom} + | ; | + ${mission.employeChefDeMissFonction}">mmmm</td-->
+														<td>	
+															<table class="table table-striped">
+																<!--th colspan="1">Nom & prénoms</th-->
+																<tr th:each="emp: ${mission.employesMission}">
+																	<td th:text="${emp.empNom} + | | + ${emp.empPren}"></td>
+																</tr>
+															</table>	
+														</td>
+														<!--td th:text="${mission.employeFonction}">nom</td-->
+														<td th:text="${mission.cadreMission} + | ; | + ${mission.natureMission}">prenom</td>
+														<td th:text="${mission.motifMission} + | ; | + ${mission.infoSupplementaires}">prenom</td>
+														<td th:text="|du | + ${mission.dateDepart} + | au | + ${mission.dateRetour}">email</td>
+														<!--td th:text="${mission.dateRetour}">tel</td-->
+														<td th:text="${mission.dureeMiss}">role</td>
+														<td th:text="${mission.villeMission} + | ; | + ${mission.paysMission}">status</td>
+														<td th:text="${mission.statusMission} + |; | + ${mission.dateStatusMission}">prenom</td>
+														<td class="p-auto text-center" style="width: 4.5%;">
+															<button type="button" th:id="|bt-| + ${mission.numOrdreMission}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${mission.numOrdreMission}" th:text="|...|">
+																action
+															</button>
 
-														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${mission.numOrdreMission}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-															<div class="modal-dialog modal-dialog-centered">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${mission.numMission}" th:text="|Actions disponibles sur mission: | + ${mission.numOrdreMission}">Actions disponibles</h1>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																	</div>
-																	<div class="modal-body">
-																		<div class="border p-1 mb-2 bg-secondary-subtle">
-																			<header class="h6 mb-1 text-start" th:text="|Données de la mission N° | + ${mission.numOrdreMission}">Données de la mission</header>
-																			<div class="d-flex flex-wrap gap-1 p-1">
-																				<a th:id="|modifmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Modifier la mission|">Annuler</a>
-																				<a th:id="|approuvmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission|">Annuler</a>
-																				<div th:if="${mission.typeOrdreMission != 'Mission'}">
-																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Changer le chef de mission|">Annuler</a>
-																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Ajouter employé(s)|">Annuler</a>
-																					<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Enlever employé(s)|">Annuler</a>
-																				</div>
-																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|OM-|+${mission.numMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
-																			</div>
+															<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${mission.numOrdreMission}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+																<div class="modal-dialog modal-dialog-centered">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${mission.numMission}" th:text="|Actions disponibles sur mission: | + ${mission.numOrdreMission}">Actions disponibles</h1>
+																			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																		</div>
+																		<div class="modal-body">
+																			<div class="border p-1 mb-2 bg-secondary-subtle">
+																				<header class="h6 mb-1 text-start" th:text="|Données de la mission N° | + ${mission.numOrdreMission}">Données de la mission</header>
+																				<div class="d-flex flex-wrap gap-1 p-1">
+																					<a th:id="|modifmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Modifier la mission|">Annuler</a>
+																					<a th:id="|approuvmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Approuver/Désapprouver la mission|">Annuler</a>
+																					<div th:if="${mission.typeOrdreMission != 'Mission'}">
+																						<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Changer le chef de mission|">Annuler</a>
+																						<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Ajouter employé(s)|">Annuler</a>
+																						<a th:id="|annulmissemp-| + ${mission.numMission}" class="btn btn-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${mission.numMission}" formmethod="get" th:text="|Enlever employé(s)|">Annuler</a>
+																					</div>
+																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|OM-|+${mission.numMission}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${mission}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
+																				</div>
+																			</div>
 
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
 
-													</td>
-												</tr>
-											</tbody>
-										</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>

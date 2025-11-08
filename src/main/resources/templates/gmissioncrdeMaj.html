@@ -210,12 +210,12 @@
 										</div-->
 										
 										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-10">
-											<label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
+											<!--label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											
 											<div class="mb-2 d-flex flex-wrap gap-2">
 												<select id="missempnom" name="missempmatricule" class="form-select" style="width: 88.5%;" multiple>
 													<option th:each="employeAutorise : ${savedMissionEmployes.employesMission}" th:value="${employeAutorise.empMatricule}" th:text="${employeAutorise.empNom} +|, | + ${employeAutorise.empPren}"></option>
-													<!--option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option-->
+													<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 												</select>
 												
 												<div class="d-flex flex-wrap text-center gap-1 p-auto m-auto" style="width: 8%;">
@@ -225,93 +225,26 @@
 													<button type="button" th:id="|btEnleveEmp|" class="btn btn-outline-danger text-center" title="Enlever certain employé" style="padding: auto; width: 40%;" th:text="|-|">
 														Ajouter emp
 													</button>
+												</div-->
+												
+												<div class="table-responsive overflow-auto" style="height: 10em;">
+													<table class="table table-sm table-hover">
+														<thead>
+															<tr>
+																<th style="width: 3%;" th:text="| |">A</th>
+																<th th:text="|Employé(s) autorisé(s)|"> Employé(s) autorisé(s)</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr class="bg-transparent" th:each="employe, itemStat : *{employesEnSvce}">
+																<td th:if="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" checked /></td>
+																<td th:unless="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" /></td>
+																<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
+															</tr>
+														</tbody>
+													</table>
 												</div>
-												<!--div class="p-auto text-center" style="width: 4.5%;">
-													<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-														<div class="modal-dialog modal-dialog-centered">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
-																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																</div>
-																<div class="modal-body">
-																	Show a second modal and hide this one with the button below.
-																</div>
-																<div class="modal-footer">
-																	<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-														<div class="modal-dialog modal-dialog-centered">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																</div>
-																<div class="modal-body">
-																	Hide this modal and show the first with the button below.
-																</div>
-																<div class="modal-footer">
-																	<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-																</div>
-															</div>
-														</div>
-													</div>
-													<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button-->
-
-
-
-													<!--button type="button" th:id="|bt-|" class="btn btn-outline-primary" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-|" th:text="|+|">
-														action
-													</button>
-
-													<div class="modal modal-xl fade bg-transparent z-3" th:id="|staticBckdpCrde-|" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-														<div class="modal-dialog modal-dialog-centered z-3">
-															<div class="modal-content z-3">
-																<div class="modal-header">
-																	<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-|" th:text="|Actions disponibles|">Actions disponibles</h1>
-																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																</div>
-																<div class="modal-body">
-																	<div class="border p-1 mb-2 bg-secondary-subtle">
-																		<header class="h6 mb-1 text-start" th:text="|Données de la mission N° | + ${savedMissionEmployes.numOrdreMission}">Données de la mission</header>
-																		<div class="d-flex flex-wrap gap-2 p-2">
-																			<a th:id="|modifmissemp-| + ${savedMissionEmployes.numMission}" class="btn btn-primary" formmethod="get" th:text="|Modifier la mission|">Annuler</a>
-																			<a th:id="|approuvmissemp-| + ${savedMissionEmployes.numMission}" class="btn btn-primary" formmethod="get" th:text="|Approuver/Désapprouver la mission|">Annuler</a>
-																			<a th:id="|annulmissemp-| + ${savedMissionEmployes.numMission}" class="btn btn-primary" formmethod="get" th:text="|Annuler/Suspendre la mission|">Annuler</a>
-																			<button type="button" class="btn btn-info align-items ms-auto" th:id="|OM-|" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])" th:text="|Imprimer ordre de mission|">Note de service</button>
-																		</div>
-																	</div>
-
-																</div>
-																<div class="modal-dialog modal-dialog-centered">
-																...
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
-																</div>
-															</div>
-														</div>
-													</div-->
-
-													<!--div class="card mb-4">
-														<div class="card-header">
-															<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseAjoutEmps" style="font-size: small; font-weight: bold;">
-																All
-															</a>
-														</div>
-														<div id="collapseAjoutEmps" class="collapse" data-bs-parent="#main-app">
-															<div class="card-body">
-																<h2 class="h4 mb-3 text-center">Ajouter ou modifier un lieu d'affectation</h2>
-																
-															</div>
-														</div>
-													</div-->
-
-												<!--/div-->
-											</div>
+											<!--/div-->
 										</div>
 
 										<div class="col-lg-10 col-md-10 col-sm-10">

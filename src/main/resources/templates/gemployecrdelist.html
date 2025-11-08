@@ -167,111 +167,117 @@
 								<hr>
 
 								<h2 class="h4 mb-3 text-center print-underline">Liste du personnel</h2>
-								<table class="table table-responsive table-bordered" id="employee-table">
-									<thead>
-										<tr class="border border-secondary bg-secondary-subtle">
-											<th class="border-end">Matricule</th>
-											<th class="border-end" style="width: 15%;">Nom & Prénoms</th>
-											<th class="border-end">Civilité</th>
-											<!--th class="border-end">Téléphone</th-->
-											<th class="border-end" style="width: 13%;">Contact</th>
-											<th class="border-end">Type employé</th>
-											<th class="border-end" style="width: 9%;">Status</th>
-											<th class="border-end" style="width: 9%;">Dates status</th>
-											<!--th class="border-end">Date fin</th-->
-											<th class="border-end">Affectation</th>
-											<th class="border-end">Fonction</th>
-											<th class="border-end" style="width: 14%;">Déc/Arr Etrée</th>
-											<th class="border-end" style="width: 14%;">Décr/Arr Stie</th>
-											<th id="col-action " class="text-center">
-												Actions
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- Les employés seront ajoutés ici dynamiquement -->
-										<tr th:each="employe: ${allEmployes}">
-											<td th:text="${employe.empMatricule}">nom</td>
-											<td th:text="${employe.empNom} + |, | + ${employe.empPren}">prenom</td>
-											<!--td th:text="${employe.empPren}">prenom</td-->
-											<td th:text="${employe.empCivilite}">prenom</td>
-											<td th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td>
-											<!--td th:text="${employe.empEmail}">email</td-->
-											<td th:text="${employe.typeEmploye}">tel</td>
-											<td th:text="${employe.status}">role</td>
-											<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}">date</td>
-											<!--td th:text="${employe.empDateFinStatus}">date</td-->
-											<td th:text="${employe.lieuAffectation}">status</td>
-											<td th:text="${employe.fonction}">status</td>
-											<td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}">role</td>
-											<td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}">role</td>
-											<td class="text-center" id="actionemp" style="width: 5%;">
-												<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
-													action
-												</button>
+								<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
+									<span class="ms-auto" th:text="${#lists.size(allEmployes)}"></span>
+									<span th:text="|employé(s)|"></span>
+								</div>
+								<div class="table-responsive overflow-auto" style="height: 40em;">
+									<table class="table table-bordered" id="employee-table">
+										<thead class="table-light bg-light">
+											<tr class="border border-secondary bg-secondary-subtle">
+												<th class="border-end">Matricule</th>
+												<th class="border-end" style="width: 15%;">Nom & Prénoms</th>
+												<th class="border-end">Civilité</th>
+												<!--th class="border-end">Téléphone</th-->
+												<th class="border-end" style="width: 13%;">Contact</th>
+												<th class="border-end">Type employé</th>
+												<th class="border-end" style="width: 9%;">Status</th>
+												<th class="border-end" style="width: 9%;">Dates status</th>
+												<!--th class="border-end">Date fin</th-->
+												<th class="border-end">Affectation</th>
+												<th class="border-end">Fonction</th>
+												<th class="border-end" style="width: 14%;">Déc/Arr Etrée</th>
+												<th class="border-end" style="width: 14%;">Décr/Arr Stie</th>
+												<th id="col-action " class="text-center">
+													Actions
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Les employés seront ajoutés ici dynamiquement -->
+											<tr th:each="employe: ${allEmployes}">
+												<td th:text="${employe.empMatricule}">nom</td>
+												<td th:text="${employe.empNom} + |, | + ${employe.empPren}">prenom</td>
+												<!--td th:text="${employe.empPren}">prenom</td-->
+												<td th:text="${employe.empCivilite}">prenom</td>
+												<td th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td>
+												<!--td th:text="${employe.empEmail}">email</td-->
+												<td th:text="${employe.typeEmploye}">tel</td>
+												<td th:text="${employe.status}">role</td>
+												<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}">date</td>
+												<!--td th:text="${employe.empDateFinStatus}">date</td-->
+												<td th:text="${employe.lieuAffectation}">status</td>
+												<td th:text="${employe.fonction}">status</td>
+												<td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}">role</td>
+												<td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}">role</td>
+												<td class="text-center" id="actionemp" style="width: 5%;">
+													<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
+														action
+													</button>
 
-												<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${employe.empMatricule}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${employe.empMatricule}" th:text="|Actions disponibles sur Employé/Stagiaire: | + ${employe.empMatricule}">Actions disponibles</h1>
-																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-															<div class="modal-body">
-																<div class="border p-1 mb-2 bg-secondary-subtle">
-																	<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
-																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a class="btn btn-outline-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Mettre à jour|">Annuler</a>
-																		<a class="btn btn-outline-danger" th:id="|inqdepartemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Indiquer le départ|">Annuler</a>
-																		<button th:id="|imprecapifemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. récapitulatif|">Note de service</button>
-																	</div>
+													<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${employe.empMatricule}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${employe.empMatricule}" th:text="|Actions disponibles sur Employé/Stagiaire: | + ${employe.empMatricule}">Actions disponibles</h1>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																</div>
-																<hr>
+																<div class="modal-body">
+																	<div class="border p-1 mb-2 bg-secondary-subtle">
+																		<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
+																		<div class="d-flex flex-wrap gap-2 p-2">
+																			<a class="btn btn-outline-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Mettre à jour|">Annuler</a>
+																			<a class="btn btn-outline-danger" th:id="|inqdepartemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Indiquer le départ|">Annuler</a>
+																			<button th:id="|imprecapifemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. récapitulatif|">Note de service</button>
+																		</div>
+																	</div>
+																	<hr>
 
-																<div class="border p-1 mb-2 bg-secondary-subtle">
-																	<header class="h6 mb-1 text-start">Affectations</header>
-																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
-																		<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html/aff-int}" formmethod="get" th:text="|Ajouter une affectation|">Annuler</a>
-																		<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique affectations|">Annuler</a>
-																		<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
+																	<div class="border p-1 mb-2 bg-secondary-subtle">
+																		<header class="h6 mb-1 text-start">Affectations</header>
+																		<div class="d-flex flex-wrap gap-2 p-2">
+																			<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
+																			<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html/aff-int}" formmethod="get" th:text="|Ajouter une affectation|">Annuler</a>
+																			<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique affectations|">Annuler</a>
+																			<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
+																		</div>
 																	</div>
-																</div>
-																<hr>
-																
-																<div class="border p-1 mb-2 bg-secondary-subtle">
-																	<header class="h6 mb-1 text-start">Missions</header>
-																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a th:id="|approuvmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. mission|">Annuler</a>
-																		<a th:id="|ajoutmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/mission-emp-crde.html/miss-indiv}" formmethod="get" th:text="|Ajouter une mission|">Annuler</a>
-																		<a th:id="|histmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique missions|">Annuler</a>
-																		<button th:id="|impordremissionemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. ordre de mission|">Note de service</button>
+																	<hr>
+																	
+																	<div class="border p-1 mb-2 bg-secondary-subtle">
+																		<header class="h6 mb-1 text-start">Missions</header>
+																		<div class="d-flex flex-wrap gap-2 p-2">
+																			<a th:id="|approuvmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. mission|">Annuler</a>
+																			<a th:id="|ajoutmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/mission-emp-crde.html/miss-indiv}" formmethod="get" th:text="|Ajouter une mission|">Annuler</a>
+																			<a th:id="|histmissionemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/missions-emp-crde.html} + |/| +${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique missions|">Annuler</a>
+																			<button th:id="|impordremissionemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. ordre de mission|">Note de service</button>
+																		</div>
 																	</div>
-																</div>
-																<hr>
+																	<hr>
 
-																<div class="border p-1 mb-2 bg-secondary-subtle">
-																	<header class="h6 mb-1 text-start">Congés</header>
-																	<div class="d-flex flex-wrap gap-2 p-2">
-																		<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. congé|">Annuler</a>
-																		<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
-																		<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique congés|">Annuler</a>
-																		<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
-																		<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. autorisat. de sortie|">Note de service</button>
+																	<div class="border p-1 mb-2 bg-secondary-subtle">
+																		<header class="h6 mb-1 text-start">Congés</header>
+																		<div class="d-flex flex-wrap gap-2 p-2">
+																			<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. congé|">Annuler</a>
+																			<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
+																			<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique congés|">Annuler</a>
+																			<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
+																			<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. autorisat. de sortie|">Note de service</button>
+																		</div>
 																	</div>
 																</div>
-															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
 
-											</td>
-										</tr>	
-									</tbody>
-								</table>
+												</td>
+											</tr>	
+										</tbody>
+									</table>
+								</div>
 							</div>
 							
 						</div>

@@ -145,49 +145,51 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center print-underline" th:text="|Historique des missions de | + ${missEmpMatricule}">Historique des missions</h2>
-										<table class="table table-responsive table-bordered" id="missionshistoriq-table">
-											<thead>
-												<tr>
-													<th style="width: 75px;">N°</th>
-													<th style="width: 100px;">Type mission</th>
-													<th style="width: 130px;">Employé</th>
-													<th class="col-nom">Fonction</th>
-													<th class="col-nom">Cadre de mission </th>
-													<!--th>Nature de mission</th-->
-													<th class="col-nom">Motif</th>
-													<th>Dates</th>
-													<th>Destination</th>
-													<th style="width: 120px;">Status actuel</th>
-													<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les missions seront ajoutées ici dynamiquement -->
-												<tr th:each="mission: ${savedMissionsEmployes}">
-													<td th:text="${mission.numOrdreMission}">Num.</td>
-													<td th:text="${mission.typeOrdreMission}">type</td>
-													<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
-													<td th:text="${mission.employeFonction}">nom</td>
-													<td th:text="${mission.cadreMission} + |; | + ${mission.natureMission}">prenom</td>
-													<td th:text="${mission.motifMission} + |; | + ${mission.infoSupplementaires}">prenom</td>
-													<td th:text="|Du: | + ${mission.dateDepart} + |  Au: | + ${mission.dateRetour}" >email</td>
-													<td th:text="${mission.paysMission} + | / | + ${mission.villeMission}">role</td>
-													<td th:text="${mission.statusMission} + | depuis le | + ${mission.dateStatusMission}">prenom</td>
-													<td class="text-center" th:if="${savedChoixStr != null}">
-														<div class="m-1 d-flex flex-wrap gap-1">
-															<select id="statusmission" name="statusmission" class="form-select">
-																<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-																<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
-																<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
-																<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
-																<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
-																<option th:value="|Autre|" th:text="|Autre|">Autre</option>
-															</select>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="missionshistoriq-table">
+												<thead>
+													<tr>
+														<th style="width: 75px;">N°</th>
+														<th style="width: 100px;">Type mission</th>
+														<th style="width: 130px;">Employé</th>
+														<th class="col-nom">Fonction</th>
+														<th class="col-nom">Cadre de mission </th>
+														<!--th>Nature de mission</th-->
+														<th class="col-nom">Motif</th>
+														<th>Dates</th>
+														<th>Destination</th>
+														<th style="width: 120px;">Status actuel</th>
+														<th class="text-center" th:if="${savedChoixStr != null}">Status souhaité</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les missions seront ajoutées ici dynamiquement -->
+													<tr th:each="mission: ${savedMissionsEmployes}">
+														<td th:text="${mission.numOrdreMission}">Num.</td>
+														<td th:text="${mission.typeOrdreMission}">type</td>
+														<td th:text="${mission.employeCivilite} + | | + ${mission.employeNom}">nom</td>
+														<td th:text="${mission.employeFonction}">nom</td>
+														<td th:text="${mission.cadreMission} + |; | + ${mission.natureMission}">prenom</td>
+														<td th:text="${mission.motifMission} + |; | + ${mission.infoSupplementaires}">prenom</td>
+														<td th:text="|Du: | + ${mission.dateDepart} + |  Au: | + ${mission.dateRetour}" >email</td>
+														<td th:text="${mission.paysMission} + | / | + ${mission.villeMission}">role</td>
+														<td th:text="${mission.statusMission} + | depuis le | + ${mission.dateStatusMission}">prenom</td>
+														<td class="text-center" th:if="${savedChoixStr != null}">
+															<div class="m-1 d-flex flex-wrap gap-1">
+																<select id="statusmission" name="statusmission" class="form-select">
+																	<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
+																	<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
+																	<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
+																	<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
+																	<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+																	<option th:value="|Autre|" th:text="|Autre|">Autre</option>
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>

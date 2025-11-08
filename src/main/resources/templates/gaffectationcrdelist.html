@@ -179,69 +179,75 @@
 										<hr>
 
 										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
-										<table class="table table-responsive table-bordered" id="affectat-table">
-											<thead>
-												<tr class="border border-secondary bg-secondary-subtle">
-												    <th style="width: 7.5%;">N°</th>
-													<th style="width: 7.5%;">Matricule</th>
-													<th style="width: 13%;">Employé</th>
-													<th style="width: 8.25%;">Date debut</th>
-													<th style="width: 8.25%;">Date fin</th>
-													<th style="width: 8.25%;">Prise srvce</th>
-													<th style="width: 14%;">Lieu affectation</th>
-													<th style="width: 10%;">Fonction</th>
-													<th>Résidence</th>
-													<th style="width: 8.25%;">Status aff.</th>
-													<th class="p-auto" style="width: 5%;">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-												<!-- Les affectations seront ajoutées ici dynamiquement -->
-												<tr th:each="affectation: ${allAffectations}">
-													<td th:text="${affectation.numNoteService}">status</td>
-													<td th:text="${affectation.employeMatricule}">nom</td>
-													<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
-													<td th:text="${affectation.dateDebutAffect}">prenom</td>
-													<td th:text="${affectation.dateFinAffect}">email</td>
-													<td th:text="${affectation.datePriseService}">email</td>
-													<td th:text="${affectation.lieuAffectation} + | / | + ${affectation.emplacementAffect}">lieu</td>
-													<td th:text="${affectation.fonction}">tel</td>
-													<td th:text="${affectation.villeResidence} + | / | + ${affectation.paysResidence}">lieu</td>
-													<td th:text="${affectation.statusAffect} + | depuis le | + ${affectation.dateStatusAffect}">sttus</td>
-													<td class="p-auto text-center" style="width: 5%;">
-														<button type="button" th:id="|bt-| + ${affectation.numNoteService}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${affectation.numNoteService}" th:text="|...|">
-															action
-														</button>
+										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
+											<span class="ms-auto" th:text="${#lists.size(allAffectations)}"></span>
+											<span th:text="|affectation(s)|"></span>
+										</div>
+										<div class="table-responsive overflow-auto" style="height: 40em;">
+											<table class="table table-bordered" id="affectat-table">
+												<thead class="table-light">
+													<tr class="border border-secondary bg-secondary-subtle">
+														<th style="width: 7.5%;">N°</th>
+														<th style="width: 7.5%;">Matricule</th>
+														<th style="width: 13%;">Employé</th>
+														<th style="width: 8.25%;">Date debut</th>
+														<th style="width: 8.25%;">Date fin</th>
+														<th style="width: 8.25%;">Prise srvce</th>
+														<th style="width: 14%;">Lieu affectation</th>
+														<th style="width: 10%;">Fonction</th>
+														<th>Résidence</th>
+														<th style="width: 8.25%;">Status aff.</th>
+														<th class="p-auto" style="width: 5%;">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Les affectations seront ajoutées ici dynamiquement -->
+													<tr th:each="affectation: ${allAffectations}">
+														<td th:text="${affectation.numNoteService}">status</td>
+														<td th:text="${affectation.employeMatricule}">nom</td>
+														<td th:text="${affectation.employeCivilite} + | | + ${affectation.employeNom}">nom</td>
+														<td th:text="${affectation.dateDebutAffect}">prenom</td>
+														<td th:text="${affectation.dateFinAffect}">email</td>
+														<td th:text="${affectation.datePriseService}">email</td>
+														<td th:text="${affectation.lieuAffectation} + | / | + ${affectation.emplacementAffect}">lieu</td>
+														<td th:text="${affectation.fonction}">tel</td>
+														<td th:text="${affectation.villeResidence} + | / | + ${affectation.paysResidence}">lieu</td>
+														<td th:text="${affectation.statusAffect} + | depuis le | + ${affectation.dateStatusAffect}">sttus</td>
+														<td class="p-auto text-center" style="width: 5%;">
+															<button type="button" th:id="|bt-| + ${affectation.numNoteService}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${affectation.numNoteService}" th:text="|...|">
+																action
+															</button>
 
-														<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${affectation.numNoteService}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-															<div class="modal-dialog modal-dialog-centered">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${affectation.numNoteService}" th:text="|Actions disponibles sur affectation: | + ${affectation.numNoteService}">Actions disponibles</h1>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-																	</div>
-																	<div class="modal-body">
-																		<div class="border p-1 mb-2 bg-secondary-subtle">
-																			<header class="h6 mb-1 text-start" th:text="|Données de l'affectation N° | + ${affectation.numNoteService}">Données de l'affectation</header>
-																			<div class="d-flex flex-wrap gap-2 p-2">
-																				<a class="btn btn-primary" th:id="|modifaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier l'affectation|">Annuler</a>
-																				<a class="btn btn-primary" th:id="|approuvaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation|">Annuler</a>
-																				<a class="btn btn-primary" th:id="|annulaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Annuler/Suspendre l'affectation|">Annuler</a>
-																				<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
+															<div class="modal modal-xl fade bg-transparent" th:id="|staticBckdpCrde-| + ${affectation.numNoteService}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+																<div class="modal-dialog modal-dialog-centered">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-| + ${affectation.numNoteService}" th:text="|Actions disponibles sur affectation: | + ${affectation.numNoteService}">Actions disponibles</h1>
+																			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																		</div>
+																		<div class="modal-body">
+																			<div class="border p-1 mb-2 bg-secondary-subtle">
+																				<header class="h6 mb-1 text-start" th:text="|Données de l'affectation N° | + ${affectation.numNoteService}">Données de l'affectation</header>
+																				<div class="d-flex flex-wrap gap-2 p-2">
+																					<a class="btn btn-primary" th:id="|modifaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Modifier l'affectation|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|approuvaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|annulaffect-|+ ${affectation.numNoteService}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numNoteService}" formmethod="get" th:text="|Annuler/Suspendre l'affectation|">Annuler</a>
+																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
+																				</div>
 																			</div>
 																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
 
-													</td>
-												</tr>
-											</tbody>
-										</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 
 								</div>
