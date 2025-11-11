@@ -20,6 +20,9 @@ spring:
   mvc:
     #static-path-pattern: "/resources/**"
     webjars-path-pattern: "/webjars/**"
+  threads:
+    virtual:
+      enabled: true     # permet l'utilisation de threads virtuels dans toute l'application
   h2:
     console:
       enabled: true

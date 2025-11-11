@@ -49,7 +49,7 @@ public class MissionEmployeService {
 
 	public List<MissionEmployesDto> getAllMissionEmployes(){
 		var missEmps = getMissionsEmployes();
-
+		
 		return meToMissionEmployesDtoMapper(missEmps);
 	}
 
