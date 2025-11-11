@@ -214,8 +214,8 @@
 			</section>
 			<hr>
 			
-			<div class="row" style="position: relative;">
-				<!-- Nouvelle section pour prise de rendez-vous -->
+			<!--div class="row" style="position: relative;">
+				
 				<section id="gvisites">
 					<div class="card">
 						<div class="card-header">
@@ -275,18 +275,16 @@
 													<option value="">Sélectionner un employé</option>
 													<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 												</select>
-												<!--label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
 												<select id="fonctioncode" name="fonctioncode" class="form-select" required>
 													<option value="">Sélectionner une fonction</option>
 													<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
-												</select-->
+												</select>
 											</div>
 											<hr>
 
 											<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
 												<button type="submit" class="btn btn-primary">Ajouter</button>
 												<button type="reset" class="btn btn-dark">Annuler</button>
-												<!--button type="button" class="btn btn-warning ms-auto" id="print-noteserv-affect">Imprimer le récapitulatif</button-->
 											</div>
 
 										</form>
@@ -296,7 +294,7 @@
 						</div>
 					</div>
 				</section>
-			</div>	
+			</div-->	
 			<hr>
 
 

@@ -66,7 +66,7 @@ public class MissionEmployeController {
 				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
 			}
 		}
-
+		
 		updateUI(typOrdMiss, model);
 
 		//request.getSession().setAttribute("modelMission", model);
