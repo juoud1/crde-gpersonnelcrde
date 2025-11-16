@@ -8,4 +8,4 @@ constraint fk_miss_emp_empkey FOREIGN key (employe_id) references employe(id),
 constraint fk_miss_emp_misskey FOREIGN key (mission_id) references mission(id)
 );
 insert into mission_employe (employe_id, mission_id, is_employe_chef_mission) 
-values (2, 1, true);
+values (3, 1, true);

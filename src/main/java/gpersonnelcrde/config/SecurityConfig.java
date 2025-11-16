@@ -37,12 +37,12 @@ public class SecurityConfig {
 					//.requestMatchers("/flavicom.ico").permitAll()
 					//.requestMatchers("/resources/**").permitAll()
 					.requestMatchers("/webjars/**").permitAll()
-					//.requestMatchers("/registry/**").permitAll()
 					.requestMatchers("/accueil.html").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/login.html/*").permitAll()
 					.requestMatchers("/logout").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/signup.html/*").permitAll()
 					.requestMatchers("/errors/**").permitAll()
+					.requestMatchers("/error.html/*").permitAll()
 					.requestMatchers("/admin/h2-console/**").access(new WebExpressionAuthorizationManager("isFullyAuthenticated() and hasRole('ADMIN')"))
 					.requestMatchers("/admin/").hasRole("ADMIN")
 					.requestMatchers("/**").hasRole("USER")
@@ -88,8 +88,8 @@ public class SecurityConfig {
 					.password(passwordEncoder().encode("admin123"))
 					.roles("USER", "ADMIN")
 					.build();
-		logger.info("user pwd : {}", passwordEncoder().encode("user123").replaceAll("A", "dobatii"));
-		logger.info("admin pwd : {}", passwordEncoder().encode("admin123").replaceAll("a", "agab"));
+		//logger.info("user pwd : {}", passwordEncoder().encode("user123").replaceAll("A", "dobatii"));
+		//logger.info("admin pwd : {}", passwordEncoder().encode("admin123").replaceAll("a", "agab"));
 
 		return new InMemoryUserDetailsManager(user, admin);
 	}

@@ -1,12 +1,14 @@
 server:
   port: 8181
+  max-http-request-header-size: 10KB
   servlet:
     context-path: /crde/gpsnel
   error:
     whitelabel:
-      enabled: false
+      enabled: false  # disable the error page
     include-exception: true
     include-stacktrace: always
+    path: /error   # /user-error
 
 spring:
   application:
@@ -23,6 +25,9 @@ spring:
   threads:
     virtual:
       enabled: true     # permet l'utilisation de threads virtuels dans toute l'application
+  autoconfigure:
+    exclude:
+    -  org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration
   h2:
     console:
       enabled: true
