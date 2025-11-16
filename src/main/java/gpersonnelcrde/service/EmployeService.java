@@ -18,11 +18,13 @@ import gpersonnelcrde.domain.entities.Affectation;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.domain.entities.Employe;
 import gpersonnelcrde.domain.entities.Mission;
+import gpersonnelcrde.domain.entities.MissionEmploye;
 import gpersonnelcrde.repository.AffectationRepository;
 import gpersonnelcrde.repository.CongeRepository;
 import gpersonnelcrde.repository.EmployeRepository;
 import gpersonnelcrde.repository.FonctionRepository;
 import gpersonnelcrde.repository.LieuAffectationRepository;
+import gpersonnelcrde.repository.MissionEmployeRepository;
 import gpersonnelcrde.repository.MissionRepository;
 import gpersonnelcrde.repository.StatusRepository;
 import gpersonnelcrde.repository.TypeEmployeRepository;
@@ -36,6 +38,7 @@ public class EmployeService {
 	private final EmployeRepository employeRepository;
 	private final AffectationRepository affectationRepository;
 	private final MissionRepository missionRepository;
+	private final MissionEmployeRepository missionEmployeRepository;
 	private final CongeRepository congeRepository;
 
 	private final FonctionRepository fonctionRepository;
@@ -44,7 +47,7 @@ public class EmployeService {
 	private final LieuAffectationRepository lieuAffectationRepository;
 
 	public EmployeService(EmployeRepository employeRepository, AffectationRepository affectationRepository, 
-	    MissionRepository missionRepository, CongeRepository congeRepository,
+	    MissionRepository missionRepository, CongeRepository congeRepository, MissionEmployeRepository missionEmployeRepository,
 		FonctionRepository fonctionRepository, TypeEmployeRepository typeEmployeRepository, 
 		StatusRepository statusRepository, LieuAffectationRepository lieuAffectationRepository) {
 		this.employeRepository = employeRepository;
@@ -52,8 +55,8 @@ public class EmployeService {
 		this.fonctionRepository = fonctionRepository;
 		this.typeEmployeRepository=typeEmployeRepository;
 		this.statusRepository = statusRepository;
-		this.lieuAffectationRepository= lieuAffectationRepository;
-
+		this.lieuAffectationRepository = lieuAffectationRepository;
+		this.missionEmployeRepository = missionEmployeRepository;
 		this.affectationRepository = affectationRepository;
 		this.missionRepository =missionRepository;
 		this.congeRepository = congeRepository;
@@ -229,18 +232,27 @@ public class EmployeService {
 		logger.info("Affectation initiale de {}, {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), affectat.getId());
 	}
 
-	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Optional<Mission> optMission, EmployeDto employeDto) {
+	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Optional<MissionEmploye> optMissionEmploye, EmployeDto employeDto) {
+		Mission mission = null;
+		if (Objects.nonNull(optMissionEmploye) && optMissionEmploye.isPresent()){
+			mission = optMissionEmploye.get().getId().getMission();
+		}
+
+		computeStatusEncoursEmploye(optAffectation, optConge, mission, employeDto);
+	}
+
+	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Mission missionEmploye, EmployeDto employeDto) {
 			optAffectation.ifPresent(affectationEmploye -> {
 			Conge congeEmploye = null;
-			Mission missionEmploye = null;
+			//Mission missionEmploye = null;
 			
 			if (Objects.nonNull(optConge) && optConge.isPresent()){
 				congeEmploye = optConge.get();
 			}
 
-			if (Objects.nonNull(optMission) && optMission.isPresent()){
+			/*if (Objects.nonNull(optMission) && optMission.isPresent()){
 				missionEmploye = optMission.get();
-			}
+			}*/
 
 			if (Objects.nonNull(congeEmploye) && Objects.nonNull(missionEmploye)){ 
 				// employé a dejà pris de congés et a aussi effectué des missions
@@ -258,6 +270,7 @@ public class EmployeService {
 					}
 				}		
 			} else {
+				//logger.info("computeStatusEncoursEmploye 2 MISSION: {}", missionEmploye.getCadreMission());
 				// employé a soit dejà pris de congés ou a aussi effectué des missions
 				if (Objects.nonNull(missionEmploye) && missionEmploye.getDateDepart().isAfter(affectationEmploye.getDateDebutAffect())){
 						// Employé en mission
@@ -339,9 +352,9 @@ public class EmployeService {
 
 		var optAffectationEmploye = gettatusEncoursEmploye(employe);
 		var optCongeEmploye = getCongeEncoursEmploye(employe);
-		////var optMissionEmploye = getMissionEncoursEmploye(employe);
-		////computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
-		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, null, eDto);
+		var optMissionEmploye = getMissionEncoursEmploye(employe);
+		
+		computeStatusEncoursEmploye(optAffectationEmploye, optCongeEmploye, optMissionEmploye, eDto);
 		return eDto;
 	}
 
@@ -363,12 +376,17 @@ public class EmployeService {
 								.findFirst();
 	}
 
-	/*private final Optional<Mission> getMissionEncoursEmploye(final Employe employe) {
+	private final Optional<MissionEmploye> getMissionEncoursEmploye(final Employe employe) {
 
-		return missionRepository.findByEmploye(employe).stream()
-								.sorted(Comparator.comparing(Mission::getId).reversed())
+		return missionEmployeRepository.findAll().stream()
+								.filter(me -> me.getId().getEmploye().getEmpMatricule().equalsIgnoreCase(employe.getEmpMatricule()) && me.getId().getMission().getStatusMission().startsWith("Approuvé"))
+								.sorted((m1, m2) -> m2.getId().getMission().getId().compareTo(m1.getId().getMission().getId()))
+								.findFirst();
+				
+		//.findByEmploye(employe).stream()
+		//						.sorted(Comparator.comparing(Mission::getId).reversed())
 								//.sorted((m1, m2) -> m2.getId().compareTo(m1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
-								.findFirst();
-	}*/
+		//						.findFirst();
+	}
 }

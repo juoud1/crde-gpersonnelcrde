@@ -42,7 +42,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
+							<a class="nav-link" th:href="@{/employes-crde.html}" style="color:#e3f2fd;" title="Employés et Stagiaires" th:text="|Employés|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
@@ -50,7 +50,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" title="Congés et absences" th:text="|Congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
@@ -58,7 +58,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd;" th:text="|Planifier visites|">Visites </a>
+							<a class="nav-link" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd;" title="Planifier une visite" th:text="|Visites|">Visites </a>
 						</li>
 						
 						<li class="nav-item dropdown ml-5">
@@ -156,10 +156,10 @@
 												</form>
 											</div>
 											<div class="row text-center w-25">
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="nvlle-miss-gpe-group">
 													<a class="btn btn-outline-primary mb-1" id="bajoutmissiongrpe" style="display: inline-block" th:href="@{/mission-emp-crde.html/miss-grpe}" formmethod="get" th:text="|Ajouter mission de groupe|">Annuler</a>
 												</div>
-												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
+												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="nvlle-miss-emp-group">
 													<a class="btn btn-outline-primary" id="bajoutmission" style="display: inline-block" th:href="@{/mission-emp-crde.html/miss-indiv}" formmethod="get" th:text="|Ajouter mission d'un employé|">Annuler</a>
 												</div>
 											</div>

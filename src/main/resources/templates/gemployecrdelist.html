@@ -42,7 +42,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{/employes-crde.html}" style="color:#e3f2fd; font-weight: bold;" th:text="|Employés et Stagiaires|">Gérer le personnel</a>
+							<a class="nav-link active" th:href="@{/employes-crde.html}" style="color:#e3f2fd; font-weight: bold;" title="Employés et Stagiaires" th:text="|Employés|">Gérer le personnel</a>
 						</li>
 						
 						<li class="nav-item">
@@ -50,7 +50,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" th:text="|Absences et congés|">Congés</a>
+							<a class="nav-link" th:href="@{/conges-emp-crde.html}" style="color:#e3f2fd;" title="Congés et absences" th:text="|Congés|">Congés</a>
 						</li>
 
 						<li class="nav-item">
@@ -58,7 +58,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd;" th:text="|Planifier visites|">Visites </a>
+							<a class="nav-link" th:href="@{/planif-visites-crde.html}" style="color:#e3f2fd;" title="Planifier une visite" th:text="|Visites|">Visites </a>
 						</li>
 						
 						<li class="nav-item dropdown ml-5">
@@ -134,17 +134,60 @@
 									<div class="w-75">
 										<form id="employee-rech-form" class="row g-1 mb-2 p-2 text-start border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" style="align-items: flex-start;" th:autocomplete="|false|">
 											<div class="col-lg-10 col-md-10 col-sm-9" id="missrecherchee-group">
+												<label class="form-label h6" for="emprecherche" th:text="|Employé Matricule ou nom|">civ</label>
 												<input class="form-control me-2" autofocus="autofocus" type="search" id="emprecherche" name="emprecherche" placeholder="Entrez le (début du) matricule ou nom employé" aria-label="Search">
 											</div>
-											<div class="col-lg-2 col-md-2 col-sm-3 text-center" >
+											<div class="col-lg-2 col-md-2 col-sm-4 text-center pt-4" >
 												<button class="ms-auto btn btn-success ms-auto" id="brechercheemploye" type="button">Rechercher</button>
 											</div>
 										</form>
 									</div>
 
 									<div class="row text-center w-25">
-										<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="enddate-group">
-											<a class="btn btn-outline-primary ms-auto" id="bajoutemploye" style="display: inline-block" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter un employé|">Annuler</a>
+										<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="nvel-emp-group">
+											<a class="btn btn-outline-primary mb-1" id="bajoutemploye" style="display: inline-block" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter un employé|">Annuler</a>
+										</div>
+										<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="nvel-emp-group">
+											<button type="button" th:id="|bt-|" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-reprise-employe|"  title="Reprise des employés après leurs congés et/ou missions" th:text="|Reprise après ...|">
+												action
+											</button>
+
+											<div class="modal modal-md fade bg-transparent" th:id="|staticBckdpCrde-reprise-employe|" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h1 class="modal-title fs-5" th:id="|staticBackdropLabel-|" th:text="|Reprise des employés après congés ou missions|">reprise</h1>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<div class="border p-1 mb-2 bg-secondary-subtle">
+																<div class="d-flex flex-wrap gap-1 p-1">
+																	<form id="mission-rech-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+													
+																		<div class="col-lg-5 col-md-5 col-sm-6" id="startdat-group">
+																			<label class="form-label h6" for="datedebutstatus">Du</label>
+																			<input type="date" id="datedebutstatus" name="datedebutstatus" class="form-control" required>
+																		</div>
+																		<div class="col-lg-5 col-md-5 col-sm-6" id="enddat-group">
+																			<label class="form-label h6" for="datefinstatus">Au</label>
+																			<input type="date" id="datefinstatus" name="datefinstatus" class="form-control" placeholder="Date fin" required>
+																		</div>
+																		
+																		<div class="col-lg-11 col-md-11 col-sm-12 text-start pt-4" >
+																			<button class="btn btn-success ms-3" id="breprendreconges" type="button" title="Reprise des employés aprés leurs congés" th:text="|Reprise après congés|">Rechercher</button>
+																			<button class="btn btn-success" id="breprendremiss" type="button" title="Reprise des employés aprés leurs missions" th:text="|Reprise après missions|">Rechercher</button>
+																		</div>
+																	</form>
+																</div>
+															</div>
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="|Fermer|">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
