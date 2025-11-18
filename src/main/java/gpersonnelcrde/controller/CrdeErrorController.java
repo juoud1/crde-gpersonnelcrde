@@ -16,10 +16,10 @@ public class CrdeErrorController implements ErrorController {
 
 	@GetMapping("/error")
 	 public String handleError(HttpServletRequest request, Model model) {
-		model.addAttribute("ERROR_STATUS_CODE", RequestDispatcher.ERROR_STATUS_CODE);
-		model.addAttribute("ERROR_MESSAGE", RequestDispatcher.ERROR_MESSAGE);
-		//model.addAttribute("ERROR_EXCEPTION", RequestDispatcher.ERROR_EXCEPTION);
-        logger.warn("Une ou plusieurs erreurs sont survenues, {}", RequestDispatcher.ERROR_EXCEPTION);
+		model.addAttribute("ERROR_STATUS_CODE", request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
+		model.addAttribute("ERROR_MESSAGE", request.getAttribute(RequestDispatcher.ERROR_MESSAGE));
+		model.addAttribute("ERROR_EXCEPTION", request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
+        logger.warn("Une ou plusieurs erreurs sont survenues, {}", request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
         return "error";
     }
 }
