@@ -52,21 +52,29 @@ spring:
        # data: classpath:data/taxes.sql, classpath:data/provinces.sql, classpath:data/taxesprovinces.sql #, classpath:reviews.sql
   jpa:
      database-platform: org.hibernate.dialect.H2Dialect
-     defer-datasource-initialization: true
+     defer-datasource-initialization: false #true
+     generate-ddl: false
      hibernate:
-       ddl-auto: create-drop #update
+       ddl-auto: none #create-drop #update
      show-sql: false 
   sql:
      init:
        platform: h2
        mode: always
-       dataLocations: classpath:sql/status.sql, classpath:sql/lieuxaffectations.sql, classpath:sql/fonctions.sql, classpath:sql/typesemployes.sql, classpath:sql/employes.sql, classpath:sql/affectations.sql, classpath:sql/conges.sql, classpath:sql/missions.sql, classpath:sql/visites.sql, classpath:sql/utilisateurs.sql, classpath:sql/missionsemployes.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
+      # dataLocations: classpath:sql/status.sql, classpath:sql/lieuxaffectations.sql, classpath:sql/fonctions.sql, classpath:sql/typesemployes.sql, classpath:sql/employes.sql, classpath:sql/affectations.sql, classpath:sql/conges.sql, classpath:sql/missions.sql, classpath:sql/visites.sql, classpath:sql/utilisateurs.sql, classpath:sql/missionsemployes.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
   thymeleaf:
     cache: false
     enabled: true
     prefix: classpath:/templates/
     suffix: .html
+  batch:
+    jdbc:
+      initialize-schema: never
   web:
     resources:
       cache:
         period: 120000
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+    baseline-on-migrate: true
