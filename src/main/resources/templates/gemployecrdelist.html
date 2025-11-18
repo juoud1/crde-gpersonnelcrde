@@ -162,20 +162,27 @@
 														<div class="modal-body">
 															<div class="border p-1 mb-2 bg-secondary-subtle">
 																<div class="d-flex flex-wrap gap-1 p-1">
-																	<form id="mission-rech-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-													
-																		<div class="col-lg-5 col-md-5 col-sm-6" id="startdat-group">
-																			<label class="form-label h6" for="datedebutstatus">Du</label>
-																			<input type="date" id="datedebutstatus" name="datedebutstatus" class="form-control" required>
+																	<form id="emp-trtmt-reprise-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
+																		<div class="col-12 text-center">
+																			<div class="alert alert-success p-2">
+																				<input type="radio" id="missions" name="typereprise" value="missions">
+																				<label class="form-label h5" for="missions">Missions</label>
+																				<input type="radio" id="congss" name="typereprise" value="congés">
+																				<label class="form-label h5" for="conges">Congés</label>
+																			</div>
 																		</div>
-																		<div class="col-lg-5 col-md-5 col-sm-6" id="enddat-group">
-																			<label class="form-label h6" for="datefinstatus">Au</label>
-																			<input type="date" id="datefinstatus" name="datefinstatus" class="form-control" placeholder="Date fin" required>
+					
+																		<div class="col-lg-5 col-md-5 col-sm-6 text-start" id="emptrtmtreprise-datedebstat-group">
+																			<span class="form-label h6 ms-2" for="datedebstat">Du</span>
+																			<input type="date" id="datedebstat" name="datedebstat" class="form-control" required>
+																		</div>
+																		<div class="col-lg-5 col-md-5 col-sm-6 text-start me-2" id="emptrtmtreprise-datefinstat-group">
+																			<span class="form-label h6 ms-2" for="datefinstat">Au</span>
+																			<input type="date" id="datefinstat" name="datefinstat" class="form-control" placeholder="Date fin" required>
 																		</div>
 																		
-																		<div class="col-lg-11 col-md-11 col-sm-12 text-start pt-4" >
-																			<button class="btn btn-success ms-3" id="breprendreconges" type="button" title="Reprise des employés aprés leurs congés" th:text="|Reprise après congés|">Rechercher</button>
-																			<button class="btn btn-success" id="breprendremiss" type="button" title="Reprise des employés aprés leurs missions" th:text="|Reprise après missions|">Rechercher</button>
+																		<div class="col-lg-11 col-md-11 col-sm-12 text-center p-2" >
+																			<button class="btn btn-success" id="bemptrtmtreprise" type="button" title="Reprise des employés aprés leurs missions opu congés" th:text="|Lancer le traitement|">Rechercher</button>
 																		</div>
 																	</form>
 																</div>
