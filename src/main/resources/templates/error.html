@@ -68,14 +68,15 @@
 									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-8 z-0 position-relative m-auto p-auto bd-highlight">
-									<div class="alert alert-danger  w-75 m-auto text-center" th:if="${param.error != null}">
-										<strong class="h2 mb-3 text-center">Une ou plusieurs erreurs sont survenues lors de traitement de votre requête</strong>
-										<span class="h4 mb-3 text-center" th:text="${ERROR_STATUS_CODE}">erreur</span><br>
+									<div class="alert alert-danger w-75 m-auto text-center" th:if="${ERROR_MESSAGE != null}">
+										<strong class="h3 mb-3 text-center" th:text="|Une ou plusieurs erreurs | + ${ERROR_STATUS_CODE} + | sont survenues lors de traitement de votre requête|">erreur</strong>
 										<span class="h5 mb-3 text-center" th:text="${ERROR_MESSAGE}">erreur</span><br>
-										<span class="h6 mb-3 text-center" th:text="${ERROR_EXCEPTION}">les identifiants de connexion sont invalides.</span><span th:text="${ERROR_EXCEPTION}">les identifiants de connexion sont invalides.</span><br><br>	
-										<a class="btn btn-primary" th:href="@{/accueil.html}" formmethod="get" th:text="|Retourner à l'accueil|">Annuler</a>
-									
+										<span class="text-start" th:text="${ERROR_EXCEPTION}">erreur</span><br>	
 									</div>
+									<div class="text-center p-3">
+										<a class="btn btn-primary" th:href="@{/accueil.html}" formmethod="get" th:text="|Retourner à l'accueil|">Annuler</a>
+									</div>
+									
 								</div>
 							</div>
 						</div>
