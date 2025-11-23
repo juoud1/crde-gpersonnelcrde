@@ -39,7 +39,7 @@ public class StockageFichiersImagesService {
 
 	@Autowired
 	public StockageFichiersImagesService(DStockageFichiersImagesProperties dossierProperties){
-		this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).getParent().toString(), dossierProperties.emplacement());
+		this.rootCrdePath = Paths.get(OS_USER_DIR, dossierProperties.emplacement());
 		logger.info("composant service de dossier stockage des sigantures et images initialisé avec succès".toUpperCase());
 	}
 
