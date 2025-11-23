@@ -123,14 +123,14 @@ public class EmployeService {
 	public Optional<EmployeDto> createEmploye (String empCivilite, String empNom, String empPren, String typeEmploye, 
 					String empMatricule, String empEmail, String empTelephone, String status, String empFonction,
 					String refDecretouArreteEntree, String lieuAffectation, LocalDate empDateDebutStatus,
-					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException{
+					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException{
 		
-		Future<Path> futureEmplacementPhoto = null;
+		//Future<Path> futureEmplacementPhoto = null;
 		//Future<Optional<EmployeDto>> futureOptEmploye = null;
 		//Optional<EmployeDto> newEmp = Optional.empty();
 
 		//if (Objects.nonNull(empphoto)){
-		try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+		/*try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 			if (Objects.nonNull(empPhoto)){
 				futureEmplacementPhoto = executor.submit(() -> {
 					return stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
@@ -155,11 +155,12 @@ public class EmployeService {
 				eDto.setTypeEmploye(typeEmploye);
 				
 				return createEmploye (eDto);
-			});*/
+			});
 
-		}
-		logger.info("PHOTO EMPLOYÉ, NOMBRE DE BITS STOCKÉS : {}\n {}", futureEmplacementPhoto!=null? futureEmplacementPhoto.get(): null, futureEmplacementPhoto.get(), 
-		futureEmplacementPhoto!=null? futureEmplacementPhoto.get().getFileSystem() : null);
+		}*/
+		//logger.info("PHOTO EMPLOYÉ, NOMBRE DE BITS STOCKÉS : {}\n {}", futureEmplacementPhoto!=null? futureEmplacementPhoto.get(): null, futureEmplacementPhoto.get(), 
+		//futureEmplacementPhoto!=null? futureEmplacementPhoto.get().getFileSystem() : null);
+		var pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
 
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
@@ -176,7 +177,7 @@ public class EmployeService {
 		eDto.setRefDecretouArreteEntree(refDecretouArreteEntree);
 		eDto.setStatus("SVCE");
 		eDto.setTypeEmploye(typeEmploye);
-		eDto.setEmpEmplacementPhoto(futureEmplacementPhoto != null? futureEmplacementPhoto.get().toString() : null);
+		eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
 		
 		var newEmp = createEmploye (eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
@@ -390,7 +391,7 @@ public class EmployeService {
             throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
 		
-		Future<Optional<Fonction>> futureOptEmpFonct = null;
+		/*Future<Optional<Fonction>> futureOptEmpFonct = null;
 		Future<Optional<Status>> futureOptEmpStatus = null;
 		Future<Optional<TypeEmploye>> futureOptTypeEmp = null;
 		Future<Optional<LieuAffectation>> futureOptLieuAffect = null;
@@ -404,11 +405,12 @@ public class EmployeService {
 			//futurePathPhoto = executor.submit(() -> this.stockagePhotoEmployeService.chargerFichierCrde(employe.getEmpUrlphoto()));
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
+		}*/
 	   // var empFonct = futureOptEmpFonct.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
 		//var empStatus = futureOptEmpStatus.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
 		//var empTypeEmp = futureOptTypeEmp.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
 		//var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		
 		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
 		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
 		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
