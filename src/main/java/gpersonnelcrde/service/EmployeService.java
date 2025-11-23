@@ -160,7 +160,7 @@ public class EmployeService {
 		}*/
 		//logger.info("PHOTO EMPLOYÉ, NOMBRE DE BITS STOCKÉS : {}\n {}", futureEmplacementPhoto!=null? futureEmplacementPhoto.get(): null, futureEmplacementPhoto.get(), 
 		//futureEmplacementPhoto!=null? futureEmplacementPhoto.get().getFileSystem() : null);
-		var pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
+		//var pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
 
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
@@ -177,7 +177,7 @@ public class EmployeService {
 		eDto.setRefDecretouArreteEntree(refDecretouArreteEntree);
 		eDto.setStatus("SVCE");
 		eDto.setTypeEmploye(typeEmploye);
-		eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
+		//eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
 		
 		var newEmp = createEmploye (eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
