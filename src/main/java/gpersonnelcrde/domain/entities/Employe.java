@@ -27,6 +27,8 @@ public class Employe {
 	private String empNom;
 	private String empPren;
 	private String empCivilite;
+	private String empUrlphoto;
+	private String empUrlsignature;
 	private String empTelephone;
 	private String empEmail;
 	private String numNoteService;
@@ -61,6 +63,7 @@ public class Employe {
 	private String empCreePar;
 	private LocalDateTime empModifieLe;
 	private String empModifiePar;
+
 	public Long getId() {
 		return id;
 	}
@@ -90,6 +93,18 @@ public class Employe {
 	}
 	public void setEmpCivilite(String empCivilite) {
 		this.empCivilite = empCivilite;
+	}
+	public String getEmpUrlphoto() {
+		return empUrlphoto;
+	}
+	public void setEmpUrlphoto(String empUrlphoto) {
+		this.empUrlphoto = empUrlphoto;
+	}
+	public String getEmpUrlsignature() {
+		return empUrlsignature;
+	}
+	public void setEmpUrlsignature(String empUrlsignature) {
+		this.empUrlsignature = empUrlsignature;
 	}
 	public String getEmpTelephone() {
 		return empTelephone;
@@ -197,6 +212,8 @@ public class Employe {
 		result = prime * result + ((empNom == null) ? 0 : empNom.hashCode());
 		result = prime * result + ((empPren == null) ? 0 : empPren.hashCode());
 		result = prime * result + ((empCivilite == null) ? 0 : empCivilite.hashCode());
+		result = prime * result + ((empUrlphoto == null) ? 0 : empUrlphoto.hashCode());
+		result = prime * result + ((empUrlsignature == null) ? 0 : empUrlsignature.hashCode());
 		result = prime * result + ((empTelephone == null) ? 0 : empTelephone.hashCode());
 		result = prime * result + ((empEmail == null) ? 0 : empEmail.hashCode());
 		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
@@ -208,6 +225,7 @@ public class Employe {
 		result = prime * result + ((dateDecretEntree == null) ? 0 : dateDecretEntree.hashCode());
 		result = prime * result + ((referenceDecretSortie == null) ? 0 : referenceDecretSortie.hashCode());
 		result = prime * result + ((dateDecretSortie == null) ? 0 : dateDecretSortie.hashCode());
+		result = prime * result + ((empMissions == null) ? 0 : empMissions.hashCode());
 		result = prime * result + ((empCreeLe == null) ? 0 : empCreeLe.hashCode());
 		result = prime * result + ((empCreePar == null) ? 0 : empCreePar.hashCode());
 		result = prime * result + ((empModifieLe == null) ? 0 : empModifieLe.hashCode());
@@ -247,6 +265,16 @@ public class Employe {
 			if (other.empCivilite != null)
 				return false;
 		} else if (!empCivilite.equals(other.empCivilite))
+			return false;
+		if (empUrlphoto == null) {
+			if (other.empUrlphoto != null)
+				return false;
+		} else if (!empUrlphoto.equals(other.empUrlphoto))
+			return false;
+		if (empUrlsignature == null) {
+			if (other.empUrlsignature != null)
+				return false;
+		} else if (!empUrlsignature.equals(other.empUrlsignature))
 			return false;
 		if (empTelephone == null) {
 			if (other.empTelephone != null)
@@ -303,6 +331,11 @@ public class Employe {
 				return false;
 		} else if (!dateDecretSortie.equals(other.dateDecretSortie))
 			return false;
+		if (empMissions == null) {
+			if (other.empMissions != null)
+				return false;
+		} else if (!empMissions.equals(other.empMissions))
+			return false;
 		if (empCreeLe == null) {
 			if (other.empCreeLe != null)
 				return false;
@@ -329,13 +362,14 @@ public class Employe {
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
-				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
-				+ ", numNoteService=" + numNoteService + ", typeEmploye=" + typeEmploye + ", empStatus=" + empStatus
-				+ ", empLieuAffectation=" + empLieuAffectation + ", empFonction=" + empFonction
-				+ ", referenceDecretEntree=" + referenceDecretEntree + ", dateDecretEntree=" + dateDecretEntree
-				+ ", referenceDecretSortie=" + referenceDecretSortie + ", dateDecretSortie=" + dateDecretSortie
-				+ ", empMissions=" + empMissions + ", empCreeLe=" + empCreeLe + ", empCreePar=" + empCreePar
-				+ ", empModifieLe=" + empModifieLe + ", empModifiePar=" + empModifiePar + "]";
+				+ ", empCivilite=" + empCivilite + ", empUrlphoto=" + empUrlphoto + ", empUrlsignature="
+				+ empUrlsignature + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail + ", numNoteService="
+				+ numNoteService + ", typeEmploye=" + typeEmploye + ", empStatus=" + empStatus + ", empLieuAffectation="
+				+ empLieuAffectation + ", empFonction=" + empFonction + ", referenceDecretEntree="
+				+ referenceDecretEntree + ", dateDecretEntree=" + dateDecretEntree + ", referenceDecretSortie="
+				+ referenceDecretSortie + ", dateDecretSortie=" + dateDecretSortie + ", empMissions=" + empMissions
+				+ ", empCreeLe=" + empCreeLe + ", empCreePar=" + empCreePar + ", empModifieLe=" + empModifieLe
+				+ ", empModifiePar=" + empModifiePar + "]";
 	}
-				
+					
 }

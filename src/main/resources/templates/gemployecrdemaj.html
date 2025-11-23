@@ -138,26 +138,80 @@
 										<legende class="h4 mb-3 text-center">Modifier un employé ou stagiaire</legende>
 										<hr>
 										
-										<fieldset>
+										<!--fieldset>
 											<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
 												<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
 												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
 											</div>
-										</fieldset>
+										</fieldset-->
+										<div class="col-lg-11 col-md-11 col-sm-11">
+											<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
+											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
+											<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
+											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
+											<div th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+												<a class="ms-auto" th:href="|#|">
+													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" th:alt="${savedEmploye.empEmplacementPhoto}" style="width:15%">
+												</a>
+											</div>
+											<div th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+												<fieldset class="text-center p-2">
+													<img id="photo" alt="Choisir la photo de l'employé" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 15%; width: 15%" />
 
-										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
+													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" size="100" maxlength="100"  onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
+												</fieldset>
+											</div>
+											<!--div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon1">
+													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end img-responsive" alt="Responsive image" width="30" height="24" />
+													</span>
+												</div>
+												<input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+											</div-->
+										</div>
+										<hr>
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
 											<input type="text" autofocus="autofocus" id="empcivilite" name="empcivilite" th:value="${savedEmploye.empCivilite}" class="form-control" />
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
 											<input type="text" id="empnom" name="empnom" th:value="${savedEmploye.empNom}" class="form-control" />
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
 											<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" />
 										</div>
-										
+										<hr>
+
+										<!--div class="col-lg-11 col-md-11 col-sm-11"-->
+											<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
+											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
+											<picture>
+  												<source th:srcset="${savedEmploye.empEmplacementPhoto}" type="image/svg+xml">
+												<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
+											</picture>
+											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file"-->
+											<!--div class="input-group">
+											<label class="form-label h6 me-auto" for="empphoto" th:text="|Emplacement photo|">civ</label>
+											<a class="aempphotoemploye" th:href="${savedEmploye.empEmplacementPhoto}">
+												<img id="empphotoemploye" th:src="${savedEmploye.empEmplacementPhoto}" th:alt="${savedEmploye.empEmplacementPhoto}" style="width:25%">
+											</a>
+											<input type="file" id="empphoto" name="empphoto" th:onload="chargerPhotoEmploye(event)" th:onchange="chargerPhotoEmploye(event)" th:onloadeddata="document.getElementById('empphotoemploye').src = window.URL.createObjectURL(${savedEmploye.empEmplacementPhoto})" class="form-control-file">
+											</div-->
+											<!--div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="basic-addon1">
+													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" th:alt="${savedEmploye.empEmplacementPhoto}" style="width:15%">
+												</span>
+												</div>
+												<input type="text" class="form-control" aria-describedby="basic-addon1">
+											</div>
+										</div>
+										<hr-->
+
 										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
 											<select id="typeemp" name="typeemp" class="form-select" required>
@@ -169,7 +223,12 @@
 											<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
 											<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" />
 										</div>
-									
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
+											<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
+										</div>
+										<hr>
+
 										<div class="col-6">
 											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
 											<input type="email" id="empemail" name="empemail" th:value="${savedEmploye.empEmail}" class="form-control" />
@@ -178,7 +237,8 @@
 											<label class="form-label h6" for="emptelephone" th:text="|Téléphone|">civ</label>
 											<input type="text" id="emptelephone" name="emptelephone" th:value="${savedEmploye.empTelephone}" class="form-control" />
 										</div>
-									
+										<hr>
+
 										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
 											<select id="sttus" name="sttus" class="form-select" onchange="statusEmployeSelectChange()" required>
@@ -209,6 +269,7 @@
 												<option th:each="fction : ${allFonctions}" th:value="${fction.fonctionCode}" th:text="${fction.fonction}"></option>
 											</select>
 										</div>
+										<hr>
 
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="refdecretouarreteentree" th:text="|Réf. decret/Arr. d'entrée|">civ</label>
@@ -302,6 +363,30 @@
 			}
 		}  
 		
+
+		function chargerPhotoEmploye(event) {
+			var reader = new FileReader();
+			/*reader.onload = function(){
+				var output = document.getElementById('empphotoemploye').src;
+				alert(output);
+				output.src = reader.result;
+			};*/
+			var output = document.getElementById('empphotoemploye').alt;
+			alert('output: '+ output);
+			output.src.value = output;
+			//alert('event.href: '+ event.href);
+			reader.onload = function (e){
+				alert('E: '+e);
+				 $(event).next('#empphotoemploye').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(output);
+		};
+
+		$(".aempphotoemploye").click(function(){
+			chargerPhotoEmploye(this);
+		});
+
 		function getEmployees() {
 			return allEmployees; //JSON.parse(localStorage.getItem('employees') || '[]');
 		}

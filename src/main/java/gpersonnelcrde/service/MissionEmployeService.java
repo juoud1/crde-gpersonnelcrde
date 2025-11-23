@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +57,12 @@ public class MissionEmployeService {
 	private List<MissionEmployeDto> getMissionsEmployes(){
 		return missionEmployeRepository.findAll().stream()
 				.map((MissionEmploye missEmp) -> {
-					MissionEmployeDto meDto = missionEmployeToDtoMapper(missEmp);
+					MissionEmployeDto meDto = null;
+					try {
+						meDto = missionEmployeToDtoMapper(missEmp);
+					} catch (EntityNotFoundException | InterruptedException | ExecutionException e) {
+						logger.warn("Un problème est survenu \n{}", e.getMessage());
+					}
 
 					return meDto;
 				})
@@ -68,7 +74,7 @@ public class MissionEmployeService {
 													final LocalDate dateDepartMiss, final LocalDate dateRetourMiss, 
 													final String dureeEnLettreMiss, final String destVille, final String destPays, 
 													final String motifMission, String infoSupplmission, 
-													final String empChefDeMissMatricule, final String... missEmpMatricules){
+													final String empChefDeMissMatricule, final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException{
 		
 		var meDto = getMissionEmployeDtoFromWebParm(numOrdreMiss, typeOrdreMission, 
 													empChefDeMissMatricule, natureDeplacement, 
@@ -190,7 +196,7 @@ public class MissionEmployeService {
 																final LocalDate dateRetourMiss, final String dureeEnLettreMiss, 
 																final String destVille, final String destPays,  
 																final String motifMission, String infoSupplmission, 
-																final String... missEmpMatricules){
+																final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException{
 
 		// Liste des employés (y compris le chef de mission) autorisés à effectuer la mission
 		List<EmployeDto> eDtos = getEmployesDtoFromWebParm(typeOrdreMission, missEmpMatricule, missEmpMatricules);
@@ -284,13 +290,13 @@ public class MissionEmployeService {
 		return List.of();
 	}
 
-	private Optional<MissionEmployeDto> missionEmployeMapper(final Optional<MissionEmploye> optMissEmp){
+	private Optional<MissionEmployeDto> missionEmployeMapper(final Optional<MissionEmploye> optMissEmp) throws EntityNotFoundException, InterruptedException, ExecutionException{
 		var meDto = missionEmployeToDtoMapper(optMissEmp.orElseThrow(()-> new EntityNotFoundException("La mission-employé n'existe pas!")));
 		
 		return Optional.of(meDto);
 	}
 
-	private MissionEmployeDto missionEmployeToDtoMapper(MissionEmploye missionEmploye){
+	private MissionEmployeDto missionEmployeToDtoMapper(MissionEmploye missionEmploye) throws EntityNotFoundException, InterruptedException, ExecutionException{
 		if (Objects.isNull(missionEmploye)){
 			throw new EntityNotFoundException("L'entité mission-employé ne doit être vide");
 		}

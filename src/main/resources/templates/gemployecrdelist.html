@@ -276,7 +276,8 @@
 																	<div class="border p-1 mb-2 bg-secondary-subtle">
 																		<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
 																		<div class="d-flex flex-wrap gap-2 p-2">
-																			<a class="btn btn-outline-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Mettre à jour|">Annuler</a>
+																			<a class="btn btn-outline-primary" th:id="|consultemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}+ |/cnsult|" formmethod="get" th:text="|Consulter|">Annuler</a>
+																			<a class="btn btn-outline-primary" th:id="|modifemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule} + |/mdific|" formmethod="get" th:text="|Mettre à jour|">Annuler</a>
 																			<a class="btn btn-outline-danger" th:id="|inqdepartemp| + ${employe.empMatricule}" th:href="@{/employe-crde-m.html} + |/| + ${employe.empMatricule}" formmethod="get" th:text="|Indiquer le départ|">Annuler</a>
 																			<button th:id="|imprecapifemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. récapitulatif|">Note de service</button>
 																		</div>
@@ -487,7 +488,8 @@
 											<div class="border p-1 mb-2 bg-secondary-subtle">
 												<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
 												<div class="d-flex flex-wrap gap-2 p-2">
-													<a class="btn btn-outline-primary" id="modifemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Mettre à jour</a>
+													<a class="btn btn-outline-primary" id="consultemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}/cnsult" formmethod="get">Consulter</a>
+													<a class="btn btn-outline-primary" id="modifemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}/mdific" formmethod="get">Mettre à jour</a>
 													<a class="btn btn-outline-danger" id="inqdepartemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Indiquer le départ</a>
 													<button id="imprecapifemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. récapitulatif</button>
 												</div>

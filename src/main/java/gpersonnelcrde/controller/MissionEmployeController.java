@@ -2,6 +2,7 @@ package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import gpersonnelcrde.domain.dto.MissionEmployeDto;
 import gpersonnelcrde.domain.dto.MissionEmployesDto;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.MissionEmployeService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -85,7 +87,7 @@ public class MissionEmployeController {
 							@RequestParam(name="infosupplmission", required = false) String infoSupplmission,
 							@RequestParam("empchefmissionmatricule") String missEmpChefMissMatricule, 
 							HttpServletRequest request, Model model,
-							@RequestParam(name="missempmatricule", required = false) String... missEmpMatricules) {
+							@RequestParam(name="missempmatricule", required = false) String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException {
 		
 		MissionEmployesDto savedMissionEmployes = missionEmployeService.saveMissionEmployes(numOrdreMiss, typeOrdreMission, natureDeplacement, 
 																cadreMission, dateDepartMiss, dateRetourMiss, dureeMiss, 
