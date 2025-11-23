@@ -22,7 +22,12 @@ public class EmployeDto {
 	private LocalDate dateDecretouArreteEntree;
 	private String refDecretouArreteDepart;
 	private LocalDate dateDecretouArreteDepart;
-	
+
+	private String empPhoto;
+	private String empEmplacementPhoto;
+	private String empSignature;
+	private String empEmplacementSignature;
+
 	public String getEmpMatricule() {
 		return empMatricule;
 	}
@@ -125,6 +130,31 @@ public class EmployeDto {
 	public void setDateDecretouArreteDepart(LocalDate dateDecretouArreteDepart) {
 		this.dateDecretouArreteDepart = dateDecretouArreteDepart;
 	}
+	public String getEmpPhoto() {
+		return empPhoto;
+	}
+	public void setEmpPhoto(String empPhoto) {
+		this.empPhoto = empPhoto;
+	}
+	public String getEmpEmplacementPhoto() {
+		return empEmplacementPhoto;
+	}
+	public void setEmpEmplacementPhoto(String empEmplacementPhoto) {
+		this.empEmplacementPhoto = empEmplacementPhoto;
+	}
+	public String getEmpSignature() {
+		return empSignature;
+	}
+	public void setEmpSignature(String empSignature) {
+		this.empSignature = empSignature;
+	}
+	public String getEmpEmplacementSignature() {
+		return empEmplacementSignature;
+	}
+	public void setEmpEmplacementSignature(String empEmplacementSignature) {
+		this.empEmplacementSignature = empEmplacementSignature;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -146,6 +176,8 @@ public class EmployeDto {
 		result = prime * result + ((dateDecretouArreteEntree == null) ? 0 : dateDecretouArreteEntree.hashCode());
 		result = prime * result + ((refDecretouArreteDepart == null) ? 0 : refDecretouArreteDepart.hashCode());
 		result = prime * result + ((dateDecretouArreteDepart == null) ? 0 : dateDecretouArreteDepart.hashCode());
+		result = prime * result + ((empEmplacementPhoto == null) ? 0 : empEmplacementPhoto.hashCode());
+		result = prime * result + ((empEmplacementSignature == null) ? 0 : empEmplacementSignature.hashCode());
 		return result;
 	}
 	@Override
@@ -242,22 +274,30 @@ public class EmployeDto {
 				return false;
 		} else if (!dateDecretouArreteDepart.equals(other.dateDecretouArreteDepart))
 			return false;
+		if (empEmplacementPhoto == null) {
+			if (other.empEmplacementPhoto != null)
+				return false;
+		} else if (!empEmplacementPhoto.equals(other.empEmplacementPhoto))
+			return false;
+		if (empEmplacementSignature == null) {
+			if (other.empEmplacementSignature != null)
+				return false;
+		} else if (!empEmplacementSignature.equals(other.empEmplacementSignature))
+			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "EmployeDto [empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
 				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
 				+ ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation=" + lieuAffectation
-				+ ", fonction=" + fonction + ", numNoteService=" + empNumInterne + ", empDateDebutStatus="
+				+ ", fonction=" + fonction + ", empNumInterne=" + empNumInterne + ", empDateDebutStatus="
 				+ empDateDebutStatus + ", empDateFinStatus=" + empDateFinStatus + ", refDecretouArreteEntree="
 				+ refDecretouArreteEntree + ", dateDecretouArreteEntree=" + dateDecretouArreteEntree
 				+ ", refDecretouArreteDepart=" + refDecretouArreteDepart + ", dateDecretouArreteDepart="
-				+ dateDecretouArreteDepart + "]";
-	}
-	public Object orElseThrow(Object object) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+				+ dateDecretouArreteDepart + ", empEmplacementPhoto=" + empEmplacementPhoto
+				+ ", empEmplacementSignature=" + empEmplacementSignature + "]";
 	}
 		
 }
