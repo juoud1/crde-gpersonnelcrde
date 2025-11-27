@@ -8,14 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import gpersonnelcrde.domain.dto.MissionDto;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.MissionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class MissionController {
 	}
     
 	////// VOIR miss-emp @GetMapping ("/missions-emp-crde.html")
-	public String getGestMissions(HttpServletRequest request, Model model){
+	public String getGestMissions(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
@@ -67,7 +66,7 @@ public class MissionController {
 	}*/
 
 	////// VOIR miss-emp @GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
-	public String getMissionIndividuelle(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model){
+	public String getMissionIndividuelle(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
@@ -91,7 +90,7 @@ public class MissionController {
 	}
 
 	//@PostMapping ("/mission-grpe-emp-crde.html")
-	public String addMissionGroupe(HttpServletRequest request, Model model){
+	public String addMissionGroupe(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
@@ -102,7 +101,7 @@ public class MissionController {
 	}
 
 	//@PostMapping ("/mission-indiv-emp-crde.html")
-	public String addMissionIndividuelle(HttpServletRequest request, Model model){
+	public String addMissionIndividuelle(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allMissions", missionService.getAllMissions()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
@@ -156,7 +155,7 @@ public class MissionController {
 	}
 
 	////// VOIR miss-emp @GetMapping ("/mission-emp-crde-m.html/{numOrderMission}/{missEmpMatricule}")
-	public String getMissionByNumOrdreAndEmpMatricule(@PathVariable String numOrderMission, @PathVariable String missEmpMatricule, HttpServletRequest request, Model model){
+	public String getMissionByNumOrdreAndEmpMatricule(@PathVariable String numOrderMission, @PathVariable String missEmpMatricule, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    var savedMission = missionService.getMissionByNumOrdreMissionAndMatriculeEmp(numOrderMission, missEmpMatricule)
 								.orElseGet(MissionDto::new);
 		model.addAttribute("savedMission", savedMission);
@@ -178,7 +177,7 @@ public class MissionController {
 	}
 
 	////// VOIR miss-emp @GetMapping ("/mission-emp-crde-m.html/{numOrderMission}")
-	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model){
+	public String getMissionByNumOrdre(@PathVariable String numOrderMission, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    var savedMission = missionService.getMissionByNum(numOrderMission)
 								.orElseGet(MissionDto::new);
 								

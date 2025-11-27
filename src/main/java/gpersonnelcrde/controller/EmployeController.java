@@ -1,5 +1,6 @@
 package gpersonnelcrde.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.FonctionService;
@@ -64,7 +66,7 @@ public class EmployeController {
 	}
 
 	@GetMapping ("/employes-crde.html")
-	public String getEmployes(HttpServletRequest request, Model model){
+	public String getEmployes(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		model.addAttribute("allStatus", statusService.getAllStatus());
 											/*.sorted(Comparator.comparing(LieuAffectation::getId))
 											.sorted(Comparator.comparing(Fonction::getId))
@@ -109,7 +111,8 @@ public class EmployeController {
 					@RequestParam(value="datedecretouarreteentree", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
 					//@RequestParam("datedecretouarretedepart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
 					@RequestParam(value="empphoto", required = false) MultipartFile empPhoto,
-					HttpServletRequest request, Model model) throws EntityNotFoundException, IllegalAccessException, InterruptedException, ExecutionException, MalformedURLException, StockageFichiersImagesException{
+					HttpServletRequest request, Model model) throws EntityNotFoundException, IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException
+					{
 
 		final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
 										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
@@ -147,7 +150,7 @@ public class EmployeController {
 				var path = stockagePhotoEmployeService.chargerFichierCrde(savedEmploye.getEmpEmplacementPhoto()); //chargerFichierCrdeAsResource(savedEmploye.getEmpEmplacementPhoto());
 				var emplacementPhoto = MvcUriComponentsBuilder.fromMethodName(EmployeController.class,
 							"serveFile", path.getFileName().toString()).build().toUri().toString();
-				logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ 2 : {}", savedEmploye.getEmpEmplacementPhoto());
+				logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ INIT = {}\n  et EMPLACEMENT PHOTO EMPLOYÉ MVC-URI= {}\n DANS IF : ", savedEmploye.getEmpEmplacementPhoto(), emplacementPhoto);
 
 				savedEmploye.setEmpEmplacementPhoto(emplacementPhoto);
 			}
@@ -172,7 +175,7 @@ public class EmployeController {
 	}
 
 	@GetMapping ("/employe-crde-m.html/{empMatricule}/{typOp}")
-	public String getEmployeByNumInterne(@PathVariable String empMatricule, @PathVariable String typOp, HttpServletRequest request, Model model) throws InterruptedException, ExecutionException{
+	public String getEmployeByNumInterne(@PathVariable String empMatricule, @PathVariable String typOp, HttpServletRequest request, Model model) throws InterruptedException, ExecutionException, EmployeServiceException{
 		
 		var savedEmploye = employeService.getEmployeByMatricule(empMatricule)
 							.orElseGet(EmployeDto::new);

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.MissionEmployeDto;
 import gpersonnelcrde.domain.dto.MissionEmployesDto;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.MissionEmployeService;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,7 +39,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/missions-emp-crde.html")
-	public String getGestMissionsEmployes(HttpServletRequest request, Model model){
+	public String getGestMissionsEmployes(HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
 	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes().stream()
 			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
 			.toList()); 
@@ -50,7 +52,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
-	public String getMissionEmployeForCreation(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model){
+	public String getMissionEmployeForCreation(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
 	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
@@ -87,7 +89,7 @@ public class MissionEmployeController {
 							@RequestParam(name="infosupplmission", required = false) String infoSupplmission,
 							@RequestParam("empchefmissionmatricule") String missEmpChefMissMatricule, 
 							HttpServletRequest request, Model model,
-							@RequestParam(name="missempmatricule", required = false) String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException {
+							@RequestParam(name="missempmatricule", required = false) String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
 		
 		MissionEmployesDto savedMissionEmployes = missionEmployeService.saveMissionEmployes(numOrdreMiss, typeOrdreMission, natureDeplacement, 
 																cadreMission, dateDepartMiss, dateRetourMiss, dureeMiss, 
@@ -107,7 +109,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}/{empMatricule}") /// Il manque le cas d'appel èa partir de la formRécap
-	public String getMissionByNumAndEmpMatricule(@PathVariable String numMission, @PathVariable String empMatricule, HttpServletRequest request, Model model){
+	public String getMissionByNumAndEmpMatricule(@PathVariable String numMission, @PathVariable String empMatricule, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    var savedMissionEmploye = missionEmployeService.getMissionEmployeByNumMissAndMatriculeEmp(numMission, empMatricule)
 								.orElseGet(MissionEmployeDto::new);
 		model.addAttribute("savedMissionEmploye", savedMissionEmploye);
@@ -119,7 +121,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/missions-emp-crde.html/{missEmpMatricule}/{choixStr}")
-	public String getMissionsByEmpMatricule(@PathVariable String missEmpMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
+	public String getMissionsByEmpMatricule(@PathVariable String missEmpMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model) throws EmployeServiceException{
 	    var savedMissionsEmployes = missionEmployeService.getMissionsEmployesByMatriculeEmp(missEmpMatricule);								
 		model.addAttribute("savedMissionsEmployes", savedMissionsEmployes);
 		model.addAttribute("missEmpMatricule", missEmpMatricule);
@@ -131,7 +133,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}")
-	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model){
+	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
 	    var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
 								.orElseGet(MissionEmployesDto::new);
 		

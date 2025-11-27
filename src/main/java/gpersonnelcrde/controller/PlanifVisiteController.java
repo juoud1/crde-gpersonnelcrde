@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.PlanifVisiteService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,7 +30,7 @@ public class PlanifVisiteController {
 	}
 
 	@GetMapping ("/planif-visite-crde.html")
-	public String addVisite(HttpServletRequest request, Model model){
+	public String addVisite(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		/*model.addAttribute("allStatus", statusService.getAllStatus());
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
 		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
@@ -43,7 +45,7 @@ public class PlanifVisiteController {
 	}
 
 	@GetMapping ("/planif-visite-crde-m.html/{numVisite}")
-	public String getVisiteByNumVisite(@PathVariable String numVisite, HttpServletRequest request, Model model){
+	public String getVisiteByNumVisite(@PathVariable String numVisite, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		var savedVisite = planifVisiteService.getVisiteByNumVisite(numVisite); 
 		model.addAttribute("savedVisite", savedVisite.orElseThrow(EntityNotFoundException::new));
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()

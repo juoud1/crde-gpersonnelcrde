@@ -188,32 +188,7 @@
 												</div>
 											</fieldset>
 
-											<div class="col-lg-11 col-md-11 col-sm-11">
-												<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
-												<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
-												<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
-												<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
-												<div th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
-													
-													<fieldset class="text-center align-items p-2">
-														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded float-end d-block mx-auto" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 15%; width: 15%">
-													</fieldset>
-												</div>
-
-												<div th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
-													<span class="h5" th:text="|L'employé n'a pas founi sa photo|">pas photo</span>
-												</div>
-												
-												<!--div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text" id="basic-addon1">
-														<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end img-responsive" alt="Responsive image" width="30" height="24" />
-														</span>
-													</div>
-													<input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-												</div-->
-											</div>
-											<hr>
+											
 
 											<div class="col-lg-3 col-md-3 col-sm-6">
 												<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
@@ -228,17 +203,48 @@
 												<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" disabled/>
 											</div>
 											
-											<div class="col-lg-4 col-md-4 col-sm-6">
+											<div class="col-lg-3 col-md-3 col-sm-6">
 												<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
 												<input type="text" id="typeemp" name="typeemp" th:value="${savedEmploye.typeEmploye}" class="form-control" disabled/>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-6">
-												<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
-												<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" disabled />
+												<fieldset>
+													<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
+													<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" disabled />
+												</fieldset>
+												<fieldset>
+													<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
+													<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
+												</fieldset>
 											</div>
-											<div class="col-lg-3 col-md-3 col-sm-6">
+											<!--div class="col-lg-2 col-md-2 col-sm-6">
 												<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
 												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
+											</div-->
+											<div class="col-lg-5 col-md-5 col-sm-6 p-2">
+												<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
+												<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
+												<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
+												<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
+												<div class="p-1" th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+													
+													<fieldset class="text-center align-items p-2">
+														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded d-block mx-auto ms-auto me-auto" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
+													</fieldset>
+												</div>
+
+												<div class="p-1" th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+													<span class="h5 text-center" th:text="|L'employé n'a pas founi sa photo|" style="color: navy; margin-top: auto; margin-bottom: auto;">pas photo</span>
+												</div>
+												
+												<!--div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="basic-addon1">
+														<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end img-responsive" alt="Responsive image" width="30" height="24" />
+														</span>
+													</div>
+													<input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+												</div-->
 											</div>
 											<hr>
 

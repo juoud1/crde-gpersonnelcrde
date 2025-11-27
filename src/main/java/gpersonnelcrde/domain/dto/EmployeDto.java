@@ -2,6 +2,8 @@ package gpersonnelcrde.domain.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.core.io.Resource;
+
 public class EmployeDto {
 	private String empMatricule;
 	private String empNom;
@@ -23,9 +25,9 @@ public class EmployeDto {
 	private String refDecretouArreteDepart;
 	private LocalDate dateDecretouArreteDepart;
 
-	private String empPhoto;
+	private Resource empPhoto;
 	private String empEmplacementPhoto;
-	private String empSignature;
+	private Resource empSignature;
 	private String empEmplacementSignature;
 
 	public String getEmpMatricule() {
@@ -130,10 +132,10 @@ public class EmployeDto {
 	public void setDateDecretouArreteDepart(LocalDate dateDecretouArreteDepart) {
 		this.dateDecretouArreteDepart = dateDecretouArreteDepart;
 	}
-	public String getEmpPhoto() {
+	public Resource getEmpPhoto() {
 		return empPhoto;
 	}
-	public void setEmpPhoto(String empPhoto) {
+	public void setEmpPhoto(Resource empPhoto) {
 		this.empPhoto = empPhoto;
 	}
 	public String getEmpEmplacementPhoto() {
@@ -142,10 +144,10 @@ public class EmployeDto {
 	public void setEmpEmplacementPhoto(String empEmplacementPhoto) {
 		this.empEmplacementPhoto = empEmplacementPhoto;
 	}
-	public String getEmpSignature() {
+	public Resource getEmpSignature() {
 		return empSignature;
 	}
-	public void setEmpSignature(String empSignature) {
+	public void setEmpSignature(Resource empSignature) {
 		this.empSignature = empSignature;
 	}
 	public String getEmpEmplacementSignature() {
