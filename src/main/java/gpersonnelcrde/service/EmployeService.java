@@ -148,7 +148,7 @@ public class EmployeService {
 					String refDecretouArreteEntree, String lieuAffectation, LocalDate empDateDebutStatus,
 					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException{
 		
-		Future<Path> futureEmplacementPhoto = null;
+		//Future<Path> futureEmplacementPhoto = null;
 		//Future<Optional<EmployeDto>> futureOptEmploye = null;
 		//Optional<EmployeDto> newEmp = Optional.empty();
 
