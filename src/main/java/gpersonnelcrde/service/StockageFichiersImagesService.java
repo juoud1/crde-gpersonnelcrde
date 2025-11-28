@@ -39,7 +39,9 @@ public class StockageFichiersImagesService {
 
 	@Autowired
 	public StockageFichiersImagesService(DStockageFichiersImagesProperties dossierProperties){
-		this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).getParent().toString(), dossierProperties.emplacement());
+		//this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).getParent().toString(), dossierProperties.emplacement());
+		this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).toString(), dossierProperties.emplacement());
+		
 		logger.info("composant service de dossier stockage des sigantures et images initialisé avec succès".toUpperCase());
 	}
 
@@ -60,7 +62,8 @@ public class StockageFichiersImagesService {
 
 			try (InputStream inputStream = fichier.getInputStream()) {
 				result = Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-				logger.info("PHOTO/SIGNATURE {} STOCKÉE AVEC SUCCÈS.", result);
+				logger.info("PHOTO/SIGNATURE DONT LE INPUTSTREAM EST {}\n KO \nEST STOCKÉE AVEC SUCCÈS.", result);
+				logger.info("PHOTO/SIGNATURE DE {} KO\n  DONT LE INPUTSTREAM EST {}\n {}\n {}\n EST STOCKÉE AVEC SUCCÈS.", result, inputStream, inputStream.toString(), inputStream.readAllBytes());
 			}
 
 			if (result <= 0) {

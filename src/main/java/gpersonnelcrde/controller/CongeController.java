@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.CongeDto;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.CongeService;
 import gpersonnelcrde.service.EmployeService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +32,7 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conges-emp-crde.html")
-	public String getGestConges(HttpServletRequest request, Model model){
+	public String getGestConges(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allConges", congeService.getAllConges());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		//request.getSession().setAttribute("modelMission", model);
@@ -38,7 +40,7 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conge-emp-crde.html")
-	public String getConge(HttpServletRequest request, Model model){
+	public String getConge(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    model.addAttribute("allConges", congeService.getAllConges());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
 		//request.getSession().setAttribute("modelMission", model);
@@ -64,7 +66,7 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
-	public String getCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
+	public String getCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		var savedConge = congeService.getCongeByNumNoteService(numNoteServiceConge)
 							.orElseGet(CongeDto::new);
 		model.addAttribute("savedConge", savedConge);

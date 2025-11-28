@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.AffectationDto;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.AffectationService;
 import gpersonnelcrde.service.EmployeService;
 import gpersonnelcrde.service.FonctionService;
@@ -38,7 +40,7 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectations-emp-crde.html")
-	public String getGestAffectations(HttpServletRequest request, Model model){
+	public String getGestAffectations(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuxAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
@@ -48,7 +50,7 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectation-emp-crde.html/{categAffect}")
-	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model){
+	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
@@ -89,7 +91,7 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectation-emp-crde-m.html/{numNoteServiceAffect}")
-	public String getAffectationByNumNoteSvceAffect(@PathVariable String numNoteServiceAffect, HttpServletRequest request, Model model){
+	public String getAffectationByNumNoteSvceAffect(@PathVariable String numNoteServiceAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		var savedAffectation = affectationService.getAffectByByNumNoteService(numNoteServiceAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);

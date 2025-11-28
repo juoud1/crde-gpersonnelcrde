@@ -3,6 +3,9 @@ package gpersonnelcrde.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.AffectationService;
 import gpersonnelcrde.service.CongeService;
 import gpersonnelcrde.service.EmployeService;
@@ -43,7 +46,7 @@ public class GestPersonnelController {
 	}
 
 	@GetMapping("/accueil.html")
-	public String displayGestPersonnel(Model model) {
+	public String displayGestPersonnel(Model model) throws StockageFichiersImagesException, EmployeServiceException {
 		model.addAttribute("allStatus", statusService.getAllStatus());
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
 		model.addAttribute("allFonction", fonctionRepository.getAllFonction());

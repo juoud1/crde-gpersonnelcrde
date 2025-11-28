@@ -1,8 +1,10 @@
 package gpersonnelcrde.service;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +16,10 @@ import java.util.concurrent.Future;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
@@ -29,6 +32,7 @@ import gpersonnelcrde.domain.entities.Mission;
 import gpersonnelcrde.domain.entities.MissionEmploye;
 import gpersonnelcrde.domain.entities.Status;
 import gpersonnelcrde.domain.entities.TypeEmploye;
+import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.repository.AffectationRepository;
 import gpersonnelcrde.repository.CongeRepository;
@@ -57,11 +61,12 @@ public class EmployeService {
 	private final StatusRepository statusRepository;
 	private final LieuAffectationRepository lieuAffectationRepository;
 	private final StockageFichiersImagesService stockagePhotoEmployeService;
+	private final ResourceLoader resourceLoader;
 
 	public EmployeService(EmployeRepository employeRepository, AffectationRepository affectationRepository, 
 	    MissionRepository missionRepository, CongeRepository congeRepository, MissionEmployeRepository missionEmployeRepository,
 		FonctionRepository fonctionRepository, TypeEmployeRepository typeEmployeRepository, StatusRepository statusRepository, 
-		StockageFichiersImagesService stockagePhotoEmployeService, LieuAffectationRepository lieuAffectationRepository) {
+		StockageFichiersImagesService stockagePhotoEmployeService, LieuAffectationRepository lieuAffectationRepository, ResourceLoader resourceLoader) {
 		this.employeRepository = employeRepository;
 		this.fonctionRepository = fonctionRepository;
 		this.typeEmployeRepository=typeEmployeRepository;
@@ -72,23 +77,40 @@ public class EmployeService {
 		this.missionRepository =missionRepository;
 		this.congeRepository = congeRepository;
 		this.stockagePhotoEmployeService = stockagePhotoEmployeService;
+		this.resourceLoader = resourceLoader;
+
 		logger.info("composant employé service initialisé avec succès".toUpperCase());
 	}
 
-	public List<EmployeDto> getAllEmploye(){
+	public List<EmployeDto> getAllEmploye() throws StockageFichiersImagesException, EmployeServiceException{
+		var employes = employeRepository.findAll();
+		logger.info("{} employé(s) récupérés avec succès!".toUpperCase(), employes.size());
 
-		return employeRepository.findAll().stream()
+		return employes!=null && !CollectionUtils.isEmpty(employes) ? employeRepository.findAll().stream()
 				.map((Employe emp) -> {
 					EmployeDto eDto = null;
 					try {
 						eDto = employeToDtoMapper(emp);
-					} catch (InterruptedException | ExecutionException e) {
-						//throw new RuntimeException(null);
-						logger.warn("La création ou le chargement de la photo a échoué. \n{}", e.getMessage());
+					} catch (InterruptedException | ExecutionException | EmployeServiceException e) {
+						logger.warn("La récupération d'un employé a échoué. \n{}", e.getMessage());
+						throw new RuntimeException("Impossible de récupérer l'employé " + e.getMessage());
 					}
 					return eDto;
+					/*try {
+						eDto = employeToDtoMapper(emp);
+						return eDto;
+					} catch (InterruptedException | ExecutionException e) {
+						//throw new RuntimeException(null);
+						logger.warn("Le chargement de la photo a échoué. \n{}", e.getMessage());
+						throw new RuntimeException("Impossible de recharger la photo " + e.getMessage());
+					} catch (EmployeServiceException e) {
+						logger.warn("La récupération d'un employé a échoué. \n{}", e.getMessage());
+						throw new RuntimeException("Impossible de récupérer l'employé " + e.getMessage());
+					}*/
+					
 				})
-				.toList();
+				.toList()
+				: Collections.emptyList();
 	}
 
 	@Transactional
@@ -123,44 +145,29 @@ public class EmployeService {
 	public Optional<EmployeDto> createEmploye (String empCivilite, String empNom, String empPren, String typeEmploye, 
 					String empMatricule, String empEmail, String empTelephone, String status, String empFonction,
 					String refDecretouArreteEntree, String lieuAffectation, LocalDate empDateDebutStatus,
-					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException{
+					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException{
 		
 		Future<Path> futureEmplacementPhoto = null;
 		//Future<Optional<EmployeDto>> futureOptEmploye = null;
 		//Optional<EmployeDto> newEmp = Optional.empty();
 
 		//if (Objects.nonNull(empphoto)){
-		try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+		/*try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 			if (Objects.nonNull(empPhoto)){
 				futureEmplacementPhoto = executor.submit(() -> {
 					return stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
 				});
 			}
 
-			/*futureOptEmploye = executor.submit(() -> {
-				EmployeDto eDto = new EmployeDto();
-				eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
-				eDto.setEmpCivilite(empCivilite);
-				eDto.setEmpDateDebutStatus(dateDecretouArreteEntree);
-				eDto.setEmpDateFinStatus(dateDecretouArreteEntree);
-				eDto.setEmpEmail(empEmail);
-				eDto.setEmpMatricule(empMatricule);
-				eDto.setEmpNom(empNom);
-				eDto.setEmpPren(empPren);
-				eDto.setEmpTelephone(empTelephone);
-				eDto.setFonction(empFonction);
-				eDto.setLieuAffectation(lieuAffectation);
-				eDto.setRefDecretouArreteEntree(refDecretouArreteEntree);
-				eDto.setStatus("En service");
-				eDto.setTypeEmploye(typeEmploye);
-				
-				return createEmploye (eDto);
-			});*/
-
 		}
-		logger.info("PHOTO EMPLOYÉ, NOMBRE DE BITS STOCKÉS : {}\n {}", futureEmplacementPhoto!=null? futureEmplacementPhoto.get(): null, futureEmplacementPhoto.get(), 
-		futureEmplacementPhoto!=null? futureEmplacementPhoto.get().getFileSystem() : null);
 
+		Path pathEmplacementPhoto = futureEmplacementPhoto!=null ? futureEmplacementPhoto.get() : null;
+		*/
+		Path pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
+		logger.info("PATH PHOTO EMPLOYÉ STOCKÉE DANS {}\n NOMBRE DE BITS = {}\n URI = {}\n ", pathEmplacementPhoto, 0, pathEmplacementPhoto.toUri());
+		var resourcePhoto = getClass().getResourceAsStream(pathEmplacementPhoto.toString());
+		logger.info("INPUTSTREAM PHOTO EMPLOYÉ = {}\n BYTEs {}\n ", resourcePhoto, resourcePhoto);
+		
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
 		eDto.setEmpCivilite(empCivilite);
@@ -176,7 +183,8 @@ public class EmployeService {
 		eDto.setRefDecretouArreteEntree(refDecretouArreteEntree);
 		eDto.setStatus("SVCE");
 		eDto.setTypeEmploye(typeEmploye);
-		eDto.setEmpEmplacementPhoto(futureEmplacementPhoto != null? futureEmplacementPhoto.get().toString() : null);
+		eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
+		eDto.setEmpPhoto(resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
 		
 		var newEmp = createEmploye (eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
@@ -184,7 +192,7 @@ public class EmployeService {
 		return newEmp;
 	}
 
-	private boolean checkEmployeExistance(EmployeDto employeDto){
+	private boolean checkEmployeExistance(EmployeDto employeDto) throws StockageFichiersImagesException, EmployeServiceException{
 		if (Objects.isNull(employeDto)){
 			throw new IllegalArgumentException("Impossible de vérifier l'existance de l'employé car les données sont vides");
 		}
@@ -195,7 +203,7 @@ public class EmployeService {
 		return optEmp.isPresent();
 	}
 
-	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException {
+	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException {
 		if (Objects.isNull(employeDto)) {
 			logger.info("Impossible de créer l'employé car les données sont vides.");
 			return Optional.empty();
@@ -206,50 +214,75 @@ public class EmployeService {
 			logger.info("Impossible de créer l'employé car, il existe déjà dans la base de données.");
 			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
 		}******À REVOIR**/
-
-		logger.info("SAUVEGARDE DES DONNÉES EMPLOYÉ : {}, {} encours ...", employeDto.getEmpNom(), employeDto.getEmpPren());
-		var empFonct = fonctionRepository.findByFonctionCode(employeDto.getFonction().trim()); 
-		var fonct = empFonct.orElseThrow(() -> new EntityNotFoundException("La fonction de l'employé est inconnue".toUpperCase()));
-
-		var empStatus = statusRepository.findByStatusCode(employeDto.getStatus().trim());
-		var sttus = empStatus.orElseThrow(() -> new EntityNotFoundException("Le status de l'employé est inconnu".toUpperCase()));
 		
-		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employeDto.getTypeEmploye().trim());
-		var typeEmp = empTypeEmp.orElseThrow(() -> new EntityNotFoundException("Le type d'employé de l'employé est inconnu".toUpperCase()));
+		Future<Optional<Fonction>> futureOptEmpFonct = null;
+		Future<Optional<Status>> futureOptEmpStatus = null;
+		Future<Optional<TypeEmploye>> futureOptTypeEmp = null;
+		Future<Optional<LieuAffectation>> futureOptLieuAffect = null;
+		Future<Path> futurePathPhoto = null;
+
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureOptEmpFonct = executor.submit(() -> fonctionRepository.findByFonctionCode(employeDto.getFonction().trim()));
+			futureOptEmpStatus = executor.submit(() -> statusRepository.findByStatusCode(employeDto.getStatus().trim()));
+			futureOptTypeEmp = executor.submit(() -> typeEmployeRepository.findByTypeEmpCode(employeDto.getTypeEmploye().trim()));
+			futureOptLieuAffect = executor.submit(() -> lieuAffectationRepository.findByLieuAffectCode(employeDto.getLieuAffectation().trim()));
+			//futurePathPhoto = executor.submit(() -> this.stockagePhotoEmployeService.chargerFichierCrde(employe.getEmpUrlphoto()));
+		} catch (Exception e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base " +e.getMessage(), e.getCause());
+		}
+		executor.close();
+
+		//try {
+			logger.info("SAUVEGARDE DES DONNÉES EMPLOYÉ : {}, {} encours ...", employeDto.getEmpNom(), employeDto.getEmpPren());
+			
+			var empFonct = futureOptEmpFonct.get(); //fonctionRepository.findByFonctionCode(employeDto.getFonction().trim()); 
+			var fonct = empFonct.orElseThrow(() -> new EntityNotFoundException("La fonction de l'employé est inconnue".toUpperCase()));
+
+			var empStatus = futureOptEmpStatus.get(); //statusRepository.findByStatusCode(employeDto.getStatus().trim());
+			var sttus = empStatus.orElseThrow(() -> new EntityNotFoundException("Le status de l'employé est inconnu".toUpperCase()));
+			
+			var empTypeEmp = futureOptTypeEmp.get(); //typeEmployeRepository.findByTypeEmpCode(employeDto.getTypeEmploye().trim());
+			var typeEmp = empTypeEmp.orElseThrow(() -> new EntityNotFoundException("Le type d'employé de l'employé est inconnu".toUpperCase()));
+			
+			var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employeDto.getLieuAffectation().trim());
+			var lAffect = empLieuAffect.orElseThrow(() -> new EntityNotFoundException("Le lieu d'affectation de l'employé est inconnu".toUpperCase()));
+			
+			Employe employe = new Employe();
+			employe.setEmpCivilite(employeDto.getEmpCivilite());
+			employe.setEmpCreeLe(LocalDateTime.now());
+			employe.setEmpCreePar("admin");
+			employe.setDateDecretEntree(employeDto.getDateDecretouArreteEntree());
+			//employe.setDateDecretSortie(employeDto.getDateDecretouArreteDepart());
+			employe.setEmpEmail(employeDto.getEmpEmail());
+			employe.setEmpFonction(fonct);
+			employe.setEmpLieuAffectation(lAffect);
+			employe.setEmpMatricule(employeDto.getEmpMatricule());
+			employe.setEmpModifieLe(LocalDateTime.now());
+			employe.setEmpModifiePar("admin");
+			employe.setEmpNom(employeDto.getEmpNom());
+			employe.setEmpPren(employeDto.getEmpPren());
+			employe.setEmpStatus(sttus);
+			employe.setEmpTelephone(employeDto.getEmpTelephone());
+			employe.setNumNoteService(null);
+			employe.setReferenceDecretEntree(employeDto.getRefDecretouArreteEntree());
+			employe.setTypeEmploye(typeEmp);
+			employe.setEmpUrlphoto(employeDto.getEmpEmplacementPhoto());
+
+			// Persistance de données
+			employe = saveEmploye(employe);
+			logger.info("Employé enregistré avec succès sous le n° : {}\n  la photo stockée à l'emplacement : {}".toUpperCase(), employe.getId(), employe.getEmpUrlphoto());
+			//employe.setNumNoteService(String.valueOf(employe.getId()));
+			//logger.info("Employé enregistré avec succès.".toUpperCase());
+
+			createInitialaffectation(employe);
+
+			return employeMapper(Optional.ofNullable(employe));	
+		/* } catch (EmployeServiceException e) {
+			logger.info("La création de l'employé {} a echoué \n{}\n {}", employeDto.getEmpMatricule(), e.getMessage(), e.getCause());
+			throw new EmployeServiceException("Impossile de cré. l'employé " + e.getMessage());
+		}*/
 		
-		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employeDto.getLieuAffectation().trim());
-		var lAffect = empLieuAffect.orElseThrow(() -> new EntityNotFoundException("Le lieu d'affectation de l'employé est inconnu".toUpperCase()));
-		
-		Employe employe = new Employe();
-		employe.setEmpCivilite(employeDto.getEmpCivilite());
-		employe.setEmpCreeLe(LocalDateTime.now());
-		employe.setEmpCreePar("admin");
-		employe.setDateDecretEntree(employeDto.getDateDecretouArreteEntree());
-		//employe.setDateDecretSortie(employeDto.getDateDecretouArreteDepart());
-		employe.setEmpEmail(employeDto.getEmpEmail());
-		employe.setEmpFonction(fonct);
-		employe.setEmpLieuAffectation(lAffect);
-		employe.setEmpMatricule(employeDto.getEmpMatricule());
-		employe.setEmpModifieLe(LocalDateTime.now());
-		employe.setEmpModifiePar("admin");
-		employe.setEmpNom(employeDto.getEmpNom());
-		employe.setEmpPren(employeDto.getEmpPren());
-		employe.setEmpStatus(sttus);
-		employe.setEmpTelephone(employeDto.getEmpTelephone());
-		employe.setNumNoteService(null);
-		employe.setReferenceDecretEntree(employeDto.getRefDecretouArreteEntree());
-		employe.setTypeEmploye(typeEmp);
-		employe.setEmpUrlphoto(employeDto.getEmpEmplacementPhoto());
-
-		// Persistance de données
-		employe = saveEmploye(employe);
-		logger.info("Employé enregistré avec succès sous le n° : {}\n  la photo stockée à l'emplacement : {}".toUpperCase(), employe.getId(), employe.getEmpUrlphoto());
-		//employe.setNumNoteService(String.valueOf(employe.getId()));
-		//logger.info("Employé enregistré avec succès.".toUpperCase());
-
-		createInitialaffectation(employe);
-
-		return employeMapper(Optional.ofNullable(employe));
 	}
 
 	@Transactional
@@ -294,17 +327,24 @@ public class EmployeService {
 		logger.info("Affectation initiale de {}, {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), affectat.getId());
 	}
 
-	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Optional<MissionEmploye> optMissionEmploye, EmployeDto employeDto) {
+	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Optional<MissionEmploye> optMissionEmploye, EmployeDto employeDto) throws EmployeServiceException {
 		Mission mission = null;
 		if (Objects.nonNull(optMissionEmploye) && optMissionEmploye.isPresent()){
 			mission = optMissionEmploye.get().getId().getMission();
 		}
 
-		computeStatusEncoursEmploye(optAffectation, optConge, mission, employeDto);
+		try {
+			computeStatusEncoursEmploye(optAffectation, optConge, mission, employeDto);
+		} catch (EmployeServiceException e) {
+			logger.warn("Un problème est surgit lors de détermination du status de l'employé {}\n {}\n {}", String.join(" ", employeDto.getEmpNom(), employeDto.getEmpPren()), e.getMessage(), e.getCause());
+			throw new EmployeServiceException("Un probléme est surgit lors de détermination du status de l'employé dont la cause est {}\n");
+		}
+		
 	}
 
-	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Mission missionEmploye, EmployeDto employeDto) {
-			optAffectation.ifPresent(affectationEmploye -> {
+	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Mission missionEmploye, EmployeDto employeDto) throws EmployeServiceException {
+			
+		optAffectation.ifPresent(affectationEmploye -> {
 			Conge congeEmploye = null;
 			//Mission missionEmploye = null;
 			
@@ -362,10 +402,10 @@ public class EmployeService {
 			employeDto.setFonction(affectationEmploye.getFonction().getFonction());
 			employeDto.setLieuAffectation(affectationEmploye.getLieuAffectation().getLieuAffect());
 
-		});
+		}); 
 	}
 
-	public Optional<EmployeDto> getEmployeByMatricule(String empMatricule) throws InterruptedException, ExecutionException{
+	public Optional<EmployeDto> getEmployeByMatricule(String empMatricule) throws InterruptedException, ExecutionException, EmployeServiceException{
 		if (StringUtils.isBlank(empMatricule)){
 			return Optional.empty();
 		}
@@ -374,7 +414,7 @@ public class EmployeService {
 		return employeMapper(optionalEmp);
 	}
 
-	private Optional<EmployeDto> employeMapper(Optional<Employe> optEmploye) throws InterruptedException, ExecutionException{
+	private Optional<EmployeDto> employeMapper(Optional<Employe> optEmploye) throws InterruptedException, ExecutionException, EmployeServiceException{
 		if (!optEmploye.isPresent()){
 			return Optional.empty();	
 		}
@@ -384,37 +424,44 @@ public class EmployeService {
 		return Optional.of(eDto);
 	}
     
-    private EmployeDto employeToDtoMapper(Employe employe) throws InterruptedException, ExecutionException{
+    private EmployeDto employeToDtoMapper(Employe employe) throws InterruptedException, ExecutionException, EmployeServiceException{
 	    if (Objects.isNull(employe)){
 			logger.warn("Impossible de faire le mappage car aucune donnée de l'employé n'est fournie");
             throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
 		
-		Future<Optional<Fonction>> futureOptEmpFonct = null;
+		/*Future<Optional<Fonction>> futureOptEmpFonct = null;
 		Future<Optional<Status>> futureOptEmpStatus = null;
 		Future<Optional<TypeEmploye>> futureOptTypeEmp = null;
 		Future<Optional<LieuAffectation>> futureOptLieuAffect = null;
-		Future<Path> futurePathPhoto = null;
+		//Future<Path> futurePathPhoto = null;
 
-		try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 			futureOptEmpFonct = executor.submit(() -> fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode()));
 			futureOptEmpStatus = executor.submit(() -> statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode()));
 			futureOptTypeEmp = executor.submit(() -> typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode()));
 			futureOptLieuAffect = executor.submit(() -> lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode()));
 			//futurePathPhoto = executor.submit(() -> this.stockagePhotoEmployeService.chargerFichierCrde(employe.getEmpUrlphoto()));
 		} catch (Exception e) {
-			// TODO: handle exception
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto");
 		}
-	   // var empFonct = futureOptEmpFonct.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
-		//var empStatus = futureOptEmpStatus.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		//var empTypeEmp = futureOptTypeEmp.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
-		//var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		executor.close(); //waits until all tasks have completed execution and the executor has terminated
+		
+		 var empFonct = futureOptEmpFonct.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var empStatus = futureOptEmpStatus.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var empTypeEmp = futureOptTypeEmp.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		
+		*/
 		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
 		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
 		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
 		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
 		
+		
 		//var pathPhoto = futurePathPhoto.get();
+		//logger.warn("futurePathPhoto.get() {}\n employe.getEmpUrlphoto() {}\n", pathPhoto.toString(), employe.getEmpUrlphoto());
 
 		var eDto = new EmployeDto();
 		eDto.setEmpCivilite(employe.getEmpCivilite());

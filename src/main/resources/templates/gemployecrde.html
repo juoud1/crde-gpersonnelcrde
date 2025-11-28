@@ -150,19 +150,8 @@
 											<input type="text" id="emppren" name="emppren" class="form-control"/>
 										</div>
 										<hr>
-
-										<div class="col-lg-11 col-md-11 col-sm-11">
-											<!--label class="form-label h6" for="empphoto" th:text="|Sélectionner la photo|">civ</label>
-											<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file"  maxlength="100" style="background-color: whitesmoke;"-->
-											<fieldset class="text-center p-2">
-												<img id="photo" alt="Choisir la photo de l'employé" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 15%; width: 15%" />
-
-												<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" size="100" maxlength="100"  onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
-											</fieldset>
-										</div>
-										<hr>
-
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										
+										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
 											<select id="typeemp" name="typeemp" class="form-select" required>
 												<option value="">Sélectionner un type employé</option>
@@ -170,9 +159,21 @@
 											</select>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
-											<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
+											<fieldset>
+												<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
+												<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
+											</fieldset>
 										</div>
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<!--label class="form-label h6" for="empphoto" th:text="|Sélectionner la photo|">civ</label>
+											<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file"  maxlength="100" style="background-color: whitesmoke;"-->
+											<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
+												<img id="photo" alt="Choisir la photo employé" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
+
+												<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
+											</fieldset>
+										</div>
+										
 										<hr>
 
 										<div class="col-lg-7 col-md-7 col-sm-6">

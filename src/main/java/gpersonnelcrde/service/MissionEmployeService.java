@@ -28,6 +28,8 @@ import gpersonnelcrde.domain.entities.Employe;
 import gpersonnelcrde.domain.entities.Mission;
 import gpersonnelcrde.domain.entities.MissionEmploye;
 import gpersonnelcrde.domain.entities.MissionEmployePk;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.repository.MissionEmployeRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -48,19 +50,19 @@ public class MissionEmployeService {
 		logger.info("Service mission-employé initialisé avec succès!");
 	}
 
-	public List<MissionEmployesDto> getAllMissionEmployes(){
+	public List<MissionEmployesDto> getAllMissionEmployes() throws EmployeServiceException{
 		var missEmps = getMissionsEmployes();
 		
 		return meToMissionEmployesDtoMapper(missEmps);
 	}
 
-	private List<MissionEmployeDto> getMissionsEmployes(){
+	private List<MissionEmployeDto> getMissionsEmployes() throws EmployeServiceException{
 		return missionEmployeRepository.findAll().stream()
 				.map((MissionEmploye missEmp) -> {
 					MissionEmployeDto meDto = null;
 					try {
 						meDto = missionEmployeToDtoMapper(missEmp);
-					} catch (EntityNotFoundException | InterruptedException | ExecutionException e) {
+					} catch (EntityNotFoundException | InterruptedException | ExecutionException | EmployeServiceException e) {
 						logger.warn("Un problème est survenu \n{}", e.getMessage());
 					}
 
@@ -74,7 +76,7 @@ public class MissionEmployeService {
 													final LocalDate dateDepartMiss, final LocalDate dateRetourMiss, 
 													final String dureeEnLettreMiss, final String destVille, final String destPays, 
 													final String motifMission, String infoSupplmission, 
-													final String empChefDeMissMatricule, final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException{
+													final String empChefDeMissMatricule, final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException{
 		
 		var meDto = getMissionEmployeDtoFromWebParm(numOrdreMiss, typeOrdreMission, 
 													empChefDeMissMatricule, natureDeplacement, 
@@ -196,7 +198,7 @@ public class MissionEmployeService {
 																final LocalDate dateRetourMiss, final String dureeEnLettreMiss, 
 																final String destVille, final String destPays,  
 																final String motifMission, String infoSupplmission, 
-																final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException{
+																final String... missEmpMatricules) throws EntityNotFoundException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException{
 
 		// Liste des employés (y compris le chef de mission) autorisés à effectuer la mission
 		List<EmployeDto> eDtos = getEmployesDtoFromWebParm(typeOrdreMission, missEmpMatricule, missEmpMatricules);
@@ -227,7 +229,7 @@ public class MissionEmployeService {
 		return meDto;
 	}
 
-	private List<EmployeDto> getEmployesDtoFromWebParm(String typeOrdreMission, String missEmpChefDeMissMatricule, final String... missEmpMatricules) {
+	private List<EmployeDto> getEmployesDtoFromWebParm(String typeOrdreMission, String missEmpChefDeMissMatricule, final String... missEmpMatricules) throws StockageFichiersImagesException, EmployeServiceException {
 		// Liste des matricules des employés (y compris celui du chef de mission) autorisés à effectuer la mission
 		List<String> empMatricules = new ArrayList<>();
 		if (!"Mission".equalsIgnoreCase(typeOrdreMission)){
@@ -242,7 +244,7 @@ public class MissionEmployeService {
 		return getEmployesDtoFromWebParm(empMatricules);
 	}
 	
-	protected List<EmployeDto> getEmployesDtoFromWebParm(final List<String> missEmpMatricules) {
+	protected List<EmployeDto> getEmployesDtoFromWebParm(final List<String> missEmpMatricules) throws StockageFichiersImagesException, EmployeServiceException {
 		if (null== missEmpMatricules || missEmpMatricules.isEmpty()) {
 			logger.info("liste de matricules d'employés vide!".toUpperCase());
 			return List.of();
@@ -255,7 +257,7 @@ public class MissionEmployeService {
 	}
 
 
-	public List<MissionEmployeDto> getMissionsEmployesByNumOrdreMission (final String numOrdreMission) {
+	public List<MissionEmployeDto> getMissionsEmployesByNumOrdreMission (final String numOrdreMission) throws EmployeServiceException {
 		if (StringUtils.isBlank(numOrdreMission) || !NumberUtils.isDigits(numOrdreMission)){
 			logger.info("Aucune mission-employé pour un numéro vide ou non-numérique.");
 			return Collections.emptyList();
@@ -270,7 +272,7 @@ public class MissionEmployeService {
 		return meResult;
 	}
 
-	public List<MissionEmployeDto> getMissionsEmployesByEmpMatricule (String employeMatricule) {
+	public List<MissionEmployeDto> getMissionsEmployesByEmpMatricule (String employeMatricule) throws EmployeServiceException {
 
 		if (StringUtils.isBlank(employeMatricule)){
 			logger.info("Aucune mission-employé pour un matricule vide.");
@@ -290,13 +292,13 @@ public class MissionEmployeService {
 		return List.of();
 	}
 
-	private Optional<MissionEmployeDto> missionEmployeMapper(final Optional<MissionEmploye> optMissEmp) throws EntityNotFoundException, InterruptedException, ExecutionException{
+	private Optional<MissionEmployeDto> missionEmployeMapper(final Optional<MissionEmploye> optMissEmp) throws EntityNotFoundException, InterruptedException, ExecutionException, EmployeServiceException{
 		var meDto = missionEmployeToDtoMapper(optMissEmp.orElseThrow(()-> new EntityNotFoundException("La mission-employé n'existe pas!")));
 		
 		return Optional.of(meDto);
 	}
 
-	private MissionEmployeDto missionEmployeToDtoMapper(MissionEmploye missionEmploye) throws EntityNotFoundException, InterruptedException, ExecutionException{
+	private MissionEmployeDto missionEmployeToDtoMapper(MissionEmploye missionEmploye) throws EntityNotFoundException, InterruptedException, ExecutionException, EmployeServiceException{
 		if (Objects.isNull(missionEmploye)){
 			throw new EntityNotFoundException("L'entité mission-employé ne doit être vide");
 		}
@@ -355,7 +357,7 @@ public class MissionEmployeService {
 	}
 
 	@Transactional
-	public List<MissionEmployeDto> getMissionsEmployesByMatriculeEmp (final String empMatricule){
+	public List<MissionEmployeDto> getMissionsEmployesByMatriculeEmp (final String empMatricule) throws EmployeServiceException{
 		if (StringUtils.isBlank(empMatricule)){
 			return List.of();
 		}
@@ -368,7 +370,7 @@ public class MissionEmployeService {
 
 	// VOIR getMissionByNumOm
 	@Transactional
-	public Optional<MissionEmployesDto> getMissionEmployesByNumMiss (final String numMission){
+	public Optional<MissionEmployesDto> getMissionEmployesByNumMiss (final String numMission) throws EmployeServiceException{
 		if (StringUtils.isBlank(numMission) || !NumberUtils.isDigits(numMission)){
 			logger.warn("n° mission incorrect");
 			throw new IllegalArgumentException("Le numéro d'une mission ne doit pas être vide ni alpha-numérique");
