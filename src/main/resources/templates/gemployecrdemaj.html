@@ -214,7 +214,7 @@
 											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
 											<div th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<a class="ms-auto" th:href="|#|">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
+													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
 												</a>
 												<!--fieldset class="text-center p-1"><style="border: #198754; border-style: solid; background-color: chocolate;">
 													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-3" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">

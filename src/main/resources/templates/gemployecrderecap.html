@@ -229,7 +229,7 @@
 												<div class="p-1" th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 													
 													<fieldset class="text-center align-items p-2">
-														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded d-block mx-auto ms-auto me-auto" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
+														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded d-block mx-auto ms-auto me-auto" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
 													</fieldset>
 												</div>
 

@@ -2,6 +2,7 @@ package gpersonnelcrde.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -157,9 +160,19 @@ public class EmployeController {
 			}
 		}
 		LE BON - FIN */
-		logger.info("PHOTO/SIGNATURE empPhoto.getOriginalFilename() {}\n empPhoto.getOriginalFilename.getBytes() {}\n", empPhoto.getOriginalFilename(), empPhoto.getOriginalFilename().getBytes());
+		
+		//logger.info("PHOTO/SIGNATURE empPhoto.getOriginalFilename() {}\n empPhoto.getOriginalFilename.getBytes() {}\n", empPhoto.getOriginalFilename(), empPhoto.getOriginalFilename().getBytes());
 		model.addAttribute("savedEmploye", savedEmploye);
-		//model.addAttribute("empPhoto", emplacementPhoto);
+
+		/*if (!empPhoto.isEmpty()){
+			var bytes = empPhoto.getBytes();
+			var inputStream = empPhoto.getInputStream();
+			var inputStreamString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+			logger.info("PHOTO/SIGNATURE DANS CONTROLLER inputStreamString {}\n empPhoto.getInputStream() {}\n", inputStreamString, inputStream.toString());
+		
+		}
+		model.addAttribute("empPhoto", emplacementPhoto);
+		*/
 
 		return "gemployecrderecap";
 	}
