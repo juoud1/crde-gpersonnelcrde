@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,8 +63,17 @@ public class StockageFichiersImagesService {
 
 			try (InputStream inputStream = fichier.getInputStream()) {
 				result = Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+				var destinationPath1 = Files.write(destinationPath, fichier.getBytes());
+				
+				//var destinationPathReadAllBytes = Files.readAllBytes(destinationPath);
+				
+				//var pathOriginalReadAllBytes = Files.readAllBytes(pathOriginal);
+				//var pathOriginalReadString = Files.readString(pathOriginal, StandardCharsets.UTF_8);
+
 				logger.info("PHOTO/SIGNATURE DONT LE INPUTSTREAM EST {}\n KO \nEST STOCKÉE AVEC SUCCÈS.", result);
-				logger.info("PHOTO/SIGNATURE DE {} KO\n  DONT LE INPUTSTREAM EST {}\n {}\n {}\n EST STOCKÉE AVEC SUCCÈS.", result, inputStream, inputStream.toString(), inputStream.readAllBytes());
+				//logger.info("PHOTO/SIGNATURE destinationPathReadAllBytes {}\n", destinationPathReadAllBytes);
+			    logger.info("PHOTO/SIGNATURE destinationPath {}\n destinationPath1 {}\n", destinationPath, destinationPath1);
+				logger.info("PHOTO/SIGNATURE destinationPath.toString {}\n destinationPath1.toString {}\n", destinationPath.toString(), destinationPath1.toString());
 			}
 
 			if (result <= 0) {

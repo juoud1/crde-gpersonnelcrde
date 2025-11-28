@@ -1,6 +1,7 @@
 package gpersonnelcrde.service;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -165,8 +166,11 @@ public class EmployeService {
 		*/
 		Path pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
 		logger.info("PATH PHOTO EMPLOYÉ STOCKÉE DANS {}\n NOMBRE DE BITS = {}\n URI = {}\n ", pathEmplacementPhoto, 0, pathEmplacementPhoto.toUri());
-		var resourcePhoto = getClass().getResourceAsStream(pathEmplacementPhoto.toString());
-		logger.info("INPUTSTREAM PHOTO EMPLOYÉ = {}\n BYTEs {}\n ", resourcePhoto, resourcePhoto);
+		//var resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toString());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
+		//logger.info("resourcePhoto PHOTO EMPLOYÉ = {}\n getContentAsByteArray {}\n getContentAsString {}\n", resourcePhoto, resourcePhoto.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
+
+		var resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
+		logger.info("resourcePhoto1 PHOTO EMPLOYÉ = {}\n toString() {}\n", resourcePhoto, resourcePhoto.toString()); //.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
 		
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
@@ -184,7 +188,7 @@ public class EmployeService {
 		eDto.setStatus("SVCE");
 		eDto.setTypeEmploye(typeEmploye);
 		eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
-		eDto.setEmpPhoto(resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
+		eDto.setEmpPhoto(resourcePhoto);//resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
 		
 		var newEmp = createEmploye (eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
