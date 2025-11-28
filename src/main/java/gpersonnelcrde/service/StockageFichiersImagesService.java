@@ -63,17 +63,17 @@ public class StockageFichiersImagesService {
 
 			try (InputStream inputStream = fichier.getInputStream()) {
 				result = Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-				var destinationPath1 = Files.write(destinationPath, fichier.getBytes());
+				//var destinationPath1 = Files.write(destinationPath, fichier.getBytes());
 				
 				//var destinationPathReadAllBytes = Files.readAllBytes(destinationPath);
 				
 				//var pathOriginalReadAllBytes = Files.readAllBytes(pathOriginal);
 				//var pathOriginalReadString = Files.readString(pathOriginal, StandardCharsets.UTF_8);
 
-				logger.info("PHOTO/SIGNATURE DONT LE INPUTSTREAM EST {}\n KO \nEST STOCKÉE AVEC SUCCÈS.", result);
+				//logger.info("PHOTO/SIGNATURE DONT LE INPUTSTREAM EST {}\n KO \nEST STOCKÉE AVEC SUCCÈS.", result);
 				//logger.info("PHOTO/SIGNATURE destinationPathReadAllBytes {}\n", destinationPathReadAllBytes);
-			    logger.info("PHOTO/SIGNATURE destinationPath {}\n destinationPath1 {}\n", destinationPath, destinationPath1);
-				logger.info("PHOTO/SIGNATURE destinationPath.toString {}\n destinationPath1.toString {}\n", destinationPath.toString(), destinationPath1.toString());
+			    //logger.info("PHOTO/SIGNATURE destinationPath {}\n destinationPath1 {}\n", destinationPath, destinationPath1);
+				//logger.info("PHOTO/SIGNATURE destinationPath.toString {}\n destinationPath1.toString {}\n", destinationPath.toString(), destinationPath1.toString());
 			}
 
 			if (result <= 0) {

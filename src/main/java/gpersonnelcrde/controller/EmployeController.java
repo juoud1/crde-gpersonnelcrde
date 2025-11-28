@@ -141,7 +141,9 @@ public class EmployeController {
 		logger.info("PHOTO EMPLOYÉ, NOMBRE DE BITS STOCKÉS : {}", futureNbreByte!=null? futureNbreByte.get(): null);
 
 		final EmployeDto savedEmploye = futureEmploye !=null ? futureEmploye.get() : null;*/
+		
 		logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ 1 : {}", savedEmploye.getEmpEmplacementPhoto());
+		/** LE BON - DEBUT
 		if (Objects.nonNull(savedEmploye)) {
 			model.addAttribute("traitement", "Récapitulatif de la création du nouvel employé ou stagiaire");
 			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
@@ -155,8 +157,10 @@ public class EmployeController {
 				savedEmploye.setEmpEmplacementPhoto(emplacementPhoto);
 			}
 		}
-		
+		LE BON - FIN */
+		logger.info("PHOTO/SIGNATURE empPhoto.getOriginalFilename() {}\n empPhoto.getOriginalFilename.getBytes() {}\n", empPhoto.getOriginalFilename(), empPhoto.getOriginalFilename().getBytes());
 		model.addAttribute("savedEmploye", savedEmploye);
+		//model.addAttribute("empPhoto", emplacementPhoto);
 
 		return "gemployecrderecap";
 	}
