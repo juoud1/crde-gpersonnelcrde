@@ -1,6 +1,7 @@
 package gpersonnelcrde.controller;
 
 import java.io.IOException;
+import java.io.ObjectInputFilter.Status;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -12,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -34,6 +36,13 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.util.UriComponentsBuilder;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.dto.FonctionDto;
+import gpersonnelcrde.domain.dto.LieuAffectationDto;
+import gpersonnelcrde.domain.dto.StatusDto;
+import gpersonnelcrde.domain.dto.TypeEmployeDto;
+import gpersonnelcrde.domain.entities.Fonction;
+import gpersonnelcrde.domain.entities.LieuAffectation;
+import gpersonnelcrde.domain.entities.TypeEmploye;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
@@ -50,17 +59,17 @@ public class EmployeController {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeController.class);
 	private final StatusService statusService;
 	private final TypeEmployeService typeEmployeService;
-	private final FonctionService fonctionRepository;
+	private final FonctionService fonctionService;
 	private final LieuAffectationService lieuAffectationService;
 	private final EmployeService employeService;
 	private final StockageFichiersImagesService stockagePhotoEmployeService;
 
 	public EmployeController(StatusService statusService, TypeEmployeService typeEmployeService,
-			FonctionService fonctionRepository, LieuAffectationService lieuAffectationService,
+			FonctionService fonctionService, LieuAffectationService lieuAffectationService,
 			EmployeService employeService, StockageFichiersImagesService stockagePhotoEmployeService) {
 		this.statusService = statusService;
 		this.typeEmployeService = typeEmployeService;
-		this.fonctionRepository = fonctionRepository;
+		this.fonctionService = fonctionService;
 		this.lieuAffectationService = lieuAffectationService;
 		this.employeService = employeService;
 		this.stockagePhotoEmployeService = stockagePhotoEmployeService;
@@ -68,16 +77,42 @@ public class EmployeController {
 	}
 
 	@GetMapping ("/employes-crde.html")
-	public String getEmployes(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-		model.addAttribute("allStatus", statusService.getAllStatus());
+	public String getEmployes(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+		Future<List<FonctionDto>> futureEmpFonctions = null;
+		Future<List<StatusDto>> futureEmpStatus = null;
+		Future<List<TypeEmployeDto>> futureTypeEmployes = null;
+		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		//Future<Path> futurePathPhoto = null;
+
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
+			futureEmpStatus = executor.submit(() -> statusService.getAllStatus());
+			futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allFonctions = futureEmpFonctions.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allStatus = futureEmpStatus.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allTypeEmp = futureTypeEmployes.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allStatus", allStatus);
 											/*.sorted(Comparator.comparing(LieuAffectation::getId))
 											.sorted(Comparator.comparing(Fonction::getId))
 											.toList());*/
-		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
-		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
-		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
-		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+		model.addAttribute("allTypeEmp", allTypeEmp);
+		model.addAttribute("allFonctions", allFonctions);
+		model.addAttribute("allLieuAffect", allLieuAffect);
+		model.addAttribute("allEmployes", allEmployes);//employeService.getAllEmploye());
+		model.addAttribute("employesEnSvce",allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
@@ -86,11 +121,37 @@ public class EmployeController {
 	}
 
 	@GetMapping ("/employe-crde.html")
-	public String addEmploye(HttpServletRequest request, Model model){
-		model.addAttribute("allStatus", statusService.getAllStatus());
-		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
-		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
-		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
+	public String addEmploye(HttpServletRequest request, Model model) throws EmployeServiceException, InterruptedException, ExecutionException{
+		Future<List<FonctionDto>> futureEmpFonctions = null;
+		Future<List<StatusDto>> futureEmpStatus = null;
+		Future<List<TypeEmployeDto>> futureTypeEmployes = null;
+		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
+		//Future<List<EmployeDto>> futureEmployes = null;
+		//Future<Path> futurePathPhoto = null;
+
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
+			futureEmpStatus = executor.submit(() -> statusService.getAllStatus());
+			futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			//futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allFonctions = futureEmpFonctions.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allStatus = futureEmpStatus.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allTypeEmp = futureTypeEmployes.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		//var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allStatus", allStatus); //statusService.getAllStatus());
+		model.addAttribute("allTypeEmp", allTypeEmp); //typeEmployeService.getAllTypeEmp());
+		model.addAttribute("allFonctions", allFonctions); //fonctionService.getAllFonction());
+		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
 		//model.addAttribute("allEmployes", employeService.getAllEmploye());
 		return "gemployecrde";
 	}
@@ -144,8 +205,8 @@ public class EmployeController {
 
 		final EmployeDto savedEmploye = futureEmploye !=null ? futureEmploye.get() : null;*/
 		
-		logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ 1 : {}", savedEmploye.getEmpEmplacementPhoto());
 		/** LE BON - DEBUT
+		logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ 1 : {}", savedEmploye.getEmpEmplacementPhoto());
 		if (Objects.nonNull(savedEmploye)) {
 			model.addAttribute("traitement", "Récapitulatif de la création du nouvel employé ou stagiaire");
 			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
@@ -212,7 +273,7 @@ public class EmployeController {
 		model.addAttribute("savedEmploye", savedEmploye);
 		model.addAttribute("allStatus", statusService.getAllStatus());
 		model.addAttribute("allTypeEmp", typeEmployeService.getAllTypeEmp());
-		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
+		model.addAttribute("allFonctions", fonctionService.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 							
 		if ("mdific".equalsIgnoreCase(typOp)){

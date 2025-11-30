@@ -1,7 +1,11 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.AffectationDto;
+import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.dto.FonctionDto;
+import gpersonnelcrde.domain.dto.LieuAffectationDto;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.AffectationService;
@@ -28,33 +35,89 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AffectationController {
 	private final AffectationService affectationService;
 	private final EmployeService employeService;
-	private final FonctionService fonctionRepository;
+	private final FonctionService fonctionService;
 	private final LieuAffectationService lieuAffectationService;
 
 	public AffectationController(AffectationService affectationService, EmployeService employeService,
-			FonctionService fonctionRepository, LieuAffectationService lieuAffectationService) {
+			FonctionService fonctionService, LieuAffectationService lieuAffectationService) {
 		this.affectationService = affectationService;
 		this.employeService = employeService;
-		this.fonctionRepository = fonctionRepository;
+		this.fonctionService = fonctionService;
 		this.lieuAffectationService = lieuAffectationService;
 	}
 
 	@GetMapping ("/affectations-emp-crde.html")
-	public String getGestAffectations(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-		model.addAttribute("allFonctions", fonctionRepository.getAllFonction());
-		model.addAttribute("allLieuxAffect", lieuAffectationService.getAllLieuAffect());
-	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
+	public String getGestAffectations(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+		Future<List<FonctionDto>> futureEmpFonctions = null;
+		Future<List<AffectationDto>> futureEmpAffectations = null;
+		//Future<List<TypeEmployeDto>> futureTypeEmployes = null;
+		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allFonctions = futureEmpFonctions.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allAffectations = futureEmpAffectations.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		//var allTypeEmp = futureTypeEmployes.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allFonctions", allFonctions); //fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuxAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
+	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 		
 	    return "gaffectationcrdelist";
 	}
 
 	@GetMapping ("/affectation-emp-crde.html/{categAffect}")
-	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+		Future<List<FonctionDto>> futureEmpFonctions = null;
+		Future<List<AffectationDto>> futureEmpAffectations = null;
+		//Future<List<TypeEmployeDto>> futureTypeEmployes = null;
+		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allFonctions = futureEmpFonctions.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allAffectations = futureEmpAffectations.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		//var allTypeEmp = futureTypeEmployes.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allFonction", allFonctions); //fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
+	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+		/*
+		model.addAttribute("allFonction", fonctionService.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		*/
 		
 		if (StringUtils.isNotBlank(categAffect)){
 			if ("aff-ext".equalsIgnoreCase(categAffect)) {
@@ -91,15 +154,48 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectation-emp-crde-m.html/{numNoteServiceAffect}")
-	public String getAffectationByNumNoteSvceAffect(@PathVariable String numNoteServiceAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
+	public String getAffectationByNumNoteSvceAffect(@PathVariable String numNoteServiceAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
 		var savedAffectation = affectationService.getAffectByByNumNoteService(numNoteServiceAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);
-		model.addAttribute("allFonction", fonctionRepository.getAllFonction());
+		
+		Future<List<FonctionDto>> futureEmpFonctions = null;
+		Future<List<AffectationDto>> futureEmpAffectations = null;
+		//Future<List<TypeEmployeDto>> futureTypeEmployes = null;
+		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allFonctions = futureEmpFonctions.get(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allAffectations = futureEmpAffectations.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		//var allTypeEmp = futureTypeEmployes.get(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allFonction", allFonctions); //fonctionRepository.getAllFonction());
+		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
+	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+		
+		/*
+		model.addAttribute("allFonction", fonctionService.getAllFonction());
 		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());
-						
+		*/
+
 		return "gaffectationcrdeMaj";
 	}
 
