@@ -224,7 +224,7 @@
 											<div th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
 													<img id="photo" alt="Photo identité" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
-													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
+													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;" disabled>
 												</fieldset>
 											</div>
 											<!--div class="input-group">
@@ -298,13 +298,13 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary mb-1">Modifier</button>
 											<!--button type="reset" class="btn btn-dark">Annuler</button-->
 											<!--a type="hidden" name="_method" value="put" class="btn btn-primary" th:text="|Modifier|">Annuler</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">
 												<button type="button" class="btn btn-warning mb-1" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
 										</div>
 									</form>
