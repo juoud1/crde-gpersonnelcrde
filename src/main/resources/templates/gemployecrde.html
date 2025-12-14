@@ -145,7 +145,7 @@
 											<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
 											<input type="text" id="empnom" name="empnom" class="form-control" required>
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+										<div class="col-lg-5 col-md-5 col-sm-6 mt-4">
 											<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
 											<input type="text" id="emppren" name="emppren" class="form-control"/>
 										</div>
@@ -164,11 +164,11 @@
 												<input type="text" id="empmatricule" name="empmatricule" class="form-control" />
 											</fieldset>
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<!--label class="form-label h6" for="empphoto" th:text="|Sélectionner la photo|">civ</label>
 											<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file"  maxlength="100" style="background-color: whitesmoke;"-->
 											<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
-												<img id="photo" alt="Choisir la photo employé" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
+												<img id="photo" alt="Photo identité" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
 
 												<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
 											</fieldset>
@@ -179,7 +179,7 @@
 										
 										<hr>
 
-										<div class="col-lg-7 col-md-7 col-sm-6">
+										<div class="col-lg-8 col-md-8 col-sm-6">
 											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
 											<input type="email" id="empemail" name="empemail" class="form-control" />
 										</div>
@@ -205,14 +205,14 @@
 											<input type="date" id="empdatefinstatus" name="empdatefinstatus" class="form-control" placeholder="Date fin" required>
 										</div-->
 									
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
 												<option value="">Sélectionner un lieu d'affectation</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
 											<select id="empfnction" name="empfnction" class="form-select" required>
 												<option value="">Sélectionner une fonction</option>

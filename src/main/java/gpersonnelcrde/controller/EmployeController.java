@@ -205,22 +205,22 @@ public class EmployeController {
 
 		final EmployeDto savedEmploye = futureEmploye !=null ? futureEmploye.get() : null;*/
 		
-		/** LE BON - DEBUT
+		/** LE BON - DEBUT**/
 		logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ 1 : {}", savedEmploye.getEmpEmplacementPhoto());
 		if (Objects.nonNull(savedEmploye)) {
 			model.addAttribute("traitement", "Récapitulatif de la création du nouvel employé ou stagiaire");
 			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
 		
-			if (savedEmploye.getEmpEmplacementPhoto()!=null){
+			/*if (savedEmploye.getEmpEmplacementPhoto()!=null){
 				var path = stockagePhotoEmployeService.chargerFichierCrde(savedEmploye.getEmpEmplacementPhoto()); //chargerFichierCrdeAsResource(savedEmploye.getEmpEmplacementPhoto());
 				var emplacementPhoto = MvcUriComponentsBuilder.fromMethodName(EmployeController.class,
 							"serveFile", path.getFileName().toString()).build().toUri().toString();
 				logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ INIT = {}\n  et EMPLACEMENT PHOTO EMPLOYÉ MVC-URI= {}\n DANS IF : ", savedEmploye.getEmpEmplacementPhoto(), emplacementPhoto);
 
 				savedEmploye.setEmpEmplacementPhoto(emplacementPhoto);
-			}
+			}*/
 		}
-		LE BON - FIN */
+		/*LE BON - FIN */
 		
 		//logger.info("PHOTO/SIGNATURE empPhoto.getOriginalFilename() {}\n empPhoto.getOriginalFilename.getBytes() {}\n", empPhoto.getOriginalFilename(), empPhoto.getOriginalFilename().getBytes());
 		model.addAttribute("savedEmploye", savedEmploye);
