@@ -1,7 +1,11 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gpersonnelcrde.domain.dto.CongeDto;
+import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.dto.MissionEmployesDto;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.CongeService;
@@ -32,10 +38,28 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conges-emp-crde.html")
-	public String getGestConges(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-	    model.addAttribute("allConges", congeService.getAllConges());
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
+	public String getGestConges(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	    Future<List<CongeDto>> futureCongesEmployes = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureCongesEmployes = executor.submit(() -> congeService.getAllConges());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allConges = futureCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+		
+		model.addAttribute("allConges", allConges); //congeService.getAllConges());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 		//request.getSession().setAttribute("modelMission", model);
+
 	    return "gcongecrdelist";
 	}
 
@@ -69,9 +93,11 @@ public class CongeController {
 	public String getCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 		var savedConge = congeService.getCongeByNumNoteService(numNoteServiceConge)
 							.orElseGet(CongeDto::new);
+		var allEmployes = employeService.getAllEmploye();
+
 		model.addAttribute("savedConge", savedConge);
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
-		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
@@ -90,8 +116,10 @@ public class CongeController {
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}/{choixStr}")
 	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
 	    var savedCongesEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
+		
 		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
 		model.addAttribute("congeEmpMatricule", employeMatricule);
+		
 		if (StringUtils.isNotBlank(choixStr) && !"hist".equalsIgnoreCase(choixStr)){
 			model.addAttribute("savedChoixStr", choixStr);
 		}

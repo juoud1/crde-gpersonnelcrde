@@ -1,8 +1,10 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
-import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import gpersonnelcrde.domain.dto.AffectationDto;
+import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.dto.FonctionDto;
+import gpersonnelcrde.domain.dto.LieuAffectationDto;
 import gpersonnelcrde.domain.dto.MissionEmployeDto;
 import gpersonnelcrde.domain.dto.MissionEmployesDto;
 import gpersonnelcrde.exception.EmployeServiceException;
@@ -39,11 +45,28 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/missions-emp-crde.html")
-	public String getGestMissionsEmployes(HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
-	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes().stream()
+	public String getGestMissionsEmployes(HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException, InterruptedException, ExecutionException{
+	   	Future<List<MissionEmployesDto>> futureMissionsEmployes = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureMissionsEmployes = executor.submit(() -> missionEmployeService.getAllMissionEmployes());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allMissionsEmployes = futureMissionsEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+		
+	    model.addAttribute("allMissionsEmployes", allMissionsEmployes.stream()
 			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
 			.toList()); 
-		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
@@ -52,12 +75,37 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde.html/{typOrdMiss}")
-	public String getMissionEmployeForCreation(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
-	    model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
-		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+	public String getMissionEmployeForCreation(@PathVariable(required = false) String typOrdMiss, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException, InterruptedException, ExecutionException{
+	    Future<List<MissionEmployesDto>> futureMissionsEmployes = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureMissionsEmployes = executor.submit(() -> missionEmployeService.getAllMissionEmployes());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allMissionsEmployes = futureMissionsEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+		
+	    model.addAttribute("allMissionsEmployes", allMissionsEmployes.stream()
+			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
+			.toList()); 
+		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
 		);
+		
+		/*model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
+		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);*/
 
 		if (StringUtils.isNotBlank(typOrdMiss)){
 			if ("miss-grpe".equalsIgnoreCase(typOrdMiss)) {
@@ -133,17 +181,43 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}")
-	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException{
+	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException, InterruptedException, ExecutionException{
 	    var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
 								.orElseGet(MissionEmployesDto::new);
 		
+		Future<List<MissionEmployesDto>> futureMissionsEmployes = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureMissionsEmployes = executor.submit(() -> missionEmployeService.getAllMissionEmployes());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		var allMissionsEmployes = futureMissionsEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+		
+	    model.addAttribute("allMissionsEmployes", allMissionsEmployes.stream()
+			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
+			.toList()); 
+		model.addAttribute("employesEnSvce", allEmployes.stream()
+			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.toList()
+		);
+		model.addAttribute("allEmployes", allEmployes);
+		
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
+		/*model.addAttribute("allEmployes", employeService.getAllEmploye());
 		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
 			.toList()
-		);
+		);*/
 		
 		updateUI(savedMissionEmployes.getTypeOrdreMission(), model);
 

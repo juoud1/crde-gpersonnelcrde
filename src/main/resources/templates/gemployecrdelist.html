@@ -225,19 +225,19 @@
 									<table class="table table-bordered" id="employee-table">
 										<thead class="table-light bg-light">
 											<tr class="border border-secondary bg-secondary-subtle">
-												<th class="border-end">Matricule</th>
-												<th class="border-end" style="width: 15%;">Nom & Prénoms</th>
-												<th class="border-end">Civilité</th>
+												<th class="border-end" style="width: 8.5%;">Matricule</th>
+												<th class="border-end" style="width: 14%;">Nom & Prénoms</th>
+												<th class="border-end" style="width: 8%;">Civilité</th>
 												<!--th class="border-end">Téléphone</th-->
 												<th class="border-end" style="width: 13%;">Contact</th>
 												<th class="border-end">Type employé</th>
-												<th class="border-end" style="width: 9%;">Status</th>
-												<th class="border-end" style="width: 9%;">Dates status</th>
+												<th class="border-end" style="width: 7%;">Status</th>
+												<th class="border-end" style="width: 10.5%;">Dates status</th>
 												<!--th class="border-end">Date fin</th-->
 												<th class="border-end">Affectation</th>
 												<th class="border-end">Fonction</th>
-												<th class="border-end" style="width: 14%;">Déc/Arr Etrée</th>
-												<th class="border-end" style="width: 14%;">Décr/Arr Stie</th>
+												<th class="border-end" style="width: 13%;">Déc/Arr Etrée</th>
+												<th class="border-end" style="width: 13%;">Décr/Arr Stie</th>
 												<th id="col-action " class="text-center">
 													Actions
 												</th>
@@ -246,20 +246,20 @@
 										<tbody>
 											<!-- Les employés seront ajoutés ici dynamiquement -->
 											<tr th:each="employe: ${allEmployes}">
-												<td th:text="${employe.empMatricule}">nom</td>
+												<td th:text="${employe.empMatricule}" style="width: 8.5%;">nom</td>
 												<td th:text="${employe.empNom} + |, | + ${employe.empPren}">prenom</td>
 												<!--td th:text="${employe.empPren}">prenom</td-->
-												<td th:text="${employe.empCivilite}">prenom</td>
+												<td th:text="${employe.empCivilite}" style="width: 8%;">prenom</td>
 												<td th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td>
 												<!--td th:text="${employe.empEmail}">email</td-->
 												<td th:text="${employe.typeEmploye}">tel</td>
-												<td th:text="${employe.status}">role</td>
-												<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}">date</td>
+												<td th:text="${employe.status}" style="width: 7%;">role</td>
+												<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}" style="width: 10.5%;">date</td>
 												<!--td th:text="${employe.empDateFinStatus}">date</td-->
 												<td th:text="${employe.lieuAffectation}">status</td>
 												<td th:text="${employe.fonction}">status</td>
-												<td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}">role</td>
-												<td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}">role</td>
+												<td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}" style="width: 13%;">role</td>
+												<td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}" style="width: 13%;">role</td>
 												<td class="text-center" id="actionemp" style="width: 5%;">
 													<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
 														action
@@ -460,17 +460,17 @@
 				.forEach((employe, index) => {
 					const row = document.createElement('tr');
 					row.innerHTML = `
-						<td>${employe.empMatricule}</td>
+						<td style="width: 8.5%;">${employe.empMatricule}</td>
 						<td>${employe.empNom}, ${employe.empPren}</td>
-						<td>${employe.empCivilite}</td>
+						<td style="width: 8%;">${employe.empCivilite}</td>
 						<td>Tél: ${employe.empTelephone}; Email: ${employe.empEmail}</td>
 						<td>${employe.typeEmploye}</td>
-						<td>${employe.status}</td>
-						<td>du: ${employe.empDateDebutStatus}; au: ${employe.empDateFinStatus}</td>
+						<td style="width: 7%;">${employe.status}</td>
+						<td style="width: 10.5%;">du: ${employe.empDateDebutStatus}; au: ${employe.empDateFinStatus}</td>
 						<td>${employe.lieuAffectation}</td>
 						<td>${employe.fonction}</td>
-						<td>${employe.refDecretouArreteEntree} ; du: ${employe.dateDecretouArreteEntree}</td>
-						<td>${employe.refDecretouArreteDepart} ; du: ${employe.dateDecretouArreteDepart}</td>
+						<td style="width: 13%;">${employe.refDecretouArreteEntree} ; du: ${employe.dateDecretouArreteEntree}</td>
+						<td style="width: 13%;">${employe.refDecretouArreteDepart} ; du: ${employe.dateDecretouArreteDepart}</td>
 						<td class="text-center" style="width: 5%;">
 						
 							<button type="button" class="btn btn-warning" id="bt1-${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde1-${employe.empMatricule}" >

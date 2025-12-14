@@ -154,7 +154,7 @@
 											<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
 											<input type="text" id="empnom" name="empnom" th:value="${savedEmploye.empNom}" class="form-control" />
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
 											<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" />
 										</div>
@@ -193,8 +193,8 @@
 												<option th:each="typemp : ${allTypeEmp}" th:value="${typemp.typeEmpCode}" th:text="${typemp.typeEmp}"></option>
 											</select>
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6 p-2">
-											<fieldset>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<fieldset class="mb-2">
 												<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
 												<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" />	
 											</fieldset>
@@ -207,14 +207,14 @@
 											<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
 											<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
 										</div-->
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
 											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
 											<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
 											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
 											<div th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<a class="ms-auto" th:href="|#|">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
+													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
 												</a>
 												<!--fieldset class="text-center p-1"><style="border: #198754; border-style: solid; background-color: chocolate;">
 													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-3" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
@@ -223,8 +223,8 @@
 											</div>
 											<div th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
-													<img id="photo" alt="Choisir la photo employé" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
-													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
+													<img id="photo" alt="Photo identité" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
+													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;" disabled>
 												</fieldset>
 											</div>
 											<!--div class="input-group">
@@ -238,7 +238,7 @@
 										</div>
 										<hr>
 
-										<div class="col-6">
+										<div class="col-lg-8 col-md-8 col-sm-6">
 											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
 											<input type="email" id="empemail" name="empemail" th:value="${savedEmploye.empEmail}" class="form-control" />
 										</div>
@@ -248,7 +248,7 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="sttus" th:text="|Status employé(e)|">civ</label>
 											<select id="sttus" name="sttus" class="form-select" onchange="statusEmployeSelectChange()" required>
 												<option th:value="${savedEmploye.status}" th:text="${savedEmploye.status}">stts</option>
@@ -264,14 +264,14 @@
 											<input type="date" id="empdatefinstatus" name="empdatefinstatus" th:value="${savedEmploye.empDateFinStatus}" class="form-control" />
 										</div>
 									
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffectation" name="lieuaffectation" class="form-select" required>
 												<option th:value="${savedEmploye.lieuAffectation}" th:text="${savedEmploye.lieuAffectation}">laffect</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
 											<select id="empfnction" name="empfnction" class="form-select" required>
 												<option th:value="${savedEmploye.fonction}" th:text="${savedEmploye.fonction}">fonction</option>
@@ -298,13 +298,13 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary mb-1">Modifier</button>
 											<!--button type="reset" class="btn btn-dark">Annuler</button-->
 											<!--a type="hidden" name="_method" value="put" class="btn btn-primary" th:text="|Modifier|">Annuler</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">
 												<button type="button" class="btn btn-warning mb-1" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
 										</div>
 									</form>

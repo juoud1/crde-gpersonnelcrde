@@ -38,7 +38,6 @@ public class StockageFichiersImagesService {
 
 	private final Path rootCrdePath;
 
-	@Autowired
 	public StockageFichiersImagesService(DStockageFichiersImagesProperties dossierProperties){
 		//this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).getParent().toString(), dossierProperties.emplacement());
 		this.rootCrdePath = Paths.get(Paths.get(OS_USER_DIR).toString(), dossierProperties.emplacement());

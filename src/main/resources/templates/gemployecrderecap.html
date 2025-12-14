@@ -198,17 +198,18 @@
 												<label class="form-label h6" for="empnom" th:text="|Nom|">civ</label>
 												<input type="text" id="empnom" name="empnom" th:value="${savedEmploye.empNom}" class="form-control" disabled>
 											</div>
-											<div class="col-lg-4 col-md-4 col-sm-6">
+											<div class="col-lg-5 col-md-5 col-sm-6">
 												<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
 												<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" disabled/>
 											</div>
-											
+											<hr>
+
 											<div class="col-lg-3 col-md-3 col-sm-6">
 												<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
 												<input type="text" id="typeemp" name="typeemp" th:value="${savedEmploye.typeEmploye}" class="form-control" disabled/>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-6">
-												<fieldset>
+												<fieldset class="mb-2">
 													<label class="form-label h6" for="empmatricule" th:text="|Matricule|">civ</label>
 													<input type="text" id="empmatricule" name="empmatricule" th:value="${savedEmploye.empMatricule}" class="form-control" disabled />
 												</fieldset>
@@ -221,7 +222,7 @@
 												<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
 												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
 											</div-->
-											<div class="col-lg-5 col-md-5 col-sm-6 p-2">
+											<div class="col-lg-6 col-md-6 col-sm-6">
 												<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
 												<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
 												<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
@@ -229,12 +230,12 @@
 												<div class="p-1" th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 													
 													<fieldset class="text-center align-items p-2">
-														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded d-block mx-auto ms-auto me-auto" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
+														<img th:src="${savedEmploye.empEmplacementPhoto}" class="img-fluid rounded d-block mx-auto ms-auto me-auto" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
 													</fieldset>
 												</div>
 
-												<div class="p-1" th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
-													<span class="h5 text-center" th:text="|L'employé n'a pas founi sa photo|" style="color: navy; margin-top: auto; margin-bottom: auto;">pas photo</span>
+												<div class="text-center p-auto" th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+													<span class="text-center ms-auto" th:text="|L'employé n'a pas founi sa photo|" style="color: navy;">pas photo</span>
 												</div>
 												
 												<!--div class="input-group">
@@ -248,7 +249,7 @@
 											</div>
 											<hr>
 
-											<div class="col-6">
+											<div class="col-lg-8 col-md-8 col-sm-6">
 												<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>
 												<input type="email" id="empemail" name="empemail" th:value="${savedEmploye.empEmail}" class="form-control" disabled />
 											</div>
@@ -258,7 +259,7 @@
 											</div>
 											<hr>
 
-											<div class="col-lg-4 col-md-4 col-sm-6">
+											<div class="col-lg-6 col-md-6 col-sm-6">
 												<label class="form-label h6" for="status" th:text="|Status employé(e)|">civ</label>
 												<input type="text" id="status" name="status" th:value="${savedEmploye.status}" class="form-control" disabled />
 											</div>
@@ -271,11 +272,11 @@
 												<input type="date" id="empdatefinstatus" name="empdatefinstatus" th:value="${savedEmploye.empDateFinStatus}" class="form-control" disabled />
 											</div>
 										
-											<div class="col-lg-5 col-md-5 col-sm-6">
+											<div class="col-lg-6 col-md-6 col-sm-6">
 												<label class="form-label h6" for="lieuaffectation" th:text="|Lieu affectation|">civ</label>
 												<input type="text" id="lieuaffectation" name="lieuaffectation" th:value="${savedEmploye.lieuAffectation}" class="form-control" disabled />
 											</div>
-											<div class="col-lg-5 col-md-5 col-sm-6">
+											<div class="col-lg-6 col-md-6 col-sm-6">
 												<label class="form-label h6" for="empfnction" th:text="|Fonction|">civ</label>
 												<input type="text" id="empfnction" name="empfnction" th:value="${savedEmploye.fonction}" class="form-control" disabled />
 											</div>
@@ -289,24 +290,24 @@
 												<label class="form-label h6" for="datedecretouarreteentree" th:text="|Decret/Arr. entrée du|">civ</label>
 												<input type="date" id="datedecretouarreteentree" name="datedecretouarreteentree" th:value="${savedEmploye.dateDecretouArreteEntree}" class="form-control" disabled />
 											</div>
-											<!--div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="col-lg-3 col-md-3 col-sm-6">
 												<label class="form-label h6" for="refdecretouarretedepart" th:text="|Réf. decret/Arr. de départ|">civ</label>
 												<input type="text" id="refdecretouarretedepart" name="refdecretouarretedepart" th:value="${savedEmploye.refDecretouArreteDepart}" class="form-control" disabled />
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-6" id="endDate-group">
 												<label class="form-label h6" for="datedecretouarretedepart" th:text="|Decret/Arr. de départ du|">civ</label>
 												<input type="date" id="datedecretouarretedepart" name="datedecretouarretedepart" th:value="${savedEmploye.dateDecretouArreteDepart}" class="form-control" disabled />
-											</div-->
+											</div>
 											<hr>
 
-											<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
+											<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 												<!--button type="submit" class="btn btn-primary">Ajouter</button>
 												<button type="reset" class="btn btn-dark">Annuler</button-->
 												<a class="btn btn-outline-primary" th:href="@{/employe-crde-m.html} + |/| + ${savedEmploye.empMatricule} + |/mdific|" formmethod="get" th:text="|Modifier|">Annuler</a>
 												<a class="btn btn-outline-primary" th:href="@{/employe-crde.html}" formmethod="get" th:text="|Ajouter nouvel employé|">Annuler</a>
 												<a class="btn btn-primary" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 											</div>
-											<div class="col-3 text-end">
+											<div class="col-lg-3 col-md-3 col-sm-12 text-center p-2 g-2">
 												<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceConge([[${savedEmploye}]])">NS</button>
 											</div>
 										</form>

@@ -17,6 +17,7 @@ import java.util.concurrent.Future;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,14 +165,18 @@ public class EmployeService {
 
 		Path pathEmplacementPhoto = futureEmplacementPhoto!=null ? futureEmplacementPhoto.get() : null;
 		*/
-		Path pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
-		logger.info("PATH PHOTO EMPLOYÉ STOCKÉE DANS {}\n NOMBRE DE BITS = {}\n URI = {}\n ", pathEmplacementPhoto, 0, pathEmplacementPhoto.toUri());
-		//var resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toString());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
-		//logger.info("resourcePhoto PHOTO EMPLOYÉ = {}\n getContentAsByteArray {}\n getContentAsString {}\n", resourcePhoto, resourcePhoto.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
+		Path pathEmplacementPhoto = null;
+		Resource resourcePhoto = null;
+		if (Objects.nonNull(empPhoto)){
+			pathEmplacementPhoto = stockagePhotoEmployeService.stockerFichierCrde(empPhoto, List.of(empNom, empPren, empMatricule), false);
+			logger.info("PATH PHOTO EMPLOYÉ STOCKÉE DANS {}\n NOMBRE DE BITS = {}\n URI = {}\n ", pathEmplacementPhoto, 0, pathEmplacementPhoto.toUri());
+			//var resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toString());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
+			//logger.info("resourcePhoto PHOTO EMPLOYÉ = {}\n getContentAsByteArray {}\n getContentAsString {}\n", resourcePhoto, resourcePhoto.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
 
-		var resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
-		logger.info("resourcePhoto1 PHOTO EMPLOYÉ = {}\n toString() {}\n", resourcePhoto, resourcePhoto.toString()); //.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
-		
+			resourcePhoto = resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath());//getClass().getResourceAsStream(pathEmplacementPhoto.toString());
+			logger.info("resourcePhoto1 PHOTO EMPLOYÉ = {}\n toString() {}\n", resourcePhoto, resourcePhoto.toString()); //.getContentAsByteArray(), resourcePhoto.getContentAsString(StandardCharsets.UTF_8));
+		}
+
 		EmployeDto eDto = new EmployeDto();
 		eDto.setDateDecretouArreteEntree(dateDecretouArreteEntree);
 		eDto.setEmpCivilite(empCivilite);
@@ -187,7 +192,7 @@ public class EmployeService {
 		eDto.setRefDecretouArreteEntree(refDecretouArreteEntree);
 		eDto.setStatus("SVCE");
 		eDto.setTypeEmploye(typeEmploye);
-		eDto.setEmpEmplacementPhoto(pathEmplacementPhoto.toString());
+		eDto.setEmpEmplacementPhoto(Objects.nonNull(empPhoto) ? pathEmplacementPhoto.toString() : null);
 		eDto.setEmpPhoto(resourcePhoto);//resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
 		
 		var newEmp = createEmploye (eDto);
