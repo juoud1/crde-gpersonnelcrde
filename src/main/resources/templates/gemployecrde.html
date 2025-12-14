@@ -134,7 +134,8 @@
 									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde.html}" enctype="multipart/form-data">
+									<!--form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde.html}" enctype="multipart/form-data"-->
+									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde.html}">
 										<legende class="h4 mb-3 text-center">Ajouter un employé ou stagiaire</legende>
 										<hr>
 										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
@@ -170,7 +171,7 @@
 											<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
 												<img id="photo" alt="Photo identité" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
 
-												<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
+												<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;" disabled>
 											</fieldset>
 
 											<!--input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -232,7 +233,7 @@
 										
 										<hr>
 
-										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button>
 											<a class="btn btn-outline-primary ms-auto" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>

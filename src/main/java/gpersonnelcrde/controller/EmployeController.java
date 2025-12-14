@@ -173,13 +173,17 @@ public class EmployeController {
 					@RequestParam(value="empdatefinstatus", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateFinStatus,
 					@RequestParam(value="datedecretouarreteentree", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteEntree,
 					//@RequestParam("datedecretouarretedepart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDecretouArreteDepart,
-					@RequestParam(value="empphoto", required = false) MultipartFile empPhoto,
+					//@RequestParam(value="empphoto", required = false) MultipartFile empPhoto,
 					HttpServletRequest request, Model model) throws EntityNotFoundException, IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException
 					{
 
-		final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
+		/*final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
 										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
 										empDateDebutStatus, dateDecretouArreteEntree, empPhoto).orElseThrow(() -> new EntityNotFoundException("La création de l'employé a échouée."));
+		*/
+		final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
+										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
+										empDateDebutStatus, dateDecretouArreteEntree, null).orElseThrow(() -> new EntityNotFoundException("La création de l'employé a échouée."));
 		
 		/*Future<EmployeDto> futureEmploye = null;
 		Future<Path> futureNbreByte = null;
@@ -211,14 +215,14 @@ public class EmployeController {
 			model.addAttribute("traitement", "Récapitulatif de la création du nouvel employé ou stagiaire");
 			model.addAttribute("resultTraitement", "Création de l'employé effectuée avec succès.");
 		
-			/*if (savedEmploye.getEmpEmplacementPhoto()!=null){
+			if (savedEmploye.getEmpEmplacementPhoto()!=null){
 				var path = stockagePhotoEmployeService.chargerFichierCrde(savedEmploye.getEmpEmplacementPhoto()); //chargerFichierCrdeAsResource(savedEmploye.getEmpEmplacementPhoto());
 				var emplacementPhoto = MvcUriComponentsBuilder.fromMethodName(EmployeController.class,
 							"serveFile", path.getFileName().toString()).build().toUri().toString();
 				logger.info("CONTROLLER EMPLACEMENT PHOTO EMPLOYÉ INIT = {}\n  et EMPLACEMENT PHOTO EMPLOYÉ MVC-URI= {}\n DANS IF : ", savedEmploye.getEmpEmplacementPhoto(), emplacementPhoto);
 
 				savedEmploye.setEmpEmplacementPhoto(emplacementPhoto);
-			}*/
+			}
 		}
 		/*LE BON - FIN */
 		
