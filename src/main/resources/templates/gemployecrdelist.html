@@ -162,27 +162,35 @@
 														<div class="modal-body">
 															<div class="border p-1 mb-2 bg-secondary-subtle">
 																<div class="d-flex flex-wrap gap-1 p-1">
-																	<form id="emp-trtmt-reprise-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-																		<div class="col-12 text-center">
+																	<form id="emp-trtmt-reprise-form" class="row g-2 mb-2 p-2 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/reprise-trav-employe-crde.html}">
+																		<div class="col-lg-12 col-md-12 col-sm-12 text-start">
 																			<div class="alert alert-info p-2">
-																				<input type="radio" id="missions" name="typereprise" value="missions">
+																				<!--input type="radio" id="missions" name="typereprise" value="missions">
 																				<label class="form-label h5" for="missions">Missions</label>
 																				<input type="radio" id="congss" name="typereprise" value="congés">
-																				<label class="form-label h5" for="conges">Congés</label>
+																				<label class="form-label h5" for="conges">Congés</label-->
+																				<label class="form-label h5" for="typereprise">Reprise suite à ...</label>
+																				<select id="typereprise" name="typereprise" class="form-select" required>
+																					<option value="" th:text="|Sélectionner le mobile|">Sélectionner</option>
+																					<option th:value="|Mission|" th:text="|une mission|"></option>
+																					<option th:value="|Conge|" th:text="|un congé|"></option>
+																				</select>
 																			</div>
+																			
 																		</div>
 					
 																		<div class="col-lg-5 col-md-5 col-sm-6 text-start" id="emptrtmtreprise-datedebstat-group">
-																			<span class="form-label h6 ms-2" for="datedebstat">Du</span>
-																			<input type="date" id="datedebstat" name="datedebstat" class="form-control" required>
+																			<span class="form-label h6 ms-2" for="datedebtrtmtreprise">Du</span>
+																			<input type="date" id="datedebtrtmtreprise" name="datedebtrtmtreprise" class="form-control" required>
 																		</div>
 																		<div class="col-lg-5 col-md-5 col-sm-6 text-start me-2" id="emptrtmtreprise-datefinstat-group">
-																			<span class="form-label h6 ms-2" for="datefinstat">Au</span>
-																			<input type="date" id="datefinstat" name="datefinstat" class="form-control" placeholder="Date fin" required>
+																			<span class="form-label h6 ms-2" for="datefintrtmtreprise">Au</span>
+																			<input type="date" id="datefintrtmtreprise" name="datefintrtmtreprise" class="form-control" placeholder="Date fin" required>
 																		</div>
-																		
+																		<hr>
+
 																		<div class="col-lg-11 col-md-11 col-sm-12 text-center p-2" >
-																			<button class="btn btn-success" id="bemptrtmtreprise" type="button" title="Reprise des employés aprés leurs missions opu congés" th:text="|Lancer le traitement|">Rechercher</button>
+																			<button type="submit" class="btn btn-primary" id="bemptrtmtreprise" title="Reprise des employés aprés leurs missions opu congés" th:text="|Lancer le traitement|">Rechercher</button>
 																		</div>
 																	</form>
 																</div>
