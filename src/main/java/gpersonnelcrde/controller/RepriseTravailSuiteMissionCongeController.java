@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import gpersonnelcrde.exception.CongeServiceException;
+import gpersonnelcrde.exception.EmployeServiceException;
+import gpersonnelcrde.exception.MissionServiceException;
 import gpersonnelcrde.service.CongeService;
 import gpersonnelcrde.service.MissionService;
 
@@ -30,13 +33,14 @@ public class RepriseTravailSuiteMissionCongeController {
 	@PostMapping ("/reprise-trav-employe-crde.html")
 	public String processReprise(@RequestParam("typereprise") String typeReprise,
 					@RequestParam(value="datedebtrtmtreprise", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebTrtmtReprise,
-					@RequestParam(value="datefintrtmtreprise", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinTrtmtReprise){
+					@RequestParam(value="datefintrtmtreprise", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinTrtmtReprise) throws MissionServiceException, CongeServiceException{
 
 		if (StringUtils.isNotBlank(typeReprise)){
 			if (typeReprise.equalsIgnoreCase("mission")) {
+				this.missionService.updateMissionsEffectuees(dateDebTrtmtReprise, dateFinTrtmtReprise);
 			
 			} else if (typeReprise.equalsIgnoreCase("conge")){
-			
+				this.congeService.updateCongesEffectuees(dateDebTrtmtReprise, dateFinTrtmtReprise);
 			} else {
 				throw new IllegalArgumentException("Type de reprise non reconnu : ".toUpperCase() + typeReprise);
 			}
@@ -44,7 +48,7 @@ public class RepriseTravailSuiteMissionCongeController {
 		} else {
 			throw new IllegalArgumentException("Type de reprise est obligatoire.".toUpperCase());
 		}
-		
+
 		return "redirect:/employes-crde.html";  //"gemployecrdelist";
 	}
 }
