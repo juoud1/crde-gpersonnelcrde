@@ -135,7 +135,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-										<legende class="h4 mb-3 text-center">Mettre à jour les données de congé</legende>
+										<legende class="h4 mb-3 text-center" id="legcongesform">Mettre à jour les données de congé</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|Congé N°|">num</label>
@@ -143,10 +143,10 @@
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
-											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" required>
-												<option th:value="${savedConge.numNoteServiceConge}" th:text="${savedConge.typeDemandeConge}">type de mission</option>
-												<option th:value="|Congé avec autorisation de sortie|" th:text="|Congé avec autorisation de sortie|">type de mission</option>
-												<option th:value="|Congé sans autorisation de sortie|" th:text="|Congé sans autorisation de sortie|">type de mission</option>
+											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" required>
+												<option th:value="${savedConge.typeDemandeConge}" th:text="${savedConge.typeDemandeConge}">Sélectionner un type cge</option>
+												<option th:value="|Congé|" th:text="|Congé|">type de congé</option>
+												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
 											</select>
 										</div>
 										
@@ -168,7 +168,7 @@
 											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" placeholder="Date de retour" >
 										</div>
 
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<div class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control">
 										</div>
@@ -178,11 +178,11 @@
 											<label class="form-label h6" for="statusconge" th:text="|Status congé|">civ</label>
 											<select id="statusconge" name="statusconge" class="form-select">
 												<option th:value="${savedConge.statusConge}" th:text="${savedConge.statusConge}">status</option>
-												<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-												<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
-												<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
-												<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
-												<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+												<option th:value="|En attente|" th:text="|En attente|">officielle</option>
+												<option th:value="|Approuvé|" th:text="|Approuvé|">officielle</option>
+												<option th:value="|Reporté|" th:text="|Reporté|">officielle</option>
+												<option th:value="|Suspendu|" th:text="|Suspendu|">officielle</option>
+												<option th:value="|Annulé|" th:text="|Annulé|">officielle</option>
 												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
@@ -190,27 +190,27 @@
 											<label class="form-label h6" for="datestatusconge" th:text="|Date status|">civ</label>
 											<input type="date" id="datestatusconge" name="datestatusconge" th:value="${savedConge.dateStatusConge}" class="form-control">
 										</div>
-										<hr>
+										<hr id="asbox">
 
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
 											<input type="text" id="numautorisatSortie" name="numautorisatSortie" th:value="${savedConge.numNoteServiceConge}" class="form-control">
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
 											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" th:value="${savedConge.dateDepartAutorisatSortie}" class="form-control">
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
 											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" th:value="${savedConge.dateRetourAutorisatSortie}" class="form-control">
 										</div>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville de destination|">civ</label>
 											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination" required>
 										</div>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div id="aspaysbox" class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
 											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination" required>
 										</div>
@@ -223,7 +223,7 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">	
 											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>
 										
 									</form>
@@ -250,6 +250,37 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allMissions = [[${allMissions}]];
+
+		const typeDemandeSelect = document.getElementById('typedemande');
+		const asBox = document.getElementById('asbox');
+		const asNumBox = document.getElementById('asnumbox');
+		const asDateDepBox = document.getElementById('asdatedepbox');
+		const asDateRetBox = document.getElementById('asdateretbox');
+		const asVilleBox = document.getElementById('asvillebox');
+		const asPaysBox = document.getElementById('aspaysbox');
+
+		const legendeFormText = document.getElementById('legcongesform');
+
+		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
+		function typeDemandeSelectChange() {
+			if (typeDemandeSelect.options[typeDemandeSelect.selectedIndex].value !== 'Congé') {
+				legendeFormText.innerText='Mettre à jour Congé et Autorisation de Sortie';
+				asNumBox.style.display='block';
+				asDateDepBox.style.display='block';
+				asDateRetBox.style.display='block';
+				asVilleBox.style.display='block';
+				asPaysBox.style.display='block';
+				asBox.style.display='block';
+			} else { 
+				legendeFormText.innerText='Mettre à jour le Congé';
+				asNumBox.style.display='none';
+				asDateDepBox.style.display='none';
+				asDateRetBox.style.display='none';
+				asVilleBox.style.display='none';
+				asPaysBox.style.display='none';
+				asBox.style.display='none';
+			}
+		}
 
 		// Impression principale et tri personnalisée
 		function printMissions() {

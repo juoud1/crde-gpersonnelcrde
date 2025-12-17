@@ -63,10 +63,42 @@ public class CongeController {
 	    return "gcongecrdelist";
 	}
 
-	@GetMapping ("/conge-emp-crde.html")
-	public String getConge(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-	    model.addAttribute("allConges", congeService.getAllConges());
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
+	@GetMapping ("/conge-emp-crde.html/{typCnge}")
+	public String getConge(@PathVariable(required = false) String typCnge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	    Future<List<CongeDto>> futureCongesEmployes = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futureCongesEmployes = executor.submit(() -> congeService.getAllConges());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
+		
+		if (StringUtils.isNotBlank(typCnge)){
+			if ("cnge-et-as".equalsIgnoreCase(typCnge)) {
+				model.addAttribute("typCngeValue", "Congé et autorisation sortie");
+				model.addAttribute("typCngeText", "Congé et autorisation de sortie");
+				//model.addAttribute("paysResidenceText", "");
+			} else {
+				model.addAttribute("typCngeValue", "Congé");
+				model.addAttribute("typCngeText", "Congé");
+				//model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
+			}
+		}
+
+		var allConges = futureCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+
+		/*model.addAttribute("allConges", congeService.getAllConges());
+		model.addAttribute("allEmployes", employeService.getAllEmploye());*/
+
+		model.addAttribute("allConges", allConges); //congeService.getAllConges());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+
 		//request.getSession().setAttribute("modelMission", model);
 	    return "gcongecrde";
 	}

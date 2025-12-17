@@ -318,7 +318,7 @@
 																		<header class="h6 mb-1 text-start">Congés</header>
 																		<div class="d-flex flex-wrap gap-2 p-2">
 																			<a th:id="|approuvcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. congé|">Annuler</a>
-																			<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
+																			<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html/cnge-uniqmt}" formmethod="get" th:text="|Ajouter un congé|">Annuler</a>
 																			<a th:id="|ajoutcongeemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/conges-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique congés|">Annuler</a>
 																			<button th:id="|impnotesvcecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
 																			<button th:id="|impautosortiecongeemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. autorisat. de sortie|">Note de service</button>
@@ -530,7 +530,7 @@
 												<header class="h6 mb-1 text-start">Congés</header>
 												<div class="d-flex flex-wrap gap-2 p-2">
 													<a id="approuvcongeemp1- ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conges-emp-crde.html}/${employe.empMatricule}" formmethod="get">Approuver/Ann. congé</a>
-													<a id="ajoutcongeemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conge-emp-crde.html}" formmethod="get">Ajouter un congé</a>
+													<a id="ajoutcongeemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conge-emp-crde.html/cnge-uniqmt}" formmethod="get">Ajouter un congé</a>
 													<a id="ajoutcongeemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/conges-emp-crde.html}/${employe.empMatricule}" formmethod="get">Historique congés</a>
 													<button id="impnotesvcecongeemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. note de service</button>
 													<button id="impautosortiecongeemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items" onclick="printNoteDeService([[${employe}]])">Imp. autorisat. de sortie</button>

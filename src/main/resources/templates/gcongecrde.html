@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="congesform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
-										<legende class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
+										<legende id="legcongesform" class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|Congé N°|">num</label>
@@ -142,10 +142,10 @@
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
-											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" required>
-												<option value="" th:text="|Sélectionner un type de demande|">type de mission</option>
-												<option th:value="|Congé avec autorisation de sortie|" th:text="|Congé avec autorisation de sortie|">type de mission</option>
-												<option th:value="|Congé sans autorisation de sortie|" th:text="|Congé sans autorisation de sortie|">type de mission</option>
+											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" required>
+												<option th:value="${typCngeValue}" th:text="${typCngeText}">type de mission</option>
+												<option th:value="|Congé|" th:text="|Congé|">type de congé</option>
+												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
 											</select>
 										</div>
 
@@ -166,34 +166,36 @@
 											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
 										
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<div class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
 										</div>
-										<hr>
+										<hr id="asbox">
 										
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
-											<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control">
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
-											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control">
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
-											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control">
-										</div>
-										
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
-											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
-										</div>
+										<!--div id="asbox" class="row w-100 as"-->
+											<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6 as">
+												<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
+												<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control">
+											</div>
+											<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6 as">
+												<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
+												<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control">
+											</div>
+											<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6 as">
+												<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
+												<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control">
+											</div>
+											
+											<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6 as">
+												<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
+												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
+											</div>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
-											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
-										</div>
+											<div id="aspaysbox" class="col-lg-5 col-md-5 col-sm-6 as">
+												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
+												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
+											</div>
+										<!--/div-->
 										<hr>
 
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
@@ -224,6 +226,37 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allConges = [[${allConges}]];
+
+		const typeDemandeSelect = document.getElementById('typedemande');
+		const asBox = document.getElementById('asbox');
+		const asNumBox = document.getElementById('asnumbox');
+		const asDateDepBox = document.getElementById('asdatedepbox');
+		const asDateRetBox = document.getElementById('asdateretbox');
+		const asVilleBox = document.getElementById('asvillebox');
+		const asPaysBox = document.getElementById('aspaysbox');
+
+		const legendeFormText = document.getElementById('legcongesform');
+
+		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
+		function typeDemandeSelectChange() {
+			if (typeDemandeSelect.options[typeDemandeSelect.selectedIndex].value !== 'Congé') {
+				legendeFormText.innerText='Ajouter un Congé et une Autorisation de Sortie';
+				asNumBox.style.display='block';
+				asDateDepBox.style.display='block';
+				asDateRetBox.style.display='block';
+				asVilleBox.style.display='block';
+				asPaysBox.style.display='block';
+				asBox.style.display='block';
+			} else { 
+				legendeFormText.innerText='Ajouter un Congé';
+				asNumBox.style.display='none';
+				asDateDepBox.style.display='none';
+				asDateRetBox.style.display='none';
+				asVilleBox.style.display='none';
+				asPaysBox.style.display='none';
+				asBox.style.display='none';
+			}
+		}
 
 		// Impression principale et tri personnalisée
 		function printConges() {
