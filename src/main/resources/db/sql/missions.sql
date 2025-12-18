@@ -18,5 +18,5 @@ mission_creee_le TIMESTAMP(9) WITH TIME ZONE, mission_creee_par VARCHAR(15),
 mission_modifiee_le TIMESTAMP(9) WITH TIME ZONE, mission_modifiee_par VARCHAR(15)--,
 --constraint fk_miss_emp FOREIGN key (employe_id) references employe(id)
 );
-insert into mission (num_ordre_mission, type_ordre_mission, nature_mission, cadre_mission, date_depart, date_retour, duree_en_let_mission, pays_mission, ville_mission, motif_mission, status_mission, date_status_mission)--, employe_id) 
-values ('12', 'Mission', 'Seminaire échange', 'Échange international sur le développement', '20250828', '20250908', 'onze (11) jours', 'Afrique du Sud', 'Pretoria', 'Mission officielle', 'Approuvée', '20250903');--, 3L);
+insert into mission (num_ordre_mission, type_ordre_mission, nature_mission, cadre_mission, date_depart, date_retour, duree_en_let_mission, pays_mission, ville_mission, motif_mission, status_mission, date_status_mission, mission_creee_le, mission_creee_par, mission_modifiee_le, mission_modifiee_par)--, employe_id) 
+values ('12', 'Mission', 'Seminaire échange', 'Échange international sur le développement', '20250828', '20250908', 'onze (11) jours', 'Afrique du Sud', 'Pretoria', 'Mission officielle', 'Approuvée', '20250903', '20250827', 'admin', '20250903', 'admin');--, 3L);

@@ -20,7 +20,8 @@ public class CongeDto {
 	private LocalDate dateRetourAutorisatSortie;
 	private String villeAutorisatSortie;
 	private String paysAutorisatSortie;
-	
+	private String numAutorisatSortie;
+
 	public String getTypeDemandeConge() {
 		return typeDemandeConge;
 	}
@@ -111,6 +112,13 @@ public class CongeDto {
 	public void setPaysAutorisatSortie(String paysAutorisatSortie) {
 		this.paysAutorisatSortie = paysAutorisatSortie;
 	}
+	public String getNumAutorisatSortie() {
+		return numAutorisatSortie;
+	}
+	public void setNumAutorisatSortie(String numAutorisatSortie) {
+		this.numAutorisatSortie = numAutorisatSortie;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,6 +138,7 @@ public class CongeDto {
 		result = prime * result + ((dateRetourAutorisatSortie == null) ? 0 : dateRetourAutorisatSortie.hashCode());
 		result = prime * result + ((villeAutorisatSortie == null) ? 0 : villeAutorisatSortie.hashCode());
 		result = prime * result + ((paysAutorisatSortie == null) ? 0 : paysAutorisatSortie.hashCode());
+		result = prime * result + ((numAutorisatSortie == null) ? 0 : numAutorisatSortie.hashCode());
 		return result;
 	}
 	@Override
@@ -216,8 +225,14 @@ public class CongeDto {
 				return false;
 		} else if (!paysAutorisatSortie.equals(other.paysAutorisatSortie))
 			return false;
+		if (numAutorisatSortie == null) {
+			if (other.numAutorisatSortie != null)
+				return false;
+		} else if (!numAutorisatSortie.equals(other.numAutorisatSortie))
+			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "CongeDto [typeDemandeConge=" + typeDemandeConge + ", dateDebutConge=" + dateDebutConge
@@ -227,7 +242,7 @@ public class CongeDto {
 				+ ", employeCivilite=" + employeCivilite + ", employeFonction=" + employeFonction
 				+ ", dateDepartAutorisatSortie=" + dateDepartAutorisatSortie + ", dateRetourAutorisatSortie="
 				+ dateRetourAutorisatSortie + ", villeAutorisatSortie=" + villeAutorisatSortie
-				+ ", paysAutorisatSortie=" + paysAutorisatSortie + "]";
+				+ ", paysAutorisatSortie=" + paysAutorisatSortie + ", numAutorisatSortie=" + numAutorisatSortie + "]";
 	}
-	
+		
 }

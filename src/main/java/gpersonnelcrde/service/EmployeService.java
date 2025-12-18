@@ -213,17 +213,17 @@ public class EmployeService {
 		return optEmp.isPresent();
 	}
 
-	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException {
+	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
 		if (Objects.isNull(employeDto)) {
 			logger.info("Impossible de créer l'employé car les données sont vides.");
 			return Optional.empty();
 		}
 
-		/*****var empExistant = checkEmployeExistance(employeDto);
+		var empExistant = checkEmployeExistance(employeDto);
 		if (empExistant){
 			logger.info("Impossible de créer l'employé car, il existe déjà dans la base de données.");
 			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
-		}******À REVOIR**/
+		}
 		
 		Future<Optional<Fonction>> futureOptEmpFonct = null;
 		Future<Optional<Status>> futureOptEmpStatus = null;
