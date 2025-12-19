@@ -21,7 +21,8 @@ public class CongeDto {
 	private String villeAutorisatSortie;
 	private String paysAutorisatSortie;
 	private String numAutorisatSortie;
-
+	private String motifSortie;
+	
 	public String getTypeDemandeConge() {
 		return typeDemandeConge;
 	}
@@ -118,6 +119,12 @@ public class CongeDto {
 	public void setNumAutorisatSortie(String numAutorisatSortie) {
 		this.numAutorisatSortie = numAutorisatSortie;
 	}
+	public String getMotifSortie() {
+		return motifSortie;
+	}
+	public void setMotifSortie(String motifSortie) {
+		this.motifSortie = motifSortie;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -139,6 +146,7 @@ public class CongeDto {
 		result = prime * result + ((villeAutorisatSortie == null) ? 0 : villeAutorisatSortie.hashCode());
 		result = prime * result + ((paysAutorisatSortie == null) ? 0 : paysAutorisatSortie.hashCode());
 		result = prime * result + ((numAutorisatSortie == null) ? 0 : numAutorisatSortie.hashCode());
+		result = prime * result + ((motifSortie == null) ? 0 : motifSortie.hashCode());
 		return result;
 	}
 	@Override
@@ -230,9 +238,14 @@ public class CongeDto {
 				return false;
 		} else if (!numAutorisatSortie.equals(other.numAutorisatSortie))
 			return false;
+		if (motifSortie == null) {
+			if (other.motifSortie != null)
+				return false;
+		} else if (!motifSortie.equals(other.motifSortie))
+			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CongeDto [typeDemandeConge=" + typeDemandeConge + ", dateDebutConge=" + dateDebutConge
@@ -242,7 +255,8 @@ public class CongeDto {
 				+ ", employeCivilite=" + employeCivilite + ", employeFonction=" + employeFonction
 				+ ", dateDepartAutorisatSortie=" + dateDepartAutorisatSortie + ", dateRetourAutorisatSortie="
 				+ dateRetourAutorisatSortie + ", villeAutorisatSortie=" + villeAutorisatSortie
-				+ ", paysAutorisatSortie=" + paysAutorisatSortie + ", numAutorisatSortie=" + numAutorisatSortie + "]";
+				+ ", paysAutorisatSortie=" + paysAutorisatSortie + ", numAutorisatSortie=" + numAutorisatSortie
+				+ ", motifSortie=" + motifSortie + "]";
 	}
-		
+	
 }

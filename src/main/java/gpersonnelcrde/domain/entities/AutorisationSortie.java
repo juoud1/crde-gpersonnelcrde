@@ -21,6 +21,7 @@ public class AutorisationSortie {
 	private String asVille;
 	private String asPays;
 	private String asNum;
+	private String motifSortie;
 	private String statusAs;
 	private LocalDate dateStatusAs;
 	
@@ -69,6 +70,24 @@ public class AutorisationSortie {
 	public void setAsNum(String asNum) {
 		this.asNum = asNum;
 	}
+	public String getMotifSortie() {
+		return motifSortie;
+	}
+	public void setMotifSortie(String motifSortie) {
+		this.motifSortie = motifSortie;
+	}
+	public String getStatusAs() {
+		return statusAs;
+	}
+	public void setStatusAs(String statusAs) {
+		this.statusAs = statusAs;
+	}
+	public LocalDate getDateStatusAs() {
+		return dateStatusAs;
+	}
+	public void setDateStatusAs(LocalDate dateStatusAs) {
+		this.dateStatusAs = dateStatusAs;
+	}
 	public Conge getConge() {
 		return conge;
 	}
@@ -99,7 +118,7 @@ public class AutorisationSortie {
 	public void setAsModifiePar(String asModifiePar) {
 		this.asModifiePar = asModifiePar;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,6 +129,9 @@ public class AutorisationSortie {
 		result = prime * result + ((asVille == null) ? 0 : asVille.hashCode());
 		result = prime * result + ((asPays == null) ? 0 : asPays.hashCode());
 		result = prime * result + ((asNum == null) ? 0 : asNum.hashCode());
+		result = prime * result + ((motifSortie == null) ? 0 : motifSortie.hashCode());
+		result = prime * result + ((statusAs == null) ? 0 : statusAs.hashCode());
+		result = prime * result + ((dateStatusAs == null) ? 0 : dateStatusAs.hashCode());
 		result = prime * result + ((conge == null) ? 0 : conge.hashCode());
 		result = prime * result + ((asCreeLe == null) ? 0 : asCreeLe.hashCode());
 		result = prime * result + ((asCreePar == null) ? 0 : asCreePar.hashCode());
@@ -156,6 +178,21 @@ public class AutorisationSortie {
 				return false;
 		} else if (!asNum.equals(other.asNum))
 			return false;
+		if (motifSortie == null) {
+			if (other.motifSortie != null)
+				return false;
+		} else if (!motifSortie.equals(other.motifSortie))
+			return false;
+		if (statusAs == null) {
+			if (other.statusAs != null)
+				return false;
+		} else if (!statusAs.equals(other.statusAs))
+			return false;
+		if (dateStatusAs == null) {
+			if (other.dateStatusAs != null)
+				return false;
+		} else if (!dateStatusAs.equals(other.dateStatusAs))
+			return false;
 		if (conge == null) {
 			if (other.conge != null)
 				return false;
@@ -187,9 +224,10 @@ public class AutorisationSortie {
 	@Override
 	public String toString() {
 		return "AutorisationSortie [id=" + id + ", asDateDepart=" + asDateDepart + ", asDateRetour=" + asDateRetour
-				+ ", asVille=" + asVille + ", asPays=" + asPays + ", asNum=" + asNum + ", conge=" + conge
-				+ ", asCreeLe=" + asCreeLe + ", asCreePar=" + asCreePar + ", asModifieLe=" + asModifieLe
-				+ ", asModifiePar=" + asModifiePar + "]";
+				+ ", asVille=" + asVille + ", asPays=" + asPays + ", asNum=" + asNum + ", motifSortie=" + motifSortie
+				+ ", statusAs=" + statusAs + ", dateStatusAs=" + dateStatusAs + ", conge=" + conge + ", asCreeLe="
+				+ asCreeLe + ", asCreePar=" + asCreePar + ", asModifieLe=" + asModifieLe + ", asModifiePar="
+				+ asModifiePar + "]";
 	}
-
+			
 }

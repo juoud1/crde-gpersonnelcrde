@@ -107,13 +107,18 @@ public class CongeController {
 	public String addConge(@RequestParam("matriculeempconge") String matriculeEmpConge, 
 					@RequestParam("datedebconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebConge,
 	                @RequestParam("datefinconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinConge, 
-					@RequestParam("infosupplconge") String infoSupplConge, 
+					@RequestParam("infosupplconge") String infoSupplConge,
+					@RequestParam("numnoteserviceconge") String numNoteDeSvceConge,
+					@RequestParam("numautorisatsortie") String numAutDeSortie, 
 					@RequestParam("datedepartautorisatsortie") LocalDate dateDepartAutorisatSortie,
-					@RequestParam("datefinautorisatSortie") LocalDate dateRetourAutorisatSortie,
+					@RequestParam("dateretourautorisatsortie") LocalDate dateRetourAutorisatSortie,
 					@RequestParam("villeautorisatsortie") String villeAutorisatSortie,
-					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, HttpServletRequest request, Model model){
+					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, 
+					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model){
 		
-		var savedConge = congeService.saveCongeEmploye(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge, dateDepartAutorisatSortie, dateRetourAutorisatSortie, villeAutorisatSortie, paysAutorisatSortie);
+		var savedConge = congeService.savePackCongeEmploye(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge,
+								numNoteDeSvceConge, numAutDeSortie, dateDepartAutorisatSortie, dateRetourAutorisatSortie,
+								villeAutorisatSortie, paysAutorisatSortie, motifSortie);
 		
 		if (Objects.nonNull(savedConge)){
 			model.addAttribute("resultTraitement", "Création de congé effectuée avec succès.");

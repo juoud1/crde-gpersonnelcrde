@@ -5,6 +5,7 @@ as_date_retour TIMESTAMP(9) WITH TIME ZONE,
 as_ville VARCHAR(30), 
 as_pays VARCHAR(40), 
 as_num VARCHAR(12),
+motif_sortie VARCHAR(60),
 status_as VARCHAR(15),
 date_status_as TIMESTAMP(9) WITH TIME ZONE, 
 conge_id long,
@@ -12,5 +13,5 @@ as_cree_le TIMESTAMP(9) WITH TIME ZONE, as_cree_par VARCHAR(15),
 as_modifie_le TIMESTAMP(9) WITH TIME ZONE, as_modifie_par VARCHAR(15),
 constraint fk_as_conge FOREIGN key (conge_id) references conge(id)
 );
-insert into autorisation_sortie (as_num, as_date_depart, as_date_retour, as_ville, as_pays, status_as, date_status_as, conge_id, as_cree_le, as_cree_par, as_modifie_le, as_modifie_par) 
-values ('021', '20250813', '20250910', 'Toumbouctou', 'Mali', 'Approuvé', '20250806', 1L, '20250803', 'admin', '20250806', 'admin');
+insert into autorisation_sortie (as_num, as_date_depart, as_date_retour, motif_sortie, as_ville, as_pays, status_as, date_status_as, conge_id, as_cree_le, as_cree_par, as_modifie_le, as_modifie_par) 
+values ('021', '20250813', '20250910', 'Visite familiale', 'Toumbouctou', 'Mali', 'Approuvé', '20250806', 1L, '20250803', 'admin', '20250806', 'admin');

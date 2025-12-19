@@ -149,7 +149,7 @@
 											</select>
 										</div>
 
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
 												<option value="">Sélectionner un employé</option>
@@ -166,7 +166,7 @@
 											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
 										
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
 										</div>
@@ -175,15 +175,15 @@
 										<!--div id="asbox" class="row w-100 as"-->
 											<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6 as">
 												<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
-												<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control">
+												<input type="text" id="numautorisatsortie" name="numautorisatsortie" class="form-control">
 											</div>
 											<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
-												<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control">
+												<label class="form-label h6" for="datedepartautorisatsortie" th:text="|Date départ|">num</label>
+												<input type="date" id="datedepartautorisatsortie" name="datedepartautorisatsortie" class="form-control">
 											</div>
 											<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
-												<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control">
+												<label class="form-label h6" for="dateretourautorisatsortie" th:text="|Date retour|">num</label>
+												<input type="date" id="dateretourautorisatsortie" name="dateretourautorisatsortie" class="form-control">
 											</div>
 											
 											<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6 as">
@@ -194,6 +194,10 @@
 											<div id="aspaysbox" class="col-lg-5 col-md-5 col-sm-6 as">
 												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
 												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
+											</div>
+											<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
+												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
+												<input type="text" id="motifsortie" name="motifsortie" class="form-control" required>
 											</div>
 										<!--/div-->
 										<hr>
@@ -234,6 +238,7 @@
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');
 		const asPaysBox = document.getElementById('aspaysbox');
+		const asMotifBox = document.getElementById('asmotifbox');
 
 		const legendeFormText = document.getElementById('legcongesform');
 
@@ -247,6 +252,7 @@
 				asVilleBox.style.display='block';
 				asPaysBox.style.display='block';
 				asBox.style.display='block';
+				asMotifBox.style.display='block';
 			} else { 
 				legendeFormText.innerText='Ajouter un Congé';
 				asNumBox.style.display='none';
@@ -255,6 +261,7 @@
 				asVilleBox.style.display='none';
 				asPaysBox.style.display='none';
 				asBox.style.display='none';
+				asMotifBox.style.display='none';
 			}
 		}
 

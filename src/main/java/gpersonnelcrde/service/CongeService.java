@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import gpersonnelcrde.domain.dto.CongeDto;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.exception.CongeServiceException;
+import gpersonnelcrde.repository.AutorisationSortieRepository;
 import gpersonnelcrde.repository.CongeRepository;
 import gpersonnelcrde.repository.EmployeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,10 +27,13 @@ public class CongeService {
 	private final static Logger logger = LoggerFactory.getLogger(CongeService.class);
 	private final CongeRepository congeRepository;
 	private final EmployeRepository employeRepository;
+	private final AutorisationSortieRepository autorisationSortieRepository;
 
-	public CongeService(CongeRepository congeRepository, EmployeRepository employeRepository) {
+	public CongeService(CongeRepository congeRepository, EmployeRepository employeRepository, AutorisationSortieRepository autorisationSortieRepository) {
 		this.congeRepository = congeRepository;
 		this.employeRepository = employeRepository;
+		this.autorisationSortieRepository = autorisationSortieRepository;
+		logger.info("composant congé service initialisé avec succès".toUpperCase());
 	}
 
 	public List<CongeDto> getAllConges() {
@@ -62,19 +66,56 @@ public class CongeService {
 		return congeMapper(optionalAffect);
 	}
 
-	public CongeDto saveCongeEmploye(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
-										LocalDate dateDepartAutorisatSortie, LocalDate dateRetourAutorisatSortie, 
-										String villeAutorisatSortie, String paysAutorisatSortie){
-		var congeDto = getCongeDtoFromWebParm(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge, dateDepartAutorisatSortie, dateRetourAutorisatSortie, villeAutorisatSortie, paysAutorisatSortie);
-		return saveCongeEmploye(congeDto);			
+	public CongeDto savePackCongeEmploye(final String matriculeEmpConge, final LocalDate dateDebConge, final LocalDate dateFinConge, 
+										final String infoSupplConge, final String numNoteServiceConge, final String numAutorisatSortie,
+										final LocalDate dateDepartAutorisatSortie, final LocalDate dateRetourAutorisatSortie, 
+										final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
+		
+		var congeDto = getPackCongeDtoFromWebParm(matriculeEmpConge, dateDebConge, dateFinConge, 
+										infoSupplConge, numNoteServiceConge, numAutorisatSortie,
+										dateDepartAutorisatSortie, dateRetourAutorisatSortie, 
+										villeAutorisatSortie, paysAutorisatSortie, motifSortie);
+	
+		return savePackCongeEmploye(congeDto);			
 	}
 
-	public CongeDto saveCongeEmploye(final CongeDto congeDtoToSave){
+	public CongeDto savePackCongeEmploye(final CongeDto congeDtoToSave){
 
 		return congeDtoToSave;
 	}
 
+	private CongeDto getPackCongeDtoFromWebParm(final String matriculeEmpConge, final LocalDate dateDebConge, final LocalDate dateFinConge, 
+												final String infoSupplConge, final String numNoteServiceConge, final String numAutorisatSortie,
+												final LocalDate dateDepartAutorisatSortie, final LocalDate dateRetourAutorisatSortie, 
+												final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
+		
+		var congeDto = new CongeDto();
+		congeDto.setDateDebutConge(dateDebConge);
+		congeDto.setDateDepartAutorisatSortie(dateDepartAutorisatSortie);
+		congeDto.setDateFinConge(dateFinConge);
+		congeDto.setDateRetourAutorisatSortie(dateRetourAutorisatSortie);
+		congeDto.setDateStatusConge(LocalDate.now());
+		congeDto.setEmployeCivilite(null);
+		congeDto.setEmployeFonction(null);
+		congeDto.setEmployeMatricule(matriculeEmpConge);
+		congeDto.setEmployeNom(null);
+		congeDto.setInfoSupplementaires(infoSupplConge);
+		congeDto.setNumAutorisatSortie(numAutorisatSortie);
+		congeDto.setNumNoteServiceConge(numNoteServiceConge);
+		congeDto.setMotifSortie(motifSortie);
+		
+		return new CongeDto();
+	}
+
 	private CongeDto getCongeDtoFromWebParm(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
+												LocalDate dateDepartAutorisatSortie, LocalDate dateRetourAutorisatSortie, 
+												String villeAutorisatSortie, String paysAutorisatSortie){
+		
+		
+		return new CongeDto();
+	}
+
+	private CongeDto getAutorisatFromWebParm(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
 												LocalDate dateDepartAutorisatSortie, LocalDate dateRetourAutorisatSortie, 
 												String villeAutorisatSortie, String paysAutorisatSortie){
 		
