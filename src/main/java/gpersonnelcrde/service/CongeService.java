@@ -8,11 +8,14 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.dto.CongeDto;
 import gpersonnelcrde.domain.entities.Conge;
+import gpersonnelcrde.exception.CongeServiceException;
 import gpersonnelcrde.repository.CongeRepository;
 import gpersonnelcrde.repository.EmployeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +23,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 @Transactional
 public class CongeService {
+	private final static Logger logger = LoggerFactory.getLogger(CongeService.class);
 	private final CongeRepository congeRepository;
 	private final EmployeRepository employeRepository;
 
@@ -102,5 +106,39 @@ public class CongeService {
 		cDto.setNumNoteServiceConge(String.valueOf(conge.getId()));
 
 		return cDto;
+	}
+
+	/**
+	 * Traitement de maj des congés qui ont été déjà effectués/complétés
+	 * 	Du coup les employés concernés dans ces congés auront automatiquement le status En Service
+	 *  donc disponible
+	 *
+	 * @param dateDebTrtmt
+	 * @param dateFinTrtmt
+	 * @throws CongeServiceException
+	 */
+	public void updateCongesEffectuees(LocalDate dateDebTrtmt, LocalDate dateFinTrtmt) throws CongeServiceException {
+		if (Objects.isNull(dateDebTrtmt) && Objects.isNull(dateFinTrtmt)){
+			logger.warn("Impossible d'effectuer le traitement de reprise du travail par les employés suite aux missions effectuées car les dates sont vides ou null");
+			throw new CongeServiceException("Les dates de traitements sont obligatoires pour permettre la mise à jour du status des employés et des missions déjà effectuées.");
+		}
+
+		if ( Objects.nonNull(dateDebTrtmt) && Objects.nonNull(dateFinTrtmt) && dateDebTrtmt.isAfter(dateFinTrtmt)){
+			logger.warn("Impossible d'effectuer le traitement de reprise du travail par les employés suite aux missions effectuées car la date de début {} est plus grande que celle de fin {} de traitement", dateDebTrtmt, dateFinTrtmt);
+			throw new CongeServiceException("Les dates de traitements sont incohérentes et ne permettent pas la mise à jour du status des employés et des missions déjà effectuées.");
+		}
+
+		var congesEffectues = this.congeRepository.findAll().parallelStream()
+				.filter(c -> c.getStatusConge().equalsIgnoreCase("Approuvé") && c.getDateFinConge().isBefore(dateDebTrtmt))
+				.map(cApp -> {
+						cApp.setStatusConge("Effectué");
+						cApp.setDateStatusConge(dateDebTrtmt);
+						return cApp;
+					})
+				.toList();
+		logger.info("{} congé(s) approuvé(s) qui sont déjà effectué(s).", congesEffectues.size());
+		
+		var resultMaj = this.congeRepository.saveAllAndFlush(congesEffectues);
+		logger.info("{} mise à jour(s) de congés(s) effectué(s) dans la base de données avec succès.", resultMaj.size());
 	}
 }

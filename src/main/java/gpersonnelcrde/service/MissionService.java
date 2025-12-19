@@ -17,13 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.dto.MissionDto;
 import gpersonnelcrde.domain.entities.Mission;
+import gpersonnelcrde.exception.MissionServiceException;
 import gpersonnelcrde.repository.MissionRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
 public class MissionService {
-private final static Logger logger = LoggerFactory.getLogger(MissionService.class);
+	private final static Logger logger = LoggerFactory.getLogger(MissionService.class);
 
 	private final MissionRepository missionRepository;
 	
@@ -233,5 +234,39 @@ private final static Logger logger = LoggerFactory.getLogger(MissionService.clas
 		missionToSave.setMissionModifieePar("admin");
 
 		return missionToSave;
+	}
+
+	/**
+	 * Traitement de maj des missions qui ont été déjà effectuées/complétées
+	 * 	Du coup les employés impliqués dans ces missions auront automatiquement le status En Service
+	 * donc disponible pour d'autre mission par exemple
+	 *
+	 * @param dateDebTrtmt
+	 * @param dateFinTrtmt
+	 * @throws MissionServiceException
+	 */
+	public void updateMissionsEffectuees(LocalDate dateDebTrtmt, LocalDate dateFinTrtmt) throws MissionServiceException{
+		if (Objects.isNull(dateDebTrtmt) && Objects.isNull(dateFinTrtmt)){
+			logger.warn("Impossible d'effectuer le traitement de reprise du travail par les employés suite aux missions effectuées car les dates sont vides ou null");
+			throw new MissionServiceException("Les dates de traitements sont obligatoires pour permettre la mise à jour du status des employés et des missions déjà effectuées.");
+		}
+
+		if ( Objects.nonNull(dateDebTrtmt) && Objects.nonNull(dateFinTrtmt) && dateDebTrtmt.isAfter(dateFinTrtmt)){
+			logger.warn("Impossible d'effectuer le traitement de reprise du travail par les employés suite aux missions effectuées car la date de début {} est plus grande que celle de fin {} de traitement", dateDebTrtmt, dateFinTrtmt);
+			throw new MissionServiceException("Les dates de traitements sont incohérentes et ne permettent pas la mise à jour du status des employés et des missions déjà effectuées.");
+		}		
+
+		var missionsEffectuees = this.missionRepository.findAll().parallelStream()
+			.filter(m -> m.getStatusMission().equalsIgnoreCase("Approuvée") && m.getDateRetour().isBefore(dateDebTrtmt))
+			.map(mApp -> {
+							mApp.setStatusMission("Effectuée");
+							mApp.setDateStatusMission(dateDebTrtmt);
+							return mApp;
+				})
+			.toList();
+		logger.info("{} mission(s) approuvée(s) qui sont déjà effectuée(s).", missionsEffectuees.size());
+		
+		var resultMaj = this.missionRepository.saveAllAndFlush(missionsEffectuees);
+		logger.info("{} mise à jour(s) de mission(s) effectuée(s) dans la base de données avec succès.", resultMaj.size()); 
 	}
 }

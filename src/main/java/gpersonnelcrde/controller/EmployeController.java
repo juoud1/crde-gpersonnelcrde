@@ -58,6 +58,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class EmployeController {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeController.class);
+	
 	private final StatusService statusService;
 	private final TypeEmployeService typeEmployeService;
 	private final FonctionService fonctionService;
@@ -74,7 +75,7 @@ public class EmployeController {
 		this.lieuAffectationService = lieuAffectationService;
 		this.employeService = employeService;
 		this.stockagePhotoEmployeService = stockagePhotoEmployeService;
-		logger.info("composant-de-présenataion de traitement des données employé/stagiaire initialisé avec succès!");
+		logger.info("composant-de-présentaion de traitement des données employé/stagiaire initialisé avec succès!".toUpperCase());
 	}
 
 	@GetMapping ("/employes-crde.html")
