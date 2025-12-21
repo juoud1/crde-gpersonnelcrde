@@ -4,11 +4,13 @@ date_debut_conge TIMESTAMP(9) WITH TIME ZONE,
 date_fin_conge TIMESTAMP(9) WITH TIME ZONE,
 info_supplementaires VARCHAR(60), 
 status_conge VARCHAR(15),
-date_status_conge TIMESTAMP(9) WITH TIME ZONE,  
+date_status_conge TIMESTAMP(9) WITH TIME ZONE, 
+num_note_service_conge VARCHAR(12),
+type_demande_conge VARCHAR(30),
 employe_id long,
 conge_cree_le TIMESTAMP(9) WITH TIME ZONE, conge_cree_par VARCHAR(15), 
 conge_modifie_le TIMESTAMP(9) WITH TIME ZONE, conge_modifie_par VARCHAR(15),
 constraint fk_conge_emp FOREIGN key (employe_id) references employe(id)
 );
-insert into conge (date_debut_conge, date_fin_conge, info_supplementaires, status_conge, date_status_conge, employe_id) 
-values ('20250812', '20250912', 'Vaccances de 1 mois avec possibilité de faire un déplacemt à ext.', 'Approuvé', '20250806', 2L);
+insert into conge (num_note_service_conge, type_demande_conge, date_debut_conge, date_fin_conge, info_supplementaires, status_conge, date_status_conge, employe_id, conge_cree_le, conge_cree_par, conge_modifie_le, conge_modifie_par) 
+values ('012', 'Congé et autorisation sortie', '20250812', '20250912', 'Vaccances de 1 mois avec possibilité de faire un déplacemt à ext.', 'Approuvé', '20250806', 2L, '20250803', 'admin', '20250806', 'admin');

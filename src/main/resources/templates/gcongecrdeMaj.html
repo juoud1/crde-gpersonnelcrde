@@ -124,41 +124,46 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" style="font-size: small; font-weight: bold;">
-							GÉRER LES ABSENCES ET CONGÉS DES EMPLOYÉS
+							GÉRER LES ABSENCES, CONGÉS ET AUTORISATIONS DE SORTIE
 						</a>
 					</div>
 					<div id="collapsemajconge" data-bs-parent="#main-app">
 						<div class="card-body z-0 p-auto m-auto">
 							<div class="row bg-light">
-								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
-									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								<div class="col-3 d-flex justify-content-center z-0 position-relative" style="margin: 0; padding: auto;">
+									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-										<legende class="h4 mb-3 text-center">Mettre à jour les données de congé</legende>
+										<legende class="h4 mb-3 text-center" id="legcongesform">Mettre à jour les données de congé</legende>
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numnoteserviceconge" th:text="|Congé N°|">num</label>
-											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control" disabled>
+										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
+											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
+											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control">
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
-											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" required>
-												<option th:value="${savedConge.numNoteServiceConge}" th:text="${savedConge.typeDemandeConge}">type de mission</option>
-												<option th:value="|Congé avec autorisation de sortie|" th:text="|Congé avec autorisation de sortie|">type de mission</option>
-												<option th:value="|Congé sans autorisation de sortie|" th:text="|Congé sans autorisation de sortie|">type de mission</option>
+											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" required>
+												<option th:value="${savedConge.typeDemandeConge}" th:text="${savedConge.typeDemandeConge}">Sélectionner un type cge</option>
+												<option th:value="|Congé|" th:text="|Congé|">type de congé</option>
+												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
 											</select>
 										</div>
+										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
+											<label class="form-label h6" for="numconge" th:text="|N° Congé|">num</label>
+											<input type="text" id="numconge" name="numconge" th:value="${savedConge.numConge}" class="form-control" disabled>
+										</div>
+										<hr>
 										
-										
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">civ</label>
 											<select id="missempnom" name="matriculeempconge" class="form-select">
 												<option th:value="${savedConge.employeMatricule}" th:text="${savedConge.employeNom}">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
-
+										<hr>
+										
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedebconge" th:text="|Date début|">civ</label>
 											<input type="date" id="datedebconge" name="datedebconge" th:value="${savedConge.dateDebutConge}" class="form-control" placeholder="Date du départ" required>
@@ -167,22 +172,55 @@
 											<label class="form-label h6" for="datefinconge" th:text="|Date fin|">civ</label>
 											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" placeholder="Date de retour" >
 										</div>
-
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<hr>
+										
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control">
 										</div>
+										<hr id="asbox">
+
+										<div id="asnumasbox" class="col-lg-2 col-md-2 col-sm-6">
+											<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
+											<input type="text" id="numautorisatSortie" name="numautorisatSortie" th:value="${savedConge.numAutorisatSortie}" class="form-control">
+										</div>
+										<div id="asnumbox" class="col-lg-2 col-md-2 col-sm-6">
+											<label class="form-label h6" for="numas" th:text="|N°|">num</label>
+											<input type="text" id="numas" name="numas" th:value="${savedConge.numAutSortie}" class="form-control" disabled>
+										</div>
+										<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
+											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" th:value="${savedConge.dateDepartAutorisatSortie}" class="form-control">
+										</div>
+										<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
+											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" th:value="${savedConge.dateRetourAutorisatSortie}" class="form-control">
+										</div>
+					
+										<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville de destination|">civ</label>
+											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination" required>
+										</div>
+
+										<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6">
+											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
+											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination" required>
+										</div>
+										<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
+												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
+												<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" required>
+											</div>
 										<hr>
 
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="statusconge" th:text="|Status congé|">civ</label>
 											<select id="statusconge" name="statusconge" class="form-select">
 												<option th:value="${savedConge.statusConge}" th:text="${savedConge.statusConge}">status</option>
-												<option th:value="|En attente de validation|" th:text="|En attente de validation|">officielle</option>
-												<option th:value="|Approuvée|" th:text="|Approuvée|">officielle</option>
-												<option th:value="|Reportée|" th:text="|Reportée|">officielle</option>
-												<option th:value="|Suspendue|" th:text="|Suspendue|">officielle</option>
-												<option th:value="|Annulée|" th:text="|Annulée|">officielle</option>
+												<option th:value="|En attente|" th:text="|En attente|">officielle</option>
+												<option th:value="|Approuvé|" th:text="|Approuvé|">officielle</option>
+												<option th:value="|Reporté|" th:text="|Reporté|">officielle</option>
+												<option th:value="|Suspendu|" th:text="|Suspendu|">officielle</option>
+												<option th:value="|Annulé|" th:text="|Annulé|">officielle</option>
 												<option th:value="|Autre|" th:text="|Autre|">Autre</option>
 											</select>
 										</div>
@@ -192,38 +230,14 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
-											<input type="text" id="numautorisatSortie" name="numautorisatSortie" th:value="${savedConge.numNoteServiceConge}" class="form-control">
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="datedepartautorisatSortie" th:text="|Date départ|">num</label>
-											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" th:value="${savedConge.dateDepartAutorisatSortie}" class="form-control">
-										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="dateretourautorisatSortie" th:text="|Date retour|">num</label>
-											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" th:value="${savedConge.dateRetourAutorisatSortie}" class="form-control">
-										</div>
-
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville de destination|">civ</label>
-											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination" required>
-										</div>
-
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
-											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination" required>
-										</div>
-										<hr>
-
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier le congé|"> Modif</button>
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">	
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
 											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>
 										
 									</form>
@@ -250,6 +264,40 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allMissions = [[${allMissions}]];
+
+		const typeDemandeSelect = document.getElementById('typedemande');
+		const asBox = document.getElementById('asbox');
+		const asNumBox = document.getElementById('asnumbox');
+		const asNumAsBox = document.getElementById('asnumasbox');
+		const asDateDepBox = document.getElementById('asdatedepbox');
+		const asDateRetBox = document.getElementById('asdateretbox');
+		const asVilleBox = document.getElementById('asvillebox');
+		const asPaysBox = document.getElementById('aspaysbox');
+
+		const legendeFormText = document.getElementById('legcongesform');
+
+		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
+		function typeDemandeSelectChange() {
+			if (typeDemandeSelect.options[typeDemandeSelect.selectedIndex].value !== 'Congé') {
+				legendeFormText.innerText='Mettre à jour Congé et Autorisation de Sortie';
+				asNumBox.style.display='block';
+				asNumAsBox.style.display='block';
+				asDateDepBox.style.display='block';
+				asDateRetBox.style.display='block';
+				asVilleBox.style.display='block';
+				asPaysBox.style.display='block';
+				asBox.style.display='block';
+			} else { 
+				legendeFormText.innerText='Mettre à jour le Congé';
+				asNumBox.style.display='none';
+				asNumAsBox.style.display='none';
+				asDateDepBox.style.display='none';
+				asDateRetBox.style.display='none';
+				asVilleBox.style.display='none';
+				asPaysBox.style.display='none';
+				asBox.style.display='none';
+			}
+		}
 
 		// Impression principale et tri personnalisée
 		function printMissions() {

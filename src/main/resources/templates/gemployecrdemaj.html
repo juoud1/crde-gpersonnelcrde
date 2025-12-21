@@ -124,17 +124,17 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<a class="btn"  href="#clpseGpernonnel" style="font-size: medium; font-weight: bold;">
-							GÉRER LES EMPLOYÉS ET/OU LEUR STATUS
+							GÉRER LES EMPLOYÉS/STAGIAIRES ET/OU LEUR STATUS
 						</a>
 					</div>
 					<div id="clpseGpernonnel" data-bs-parent="#main-app">
-						<div class="card-body z-0" style="margin: auto; padding: auto;">
+						<div class="card-body z-0 p-auto m-auto">
 							<div class="row bg-light">
-								<div class="col-3 d-flex justify-content-start z-0 position-relative" style="margin: 0;">
-									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								<div class="col-3 d-flex justify-content-center z-0 position-relative" style="margin: 0; padding: auto;">
+									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
-								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" method = "post" th:action="@{/employe-crde-m.html}">
+								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative" style="margin: 0; padding: auto;">
+									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde-m.html}">
 										<legende class="h4 mb-3 text-center">Modifier un employé ou stagiaire</legende>
 										<hr>
 										
@@ -159,32 +159,6 @@
 											<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" />
 										</div>
 										<hr>
-
-										<!--div class="col-lg-11 col-md-11 col-sm-11"-->
-											<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
-											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
-											<picture>
-  												<source th:srcset="${savedEmploye.empEmplacementPhoto}" type="image/svg+xml">
-												<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
-											</picture>
-											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file"-->
-											<!--div class="input-group">
-											<label class="form-label h6 me-auto" for="empphoto" th:text="|Emplacement photo|">civ</label>
-											<a class="aempphotoemploye" th:href="${savedEmploye.empEmplacementPhoto}">
-												<img id="empphotoemploye" th:src="${savedEmploye.empEmplacementPhoto}" th:alt="${savedEmploye.empEmplacementPhoto}" style="width:25%">
-											</a>
-											<input type="file" id="empphoto" name="empphoto" th:onload="chargerPhotoEmploye(event)" th:onchange="chargerPhotoEmploye(event)" th:onloadeddata="document.getElementById('empphotoemploye').src = window.URL.createObjectURL(${savedEmploye.empEmplacementPhoto})" class="form-control-file">
-											</div-->
-											<!--div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text" id="basic-addon1">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" th:alt="${savedEmploye.empEmplacementPhoto}" style="width:15%">
-												</span>
-												</div>
-												<input type="text" class="form-control" aria-describedby="basic-addon1">
-											</div>
-										</div>
-										<hr-->
 
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="typeemp" th:text="|Type employé(e)|">civ</label>
@@ -212,19 +186,21 @@
 											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
 											<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end" alt="Photo Employé">
 											<input type="file" id="empphoto" name="empphoto" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control-file" disabled-->
-											<div th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
-												<a class="ms-auto" th:href="|#|">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
-												</a>
+											<div class="text-center p-auto" th:if="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+												<fieldset class="text-center align-items p-2">
+													<a class="ms-auto" th:href="|#|">
+														<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
+													</a>
+												</fieldset>
 												<!--fieldset class="text-center p-1"><style="border: #198754; border-style: solid; background-color: chocolate;">
 													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-3" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
 													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file m-auto" onchange="document.getElementById('photo').src =''; document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
 												</fieldset-->
 											</div>
-											<div th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
+											<div class="text-center p-auto" th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
 													<img id="photo" alt="Photo identité" class="img-fluid rounded float-center d-block mx-auto ms-auto me-auto mb-3" style="height: 30%; width: 30%" />
-													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto me-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;" disabled>
+													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke; width: 100%;" disabled>
 												</fieldset>
 											</div>
 											<!--div class="input-group">

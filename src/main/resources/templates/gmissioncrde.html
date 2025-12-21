@@ -130,8 +130,8 @@
 					<div id="collapseMissions" data-bs-parent="#main-app">
 						<div class="card-body z-0 p-auto m-auto">
 							<div class="row bg-light">
-								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
-									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								<div class="col-3 d-flex justify-content-center z-0 position-relative" style="margin: 0; padding: auto;">
+									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/mission-emp-crde.html}">
@@ -185,6 +185,7 @@
 											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="infosupplmission" name="infosupplmission" class="form-control" >
 										</div>
+										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
@@ -194,8 +195,8 @@
 											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
 											<input type="text" id="destpays" name="destpays" class="form-control" >
 										</div>
-
-
+										<hr>
+										
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedepartmiss" th:text="|Date départ|">civ</label>
 											<input type="date" id="datedepartmiss" name="datedepartmiss" class="form-control" required>
@@ -208,7 +209,8 @@
 											<label class="form-label h6" for="dureeMiss" th:text="|Durée de la mission|">civ</label>
 											<input type="text" id="dureeMiss" name="dureeMiss" class="form-control">
 										</div>
-
+										<hr>
+										
 										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-10">
 											<!--label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
 											<select id="missempnom" name="missempmatricule" class="form-select" multiple>
@@ -254,7 +256,7 @@
 										</div-->
 										<hr>
 										
-										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button>
 											<a class="btn btn-outline-primary ms-auto" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>

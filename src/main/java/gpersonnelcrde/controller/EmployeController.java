@@ -75,7 +75,7 @@ public class EmployeController {
 		this.lieuAffectationService = lieuAffectationService;
 		this.employeService = employeService;
 		this.stockagePhotoEmployeService = stockagePhotoEmployeService;
-		logger.info("composant-de-présentaion de traitement des données employé/stagiaire initialisé avec succès!".toUpperCase());
+		logger.info("composant-de-présentaion de mappage des ressources des employés/stagiaires initialisé avec succès!".toUpperCase());
 	}
 
 	@GetMapping ("/employes-crde.html")

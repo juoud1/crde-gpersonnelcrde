@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import gpersonnelcrde.domain.dto.AutorisationSortieDto;
 import gpersonnelcrde.domain.dto.CongeDto;
 import gpersonnelcrde.domain.dto.PackCongeDto;
+import gpersonnelcrde.domain.entities.AutorisationSortie;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.exception.CongeServiceException;
 import gpersonnelcrde.repository.AutorisationSortieRepository;
@@ -24,20 +26,20 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
-public class CongeService {
-	private final static Logger logger = LoggerFactory.getLogger(CongeService.class);
+public class PackCongeService {
+	private final static Logger logger = LoggerFactory.getLogger(PackCongeService.class);
 	private final CongeRepository congeRepository;
 	private final EmployeRepository employeRepository;
 	private final AutorisationSortieRepository autorisationSortieRepository;
 
-	public CongeService(CongeRepository congeRepository, EmployeRepository employeRepository, AutorisationSortieRepository autorisationSortieRepository) {
+	public PackCongeService(CongeRepository congeRepository, EmployeRepository employeRepository, AutorisationSortieRepository autorisationSortieRepository) {
 		this.congeRepository = congeRepository;
 		this.employeRepository = employeRepository;
 		this.autorisationSortieRepository = autorisationSortieRepository;
 		logger.info("composant congé service initialisé avec succès".toUpperCase());
 	}
 
-	public List<CongeDto> getAllConges() {
+	public List<PackCongeDto> getAllPackConges() {
 		return congeRepository.findAll().stream()
 				.map(conge -> {
 					var cDto = congeToDtoMapper(conge);
@@ -47,84 +49,98 @@ public class CongeService {
 				.toList();
 	}
 
-	public List<CongeDto> getCongeByEmployeMatricule(final String empMatricule){
+	public List<PackCongeDto> getPackCongeByEmployeMatricule(final String empMatricule){
 		if (StringUtils.isBlank(empMatricule)){
 			return Collections.emptyList();
 		}
 
-		return this.getAllConges().stream()
+		return this.getAllPackConges().stream()
 				.filter(c -> empMatricule.equalsIgnoreCase(c.getEmployeMatricule()))
 				.sorted((c1, c2) -> c2.getDateFinConge().compareTo(c1.getDateDebutConge()))
 				.toList();
 	}
 
-	public Optional<CongeDto> getCongeByNumNoteService(String numNoteServiceConge){
-		if (StringUtils.isBlank(numNoteServiceConge) || !NumberUtils.isDigits(numNoteServiceConge )){
+	public Optional<PackCongeDto> getPackCongeByNumNoteService(final String numConge){
+		if (StringUtils.isBlank(numConge) || !NumberUtils.isDigits(numConge )){
 			return Optional.empty();
 		}
-		var optionalAffect = congeRepository.findById(Long.parseLong(numNoteServiceConge));
+		var optionalConge = congeRepository.findById(Long.parseLong(numConge));
 	
-		return congeMapper(optionalAffect);
+		return packCongeMapper(optionalConge);
 	}
 
-	public CongeDto savePackCongeEmploye(final String matriculeEmpConge, final LocalDate dateDebConge, final LocalDate dateFinConge, 
+	public PackCongeDto savePackCongeEmploye(final String matriculeEmpConge, final String typeDemandeConge, 
+										final LocalDate dateDebConge, final LocalDate dateFinConge, 
 										final String infoSupplConge, final String numNoteServiceConge, final String numAutorisatSortie,
 										final LocalDate dateDepartAutorisatSortie, final LocalDate dateRetourAutorisatSortie, 
 										final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
 		
-		var congeDto = getPackCongeDtoFromWebParm(matriculeEmpConge, dateDebConge, dateFinConge, 
+		var congeDto = getPackCongeDtoFromWebParm(matriculeEmpConge, typeDemandeConge, dateDebConge, dateFinConge, 
 										infoSupplConge, numNoteServiceConge, numAutorisatSortie,
 										dateDepartAutorisatSortie, dateRetourAutorisatSortie, 
 										villeAutorisatSortie, paysAutorisatSortie, motifSortie);
 	
-		return saveCongeEmploye(congeDto);			
+		return savePackCongeEmploye(congeDto);			
 	}
 
-	public CongeDto saveCongeEmploye(final CongeDto congeDtoToSave){
+	public PackCongeDto savePackCongeEmploye(final PackCongeDto congeDtoToSave){
 
 		return congeDtoToSave;
 	}
 
-	private CongeDto getPackCongeDtoFromWebParm(final String matriculeEmpConge, final LocalDate dateDebConge, final LocalDate dateFinConge, 
+	private PackCongeDto getPackCongeDtoFromWebParm(final String matriculeEmpConge, final String typeDemandeConge,
+												final LocalDate dateDebConge, final LocalDate dateFinConge, 
 												final String infoSupplConge, final String numNoteServiceConge, final String numAutorisatSortie,
 												final LocalDate dateDepartAutorisatSortie, final LocalDate dateRetourAutorisatSortie, 
 												final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
 		
-		var congeDto = new CongeDto();
-		congeDto.setDateDebutConge(dateDebConge);
-		//congeDto.setDateDepartAutorisatSortie(dateDepartAutorisatSortie);
-		congeDto.setDateFinConge(dateFinConge);
-		//congeDto.setDateRetourAutorisatSortie(dateRetourAutorisatSortie);
-		congeDto.setDateStatusConge(LocalDate.now());
-		congeDto.setEmployeCivilite(null);
-		congeDto.setEmployeFonction(null);
-		congeDto.setEmployeMatricule(matriculeEmpConge);
-		congeDto.setEmployeNom(null);
-		congeDto.setInfoSupplementaires(infoSupplConge);
-		//congeDto.setNumAutorisatSortie(numAutorisatSortie);
-		congeDto.setNumNoteServiceConge(numNoteServiceConge);
-		//congeDto.setMotifSortie(motifSortie);
 		
-		return congeDto;
+		var congeEmploye = employeRepository.findByEmpMatricule(matriculeEmpConge)
+								.orElseThrow(() -> new EntityNotFoundException(matriculeEmpConge + " est un matricule employé inexistant."));
+
+		var packCongeDto = new PackCongeDto();
+		packCongeDto.setDateDebutConge(dateDebConge);
+		packCongeDto.setDateDepartAutorisatSortie(dateDepartAutorisatSortie);
+		packCongeDto.setDateFinConge(dateFinConge);
+		packCongeDto.setDateRetourAutorisatSortie(dateRetourAutorisatSortie);
+		packCongeDto.setDateStatusConge(LocalDate.now());
+		packCongeDto.setDateStatusAutorisatSortie(LocalDate.now());
+		packCongeDto.setEmployeCivilite(congeEmploye.getEmpCivilite());
+		packCongeDto.setEmployeFonction(congeEmploye.getEmpFonction().getFonctionCode());
+		packCongeDto.setEmployeMatricule(matriculeEmpConge);
+		packCongeDto.setEmployeNom(String.join(", ", congeEmploye.getEmpNom(), congeEmploye.getEmpPren()));
+		packCongeDto.setInfoSupplementaires(infoSupplConge);
+		packCongeDto.setNumAutorisatSortie(numAutorisatSortie);
+		packCongeDto.setNumNoteServiceConge(numNoteServiceConge);
+		packCongeDto.setMotifSortie(motifSortie);
+		packCongeDto.setNumAutSortie(null);
+		packCongeDto.setNumConge(null);
+		packCongeDto.setPaysAutorisatSortie(paysAutorisatSortie);
+		packCongeDto.setVilleAutorisatSortie(villeAutorisatSortie);
+		packCongeDto.setStatusConge("En attente");
+		packCongeDto.setStatusAutorisatSortie("En attente");
+		packCongeDto.setTypeDemandeConge(typeDemandeConge);
+		
+		return packCongeDto;
 	}
 
-	private CongeDto getCongeDtoFromWebParm(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
+	private PackCongeDto getPackCongeDtoFromWebParm(String matriculeEmpConge, String typeDemandeConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
 												LocalDate dateDepartAutorisatSortie, LocalDate dateRetourAutorisatSortie, 
 												String villeAutorisatSortie, String paysAutorisatSortie){
 		
 		
-		return new CongeDto();
+		return new PackCongeDto();
 	}
 
-	private CongeDto getAutorisatFromWebParm(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
+	private AutorisationSortieDto getAutorisatFromWebParm(String matriculeEmpConge, LocalDate dateDebConge, LocalDate dateFinConge, String infoSupplConge,
 												LocalDate dateDepartAutorisatSortie, LocalDate dateRetourAutorisatSortie, 
 												String villeAutorisatSortie, String paysAutorisatSortie){
 		
 		
-		return new CongeDto();
+		return new AutorisationSortieDto();
 	}
 
-	private Optional<CongeDto> congeMapper(Optional<Conge> optConge){
+	private Optional<PackCongeDto> packCongeMapper(Optional<Conge> optConge){
 		if (!optConge.isPresent()){
 			return Optional.empty();
 		}
@@ -134,22 +150,45 @@ public class CongeService {
 		return Optional.of(cDto);
 	}
 
-	private CongeDto congeToDtoMapper(final Conge conge){
+	private PackCongeDto congeToDtoMapper(final Conge conge){
 	    if (Objects.isNull(conge)){
             throw new EntityNotFoundException("L'entité congé ne doit être null");
 		}
 
-	    var congeEmploye = employeRepository.findByEmpMatricule(conge.getEmploye().getEmpMatricule());
-		var cDto = new CongeDto();
+		AutorisationSortie asEmploye = autorisationSortieRepository.findByConge(conge).stream()
+							.filter(as -> as.getStatusAs().equalsIgnoreCase(conge.getStatusConge()))
+							.findFirst()
+							.orElseGet(AutorisationSortie::new);					
+		logger.info("Autorisation de sortie n° {} enregistré sous le n° {}", asEmploye.getAsNum(), asEmploye.getId());
+
+		var congeEmploye = employeRepository.findByEmpMatricule(conge.getEmploye().getEmpMatricule());
+		//logger.info("Congé de l'employé {}", congeEmploye.toString());
+
+		var cDto = new PackCongeDto();
 		cDto.setDateDebutConge(conge.getDateDebutConge());
 		cDto.setDateFinConge(conge.getDateDebutConge());
+		cDto.setDateStatusConge(conge.getDateStatusConge());
 		cDto.setEmployeMatricule(congeEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
 		cDto.setEmployeCivilite(congeEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
 		cDto.setEmployeNom(String.join(", ", congeEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
 				congeEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
 		cDto.setEmployeFonction(congeEmploye.orElseThrow(EntityNotFoundException::new).getEmpFonction().getFonction());
 		cDto.setInfoSupplementaires(conge.getInfoSupplementaires());
-		cDto.setNumNoteServiceConge(String.valueOf(conge.getId()));
+		cDto.setNumNoteServiceConge(String.valueOf(conge.getNumNoteServiceConge()));
+		cDto.setNumConge(String.valueOf(conge.getId()));
+		cDto.setStatusConge(conge.getStatusConge());
+		cDto.setTypeDemandeConge(conge.getTypeDemandeConge());
+
+		cDto.setDateDepartAutorisatSortie(asEmploye.getAsDateDepart());
+		cDto.setDateRetourAutorisatSortie(asEmploye.getAsDateRetour());
+		cDto.setDateStatusAutorisatSortie(asEmploye.getDateStatusAs());
+		cDto.setMotifSortie(asEmploye.getMotifSortie());
+		cDto.setNumAutSortie(String.valueOf(asEmploye.getId()));
+		cDto.setNumAutorisatSortie(asEmploye.getAsNum());
+		cDto.setPaysAutorisatSortie(asEmploye.getAsPays());
+		cDto.setStatusAutorisatSortie(asEmploye.getStatusAs());
+		cDto.setVilleAutorisatSortie(asEmploye.getAsVille());
+		logger.info("{} n° {} enregistré sous le n° {}", cDto.getTypeDemandeConge(), cDto.getNumAutorisatSortie(), cDto.getNumAutSortie());
 
 		return cDto;
 	}
@@ -163,7 +202,7 @@ public class CongeService {
 	 * @param dateFinTrtmt
 	 * @throws CongeServiceException
 	 */
-	public void updateCongesEffectuees(LocalDate dateDebTrtmt, LocalDate dateFinTrtmt) throws CongeServiceException {
+	public void updatePackCongesEffectuees(LocalDate dateDebTrtmt, LocalDate dateFinTrtmt) throws CongeServiceException {
 		if (Objects.isNull(dateDebTrtmt) && Objects.isNull(dateFinTrtmt)){
 			logger.warn("Impossible d'effectuer le traitement de reprise du travail par les employés suite aux missions effectuées car les dates sont vides ou null");
 			throw new CongeServiceException("Les dates de traitements sont obligatoires pour permettre la mise à jour du status des employés et des missions déjà effectuées.");

@@ -2,6 +2,7 @@ package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -17,10 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import gpersonnelcrde.domain.dto.AffectationDto;
 import gpersonnelcrde.domain.dto.EmployeDto;
-import gpersonnelcrde.domain.dto.FonctionDto;
-import gpersonnelcrde.domain.dto.LieuAffectationDto;
 import gpersonnelcrde.domain.dto.MissionEmployeDto;
 import gpersonnelcrde.domain.dto.MissionEmployesDto;
 import gpersonnelcrde.exception.EmployeServiceException;
@@ -41,7 +39,7 @@ public class MissionEmployeController {
 	public MissionEmployeController (MissionEmployeService missionEmployeService, EmployeService employeService) {
 		this.missionEmployeService = missionEmployeService;
 		this.employeService = employeService;
-		logger.info("composant-de-présenataion de mission-employé initialisé avec succès!");
+		logger.info("composant-de-présenataion de mappage des ressources de mission-employé initialisé avec succès!");
 	}
 
 	@GetMapping ("/missions-emp-crde.html")
@@ -144,7 +142,7 @@ public class MissionEmployeController {
 																destVille, destPays, motifMission, infoSupplmission, 
 																missEmpChefMissMatricule, missEmpMatricules);
 		//model = (Model) request.getSession().getAttribute("modelMission");
-		if (StringUtils.isNotBlank(savedMissionEmployes.getNumMission())){
+		if (Objects.nonNull(savedMissionEmployes) && StringUtils.isNotBlank(savedMissionEmployes.getNumMission())){
 			model.addAttribute("resultTraitement", "Création de mission - employé(s) effectuée avec succès.");
 			model.addAttribute("traitement", "création de nouvelle mission");
 		}

@@ -129,8 +129,8 @@
 					<div id="collapseAffectations" data-bs-parent="#main-app">
 						<div class="card-body">
 							<div class="row bg-light">
-								<div class="col-3 d-flex justify-content-start z-0 position-relative m-0">
-									<span class="h1 bg-transparent m-auto p-auto" style="font-size: 6.5em; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="CRDE"></span>
+								<div class="col-3 d-flex justify-content-center z-0 position-relative" style="margin: 0; padding: auto;">
+									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
@@ -210,12 +210,12 @@
 										</div>
 										<hr>
 										
-										<div class="col-lg-9 col-md-9 col-sm-12 text-center mb-4">
+										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<a class="btn btn-outline-primary" th:href="@{/affectation-emp-crde-m.html} + |/| + ${savedAffectation.numNoteService}" formmethod="get" th:text="|Modifier|">Annuler</a>
 											<a class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html}" formmethod="get" th:text="|Ajouter nouvelle affectation|">Annuler</a>
 											<a class="btn btn-primary" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
-										<div class="col-3 text-end">
+										<div class="col-lg-3 col-md-3 col-sm-6 text-center p-2 g-2">
 											<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imprimer le récapitulatif|" th:onclick="printNoteServiceAffect([[${savedAffectation}]])">NS</button>
 										</div>
 									</form>

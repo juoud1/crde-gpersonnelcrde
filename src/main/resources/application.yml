@@ -61,7 +61,7 @@ spring:
      init:
        platform: h2
        mode: always
-       dataLocations: classpath:db/sql/status.sql, classpath:db/sql/lieuxaffectations.sql, classpath:db/sql/fonctions.sql, classpath:db/sql/typesemployes.sql, classpath:db/sql/employes.sql, classpath:db/sql/affectations.sql, classpath:db/sql/conges.sql, classpath:db/sql/missions.sql, classpath:db/sql/visites.sql, classpath:db/sql/utilisateurs.sql, classpath:db/sql/missionsemployes.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
+       dataLocations: classpath:db/sql/status.sql, classpath:db/sql/lieuxaffectations.sql, classpath:db/sql/fonctions.sql, classpath:db/sql/typesemployes.sql, classpath:db/sql/employes.sql, classpath:db/sql/affectations.sql, classpath:db/sql/conges.sql, classpath:db/sql/missions.sql, classpath:db/sql/visites.sql, classpath:db/sql/utilisateurs.sql, classpath:db/sql/missionsemployes.sql, classpath:db/sql/autorisationssortie.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
   thymeleaf:
     cache: false
     enabled: true

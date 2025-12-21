@@ -21,6 +21,8 @@ public class Conge {
 	private String infoSupplementaires;
 	private String statusConge;
 	private LocalDate dateStatusConge;
+	private String numNoteServiceConge;
+	private String typeDemandeConge;
 
 	@JsonIgnore
 	@ManyToOne
@@ -30,6 +32,7 @@ public class Conge {
 	private String congeCreePar;
 	private LocalDateTime congeModifieLe;
 	private String congeModifiePar;
+	
 	public Long getId() {
 		return id;
 	}
@@ -53,6 +56,30 @@ public class Conge {
 	}
 	public void setInfoSupplementaires(String infoSupplementaires) {
 		this.infoSupplementaires = infoSupplementaires;
+	}
+	public String getStatusConge() {
+		return statusConge;
+	}
+	public void setStatusConge(String statusConge) {
+		this.statusConge = statusConge;
+	}
+	public LocalDate getDateStatusConge() {
+		return dateStatusConge;
+	}
+	public void setDateStatusConge(LocalDate dateStatusConge) {
+		this.dateStatusConge = dateStatusConge;
+	}
+	public String getNumNoteServiceConge() {
+		return numNoteServiceConge;
+	}
+	public void setNumNoteServiceConge(String numNoteServiceConge) {
+		this.numNoteServiceConge = numNoteServiceConge;
+	}
+	public String getTypeDemandeConge() {
+		return typeDemandeConge;
+	}
+	public void setTypeDemandeConge(String typeDemandeConge) {
+		this.typeDemandeConge = typeDemandeConge;
 	}
 	public Employe getEmploye() {
 		return employe;
@@ -84,18 +111,7 @@ public class Conge {
 	public void setCongeModifiePar(String congeModifiePar) {
 		this.congeModifiePar = congeModifiePar;
 	}
-	public String getStatusConge() {
-		return statusConge;
-	}
-	public void setStatusConge(String statusConge) {
-		this.statusConge = statusConge;
-	}
-	public LocalDate getDateStatusConge() {
-		return dateStatusConge;
-	}
-	public void setDateStatusConge(LocalDate dateStatusConge) {
-		this.dateStatusConge = dateStatusConge;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,6 +120,10 @@ public class Conge {
 		result = prime * result + ((dateDebutConge == null) ? 0 : dateDebutConge.hashCode());
 		result = prime * result + ((dateFinConge == null) ? 0 : dateFinConge.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
+		result = prime * result + ((statusConge == null) ? 0 : statusConge.hashCode());
+		result = prime * result + ((dateStatusConge == null) ? 0 : dateStatusConge.hashCode());
+		result = prime * result + ((numNoteServiceConge == null) ? 0 : numNoteServiceConge.hashCode());
+		result = prime * result + ((typeDemandeConge == null) ? 0 : typeDemandeConge.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((congeCreeLe == null) ? 0 : congeCreeLe.hashCode());
 		result = prime * result + ((congeCreePar == null) ? 0 : congeCreePar.hashCode());
@@ -140,6 +160,26 @@ public class Conge {
 				return false;
 		} else if (!infoSupplementaires.equals(other.infoSupplementaires))
 			return false;
+		if (statusConge == null) {
+			if (other.statusConge != null)
+				return false;
+		} else if (!statusConge.equals(other.statusConge))
+			return false;
+		if (dateStatusConge == null) {
+			if (other.dateStatusConge != null)
+				return false;
+		} else if (!dateStatusConge.equals(other.dateStatusConge))
+			return false;
+		if (numNoteServiceConge == null) {
+			if (other.numNoteServiceConge != null)
+				return false;
+		} else if (!numNoteServiceConge.equals(other.numNoteServiceConge))
+			return false;
+		if (typeDemandeConge == null) {
+			if (other.typeDemandeConge != null)
+				return false;
+		} else if (!typeDemandeConge.equals(other.typeDemandeConge))
+			return false;
 		if (employe == null) {
 			if (other.employe != null)
 				return false;
@@ -167,9 +207,14 @@ public class Conge {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "Conge [id=" + id + ", dateDebutConge=" + dateDebutConge + ", dateFinConge=" + dateFinConge
-				+ ", infoSupplementaires=" + infoSupplementaires + ", employe=" + employe + "]";
+				+ ", infoSupplementaires=" + infoSupplementaires + ", statusConge=" + statusConge + ", dateStatusConge="
+				+ dateStatusConge + ", numNoteServiceConge=" + numNoteServiceConge + ", typeDemadeConge="
+				+ typeDemandeConge + ", employe=" + employe + ", congeCreeLe=" + congeCreeLe + ", congeCreePar="
+				+ congeCreePar + ", congeModifieLe=" + congeModifieLe + ", congeModifiePar=" + congeModifiePar + "]";
 	}
+	
 }
