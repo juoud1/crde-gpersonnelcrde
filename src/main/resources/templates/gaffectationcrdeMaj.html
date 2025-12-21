@@ -222,12 +222,12 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier|"> Modif</button>
 											<!--button type="submit" class="btn btn-primary">Ajouter</button-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">
 											<button type="button" class="btn btn-warning" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
 										</div>	
 									</form>

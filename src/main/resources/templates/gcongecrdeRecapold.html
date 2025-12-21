@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100" lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,6 +77,7 @@
 							</ul>
 						</li>
 					</ul>
+
 					<ul class="nav navbar-nav m-auto pull-right" sec:authorize="isAuthenticated()">
 						<li>
 							&nbsp; | &nbsp; 
@@ -112,111 +113,84 @@
 		</nav>
 	</header>
 	
-	<div id="main-app" class="w-100 z-0">
-        <div class="container py-5 z-0">
+	<div id="main-app" class="w-100">
+        <div class="container py-5">
 			<div class="text-center my-3">
 				<img th:src="@{/images/blason.png}" alt="Blason de la CRDE" style="margin-top: 2em; max-height: 100px;">
 			</div>
 			<h1 class="mb-4 text-center">GESTION DU PERSONNEL DE LA CRDE</h1>
 
-			<section id="gconges">
-				<div class="card mb-4">
-					<div class="card-header">
-						<a class="collapsed btn" href="#collapseConges" style="font-size: small; font-weight: bold;">
-							GÉRER LES ABSENCES, CONGÉS ET AUTORISATIONS DE SORTIE
-						</a>
-					</div>
-					<div id="collapseConges" data-bs-parent="#main-app">
-						<div class="card-body z-0 p-auto m-auto">
-							<div class="row bg-light">
-								<div class="col-3 d-flex justify-content-center z-0 position-relative" style="margin: 0; padding: auto;">
-									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
-								</div>
-								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="congesform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
-										<legende id="legcongesform" class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
+			<div class="row" style="position: relative;">	
+				<div class="col-lg-12 col-md-12 col-sm-12 desc">
+					<!-- Nouvelle section pour la gestion de missions -->
+					<section id="gconges">
+						<div class="card mb-4">
+							<div class="card-header">
+								<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseConges" style="font-size: small; font-weight: bold;">
+									ABSENCES ET CONGÉS DES EMPLOYÉS
+								</a>
+							</div>
+							<div id="collapseConges" class="collapse show" data-bs-parent="#main-app">
+								<div class="card-body">
+									<h2 class="h4 mb-3 text-center">Ajouter ou modifier une absence ou un congé d'un employé</h2>
+									<form id="congesform" class="row g-3" th:autocomplete="|false|" th:action="@{/conge-emp-crde.html}">
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
-											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control">
+										<div class="col-md-2">
+											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control" placeholder="num. note de service" disabled>
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
-											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
-											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" required>
-												<option th:value="${typCngeValue}" th:text="${typCngeText}">type de mission</option>
-												<option th:value="|Congé|" th:text="|Congé|">type de congé</option>
-												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
-											</select>
+										<div class="col-md-8">
+											<input type="text" id="congeemploye" name="congeemploye" th:value="${savedConge.employeNom}" class="form-control" placeholder="num ordre mission" disabled>
 										</div>
-										<hr>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
-											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
-											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
+										<div class="col-md-2">
+											<input type="date" id="datedebconge" name="datedebconge" th:value="${savedConge.dateDebutConge}" class="form-control" placeholder="Date début congé" disabled>
 										</div>
-										<hr>
-										
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="datedebconge" th:text="|Date de début|">num</label>
-											<input type="date" id="datedebconge" name="datedebconge" class="form-control" required>
+										<div class="col-md-2">
+											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" placeholder="Date fin congé" disabled>
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
-											<label class="form-label h6" for="datefinconge" th:text="|Date de début|">num</label>
-											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
-										</div>
-										<hr>
-										
-										<div class="col-lg-11 col-md-11 col-sm-12">
-											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
-											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
-										</div>
-										<hr id="asbox">
-										
-										<!--div id="asbox" class="row w-100 as"-->
-											<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
-												<input type="text" id="numautorisatsortie" name="numautorisatsortie" class="form-control">
-											</div>
-											<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="datedepartautorisatsortie" th:text="|Date départ|">num</label>
-												<input type="date" id="datedepartautorisatsortie" name="datedepartautorisatsortie" class="form-control">
-											</div>
-											<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="dateretourautorisatsortie" th:text="|Date retour|">num</label>
-												<input type="date" id="dateretourautorisatsortie" name="dateretourautorisatsortie" class="form-control">
-											</div>
-											
-											<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6 as">
-												<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
-												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
-											</div>
 
-											<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6 as">
-												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
-												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
-											</div>
-											<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
-												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" class="form-control" required>
-											</div>
-										<!--/div-->
+										<div class="col-md-9">
+											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control" placeholder="informations supplémentaires s'il y a lieu" disabled>
+										</div>
+										<hr>
+										
+										<div class="col-md-2">
+											<input type="text" id="numautorisatSortie" name="numautorisatSortie" class="form-control" placeholder="num. autorisation sortie" disabled>
+										</div>
+										<div class="col-md-2">
+											<input type="date" id="datedepartautorisatSortie" name="datedepartautorisatSortie" class="form-control" placeholder="Date départ autorisée">
+										</div>
+										<div class="col-md-2">
+											<input type="date" id="dateretourautorisatSortie" name="dateretourautorisatSortie" class="form-control" placeholder="Date retour autorisée">
+										</div>
+										
+										<div class="col-md-4">
+											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville autorisation de sortie" disabled>
+										</div>
+
+										<div class="col-md-4">
+											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays autorisation de sortie" disabled>
+										</div>
 										<hr>
 
-										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
-											<button type="submit" class="btn btn-primary">Ajouter</button>
-											<button type="reset" class="btn btn-dark">Annuler</button>
-											<a class="btn btn-outline-primary ms-auto" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
+										<div class="col-5 text-end">
+											<!--button type="submit" class="btn btn-primary" th:text="|Ajouter le congé|">Ajouter</button>
+											<button type="reset" class="btn btn-dark" th:text="|Annuler|">Ann</button-->
+											<a class="btn btn-dark" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
+											<a class="btn btn-info" th:href="@{/aut-sortie-emp-crde.html}" formmethod="get" th:text="|Demander une aut. de sortie|">Annuler</a>
+										</div>
+										<div class="col-7 text-end mb-2">
+											<button type="button" class="btn btn-warning" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
+											<button type="button" class="btn btn-warning" id="print-autorisat-sortie" th:text="|Imprimer autorisation de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>
 									</form>
+
 								</div>
-							</div>		
+							</div>
 						</div>
-					</div>
+					</section>
 				</div>
-			</section>
+			</div>
         </div>
     </div>
 	<footer class="footer mt-auto py-3" style="background-color:#c2b280;">
@@ -233,40 +207,6 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script  th:inline="javascript">
         let allConges = [[${allConges}]];
-
-		const typeDemandeSelect = document.getElementById('typedemande');
-		const asBox = document.getElementById('asbox');
-		const asNumBox = document.getElementById('asnumbox');
-		const asDateDepBox = document.getElementById('asdatedepbox');
-		const asDateRetBox = document.getElementById('asdateretbox');
-		const asVilleBox = document.getElementById('asvillebox');
-		const asPaysBox = document.getElementById('aspaysbox');
-		const asMotifBox = document.getElementById('asmotifbox');
-
-		const legendeFormText = document.getElementById('legcongesform');
-
-		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
-		function typeDemandeSelectChange() {
-			if (typeDemandeSelect.options[typeDemandeSelect.selectedIndex].value !== 'Congé') {
-				legendeFormText.innerText='Ajouter un Congé et une Autorisation de Sortie';
-				asNumBox.style.display='block';
-				asDateDepBox.style.display='block';
-				asDateRetBox.style.display='block';
-				asVilleBox.style.display='block';
-				asPaysBox.style.display='block';
-				asBox.style.display='block';
-				asMotifBox.style.display='block';
-			} else { 
-				legendeFormText.innerText='Ajouter un Congé';
-				asNumBox.style.display='none';
-				asDateDepBox.style.display='none';
-				asDateRetBox.style.display='none';
-				asVilleBox.style.display='none';
-				asPaysBox.style.display='none';
-				asBox.style.display='none';
-				asMotifBox.style.display='none';
-			}
-		}
 
 		// Impression principale et tri personnalisée
 		function printConges() {

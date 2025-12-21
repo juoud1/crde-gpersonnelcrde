@@ -124,7 +124,7 @@
 				<div class="card mb-4">
 					<div class="card-header">
 						<a class="collapsed btn" data-bs-toggle="collapse" href="#collapseMissions" style="font-size: small; font-weight: bold;">
-							GÉRER LES ABSENCES ET CONGÉS DES EMPLOYÉS
+							GÉRER LES ABSENCES, CONGÉS ET AUTORISATIONS DE SORTIE
 						</a>
 					</div>
 					<div id="collapsemajconge" data-bs-parent="#main-app">
@@ -230,12 +230,12 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center mb-1">
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier le congé|"> Modif</button>
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center mb-3">	
+										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
 											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
 											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>

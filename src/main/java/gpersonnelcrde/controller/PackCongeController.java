@@ -128,9 +128,14 @@ public class PackCongeController {
 			model.addAttribute("resultTraitement", "Création de congé effectuée avec succès.");
 		}
 
+		if (Objects.nonNull(savedConge) && StringUtils.isNotBlank(savedConge.getNumConge())){
+			model.addAttribute("resultTraitement", "Création du pack congé et aut. de sortie de l'employé effectuée avec succès.");
+			model.addAttribute("traitement", "création de nouveau congé");
+		}
+
 		model.addAttribute("savedConge", savedConge);
 
-		return "gcongecrdeRecap";
+		return "gcongecrderecap";
 	}
 
 	@GetMapping ("/conge-emp-crde-m.html/{numConge}")
@@ -156,6 +161,11 @@ public class PackCongeController {
 		var allEmployes = employeService.getAllEmploye(); //futureEmployes.get(); //
 		logger.info("Congé n° {} enregistré sous le n° {}", savedConge.getNumAutorisatSortie(), savedConge.getNumAutSortie());
 
+		if (StringUtils.isNotBlank(savedConge.getNumConge())){
+			model.addAttribute("resultTraitement", "Création du pack congé et aut. de sortie de l'employé effectuée avec succès.");
+			model.addAttribute("traitement", "création de nouveau congé");
+		}
+
 		model.addAttribute("savedConge", savedConge);
 		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 		model.addAttribute("employesEnSvce", allEmployes.stream()
@@ -163,7 +173,7 @@ public class PackCongeController {
 			.toList()
 		);
 							
-		return "gcongecrdeMaj";
+		return "gcongecrdemaj";
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}")

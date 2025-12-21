@@ -215,7 +215,7 @@ public class MissionEmployeService {
 		meDto.setEmployeChefDeMissCivilite(empChefDeMissionDto.getEmpCivilite());
 		meDto.setEmployeChefDeMissFonction(empChefDeMissionDto.getFonction());
 		meDto.setEmployeChefDeMissMatricule(empChefDeMissionDto.getEmpMatricule());
-		meDto.setEmployeChefDeMissNom(empChefDeMissionDto.getEmpNom());
+		meDto.setEmployeChefDeMissNom(String.join(", ", empChefDeMissionDto.getEmpNom(), empChefDeMissionDto.getEmpPren()));
 		meDto.setEmployesMission(eDtos);
 		meDto.setInfoSupplementaires(infoSupplmission);
 		meDto.setMotifMission(motifMission);
