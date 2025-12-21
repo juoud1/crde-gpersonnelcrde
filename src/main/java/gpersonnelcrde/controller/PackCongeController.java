@@ -181,7 +181,7 @@ public class PackCongeController {
 	    var savedCongesEmploye = packCongeService.getPackCongeByEmployeMatricule(employeMatricule);								
 		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
 
-		return "gcongecrdeMaj";
+		return "gcongecrdemaj";
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}/{choixStr}")
