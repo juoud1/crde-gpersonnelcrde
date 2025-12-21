@@ -137,7 +137,7 @@
 										<legende id="legcongesform" class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numnoteserviceconge" th:text="|Congé N°|">num</label>
+											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control">
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
@@ -148,7 +148,8 @@
 												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
 											</select>
 										</div>
-
+										<hr>
+										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
@@ -156,6 +157,7 @@
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
+										<hr>
 										
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedebconge" th:text="|Date de début|">num</label>
@@ -165,6 +167,7 @@
 											<label class="form-label h6" for="datefinconge" th:text="|Date de début|">num</label>
 											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
+										<hr>
 										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
@@ -174,7 +177,7 @@
 										
 										<!--div id="asbox" class="row w-100 as"-->
 											<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6 as">
-												<label class="form-label h6" for="numautorisatSortie" th:text="|Aut. de sortie N°|">num</label>
+												<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
 												<input type="text" id="numautorisatsortie" name="numautorisatsortie" class="form-control">
 											</div>
 											<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6 as">
@@ -191,7 +194,7 @@
 												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
 											</div>
 
-											<div id="aspaysbox" class="col-lg-5 col-md-5 col-sm-6 as">
+											<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6 as">
 												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
 												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
 											</div>

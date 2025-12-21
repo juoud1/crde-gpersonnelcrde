@@ -188,30 +188,32 @@
 											<table class="table table-bordered" id="conges-table">
 												<thead class="table-light">
 													<tr>
-														<th>N°</th>
+														<th style="width: 9%;">N° congé</th>
 														<th>Type demande</th>
-														<th style="width: 150px;">Employé</th>
-														<th tyle="width: 150px;">Fonction</th>
-														<th>Date début</th>
-														<th>Date fin</th>
-														<th tyle="width: 180px;">Détails</th>
-														<th tyle="width: 120px;">Status</th>
-														<th class="p-auto">Actions</th>
+														<th style="width: 13%;">Employé</th>
+														<th style="width: 13%;">Fonction</th>
+														<th style="width: 9%;">Date début</th>
+														<th style="width: 9%;">Date fin</th>
+														<th style="width: 14%;">Détails</th>
+														<th>N° note de svce</th>
+														<th style="width: 11%;">Status</th>
+														<th class="p-auto" style="width: 5%;">Actions</th>
 													</tr>
 												</thead>
 												<tbody>
 													<!-- Les congés seront ajoutées ici dynamiquement -->
 													<tr th:each="conge: ${allConges}">
-														<td th:text="${conge.numNoteServiceConge}">status</td>
+														<td th:text="${conge.numConge}">status</td>
 														<td th:text="${conge.typeDemandeConge}">status</td>
 														<td th:text="${conge.employeCivilite} + | | + ${conge.employeNom}">nom</td>
 														<td th:text="${conge.employeFonction}">nom</td>
 														<td th:text="${conge.dateDebutConge}">email</td>
 														<td th:text="${conge.dateFinConge}">tel</td>
 														<td th:text="${conge.infoSupplementaires}">role</td>
-														<td th:text="${conge.statusConge} + |, | + ${conge.dateStatusConge}">role</td>
+														<td th:text="${conge.numNoteServiceConge}">status</td>
+														<td th:text="${conge.statusConge} + |; du | + ${conge.dateStatusConge}">role</td>
 														<td class="p-auto" style="width: 5%;">
-															<button type="button" th:id="|bt-| + ${conge.numNoteServiceConge}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${conge.numNoteServiceConge}" th:text="|...|">
+															<button type="button" th:id="|bt-| + ${conge.numConge}" class="btn btn-warning" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${conge.numNoteServiceConge}" th:text="|...|">
 																action
 															</button>
 
@@ -226,11 +228,11 @@
 																			<div class="border p-1 mb-2 bg-secondary-subtle">
 																				<header class="h6 mb-1 text-start" th:text="|Données de congé N° | + ${conge.numNoteServiceConge}">Données de l'affectation</header>
 																				<div class="d-flex flex-wrap gap-2 p-2">
-																					<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Modifier le congé|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numNoteServiceConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numNoteServiceConge}" formmethod="get" th:text="|Annuler/Suspendre le congé|">Annuler</a>
-																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
-																					<button type="button" class="btn btn-info align-items ms-auto" th:id=" |AS-|+ ${conge.numNoteServiceConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>
+																					<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Modifier le congé|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Annuler/Suspendre le congé|">Annuler</a>
+																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
+																					<button type="button" class="btn btn-info align-items ms-auto" th:id=" |AS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>
 																				</div>
 																			</div>
 
@@ -305,7 +307,7 @@
 						`<th>Matricule</th><th class='print-col-nom'>Employé</th><th>Date début</th><th>Date fin</th><th class='print-col-email'>Détails</th><th class='print-col-email'>Status</th><th>Num. note de srvce</th></tr></thead><tbody>`;
 					
 					allConges.forEach(conge => {
-						tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br> ${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><td>${conge.statusConge}<br> ${conge.dateStatusConge}</td><td>${conge.numNoteServiceConge }</td></tr>`;
+						tableHtml += `<tr><td>${conge.employeMatricule}</td><td>${conge.employeCivilite}<br> ${conge.employeNom}</td><td>${conge.dateDebutConge}</td><td>${conge.dateFinConge}</td><td>${conge.infoSupplementaires}</td><td>${conge.statusConge}<br> ${conge.dateStatusConge}</td><td>${conge.numConge }</td></tr>`;
 					});
 
 					tableHtml += `</tbody></table>`;

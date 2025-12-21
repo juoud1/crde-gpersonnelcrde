@@ -22,7 +22,7 @@ public class Conge {
 	private String statusConge;
 	private LocalDate dateStatusConge;
 	private String numNoteServiceConge;
-	private String typeDemadeConge;
+	private String typeDemandeConge;
 
 	@JsonIgnore
 	@ManyToOne
@@ -75,11 +75,11 @@ public class Conge {
 	public void setNumNoteServiceConge(String numNoteServiceConge) {
 		this.numNoteServiceConge = numNoteServiceConge;
 	}
-	public String getTypeDemadeConge() {
-		return typeDemadeConge;
+	public String getTypeDemandeConge() {
+		return typeDemandeConge;
 	}
-	public void setTypeDemadeConge(String typeDemadeConge) {
-		this.typeDemadeConge = typeDemadeConge;
+	public void setTypeDemandeConge(String typeDemandeConge) {
+		this.typeDemandeConge = typeDemandeConge;
 	}
 	public Employe getEmploye() {
 		return employe;
@@ -123,7 +123,7 @@ public class Conge {
 		result = prime * result + ((statusConge == null) ? 0 : statusConge.hashCode());
 		result = prime * result + ((dateStatusConge == null) ? 0 : dateStatusConge.hashCode());
 		result = prime * result + ((numNoteServiceConge == null) ? 0 : numNoteServiceConge.hashCode());
-		result = prime * result + ((typeDemadeConge == null) ? 0 : typeDemadeConge.hashCode());
+		result = prime * result + ((typeDemandeConge == null) ? 0 : typeDemandeConge.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
 		result = prime * result + ((congeCreeLe == null) ? 0 : congeCreeLe.hashCode());
 		result = prime * result + ((congeCreePar == null) ? 0 : congeCreePar.hashCode());
@@ -175,10 +175,10 @@ public class Conge {
 				return false;
 		} else if (!numNoteServiceConge.equals(other.numNoteServiceConge))
 			return false;
-		if (typeDemadeConge == null) {
-			if (other.typeDemadeConge != null)
+		if (typeDemandeConge == null) {
+			if (other.typeDemandeConge != null)
 				return false;
-		} else if (!typeDemadeConge.equals(other.typeDemadeConge))
+		} else if (!typeDemandeConge.equals(other.typeDemandeConge))
 			return false;
 		if (employe == null) {
 			if (other.employe != null)
@@ -213,7 +213,7 @@ public class Conge {
 		return "Conge [id=" + id + ", dateDebutConge=" + dateDebutConge + ", dateFinConge=" + dateFinConge
 				+ ", infoSupplementaires=" + infoSupplementaires + ", statusConge=" + statusConge + ", dateStatusConge="
 				+ dateStatusConge + ", numNoteServiceConge=" + numNoteServiceConge + ", typeDemadeConge="
-				+ typeDemadeConge + ", employe=" + employe + ", congeCreeLe=" + congeCreeLe + ", congeCreePar="
+				+ typeDemandeConge + ", employe=" + employe + ", congeCreeLe=" + congeCreeLe + ", congeCreePar="
 				+ congeCreePar + ", congeModifieLe=" + congeModifieLe + ", congeModifiePar=" + congeModifiePar + "]";
 	}
 	

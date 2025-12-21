@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import gpersonnelcrde.domain.dto.AffectationDto;
 import gpersonnelcrde.domain.dto.EmployeDto;
-import gpersonnelcrde.domain.dto.FonctionDto;
-import gpersonnelcrde.domain.dto.LieuAffectationDto;
 import gpersonnelcrde.domain.dto.MissionEmployeDto;
 import gpersonnelcrde.domain.dto.MissionEmployesDto;
 import gpersonnelcrde.exception.EmployeServiceException;
@@ -41,7 +38,7 @@ public class MissionEmployeController {
 	public MissionEmployeController (MissionEmployeService missionEmployeService, EmployeService employeService) {
 		this.missionEmployeService = missionEmployeService;
 		this.employeService = employeService;
-		logger.info("composant-de-présenataion de mission-employé initialisé avec succès!");
+		logger.info("composant-de-présenataion de mappage des ressources de mission-employé initialisé avec succès!");
 	}
 
 	@GetMapping ("/missions-emp-crde.html")

@@ -8,44 +8,46 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import gpersonnelcrde.domain.dto.CongeDto;
 import gpersonnelcrde.domain.dto.EmployeDto;
-import gpersonnelcrde.domain.dto.MissionEmployesDto;
+import gpersonnelcrde.domain.dto.PackCongeDto;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
-import gpersonnelcrde.service.CongeService;
 import gpersonnelcrde.service.EmployeService;
+import gpersonnelcrde.service.PackCongeService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class CongeController {
-	private final CongeService congeService;
+public class PackCongeController {
+	private static final Logger logger = LoggerFactory.getLogger(PackCongeController.class);
+
+	private final PackCongeService packCongeService;
 	private final EmployeService employeService;
 
-	public CongeController(CongeService congeService, EmployeService employeService) {
-		this.congeService = congeService;
+	public PackCongeController(PackCongeService packCongeService, EmployeService employeService) {
+		this.packCongeService = packCongeService;
 		this.employeService = employeService;
+		logger.info("composant-de-présentaion de mappage des ressources de pack/paquettage de congé des employés initialisé avec succès!".toUpperCase());
 	}
 
 	@GetMapping ("/conges-emp-crde.html")
 	public String getGestConges(HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
-	    Future<List<CongeDto>> futureCongesEmployes = null;
+	    Future<List<PackCongeDto>> futurePackCongesEmployes = null;
 		Future<List<EmployeDto>> futureEmployes = null;
 		
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try 
 		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureCongesEmployes = executor.submit(() -> congeService.getAllConges());
+			futurePackCongesEmployes = executor.submit(() -> packCongeService.getAllPackConges());
 			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
@@ -53,7 +55,7 @@ public class CongeController {
 		
 		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
 		
-		var allConges = futureCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allConges = futurePackCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
 		var allEmployes = futureEmployes.get();
 		
 		model.addAttribute("allConges", allConges); //congeService.getAllConges());
@@ -65,19 +67,23 @@ public class CongeController {
 
 	@GetMapping ("/conge-emp-crde.html/{typCnge}")
 	public String getConge(@PathVariable(required = false) String typCnge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
-	    Future<List<CongeDto>> futureCongesEmployes = null;
+	    Future<List<PackCongeDto>> futurePackCongesEmployes = null;
 		Future<List<EmployeDto>> futureEmployes = null;
 		
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try 
 		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureCongesEmployes = executor.submit(() -> congeService.getAllConges());
+			futurePackCongesEmployes = executor.submit(() -> packCongeService.getAllPackConges());
 			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
 		}
+		
 		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
 		
+		var allConges = futurePackCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allEmployes = futureEmployes.get();
+
 		if (StringUtils.isNotBlank(typCnge)){
 			if ("cnge-et-as".equalsIgnoreCase(typCnge)) {
 				model.addAttribute("typCngeValue", "Congé et autorisation sortie");
@@ -90,9 +96,6 @@ public class CongeController {
 			}
 		}
 
-		var allConges = futureCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		var allEmployes = futureEmployes.get();
-
 		/*model.addAttribute("allConges", congeService.getAllConges());
 		model.addAttribute("allEmployes", employeService.getAllEmploye());*/
 
@@ -104,7 +107,8 @@ public class CongeController {
 	}
 
 	@PostMapping("/conge-emp-crde.html")
-	public String addConge(@RequestParam("matriculeempconge") String matriculeEmpConge, 
+	public String addConge(@RequestParam("matriculeempconge") String matriculeEmpConge,  
+					@RequestParam("typedemande") String typeDmdeConge,
 					@RequestParam("datedebconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebConge,
 	                @RequestParam("datefinconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinConge, 
 					@RequestParam("infosupplconge") String infoSupplConge,
@@ -116,7 +120,7 @@ public class CongeController {
 					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, 
 					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model){
 		
-		var savedConge = congeService.savePackCongeEmploye(matriculeEmpConge, dateDebConge, dateFinConge, infoSupplConge,
+		var savedConge = packCongeService.savePackCongeEmploye(matriculeEmpConge, typeDmdeConge, dateDebConge, dateFinConge, infoSupplConge,
 								numNoteDeSvceConge, numAutDeSortie, dateDepartAutorisatSortie, dateRetourAutorisatSortie,
 								villeAutorisatSortie, paysAutorisatSortie, motifSortie);
 		
@@ -129,11 +133,28 @@ public class CongeController {
 		return "gcongecrdeRecap";
 	}
 
-	@GetMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
-	public String getCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
-		var savedConge = congeService.getCongeByNumNoteService(numNoteServiceConge)
-							.orElseGet(CongeDto::new);
-		var allEmployes = employeService.getAllEmploye();
+	@GetMapping ("/conge-emp-crde-m.html/{numConge}")
+	public String getPackCongeByNumNoteSvceConge(@PathVariable String numConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+		Future<PackCongeDto> futurePackCongeEmploye = null;
+		Future<List<EmployeDto>> futureEmployes = null;
+		
+		var executor = Executors.newVirtualThreadPerTaskExecutor();
+		try 
+		{//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+			futurePackCongeEmploye = executor.submit(() -> packCongeService.getPackCongeByNumNoteService(numConge)
+																.orElseGet(PackCongeDto::new));
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+		} catch (Exception  e) {
+			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+		}
+		executor.close();
+
+		PackCongeDto savedConge = futurePackCongeEmploye.get(); //packCongeService.getPackCongeByNumNoteService(numNoteServiceConge) 
+							//.orElseThrow(IllegalArgumentException::new);
+							//.orElseGet(PackCongeDto::new);
+
+		var allEmployes = employeService.getAllEmploye(); //futureEmployes.get(); //
+		logger.info("Congé n° {} enregistré sous le n° {}", savedConge.getNumAutorisatSortie(), savedConge.getNumAutSortie());
 
 		model.addAttribute("savedConge", savedConge);
 		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
@@ -146,16 +167,16 @@ public class CongeController {
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}")
-	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, HttpServletRequest request, Model model){
-	    var savedCongessEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
-		model.addAttribute("savedCongesEmploye", savedCongessEmploye);
+	public String getPackCongesByEmpMatricule(@PathVariable String employeMatricule, HttpServletRequest request, Model model){
+	    var savedCongesEmploye = packCongeService.getPackCongeByEmployeMatricule(employeMatricule);								
+		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
 
 		return "gcongecrdeMaj";
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}/{choixStr}")
 	public String getCongesByEmpMatricule(@PathVariable String employeMatricule, @PathVariable String choixStr, HttpServletRequest request, Model model){
-	    var savedCongesEmploye = congeService.getCongeByEmployeMatricule(employeMatricule);								
+	    var savedCongesEmploye = packCongeService.getPackCongeByEmployeMatricule(employeMatricule);								
 		
 		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
 		model.addAttribute("congeEmpMatricule", employeMatricule);
@@ -165,17 +186,5 @@ public class CongeController {
 		}
 
 		return "gcongesemphistoriq";
-	}
-
-	@DeleteMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
-	public String deleteCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
-
-		return "redirect:/conges-emp-crde.html";
-	}
-
-	@PutMapping ("/conge-emp-crde-m.html/{numNoteServiceConge}")
-	public String putCongeByNumNoteSvceConge(@PathVariable String numNoteServiceConge, HttpServletRequest request, Model model){
-
-		return "redirect:/conges-emp-crde.html";
 	}
 }
