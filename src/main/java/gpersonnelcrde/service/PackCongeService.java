@@ -84,8 +84,19 @@ public class PackCongeService {
 	}
 
 	public PackCongeDto savePackCongeEmploye(final PackCongeDto congeDtoToSave){
-
+		var conge = getCongeFromPack(congeDtoToSave);
+		var as = getAutSortieFromPack(congeDtoToSave);
 		return congeDtoToSave;
+	}
+
+	private Conge getCongeFromPack(final PackCongeDto congeDtoToSave){
+
+		return new Conge();
+	}
+
+	private AutorisationSortie getAutSortieFromPack(final PackCongeDto congeDtoToSave){
+
+		return new AutorisationSortie();
 	}
 
 	private PackCongeDto getPackCongeDtoFromWebParm(final String matriculeEmpConge, final String typeDemandeConge,
