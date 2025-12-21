@@ -159,7 +159,7 @@
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">civ</label>
 											<select id="missempnom" name="matriculeempconge" class="form-select">
 												<option th:value="${savedConge.employeMatricule}" th:text="${savedConge.employeNom}">Sélectionner un employé</option>
-												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + |, | + ${employe.empPren}"></option>
 											</select>
 										</div>
 										<hr>
