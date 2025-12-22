@@ -135,7 +135,7 @@ public class PackCongeController {
 
 		model.addAttribute("savedConge", savedConge);
 
-		return "gcongecrderecap";
+		return "gcongecrdeRecap";
 	}
 
 	@GetMapping ("/conge-emp-crde-m.html/{numConge}")
@@ -173,7 +173,7 @@ public class PackCongeController {
 			.toList()
 		);
 							
-		return "gcongecrdemaj";
+		return "gcongecrdeMaj";
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}")
@@ -181,7 +181,7 @@ public class PackCongeController {
 	    var savedCongesEmploye = packCongeService.getPackCongeByEmployeMatricule(employeMatricule);								
 		model.addAttribute("savedCongesEmploye", savedCongesEmploye);
 
-		return "gcongecrdemaj";
+		return "gcongecrdeMaj";
 	}
 
 	@GetMapping ("/conges-emp-crde.html/{employeMatricule}/{choixStr}")
