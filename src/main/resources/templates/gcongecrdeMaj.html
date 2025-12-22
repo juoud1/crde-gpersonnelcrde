@@ -236,8 +236,8 @@
 											<a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
-											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imp. note de service|" title="Imprimer la note de service de congé" th:onclick="printNoteServiceConge([[${savedMission}]])">NS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imp. aut. de sortie|" title="Imprimer l'autorisation de sortie" th:onclick="printAutorisationSortie([[${savedMission}]])">OS</button>
 										</div>
 										
 									</form>
@@ -273,6 +273,7 @@
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');
 		const asPaysBox = document.getElementById('aspaysbox');
+		const asMotifBox = document.getElementById('asmotifbox');
 
 		const legendeFormText = document.getElementById('legcongesform');
 
@@ -287,6 +288,7 @@
 				asVilleBox.style.display='block';
 				asPaysBox.style.display='block';
 				asBox.style.display='block';
+				asMotifBox.style.display='block';
 			} else { 
 				legendeFormText.innerText='Mettre à jour le Congé';
 				asNumBox.style.display='none';
@@ -296,6 +298,7 @@
 				asVilleBox.style.display='none';
 				asPaysBox.style.display='none';
 				asBox.style.display='none';
+				asMotifBox.style.display='none';
 			}
 		}
 

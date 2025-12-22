@@ -210,9 +210,9 @@
 											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" disabled>
 										</div>
 										<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
-												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" disabled>
-											</div>
+											<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
+											<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" disabled>
+										</div>
 										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
@@ -223,11 +223,11 @@
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datestatusconge" th:text="|Date status|">civ</label>
-											<input type="date" id="datestatusconge" name="datestatusconge" th:value="${savedConge.dateStatusConge}" class="form-control">
+											<input type="date" id="datestatusconge" name="datestatusconge" th:value="${savedConge.dateStatusConge}" class="form-control" disabled>
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
+										<div class="col-lg-7 col-md-7 col-sm-12 text-center p-2 g-2">
 											<!--button type="submit" class="btn btn-primary mb-1" th:text="|Modifier le congé|"> Modif</button-->
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
 											<!--a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a-->
@@ -236,9 +236,9 @@
 											<a class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter nouveau congé|">Annuler</a>
 											<a class="btn btn-primary" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
-											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedConge}]])">AS</button>
+										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">	
+											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imp. note de service|" title="Imprimer la note de service de congé" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imp. aut. de sortie|" title="Imprimer l'autorisation de sortie" th:onclick="printAutorisationSortie([[${savedConge}]])">AS</button>
 										</div>
 										
 									</form>
@@ -274,7 +274,8 @@
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');
 		const asPaysBox = document.getElementById('aspaysbox');
-
+		const asMotifBox = document.getElementById('asmotifbox');
+		
 		const legendeFormText = document.getElementById('legcongesform');
 
 		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
@@ -288,6 +289,7 @@
 				asVilleBox.style.display='block';
 				asPaysBox.style.display='block';
 				asBox.style.display='block';
+				asMotifBox.style.display='block';
 			} else { 
 				legendeFormText.innerText='Mettre à jour le Congé';
 				asNumBox.style.display='none';
@@ -297,6 +299,7 @@
 				asVilleBox.style.display='none';
 				asPaysBox.style.display='none';
 				asBox.style.display='none';
+				asMotifBox.style.display='none';
 			}
 		}
 

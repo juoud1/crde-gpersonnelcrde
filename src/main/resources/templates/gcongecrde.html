@@ -152,7 +152,7 @@
 										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
-											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
+											<select id="matriculeempconge" name="matriculeempconge" class="form-select" required>
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
@@ -171,7 +171,7 @@
 										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
-											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
+											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control" required>
 										</div>
 										<hr id="asbox">
 										
@@ -191,16 +191,16 @@
 											
 											<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6 as">
 												<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
-												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
+												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control">
 											</div>
 
 											<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6 as">
 												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
-												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
+												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control">
 											</div>
 											<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
 												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" class="form-control" required>
+												<input type="text" id="motifsortie" name="motifsortie" class="form-control">
 											</div>
 										<!--/div-->
 										<hr>
@@ -237,6 +237,7 @@
 		const typeDemandeSelect = document.getElementById('typedemande');
 		const asBox = document.getElementById('asbox');
 		const asNumBox = document.getElementById('asnumbox');
+		const asNumAsBox = document.getElementById('asnumasbox');
 		const asDateDepBox = document.getElementById('asdatedepbox');
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');

@@ -107,18 +107,18 @@ public class PackCongeController {
 	}
 
 	@PostMapping("/conge-emp-crde.html")
-	public String addConge(@RequestParam("matriculeempconge") String matriculeEmpConge,  
+	public String addConge(@RequestParam(value="matriculeempconge", required = false) String matriculeEmpConge,  
 					@RequestParam("typedemande") String typeDmdeConge,
 					@RequestParam("datedebconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebConge,
 	                @RequestParam("datefinconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinConge, 
 					@RequestParam("infosupplconge") String infoSupplConge,
 					@RequestParam("numnoteserviceconge") String numNoteDeSvceConge,
-					@RequestParam("numautorisatsortie") String numAutDeSortie, 
-					@RequestParam("datedepartautorisatsortie") LocalDate dateDepartAutorisatSortie,
-					@RequestParam("dateretourautorisatsortie") LocalDate dateRetourAutorisatSortie,
-					@RequestParam("villeautorisatsortie") String villeAutorisatSortie,
-					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, 
-					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model){
+					@RequestParam(value="numautorisatsortie", required = false) String numAutDeSortie, 
+					@RequestParam(value="datedepartautorisatsortie", required = false) LocalDate dateDepartAutorisatSortie,
+					@RequestParam(value="dateretourautorisatsortie", required = false) LocalDate dateRetourAutorisatSortie,
+					@RequestParam(value="villeautorisatsortie", required = false) String villeAutorisatSortie,
+					@RequestParam(value="paysautorisatsortie", required = false) String paysAutorisatSortie, 
+					@RequestParam(value="motifsortie", required = false) String motifSortie, HttpServletRequest request, Model model){
 		
 		var savedConge = packCongeService.savePackCongeEmploye(matriculeEmpConge, typeDmdeConge, dateDebConge, dateFinConge, infoSupplConge,
 								numNoteDeSvceConge, numAutDeSortie, dateDepartAutorisatSortie, dateRetourAutorisatSortie,
