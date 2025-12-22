@@ -276,6 +276,7 @@
 		const asMotifBox = document.getElementById('asmotifbox');
 
 		const legendeFormText = document.getElementById('legcongesform');
+		const bprintas = document.getElementById('print-autorisat-sortie');
 
 		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
 		function typeDemandeSelectChange() {
@@ -289,6 +290,7 @@
 				asPaysBox.style.display='block';
 				asBox.style.display='block';
 				asMotifBox.style.display='block';
+				bprintas.style.display='inline-flex';
 			} else { 
 				legendeFormText.innerText='Mettre à jour le Congé';
 				asNumBox.style.display='none';
@@ -299,6 +301,7 @@
 				asPaysBox.style.display='none';
 				asBox.style.display='none';
 				asMotifBox.style.display='none';
+				bprintas.style.display='none';
 			}
 		}
 
