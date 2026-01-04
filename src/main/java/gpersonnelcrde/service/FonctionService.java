@@ -35,7 +35,7 @@ public class FonctionService {
 		if (StringUtils.isBlank(fonctionCode)){
 			return Optional.empty();
 		}
-		var optionalFonct = fonctionRepository.findByFonctionCode(fonctionCode);
+		var optionalFonct = fonctionRepository.findByFonctionCode(fonctionCode).stream().sorted().findFirst();
 
 		return fonctionMapper(optionalFonct);
 	}

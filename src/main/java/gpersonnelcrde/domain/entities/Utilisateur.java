@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "utilisateur")
-public class Utilisateur {
+public class Utilisateur implements Comparable<Utilisateur> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -189,5 +189,9 @@ public class Utilisateur {
 				+ utilisateurLastname + ", utilisateurEmail=" + utilisateurEmail + ", utilisateurPhoneNumber="
 				+ utilisateurPhoneNumber + ", utilisateurNomConnexion=" + utilisateurNomConnexion + ", utilisateurRole="
 				+ utilisateurRole + ", utilisateurStatus=" + utilisateurStatus + "]";
+	}
+	@Override
+	public int compareTo(Utilisateur o) {
+		return o.getId().compareTo(id);
 	}		
 }

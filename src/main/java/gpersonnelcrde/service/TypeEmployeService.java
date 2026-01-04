@@ -36,7 +36,7 @@ public class TypeEmployeService {
 			return Optional.empty();
 		}
 
-		var optionalTypeEmp = typeEmployeRepository.findByTypeEmpCode(typeEmpCode);
+		var optionalTypeEmp = typeEmployeRepository.findByTypeEmpCode(typeEmpCode).stream().sorted().findFirst();
 
 		return typeEmpMapper(optionalTypeEmp);
 	}

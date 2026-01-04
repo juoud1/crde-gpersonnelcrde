@@ -233,10 +233,22 @@ public class EmployeService {
 
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureOptEmpFonct = executor.submit(() -> fonctionRepository.findByFonctionCode(employeDto.getFonction().trim()));
-			futureOptEmpStatus = executor.submit(() -> statusRepository.findByStatusCode(employeDto.getStatus().trim()));
-			futureOptTypeEmp = executor.submit(() -> typeEmployeRepository.findByTypeEmpCode(employeDto.getTypeEmploye().trim()));
-			futureOptLieuAffect = executor.submit(() -> lieuAffectationRepository.findByLieuAffectCode(employeDto.getLieuAffectation().trim()));
+				futureOptEmpFonct = executor.submit(() -> {
+					var result = fonctionRepository.findAll();
+					return result.stream().filter(f -> f.getFonctionCode().equalsIgnoreCase(employeDto.getFonction().trim())).sorted().findFirst();
+				});
+				futureOptEmpStatus = executor.submit(() -> {
+					var result = statusRepository.findAll();
+					return result.stream().filter(s -> s.getStatusCode().equalsIgnoreCase(employeDto.getStatus().trim())).sorted().findFirst();
+				});
+				futureOptTypeEmp = executor.submit(() -> {
+					var result = typeEmployeRepository.findAll();
+					return result.stream().filter(t -> t.getTypeEmpCode().equalsIgnoreCase(employeDto.getTypeEmploye().trim())).sorted().findFirst();
+				});
+				futureOptLieuAffect = executor.submit(() -> {
+					var result = lieuAffectationRepository.findAll();
+					return result.stream().filter(l -> l.getLieuAffectCode().equalsIgnoreCase(employeDto.getLieuAffectation().trim())).sorted().findFirst();
+				});
 			//futurePathPhoto = executor.submit(() -> this.stockagePhotoEmployeService.chargerFichierCrde(employe.getEmpUrlphoto()));
 		} catch (Exception e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base " +e.getMessage(), e.getCause());
@@ -372,13 +384,13 @@ public class EmployeService {
 						// Employé en congé
 						employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 						employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new).getStatus());	
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());	
 				} else {
 					if (missionEmploye.getDateDepart().isAfter(affectationEmploye.getDateDebutAffect())){
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					}
 				}		
 			} else {
@@ -388,18 +400,18 @@ public class EmployeService {
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					
 				} else {
 					if (Objects.nonNull(congeEmploye) && congeEmploye.getDateDebutConge().isAfter(affectationEmploye.getDateDebutAffect())){
 							// Employé en congé
 							employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 							employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-							employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).orElseThrow(EntityNotFoundException::new).getStatus());
+							employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					} else {
 						// Employé n'a ni congé ni mission
 						employeDto.setEmpDateDebutStatus(affectationEmploye.getDateDebutAffect());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("SVCE")).orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("SVCE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 
 						if (!affectationEmploye.getDateFinAffect().isAfter(affectationEmploye.getDateDebutAffect())){
 							employeDto.setEmpDateFinStatus(affectationEmploye.getDateFinAffect());
@@ -464,10 +476,10 @@ public class EmployeService {
 		var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
 		
 		*/
-		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
-		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
-		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode()).stream().sorted().findFirst();
+		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode()).stream().sorted().findFirst();
+		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode()).stream().sorted().findFirst();
+		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode()).stream().sorted().findFirst();
 		
 		
 		//var pathPhoto = futurePathPhoto.get();

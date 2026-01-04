@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "fonction")
-public class Fonction {
+public class Fonction implements Comparable<Fonction> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -128,6 +128,11 @@ public class Fonction {
 		return "Fonction [id=" + id + ", fonctionCode=" + fonctionCode + ", fonction=" + fonction + ", fonctionCreeLe="
 				+ fonctionCreeLe + ", fonctionCreePar=" + fonctionCreePar + ", fonctionModifieLe=" + fonctionModifieLe
 				+ ", fonctionModifiePar=" + fonctionModifiePar + "]";
+	}
+	
+	@Override
+	public int compareTo(Fonction o) {
+		return o.getId().compareTo(id);
 	}
 	
 }

@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "lieu_affectation")
-public class LieuAffectation {
+public class LieuAffectation implements Comparable<LieuAffectation> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -130,6 +130,10 @@ public class LieuAffectation {
 				+ ", lieuAffectCreeLe=" + lieuAffectCreeLe + ", lieuAffectCreePar=" + lieuAffectCreePar
 				+ ", lieuAffectModifieLe=" + lieuAffectModifieLe + ", lieuAffectModifiePar=" + lieuAffectModifiePar
 				+ "]";
+	}
+	@Override
+	public int compareTo(LieuAffectation o) {
+		return o.getId().compareTo(id);
 	}
 	
 }

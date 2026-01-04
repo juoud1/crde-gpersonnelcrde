@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "mission_employe")
-public class MissionEmploye extends AbstractPersistable<MissionEmployePk> {
+public class MissionEmploye extends AbstractPersistable<MissionEmployePk> implements Comparable<MissionEmploye> {
 
 	@EmbeddedId
 	private MissionEmployePk id;
@@ -114,6 +114,10 @@ public class MissionEmploye extends AbstractPersistable<MissionEmployePk> {
 		return "MissionEmploye [id=" + id + ", isEmployeChefMission=" + isEmployeChefMission + ", missEmpCreeeLe="
 				+ missEmpCreeeLe + ", missEmpCreeePar=" + missEmpCreeePar + ", missEmpModifieeLe=" + missEmpModifieeLe
 				+ ", missEmpModifieePar=" + missEmpModifieePar + "]";
+	}
+	@Override
+	public int compareTo(MissionEmploye o) {
+		return o.getId().compareTo(id);
 	}
 
 	

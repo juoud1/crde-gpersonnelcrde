@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "type_employe")
-public class TypeEmploye {
+public class TypeEmploye implements Comparable<TypeEmploye> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -22,6 +22,12 @@ public class TypeEmploye {
 	private String typeEmpCreePar;
 	private LocalDateTime typeEmpModifieLe;
 	private String typeEmpModifiePar;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTypeEmpCode() {
 		return typeEmpCode;
 	}
@@ -90,5 +96,10 @@ public class TypeEmploye {
 	@Override
 	public String toString() {
 		return "TypeEmploye [typeEmpCode=" + typeEmpCode + ", typeEmp=" + typeEmp + "]";
+	}
+
+	@Override
+	public int compareTo(TypeEmploye o) {
+		return o.getId().compareTo(id);
 	}
 }

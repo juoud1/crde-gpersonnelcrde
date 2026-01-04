@@ -7,7 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
-public class MissionEmployePk implements Serializable {
+public class MissionEmployePk implements Serializable, Comparable<MissionEmployePk> {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employe employe;
@@ -65,6 +65,11 @@ public class MissionEmployePk implements Serializable {
 	@Override
 	public String toString() {
 		return "EmployeMissionPk [employe=" + employe + ", mission=" + mission + "]";
+	}
+
+	@Override
+	public int compareTo(MissionEmployePk o) {
+		return o.getEmploye().compareTo(employe);
 	}
 
 }

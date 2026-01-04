@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "status")
-public class Status {
+public class Status implements Comparable<Status> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -132,6 +132,11 @@ public class Status {
 		return "Status [id=" + id + ", statusCode=" + statusCode + ", status=" + status + ", statusCreeLe="
 				+ statusCreeLe + ", statusCreePar=" + statusCreePar + ", statusModifieLe=" + statusModifieLe
 				+ ", statusModifiePar=" + statusModifiePar + "]";
+	}
+
+	@Override
+	public int compareTo(Status o) {
+		return o.getId().compareTo(id);
 	}
 		
 }

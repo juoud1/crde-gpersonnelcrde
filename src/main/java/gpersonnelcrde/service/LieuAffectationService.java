@@ -35,7 +35,7 @@ public class LieuAffectationService {
 		if (StringUtils.isBlank(lieuAffectCode)){
 			return Optional.empty();
 		}
-		var optionalLieuAffect = lieuAffectationRepository.findByLieuAffectCode(lieuAffectCode);
+		var optionalLieuAffect = lieuAffectationRepository.findByLieuAffectCode(lieuAffectCode).stream().sorted().findFirst();
 
 		return lieuAffectMapper(optionalLieuAffect); 
 	}

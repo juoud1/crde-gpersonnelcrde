@@ -123,10 +123,10 @@ public class AffectationService {
 
 
 		logger.info("SAUVEGARDE DES DONNÉES AFFECTATION {} DE L'EMPLOYÉ {}", affectationDto.getNumNoteService(), affectationDto.getEmployeMatricule());
-		var optEmpFonct = fonctionRepository.findByFonctionCode(affectationDto.getFonction().trim()); 
+		var optEmpFonct = fonctionRepository.findByFonctionCode(affectationDto.getFonction().trim()).stream().sorted().findFirst(); 
 		var fonct = optEmpFonct.orElseThrow(() -> new EntityNotFoundException("La fonction de l'employé affecté est inconnue".toUpperCase()));
 
-		var optEmpLieuAffect = lieuAffectationRepository.findByLieuAffectCode(affectationDto.getLieuAffectation().trim());
+		var optEmpLieuAffect = lieuAffectationRepository.findByLieuAffectCode(affectationDto.getLieuAffectation().trim()).stream().sorted().findFirst();
 		var lAffect = optEmpLieuAffect.orElseThrow(() -> new EntityNotFoundException("Le lieu d'affectation de l'employé affecté est inconnu".toUpperCase()));
 
 		var optEmp = employeRepository.findByEmpMatricule(affectationDto.getEmployeMatricule());
@@ -205,8 +205,8 @@ public class AffectationService {
 		}
 
 		var affectEmploye = employeRepository.findByEmpMatricule(affectation.getEmploye().getEmpMatricule());
-		var affectLieuAffectation = lieuAffectationRepository.findByLieuAffectCode(affectation.getLieuAffectation().getLieuAffectCode());
-		var affectFonction = fonctionRepository.findByFonctionCode(affectation.getFonction().getFonctionCode());
+		var affectLieuAffectation = lieuAffectationRepository.findByLieuAffectCode(affectation.getLieuAffectation().getLieuAffectCode()).stream().sorted().findFirst();
+		var affectFonction = fonctionRepository.findByFonctionCode(affectation.getFonction().getFonctionCode()).stream().sorted().findFirst();
 					
 		var aDto = new AffectationDto();
 		aDto.setDateDebutAffect(affectation.getDateDebutAffect());
