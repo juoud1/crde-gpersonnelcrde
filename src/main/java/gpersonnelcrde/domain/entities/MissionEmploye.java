@@ -6,8 +6,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
+//@Table(schema = "crde", name = "mission_employe")
 public class MissionEmploye extends AbstractPersistable<MissionEmployePk> {
 
 	@EmbeddedId

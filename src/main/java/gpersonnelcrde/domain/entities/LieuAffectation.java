@@ -6,12 +6,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+//@Table(schema = "crde", name = "lieu_affectation")
 public class LieuAffectation {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String lieuAffectCode;
 	private String lieuAffect;

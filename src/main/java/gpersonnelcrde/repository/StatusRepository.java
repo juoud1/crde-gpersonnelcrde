@@ -5,12 +5,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.entities.Status;
+
+import java.util.List;
 import java.util.Optional;
 
 
 @Repository
 @Transactional
 public interface StatusRepository extends JpaRepository<Status, Long> {
-	Optional<Status> findByStatusCode(String statusCode);
-	Optional<Status> findByStatus(String status);
+	//Optional<Status> findByStatusCode(String statusCode);
+	//Optional<Status> findByStatus(String status);
+	List<Status> findByStatusCode(String statusCode);
+	List<Status> findByStatus(String status);
 }

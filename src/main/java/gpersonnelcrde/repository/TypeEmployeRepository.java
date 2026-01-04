@@ -1,5 +1,6 @@
 package gpersonnelcrde.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,8 @@ import gpersonnelcrde.domain.entities.TypeEmploye;
 @Repository
 @Transactional
 public interface TypeEmployeRepository extends JpaRepository<TypeEmploye, Long> {
-	Optional<TypeEmploye> findByTypeEmpCode(String typeEmpCode);
-	Optional<TypeEmploye> findByTypeEmp(String typeEmp);
+	//Optional<TypeEmploye> findByTypeEmpCode(String typeEmpCode);
+	//Optional<TypeEmploye> findByTypeEmp(String typeEmp);
+	List<TypeEmploye> findByTypeEmpCode(String typeEmpCode);
+	List<TypeEmploye> findByTypeEmp(String typeEmp);
 }

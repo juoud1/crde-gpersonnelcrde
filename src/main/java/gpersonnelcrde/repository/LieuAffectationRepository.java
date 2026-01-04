@@ -1,5 +1,6 @@
 package gpersonnelcrde.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,8 @@ import gpersonnelcrde.domain.entities.LieuAffectation;
 @Repository
 @Transactional
 public interface LieuAffectationRepository extends JpaRepository<LieuAffectation, Long> {
-	Optional<LieuAffectation> findByLieuAffectCode (String lieuAffectCode);
-	Optional<LieuAffectation> findByLieuAffect (String lieuAffect);
+	//Optional<LieuAffectation> findByLieuAffectCode (String lieuAffectCode);
+	//Optional<LieuAffectation> findByLieuAffect (String lieuAffect);
+	List<LieuAffectation> findByLieuAffectCode (String lieuAffectCode);
+	List<LieuAffectation> findByLieuAffect (String lieuAffect);
 }

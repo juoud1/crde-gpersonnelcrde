@@ -35,33 +35,34 @@ spring:
       settings.trace: false
       settings.web-allow-others: true
   datasource:
-    url: jdbc:h2:~/crde/crdedb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL #;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;        # jdbc:h2:~/olibilldb;AUTO_SERVER=TRUE
+    type: com.zaxxer.hikari.HikariDataSource
+    #url: jdbc:h2:~/crde/crdedb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL #;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;        # jdbc:h2:~/olibilldb;AUTO_SERVER=TRUE
+    #url: jdbc:h2:~/crde/crdedb;INIT=CREATE SCHEMA IF NOT EXISTS crde;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL #;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;MODE=PostgreSQL;        # jdbc:h2:~/olibilldb;AUTO_SERVER=TRUE
+    #url: jdbc:h2:~/crde/crdedb;AUTO_SERVER=TRUE;MODE=LEGACY;
+    #url: jdbc:h2:mem:crde/crdedb #;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE; MODE=MySQL
+    url: jdbc:h2:~/crde/crdedb;AUTO_SERVER=TRUE;TRACE_LEVEL_FILE=3;TRACE_LEVEL_SYSTEM_OUT=3;IGNORE_UNKNOWN_SETTINGS=TRUE;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
     username: admin
     password: admin123
-    driver-class-name: org.h2.Driver
-  hikari:
-      pool-name: crdeHikariPool
-      maximum-pool-size: 50
-      minimum-idle: 20
-      idle-timeout: 60000
-      max-lifetime: 1200000
-      connection-timeout: 5000
-      leak-detection-threshold: 2000
-      validation-timeout: 500	  
-     # platform: h2
-       # data: classpath:data/taxes.sql, classpath:data/provinces.sql, classpath:data/taxesprovinces.sql #, classpath:reviews.sql
+    driver-class-name: org.h2.Driver #org.postgresql.Driver #org.h2.Driver
+    hikari:
+      idle-timeout: 50000
   jpa:
-     database-platform: org.hibernate.dialect.H2Dialect
-     defer-datasource-initialization: true ##false --for flyway 
-     generate-ddl: false
-     hibernate:
-       ddl-auto: create-drop #update ##none --for flyway
-     show-sql: false 
+    hibernate:
+      ddl-auto: update #create-drop #update ##none --for flyway
+      #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect #org.hibernate.dialect.H2Dialect #org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true ##false --for flyway
+    globally_quoted_identifiers: true
+    #generate-ddl: true   
   sql:
      init:
-       platform: h2
-       mode: always
-       dataLocations: classpath:db/sql/status.sql, classpath:db/sql/lieuxaffectations.sql, classpath:db/sql/fonctions.sql, classpath:db/sql/typesemployes.sql, classpath:db/sql/employes.sql, classpath:db/sql/affectations.sql, classpath:db/sql/conges.sql, classpath:db/sql/missions.sql, classpath:db/sql/visites.sql, classpath:db/sql/utilisateurs.sql, classpath:db/sql/missionsemployes.sql, classpath:db/sql/autorisationssortie.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
+       #platform: h2
+       mode: always #never #always
+       schema-locations: classpath:db/sql/schema.sql
+       data-locations: classpath:db/sql/data/status.sql, classpath:db/sql/data/lieuxaffectations.sql, classpath:db/sql/data/fonctions.sql, classpath:db/sql/data/typesemployes.sql, classpath:db/sql/data/employes.sql, classpath:db/sql/data/affectations.sql, classpath:db/sql/data/conges.sql, classpath:db/sql/data/missions.sql, classpath:db/sql/data/visites.sql, classpath:db/sql/data/utilisateurs.sql, classpath:db/sql/data/missionsemployes.sql, classpath:db/sql/data/autorisationssortie.sql 
+       #dataLocations: classpath:db/sql/status.sql, classpath:db/sql/lieuxaffectations.sql, classpath:db/sql/fonctions.sql, classpath:db/sql/typesemployes.sql, classpath:db/sql/employes.sql, classpath:db/sql/affectations.sql, classpath:db/sql/conges.sql, classpath:db/sql/missions.sql, classpath:db/sql/visites.sql, classpath:db/sql/utilisateurs.sql, classpath:db/sql/missionsemployes.sql, classpath:db/sql/autorisationssortie.sql  #, classpath:data/affectations.sql, classpath:data/conges.sql, classpath:data/missions.sql, classpath:data/visites.sql
+       continue-on-error: true  # if the scripts cause exceptions, the application does not fail to start
   thymeleaf:
     cache: false
     enabled: true
