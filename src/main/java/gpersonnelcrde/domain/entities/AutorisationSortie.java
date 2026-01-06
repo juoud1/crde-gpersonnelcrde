@@ -10,9 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class AutorisationSortie {
+//@Table(schema = "crde", name = "autorisation_sortie")
+public class AutorisationSortie implements Comparable<AutorisationSortie> {
 	@Id
    	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
@@ -228,6 +230,10 @@ public class AutorisationSortie {
 				+ ", statusAs=" + statusAs + ", dateStatusAs=" + dateStatusAs + ", conge=" + conge + ", asCreeLe="
 				+ asCreeLe + ", asCreePar=" + asCreePar + ", asModifieLe=" + asModifieLe + ", asModifiePar="
 				+ asModifiePar + "]";
+	}
+	@Override
+	public int compareTo(AutorisationSortie o) {
+		return o.getId().compareTo(id);
 	}
 			
 }

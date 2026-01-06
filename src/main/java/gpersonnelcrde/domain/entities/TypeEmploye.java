@@ -6,12 +6,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class TypeEmploye {
+//@Table(schema = "crde", name = "type_employe")
+public class TypeEmploye implements Comparable<TypeEmploye> {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String typeEmpCode;
 	private String typeEmp;
@@ -19,6 +22,12 @@ public class TypeEmploye {
 	private String typeEmpCreePar;
 	private LocalDateTime typeEmpModifieLe;
 	private String typeEmpModifiePar;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTypeEmpCode() {
 		return typeEmpCode;
 	}
@@ -87,5 +96,10 @@ public class TypeEmploye {
 	@Override
 	public String toString() {
 		return "TypeEmploye [typeEmpCode=" + typeEmpCode + ", typeEmp=" + typeEmp + "]";
+	}
+
+	@Override
+	public int compareTo(TypeEmploye o) {
+		return o.getId().compareTo(id);
 	}
 }

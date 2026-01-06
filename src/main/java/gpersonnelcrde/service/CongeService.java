@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.dto.CongeDto;
-import gpersonnelcrde.domain.dto.PackCongeDto;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.exception.CongeServiceException;
 import gpersonnelcrde.repository.AutorisationSortieRepository;

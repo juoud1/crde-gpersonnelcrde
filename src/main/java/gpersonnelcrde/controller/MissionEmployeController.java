@@ -66,8 +66,8 @@ public class MissionEmployeController {
 			.toList()); 
 		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
-			.toList()
-		);
+			.distinct()
+			.toList());
 		//request.getSession().setAttribute("modelMission", model);
 	    return "gmissioncrdelist";
 	}
@@ -93,11 +93,12 @@ public class MissionEmployeController {
 		
 	    model.addAttribute("allMissionsEmployes", allMissionsEmployes.stream()
 			.sorted((m, n) -> Long.valueOf(m.getNumMission()).compareTo(Long.valueOf(n.getNumMission())))
+			.distinct()
 			.toList()); 
 		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
-			.toList()
-		);
+			.distinct()
+			.toList());
 		
 		/*model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes()); 
 		model.addAttribute("employesEnSvce", employeService.getAllEmploye().stream()
@@ -147,7 +148,7 @@ public class MissionEmployeController {
 			model.addAttribute("traitement", "création de nouvelle mission");
 		}
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
-		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes());
+		model.addAttribute("allMissionsEmployes", missionEmployeService.getAllMissionEmployes().stream().distinct().toList());
 		
 		updateUI(typeOrdreMission, model);
 
@@ -205,8 +206,7 @@ public class MissionEmployeController {
 			.toList()); 
 		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
-			.toList()
-		);
+			.toList());
 		model.addAttribute("allEmployes", allEmployes);
 		
 		model.addAttribute("savedMissionEmployes", savedMissionEmployes);

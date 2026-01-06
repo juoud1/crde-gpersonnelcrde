@@ -35,7 +35,7 @@ public class StatusService {
 		if (StringUtils.isBlank(statusCode)) {
 			return Optional.empty();
 		}
-		var optionalStatus = statusRepository.findByStatusCode(statusCode);
+		var optionalStatus = statusRepository.findByStatusCode(statusCode).stream().sorted().findFirst();
 
 		return statusMapper(optionalStatus);
 

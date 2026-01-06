@@ -82,7 +82,7 @@ public class PackCongeController {
 		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
 		
 		var allConges = futurePackCongesEmployes.get(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		var allEmployes = futureEmployes.get();
+		var allEmployes = futureEmployes.get().stream().distinct().toList();;
 
 		if (StringUtils.isNotBlank(typCnge)){
 			if ("cnge-et-as".equalsIgnoreCase(typCnge)) {
@@ -158,7 +158,7 @@ public class PackCongeController {
 							//.orElseThrow(IllegalArgumentException::new);
 							//.orElseGet(PackCongeDto::new);
 
-		var allEmployes = employeService.getAllEmploye(); //futureEmployes.get(); //
+		var allEmployes = employeService.getAllEmploye().stream().distinct().toList(); //futureEmployes.get(); //
 		logger.info("Congé n° {} enregistré sous le n° {}", savedConge.getNumAutorisatSortie(), savedConge.getNumAutSortie());
 
 		if (StringUtils.isNotBlank(savedConge.getNumConge())){
@@ -170,6 +170,7 @@ public class PackCongeController {
 		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 		model.addAttribute("employesEnSvce", allEmployes.stream()
 			.filter(emp -> !"AUT".equalsIgnoreCase(emp.getStatus()))
+			.distinct()
 			.toList()
 		);
 							

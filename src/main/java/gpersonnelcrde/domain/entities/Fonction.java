@@ -3,12 +3,15 @@ package gpersonnelcrde.domain.entities;
 import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class Fonction {
+//@Table(schema = "crde", name = "fonction")
+public class Fonction implements Comparable<Fonction> {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String fonctionCode;
 	private String fonction;
@@ -125,6 +128,11 @@ public class Fonction {
 		return "Fonction [id=" + id + ", fonctionCode=" + fonctionCode + ", fonction=" + fonction + ", fonctionCreeLe="
 				+ fonctionCreeLe + ", fonctionCreePar=" + fonctionCreePar + ", fonctionModifieLe=" + fonctionModifieLe
 				+ ", fonctionModifiePar=" + fonctionModifiePar + "]";
+	}
+	
+	@Override
+	public int compareTo(Fonction o) {
+		return o.getId().compareTo(id);
 	}
 	
 }

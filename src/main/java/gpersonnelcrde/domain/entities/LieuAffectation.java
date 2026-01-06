@@ -6,12 +6,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class LieuAffectation {
+//@Table(schema = "crde", name = "lieu_affectation")
+public class LieuAffectation implements Comparable<LieuAffectation> {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String lieuAffectCode;
 	private String lieuAffect;
@@ -127,6 +130,10 @@ public class LieuAffectation {
 				+ ", lieuAffectCreeLe=" + lieuAffectCreeLe + ", lieuAffectCreePar=" + lieuAffectCreePar
 				+ ", lieuAffectModifieLe=" + lieuAffectModifieLe + ", lieuAffectModifiePar=" + lieuAffectModifiePar
 				+ "]";
+	}
+	@Override
+	public int compareTo(LieuAffectation o) {
+		return o.getId().compareTo(id);
 	}
 	
 }

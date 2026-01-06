@@ -7,12 +7,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class Status {
+//@Table(schema = "crde", name = "status")
+public class Status implements Comparable<Status> {
 	@Id
-   	@GeneratedValue
+   	@GeneratedValue(strategy=GenerationType.IDENTITY)
    	private Long id;
 	private String statusCode;
 	private String status;
@@ -129,6 +132,11 @@ public class Status {
 		return "Status [id=" + id + ", statusCode=" + statusCode + ", status=" + status + ", statusCreeLe="
 				+ statusCreeLe + ", statusCreePar=" + statusCreePar + ", statusModifieLe=" + statusModifieLe
 				+ ", statusModifiePar=" + statusModifiePar + "]";
+	}
+
+	@Override
+	public int compareTo(Status o) {
+		return o.getId().compareTo(id);
 	}
 		
 }
