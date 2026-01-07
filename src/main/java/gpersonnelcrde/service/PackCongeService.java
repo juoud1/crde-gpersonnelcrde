@@ -1,6 +1,7 @@
 package gpersonnelcrde.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gpersonnelcrde.domain.dto.AutorisationSortieDto;
-import gpersonnelcrde.domain.dto.CongeDto;
 import gpersonnelcrde.domain.dto.PackCongeDto;
 import gpersonnelcrde.domain.entities.AutorisationSortie;
 import gpersonnelcrde.domain.entities.Conge;
@@ -82,21 +82,123 @@ public class PackCongeService {
 	
 		return savePackCongeEmploye(congeDto);			
 	}
+	
+	private boolean checkExistanceCongeBeforSaving(final Conge congeToSave) {
+		var result = congeRepository.findByDateDebutCongeAndDateFinCongeAndEmploye(congeToSave.getDateDebutConge(),
+							congeToSave.getDateFinConge(), congeToSave.getEmploye());
+		logger.info("Résultat de vérification de congé à persister: {}", result.isPresent());
 
-	public PackCongeDto savePackCongeEmploye(final PackCongeDto congeDtoToSave){
-		var conge = getCongeFromPack(congeDtoToSave);
-		var as = getAutSortieFromPack(congeDtoToSave);
-		return congeDtoToSave;
+		return result.isPresent();
 	}
 
-	private Conge getCongeFromPack(final PackCongeDto congeDtoToSave){
+	private Conge saveConge(Conge congeToSave) {
+		var result = congeRepository.saveAndFlush(congeToSave);
+		logger.info("Congé enregistré avec succès sous le numéro; {}", result.getId());
 
-		return new Conge();
+		return result;
 	}
 
-	private AutorisationSortie getAutSortieFromPack(final PackCongeDto congeDtoToSave){
+	public PackCongeDto savePackCongeEmploye(PackCongeDto packCongeDtoToSave){
+		if (Objects.isNull(packCongeDtoToSave)) {
+			logger.warn("Impossible de persister l'objet car le Pack congé est null.");
+			throw new IllegalArgumentException("L'objet Pack congé et/ou autorisation de sortie doit être non null.");
+		}
 
-		return new AutorisationSortie();
+		var conge = getCongeFromPack(packCongeDtoToSave);
+		Conge savedConge  = null;
+		//Check
+		if (!checkExistanceCongeBeforSaving(conge)){
+			//save
+			savedConge = saveConge(conge);
+
+			AutorisationSortie as, savedAs = null;
+			if (!packCongeDtoToSave.getTypeDemandeConge().equalsIgnoreCase("Congé")) {
+				as = getAutSortieFromPack(packCongeDtoToSave, savedConge);
+				//Check
+				if (!checkExistanceAutSortieBeforSaving(as)){
+					//save
+					savedAs = saveAutSortie(as);
+				}
+				
+				//packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, savedAs);
+			}
+			
+			packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, savedAs);
+		}
+
+		return packCongeDtoToSave;
+	}
+
+	private PackCongeDto updatePackCongeDtoAfterSaving(PackCongeDto packCongeDto, final Conge savedConge, final AutorisationSortie savedAs){
+		packCongeDto.setNumConge(String.valueOf(savedConge.getId()));
+		packCongeDto.setEmployeCivilite(savedConge.getEmploye().getEmpCivilite());
+		packCongeDto.setEmployeFonction(savedConge.getEmploye().getEmpFonction().getFonctionCode());
+		packCongeDto.setEmployeNom(String.join(", ", savedConge.getEmploye().getEmpNom(), savedConge.getEmploye().getEmpPren()));
+
+		if (Objects.nonNull(savedAs)){
+			//packCongeDto.setNumConge(String.valueOf(savedConge.getId()));
+			packCongeDto.setNumAutSortie(String.valueOf(savedAs.getId()));
+			//packCongeDto.setEmployeCivilite(savedConge.getEmploye().getEmpCivilite());
+			//packCongeDto.setEmployeFonction(savedConge.getEmploye().getEmpFonction().getFonctionCode());
+			//packCongeDto.setEmployeNom(String.join(", ", savedConge.getEmploye().getEmpNom(), savedConge.getEmploye().getEmpPren()));	
+		}
+		logger.info("Mise à jour du Pack de congé et autorisation de sortie".toUpperCase());
+
+		return packCongeDto;
+	}
+
+	private AutorisationSortie saveAutSortie(AutorisationSortie asToSave){
+		var result = autorisationSortieRepository.saveAndFlush(asToSave);
+		logger.info("Autorisation de sortie enregistrée avec succès sous le numéro; {}", result.getId());
+
+		return result;
+	}
+
+	private boolean checkExistanceAutSortieBeforSaving(final AutorisationSortie asToSave) {
+		var result = autorisationSortieRepository.findByAsDateDepartAndAsDateRetourAndConge(asToSave.getAsDateDepart(), asToSave.getAsDateRetour(), asToSave.getConge());
+
+		return result.isPresent();
+	}
+
+	private Conge getCongeFromPack(final PackCongeDto packCongeDtoToSave){
+		
+		var congeEmploye = employeRepository.findByEmpMatricule(packCongeDtoToSave.getEmployeMatricule())
+								.orElseThrow(() -> new EntityNotFoundException(packCongeDtoToSave.getEmployeMatricule() + " est un matricule employé inexistant."));
+
+		var conge = new Conge();
+		conge.setCongeCreeLe(LocalDateTime.now());
+		conge.setCongeCreePar("admin");
+		conge.setCongeModifieLe(LocalDateTime.now());
+		conge.setCongeModifiePar("admin");
+		conge.setDateDebutConge(packCongeDtoToSave.getDateDebutConge());
+		conge.setDateFinConge(packCongeDtoToSave.getDateFinConge());
+		conge.setDateStatusConge(packCongeDtoToSave.getDateStatusConge());
+		conge.setEmploye(congeEmploye);
+		conge.setInfoSupplementaires(packCongeDtoToSave.getInfoSupplementaires());
+		conge.setNumNoteServiceConge(packCongeDtoToSave.getNumNoteServiceConge());
+		conge.setStatusConge(packCongeDtoToSave.getStatusConge());
+		conge.setTypeDemandeConge(packCongeDtoToSave.getTypeDemandeConge());
+
+		return conge;
+	}
+
+	private AutorisationSortie getAutSortieFromPack(final PackCongeDto packCongeDtoToSave, final Conge savedConge){
+		var autorisationSortie = new AutorisationSortie();
+		autorisationSortie.setAsCreeLe(savedConge.getCongeCreeLe());
+		autorisationSortie.setAsCreePar(savedConge.getCongeCreePar());
+		autorisationSortie.setAsDateDepart(packCongeDtoToSave.getDateDepartAutorisatSortie());
+		autorisationSortie.setAsDateRetour(packCongeDtoToSave.getDateRetourAutorisatSortie());
+		autorisationSortie.setAsModifieLe(savedConge.getCongeModifieLe());
+		autorisationSortie.setAsModifiePar(savedConge.getCongeModifiePar());
+		autorisationSortie.setMotifSortie(packCongeDtoToSave.getMotifSortie());
+		autorisationSortie.setAsNum(packCongeDtoToSave.getNumAutorisatSortie());
+		autorisationSortie.setAsPays(packCongeDtoToSave.getPaysAutorisatSortie());
+		autorisationSortie.setAsVille(packCongeDtoToSave.getVilleAutorisatSortie());
+		autorisationSortie.setStatusAs(savedConge.getStatusConge());
+		autorisationSortie.setDateStatusAs(savedConge.getDateStatusConge());
+		autorisationSortie.setConge(savedConge);
+
+		return autorisationSortie;
 	}
 
 	private PackCongeDto getPackCongeDtoFromWebParm(final String matriculeEmpConge, final String typeDemandeConge,
@@ -106,8 +208,8 @@ public class PackCongeService {
 												final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
 		
 		
-		var congeEmploye = employeRepository.findByEmpMatricule(matriculeEmpConge)
-								.orElseThrow(() -> new EntityNotFoundException(matriculeEmpConge + " est un matricule employé inexistant."));
+		//var congeEmploye = employeRepository.findByEmpMatricule(matriculeEmpConge)
+		//						.orElseThrow(() -> new EntityNotFoundException(matriculeEmpConge + " est un matricule employé inexistant."));
 
 		var packCongeDto = new PackCongeDto();
 		packCongeDto.setDateDebutConge(dateDebConge);
@@ -116,10 +218,10 @@ public class PackCongeService {
 		packCongeDto.setDateRetourAutorisatSortie(dateRetourAutorisatSortie);
 		packCongeDto.setDateStatusConge(LocalDate.now());
 		packCongeDto.setDateStatusAutorisatSortie(LocalDate.now());
-		packCongeDto.setEmployeCivilite(congeEmploye.getEmpCivilite());
-		packCongeDto.setEmployeFonction(congeEmploye.getEmpFonction().getFonctionCode());
+		//packCongeDto.setEmployeCivilite(congeEmploye.getEmpCivilite());
+		//packCongeDto.setEmployeFonction(congeEmploye.getEmpFonction().getFonctionCode());
 		packCongeDto.setEmployeMatricule(matriculeEmpConge);
-		packCongeDto.setEmployeNom(String.join(", ", congeEmploye.getEmpNom(), congeEmploye.getEmpPren()));
+		//packCongeDto.setEmployeNom(String.join(", ", congeEmploye.getEmpNom(), congeEmploye.getEmpPren()));
 		packCongeDto.setInfoSupplementaires(infoSupplConge);
 		packCongeDto.setNumAutorisatSortie(numAutorisatSortie);
 		packCongeDto.setNumNoteServiceConge(numNoteServiceConge);
