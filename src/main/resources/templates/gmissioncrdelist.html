@@ -329,13 +329,14 @@
 		}
 
 		function printOrdreMissions(savedMissionEmp) {
-			
+			let nbreInteresses = 0;
+
 			if (undefined !== savedMissionEmp) {
 				let divHtml ='';
 
 				if ('Mission' == savedMissionEmp.typeOrdreMission) {
 				
-					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; font-weight:bold; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
 						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 					
 					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
@@ -346,18 +347,20 @@
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
 
 					//divHtml += `</div><div class="col-1"></div></div>`;
+					nbreInteresses = 1;
 
 				} else {
 					let tableEmployesAutorisesHtml = `<table class="table table-responsive table-bordered" style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
 					`<th class='print-col-nom'>Grade/Civité</th><th class='print-col-nom'>Nom(s)</th><th class='print-col-nom'>Prénom</th></tr></thead><tbody>`;
 				
 					savedMissionEmp.employesMission.forEach(empAutorise => {
+						++nbreInteresses;
 						tableEmployesAutorisesHtml += `<tr><td>${empAutorise.empCivilite}</td><td>${empAutorise.empNom}</td><td>${empAutorise.empPren}</td></tr>`;
 					});
 
 					tableEmployesAutorisesHtml += `</tbody></table>`;
 
-					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION COLLECTIF</h2><br><br>` +
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; font-weight:bold; text-decoration: underline;">ORDRE DE MISSION COLLECTIF</h2><br><br>` +
 						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 
 					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMissionEmp.cadreMission}, Le Ministre Conseiller ` +
@@ -368,7 +371,8 @@
 						`<b class="text-decoration-underline">Motif:</b> ${savedMissionEmp.motifMission}<br>` +
 						`<b class="text-decoration-underline">NB : </b> ${savedMissionEmp.employeChefDeMissCivilite} ${savedMissionEmp.employeChefDeMissNom} est désigné(e) Chef(fe) de Mission.</p><br>` +
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
-
+					
+					//nbreInteresses = savedMissionEmp.employesMission.size();
 				}
 
 				divHtml += `</div><div class="col-1"></div></div>`;
@@ -380,7 +384,7 @@
 				win.document.write('</head><body>');
 				win.document.write(getPrintableHeader());
 				win.document.write(divHtml);
-				win.document.write(getPrintableFooterNoteSvce());
+				win.document.write(getPrintableFooterNoteSvce(nbreInteresses));
 				win.document.write('</body></html>');
 				win.document.close();
 				win.print();
@@ -404,7 +408,7 @@
 				<div style='margin-bottom:10px;'>
 					<span style='text-decoration:underline;'>N°</span>
 					<span>_______</span>
-					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 25</span>
+					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 26</span>
 				</div>
 				</th>
 				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
@@ -448,15 +452,31 @@
 			</div>
 			`;
 
+		function convertNbreInteressesToString(nbreInteresses) {
+			return nbreInteresses < 10 ? "0" + nbreInteresses : "" + nbreInteresses;
+		}
+
 		function getPrintableFooter() {
 			return signataireDoc;
 		}
 
-		function getPrintableFooterNoteSvce() {
+		function getPrintableFooterNoteSvce(nbreInteresses) {
+			let strNbreInteresses = convertNbreInteressesToString(nbreInteresses);  
+			let varAmpliDoc = `<br> <br>
+			<div style='float:left;text-align:left;'>
+				<span style='font-weight:bold;text-decoration:underline;font-size:14pt;'>Ampliation</span><br/>
+				<ul>
+                     <li>M.E DIRCAB……(ATCR) ;</li>
+					 <li>Intéressé…………..(${strNbreInteresses}) ;</li>
+					 <li>Archive / Chrono.</li>
+				</ul>
+			</div>
+			`;
+
 			return `
 			<div class="row" style="position: relative;">
 			<div class="col-6">` + 
-			ampliDoc +
+			varAmpliDoc +
 			`</div>
 			<div class="col-6">` +
 			signataireDoc +

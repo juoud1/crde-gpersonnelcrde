@@ -73,7 +73,7 @@ public class PackCongeService {
 										final LocalDate dateDebConge, final LocalDate dateFinConge, 
 										final String infoSupplConge, final String numNoteServiceConge, final String numAutorisatSortie,
 										final LocalDate dateDepartAutorisatSortie, final LocalDate dateRetourAutorisatSortie, 
-										final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie){
+										final String villeAutorisatSortie, final String paysAutorisatSortie, final String motifSortie) throws IllegalAccessException{
 		
 		var congeDto = getPackCongeDtoFromWebParm(matriculeEmpConge, typeDemandeConge, dateDebConge, dateFinConge, 
 										infoSupplConge, numNoteServiceConge, numAutorisatSortie,
@@ -98,7 +98,8 @@ public class PackCongeService {
 		return result;
 	}
 
-	public PackCongeDto savePackCongeEmploye(PackCongeDto packCongeDtoToSave){
+	@Transactional
+	public PackCongeDto savePackCongeEmploye(PackCongeDto packCongeDtoToSave) throws IllegalAccessException{
 		if (Objects.isNull(packCongeDtoToSave)) {
 			logger.warn("Impossible de persister l'objet car le Pack congé est null.");
 			throw new IllegalArgumentException("L'objet Pack congé et/ou autorisation de sortie doit être non null.");
@@ -107,24 +108,41 @@ public class PackCongeService {
 		var conge = getCongeFromPack(packCongeDtoToSave);
 		Conge savedConge  = null;
 		//Check
-		if (!checkExistanceCongeBeforSaving(conge)){
+		if (checkExistanceCongeBeforSaving(conge)){
+			logger.info("Impossible de créer le congé car il existe déjà dans la base de données.");
+			throw new IllegalAccessException("Ce congé existe déjà dans la base de données.");
+		}
 			//save
-			savedConge = saveConge(conge);
+		savedConge = saveConge(conge);
+		logger.debug("Un congé de l'Employé {} est crée sous le numéro {}".toUpperCase(), savedConge.getEmploye(), savedConge.getId());
 
-			AutorisationSortie as, savedAs = null;
-			if (!packCongeDtoToSave.getTypeDemandeConge().equalsIgnoreCase("Congé")) {
-				as = getAutSortieFromPack(packCongeDtoToSave, savedConge);
+		AutorisationSortie as, savedAs = null;
+		if (!packCongeDtoToSave.getTypeDemandeConge().equalsIgnoreCase("Congé")) {
+			as = getAutSortieFromPack(packCongeDtoToSave, savedConge);
 				//Check
-				if (!checkExistanceAutSortieBeforSaving(as)){
+			if (checkExistanceAutSortieBeforSaving(as)){
+				///// IL FAUT ANNULER LA CREATION DE CONGÉ
+				//packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, null);
+				logger.info("Impossible de créer l'autorisation de sortie car elle existe déjà dans la base de données.");	
+				throw new IllegalAccessException("Cette autorisation de sortie existe déjà dans la base de données.");
+			}
 					//save
-					savedAs = saveAutSortie(as);
-				}
+			savedAs = saveAutSortie(as);
+			logger.debug("Un autorisation de sortie relative au congé n° {} de l'Employé {} est créée sous le numéro {}".toUpperCase(), savedAs.getConge().getId(), savedAs.getConge().getEmploye().getEmpMatricule(), savedAs.getId());
+				//} else {
+				//	logger.info("Impossible de créer l'autorisation de sortie car elle existe déjà dans la base de données.");	
+					//throw new IllegalAccessException("Cette autorisation de sortie existe déjà dans la base de données.");
+				//}
 				
 				//packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, savedAs);
-			}
-			
-			packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, savedAs);
 		}
+			
+		packCongeDtoToSave = updatePackCongeDtoAfterSaving(packCongeDtoToSave, savedConge, savedAs);
+		
+		//} else {
+		//	logger.info("Impossible de créer le congé car il existe déjà dans la base de données.");
+		//	throw new IllegalAccessException("Ce congé existe déjà dans la base de données.");
+		//}
 
 		return packCongeDtoToSave;
 	}
@@ -133,7 +151,7 @@ public class PackCongeService {
 		packCongeDto.setNumConge(String.valueOf(savedConge.getId()));
 		packCongeDto.setEmployeCivilite(savedConge.getEmploye().getEmpCivilite());
 		packCongeDto.setEmployeFonction(savedConge.getEmploye().getEmpFonction().getFonctionCode());
-		packCongeDto.setEmployeNom(String.join(", ", savedConge.getEmploye().getEmpNom(), savedConge.getEmploye().getEmpPren()));
+		packCongeDto.setEmployeNom(String.join(" ", savedConge.getEmploye().getEmpNom(), savedConge.getEmploye().getEmpPren()));
 
 		if (Objects.nonNull(savedAs)){
 			//packCongeDto.setNumConge(String.valueOf(savedConge.getId()));
@@ -156,6 +174,7 @@ public class PackCongeService {
 
 	private boolean checkExistanceAutSortieBeforSaving(final AutorisationSortie asToSave) {
 		var result = autorisationSortieRepository.findByAsDateDepartAndAsDateRetourAndConge(asToSave.getAsDateDepart(), asToSave.getAsDateRetour(), asToSave.getConge());
+		logger.info("Résultat de vérification de l'autorisation de sortie à persister: {}", result.isPresent());
 
 		return result.isPresent();
 	}

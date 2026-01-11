@@ -118,7 +118,7 @@ public class PackCongeController {
 					@RequestParam("dateretourautorisatsortie") LocalDate dateRetourAutorisatSortie,
 					@RequestParam("villeautorisatsortie") String villeAutorisatSortie,
 					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, 
-					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model){
+					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model) throws IllegalAccessException{
 		
 		var savedConge = packCongeService.savePackCongeEmploye(matriculeEmpConge, typeDmdeConge, dateDebConge, dateFinConge, infoSupplConge,
 								numNoteDeSvceConge, numAutDeSortie, dateDepartAutorisatSortie, dateRetourAutorisatSortie,

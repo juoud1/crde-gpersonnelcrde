@@ -1,7 +1,6 @@
 package gpersonnelcrde.service;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -196,13 +194,13 @@ public class EmployeService {
 		eDto.setEmpEmplacementPhoto(Objects.nonNull(empPhoto) ? pathEmplacementPhoto.toString() : null);
 		eDto.setEmpPhoto(resourcePhoto);//resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
 		
-		var newEmp = createEmploye (eDto);
+		var newEmp = saveEmploye (eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
 
 		return newEmp;
 	}
 
-	private boolean checkEmployeExistance(EmployeDto employeDto) throws StockageFichiersImagesException, EmployeServiceException{
+	private boolean checkExistanceEmploye(EmployeDto employeDto) throws StockageFichiersImagesException, EmployeServiceException{
 		if (Objects.isNull(employeDto)){
 			throw new IllegalArgumentException("Impossible de vérifier l'existance de l'employé car les données sont vides");
 		}
@@ -213,17 +211,17 @@ public class EmployeService {
 		return optEmp.isPresent();
 	}
 
-	public Optional<EmployeDto> createEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
+	public Optional<EmployeDto> saveEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
 		if (Objects.isNull(employeDto)) {
 			logger.info("Impossible de créer l'employé car les données sont vides.");
 			return Optional.empty();
 		}
 
-		var empExistant = checkEmployeExistance(employeDto);
+		/*var empExistant = checkExistanceEmploye(employeDto);
 		if (empExistant){
 			logger.info("Impossible de créer l'employé car, il existe déjà dans la base de données.");
 			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
-		}
+		}*/
 		
 		Future<Optional<Fonction>> futureOptEmpFonct = null;
 		Future<Optional<Status>> futureOptEmpStatus = null;
@@ -308,13 +306,34 @@ public class EmployeService {
 	}
 
 	@Transactional
-	protected Employe saveEmploye(final Employe employe){
+	protected Employe saveEmploye(final Employe employe) throws IllegalAccessException{
 		if (Objects.isNull(employe)) {
+			logger.warn("Impossible de persister l'objet car l'employé est null.");
 			throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
 		//logger.info("Affectation initiale de {}, {} enregistrée sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), );
+		if (checkExistanceEmployeBeforSaving(employe)){
+			logger.info("Impossible de créer l'employé car il existe déjà dans la base de données.");
+			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
+		}
 		
-		return employeRepository.saveAndFlush(employe);
+		//Employe savedEmploye = null;
+		//if (!checkExistanceEmployeBeforSaving(employe)){
+		Employe savedEmploye = employeRepository.saveAndFlush(employe); 
+		//}
+		logger.debug("Employé {} {} est crée sous le numéro {}".toUpperCase(), employe.getEmpNom(), savedEmploye.getEmpPren(), savedEmploye.getId());
+
+		return savedEmploye; //employeRepository.saveAndFlush(employe);
+	}
+
+	private boolean checkExistanceEmployeBeforSaving(final Employe employe) {
+		var result = employeRepository.findByEmpNomAndEmpPrenAndEmpCiviliteAndEmpMatriculeAndTypeEmploye(employe.getEmpNom(), 
+							employe.getEmpPren(), 
+							employe.getEmpCivilite(), 
+							employe.getEmpMatricule(), 
+							employe.getTypeEmploye());
+
+		return result.isPresent();
 	}
 
 	private void createInitialaffectation(final Employe employe){

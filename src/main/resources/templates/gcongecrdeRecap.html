@@ -301,71 +301,42 @@
 		}
 
 		// Impression principale et tri personnalisée
-		function printMissions() {
-			const printBtn = document.getElementById('print-missions');
-			
-			if (printBtn) {
-				//const employees = getEmployees();
-					
-				let tableHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:1.5em; text-decoration: underline;">LISTE DES MISSIONS</h2><br> <table class='table table-striped' style="border: 1px solid black; border-collapse: collapse;"><thead><tr>` +
-					`<th>Matricule</th><th class='print-col-nom'>Employé</th><th class='print-col-email'>Cadre de mission</th><th>Motif</th><th>Date Depart</th><th>Date retour</th><th class='print-col-email'>Destination</th><th>Num. ordre miss</th></tr></thead><tbody>`;
-				
-				allMissions.forEach(miss => {
-					tableHtml += `<tr><td>${miss.employeMatricule}</td><td>${miss.employeCivilite}<br> ${miss.employeNom}</td><td>${miss.cadreMission}</td><td>${miss.motifMission}</td><td>${miss.dateDepart}</td><td>${miss.dateRetour}</td><td>${miss.villeMission}, ${miss.paysMission}</td><td>${miss.numOrdreMission }</td></tr>`;
-				});
-
-				tableHtml += `</tbody></table>`;
+		function printNoteServiceConge(savedConge) {
+			if (undefined !== savedConge) {
+				let divHtml ='DOCUMENT À VENIR';
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');
 				win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-				win.document.write('<style>td,th{border: 1px solid black; border-collapse: collapse; padding: 1px; margin: 1px;} .print-col-fonction{min-width:190px;padding-left:18px !important;padding-right:18px !important;} body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;} .container, .card, .card-body, .table {position:relative;z-index:1;} .print-col-nom{min-width:150px;padding-left:18px !important;padding-right:18px !important;} .print-col-email{min-width:220px;padding-left:18px !important;padding-right:18px !important;}</style>');
+				win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
 				win.document.write('</head><body>');
 				win.document.write(getPrintableHeader());
-				win.document.write(tableHtml);
-				win.document.write(getPrintableFooter());
+				win.document.write(divHtml);
+				win.document.write(getPrintableFooterNoteSvce());
 				win.document.write('</body></html>');
 				win.document.close();
 				win.print();
 			}
 		}
 
-		function printOrdreMissions(savedMission) {
-			//const btnId = 'print-ordre-mission' + numordremiss;
-			//const printOmBtn = document.getElementById(btnId);
-			//const numordremissTxt = document.getElementById('numordremiss').innerText.trim();
-	
-			if (undefined !== savedMission) {
+		function printAutorisationSortie(savedConge) {
+			
+			if (undefined !== savedConge) {
 				let divHtml ='';
 
-				if ('ordre-mission' == savedMission.typeOrdreMission) {
+				if ('Congé' !== savedConge.typeDemandeConge) {
 				
-					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">ORDRE DE MISSION</h2><br><br>` +
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; font-weight:bold; text-decoration: underline;">AUTORISATION DE SORTIE</h2><br><br>` +
 						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
 					
-					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Dans le cadre de ${savedMission.cadreMission}, Le Ministre Conseiller ` +
-						`Spécial en Charge de la Coordination de Renseignements et de la Documentation d’Etat, autorise ${savedMission.employeCivilite}` +
-						` <b> ${savedMission.employeNom},</b> ${savedMission.employeFonction} de se rendre à ${savedMission.villeMission},  ${savedMission.paysMission}.</p>` + 
-						`<p class='w-100' style="text-align:left; font-size:14pt;"><b>Date du départ:</b> ${savedMission.dateDepart}<br> <b>Date de retour:</b> ${savedMission.dateRetour}<br>` +
-						`<b>Motif:</b> ${savedMission.motifMission}</p>` +
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Le Ministre Conseiller Spécial en Charge de la Coordination des Renseignements et de la Documentation d’Etat, ` +
+						//`autorise ${savedMission.employeCivilite}` +
+						`autorise le/la ${savedConge.employeCivilite} <b> ${savedConge.employeNom},</b> à se rendre à ${savedConge.villeAutorisatSortie}, ${savedConge.paysAutorisatSortie}.</p>` + 
+						`<p class='w-100 mt-0' style="text-align:left; font-size:14pt;"><b style="text-decoration: underline;">Date du départ:</b> ${savedConge.dateDepartAutorisatSortie}<br>` +
+						`<b style="text-decoration: underline;">Date de retour:</b> ${savedConge.dateRetourAutorisatSortie}<br></p>` +
 						`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente autorisation est établie pour servir et valoir ce que de droit.</p>`;
 
 					divHtml += `</div><div class="col-1"></div></div>`;
-
-					/*const win = window.open('', '', 'height=700,width=900');
-					win.document.write('<html><head>');
-					win.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-					win.document.write('<style>body{background:#f8fafc;position:relative;min-height:100vh;overflow-x:hidden;font-family:\'Times New Roman\',Times,serif;}body::before{content:"CRDE";position:fixed;top:50%;left:50%;width:100vw;height:100vh;transform:translate(-50%,-50%);font-size:10vw;color:rgba(44,62,80,0.07);font-weight:900;letter-spacing:1vw;z-index:0;pointer-events:none;user-select:none;display:flex;align-items:center;justify-content:center;}body::after{content:"";position:fixed;top:50%;left:50%;width:60vw;height:60vw;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(80,180,255,0.12) 0%,rgba(80,180,255,0.08) 60%,transparent 80%),repeating-conic-gradient(rgba(80,180,255,0.15) 0deg 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none;}</style>');
-					win.document.write('</head><body>');
-					win.document.write(getPrintableHeader());
-					win.document.write(divHtml);
-					win.document.write(getPrintableFooterNoteSvce());
-					win.document.write('</body></html>');
-					win.document.close();
-					win.print();*/
-				} else {
-				
-				
 				}
 
 				const win = window.open('', '', 'height=700,width=900');
@@ -399,7 +370,7 @@
 				<div style='margin-bottom:10px;'>
 					<span style='text-decoration:underline;'>N°</span>
 					<span>_______</span>
-					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 25</span>
+					<span style='text-decoration:underline;'>/PR/DIRCAB/CRDE/SP. 26</span>
 				</div>
 				</th>
 				<th style='width:15%;text-align:center;border:1px dotted #333;vertical-align:middle;align-items:center;justify-content:center;height:140px;padding:0;'>
