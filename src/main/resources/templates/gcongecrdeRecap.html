@@ -161,7 +161,7 @@
 										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">civ</label>
-											<select id="missempnom" name="matriculeempconge" class="form-select" disabled>
+											<select name="matriculeempconge" class="form-select" disabled>
 												<option th:value="${savedConge.employeMatricule}" th:text="${savedConge.employeNom}">employé</option>
 											</select>
 										</div>
@@ -175,11 +175,18 @@
 											<label class="form-label h6" for="datefinconge" th:text="|Date fin|">civ</label>
 											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" disabled>
 										</div>
-										<hr>
 										
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control" disabled>
+										</div>
+										<hr>
+										
+										<div class="col-lg-11 col-md-11 col-sm-12">
+											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">civ</label>
+											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select" disabled>
+												<option th:value="${savedConge.employeMatriculeRemplacant}" th:text="${savedConge.employeNomRemplacant}">employé</option>
+											</select>
 										</div>
 										<hr id="asbox">
 
@@ -302,8 +309,27 @@
 
 		// Impression principale et tri personnalisée
 		function printNoteServiceConge(savedConge) {
+			
 			if (undefined !== savedConge) {
-				let divHtml ='DOCUMENT À VENIR';
+				let divHtml ='';
+
+				//if ('Congé' !== savedConge.typeDemandeConge) {
+				
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; font-weight:bold; text-decoration: underline;">NOTE DE SERVICE</h2><br>` +
+						//`<span style="text-align:center; margin:0 0 40px 0;font-size:13pt; font-weight:bold;">************</span><br><br><br>` +
+						`<h3 class='w-100' style="text-align:justify; font-size:17pt;"><b style="text-decoration: underline;">Objet :</b> Congé autorisé.</h3><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+					
+					//divHtml += `<h3 class='w-100' style="text-align:justify; font-size:17pt;"><b style="text-decoration: underline;">Objet :</b> Congé autorisé.</h3><br><br><br>` +
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Pour compter de la date de signature de la présente note de service, ` +
+						//`autorise ${savedMission.employeCivilite}` +
+						`<b>${savedConge.employeCivilite}</b> <b>${savedConge.employeNom}</b> de la Coordination des Renseignements et de la Documentation d’Etat, est en congé du ` + 
+						`<b>${savedConge.dateDebutConge}</b> jusqu’au <b>${savedConge.dateFinConge}</b>.</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:15pt;">Durant cette période, il/elle sera remplacé(e) par <em style="font-weight=bold;">${savedConge.employeCiviliteRemplacant} ${savedConge.employeNomRemplacant}</em>.</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:15pt;">La présente Note de Service prend effet à compter de la date de sa signature.</p>`;
+
+					divHtml += `</div><div class="col-1"></div></div>`;
+				//}
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');

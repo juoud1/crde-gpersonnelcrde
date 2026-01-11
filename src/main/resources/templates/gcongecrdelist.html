@@ -231,8 +231,8 @@
 																					<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Modifier le congé|">Annuler</a>
 																					<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé|">Annuler</a>
 																					<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Annuler/Suspendre le congé|">Annuler</a>
-																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${conge}]])" th:text="|Imprimer note de service|">Note de service</button>
-																					<button type="button" class="btn btn-info align-items ms-auto" th:id=" |AS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" th:text="|Imprimer autoris. de sortie|">Note de service</button>
+																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteServiceConge([[${conge}]])" title="Imprimer la note de service (NS)" th:text="|Imprimer NS|">Note de service</button>
+																					<button type="button" class="btn btn-info align-items" th:id=" |AS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" title="Imprimer l'autorisation de sortie (AS)" th:text="|Imprimer AS|">Note de service</button>
 																				</div>
 																			</div>
 
@@ -361,16 +361,27 @@
 		}
 
 		function printNoteServiceConge(savedConge) {
+			
 			if (undefined !== savedConge) {
-				//const employees = getEmployees();
-				let divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; text-decoration: underline;">NOTE DE SERVICE</h2><br><br>` +
-					`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
-				
-				divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Conformément aux textes du code du travail en vigueur, ${savedConge.employeCivilite} ` +
-					` <b> ${savedConge.employeNom},</b> ${savedConge.employeFonction} est en congé(e) ou sera absent(e) du <b>${savedConge.dateDebutConge}</b> au <b>${savedConge.dateFinConge}</b>.</p>` +
-					`<p class='w-100' style="text-align:justify; font-size:14pt;">La présente note est établie pour servir et valoir ce que de droit.</p>`;
+				let divHtml ='';
 
-				divHtml += `</div><div class="col-1"></div></div>`;
+				//if ('Congé' !== savedConge.typeDemandeConge) {
+				
+					divHtml = `<h2 style="text-align:center;margin:0 0 40px 0;font-size:22pt; font-weight:bold; text-decoration: underline;">NOTE DE SERVICE</h2><br>` +
+						//`<span style="text-align:center; margin:0 0 40px 0;font-size:13pt; font-weight:bold;">************</span><br><br><br>` +
+						`<h3 class='w-100' style="text-align:justify; font-size:17pt;"><b style="text-decoration: underline;">Objet :</b> Congé autorisé.</h3><br><br>` +
+						`<div class='row' style="position: relative;"> <div class="col-2"></div> <div class="col-1010 desc">`;
+					
+					//divHtml += `<h3 class='w-100' style="text-align:justify; font-size:17pt;"><b style="text-decoration: underline;">Objet :</b> Congé autorisé.</h3><br><br><br>` +
+					divHtml += `<p class='w-100' style="text-align:justify; font-size:15pt;">Pour compter de la date de signature de la présente note de service, ` +
+						//`autorise ${savedMission.employeCivilite}` +
+						`<b>${savedConge.employeCivilite}</b> <b>${savedConge.employeNom}</b> de la Coordination des Renseignements et de la Documentation d’Etat, est en congé du ` + 
+						`<b>${savedConge.dateDebutConge}</b> jusqu’au <b>${savedConge.dateFinConge}</b>.</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:15pt;">Durant cette période, il/elle sera remplacé(e) par <em style="font-weight=bold;">${savedConge.employeCiviliteRemplacant} ${savedConge.employeNomRemplacant}</em>.</p>` +
+						`<p class='w-100' style="text-align:justify; font-size:15pt;">La présente Note de Service prend effet à compter de la date de sa signature.</p>`;
+
+					divHtml += `</div><div class="col-1"></div></div>`;
+				//}
 
 				const win = window.open('', '', 'height=700,width=900');
 				win.document.write('<html><head>');
