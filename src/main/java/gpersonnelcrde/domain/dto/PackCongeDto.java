@@ -26,6 +26,11 @@ public class PackCongeDto {
 	private String motifSortie;
 	private String statusAutorisatSortie;
 	private LocalDate dateStatusAutorisatSortie;
+
+	private String employeMatriculeRemplacant;
+	private String employeNomRemplacant;
+	private String employeCiviliteRemplacant;
+	private String employeFonctionRemplacant;
 	
 	public String getTypeDemandeConge() {
 		return typeDemandeConge;
@@ -153,6 +158,30 @@ public class PackCongeDto {
 	public void setDateStatusAutorisatSortie(LocalDate dateStatusAutorisatSortie) {
 		this.dateStatusAutorisatSortie = dateStatusAutorisatSortie;
 	}
+	public String getEmployeMatriculeRemplacant() {
+		return employeMatriculeRemplacant;
+	}
+	public void setEmployeMatriculeRemplacant(String employeMatriculeRemplacant) {
+		this.employeMatriculeRemplacant = employeMatriculeRemplacant;
+	}
+	public String getEmployeNomRemplacant() {
+		return employeNomRemplacant;
+	}
+	public void setEmployeNomRemplacant(String employeNomRemplacant) {
+		this.employeNomRemplacant = employeNomRemplacant;
+	}
+	public String getEmployeCiviliteRemplacant() {
+		return employeCiviliteRemplacant;
+	}
+	public void setEmployeCiviliteRemplacant(String employeCiviliteRemplacant) {
+		this.employeCiviliteRemplacant = employeCiviliteRemplacant;
+	}
+	public String getEmployeFonctionRemplacant() {
+		return employeFonctionRemplacant;
+	}
+	public void setEmployeFonctionRemplacant(String employeFonctionRemplacant) {
+		this.employeFonctionRemplacant = employeFonctionRemplacant;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -179,6 +208,10 @@ public class PackCongeDto {
 		result = prime * result + ((motifSortie == null) ? 0 : motifSortie.hashCode());
 		result = prime * result + ((statusAutorisatSortie == null) ? 0 : statusAutorisatSortie.hashCode());
 		result = prime * result + ((dateStatusAutorisatSortie == null) ? 0 : dateStatusAutorisatSortie.hashCode());
+		result = prime * result + ((employeMatriculeRemplacant == null) ? 0 : employeMatriculeRemplacant.hashCode());
+		result = prime * result + ((employeNomRemplacant == null) ? 0 : employeNomRemplacant.hashCode());
+		result = prime * result + ((employeCiviliteRemplacant == null) ? 0 : employeCiviliteRemplacant.hashCode());
+		result = prime * result + ((employeFonctionRemplacant == null) ? 0 : employeFonctionRemplacant.hashCode());
 		return result;
 	}
 	@Override
@@ -295,6 +328,26 @@ public class PackCongeDto {
 				return false;
 		} else if (!dateStatusAutorisatSortie.equals(other.dateStatusAutorisatSortie))
 			return false;
+		if (employeMatriculeRemplacant == null) {
+			if (other.employeMatriculeRemplacant != null)
+				return false;
+		} else if (!employeMatriculeRemplacant.equals(other.employeMatriculeRemplacant))
+			return false;
+		if (employeNomRemplacant == null) {
+			if (other.employeNomRemplacant != null)
+				return false;
+		} else if (!employeNomRemplacant.equals(other.employeNomRemplacant))
+			return false;
+		if (employeCiviliteRemplacant == null) {
+			if (other.employeCiviliteRemplacant != null)
+				return false;
+		} else if (!employeCiviliteRemplacant.equals(other.employeCiviliteRemplacant))
+			return false;
+		if (employeFonctionRemplacant == null) {
+			if (other.employeFonctionRemplacant != null)
+				return false;
+		} else if (!employeFonctionRemplacant.equals(other.employeFonctionRemplacant))
+			return false;
 		return true;
 	}
 
@@ -310,7 +363,8 @@ public class PackCongeDto {
 				+ villeAutorisatSortie + ", paysAutorisatSortie=" + paysAutorisatSortie + ", numAutorisatSortie="
 				+ numAutorisatSortie + ", numAutSortie=" + numAutSortie + ", motifSortie=" + motifSortie
 				+ ", statusAutorisatSortie=" + statusAutorisatSortie + ", dateStatusAutorisatSortie="
-				+ dateStatusAutorisatSortie + "]";
-	}
-	
+				+ dateStatusAutorisatSortie + ", employeMatriculeRemplacant=" + employeMatriculeRemplacant
+				+ ", employeNomRemplacant=" + employeNomRemplacant + ", employeCiviliteRemplacant="
+				+ employeCiviliteRemplacant + ", employeFonctionRemplacant=" + employeFonctionRemplacant + "]";
+	}	
 }

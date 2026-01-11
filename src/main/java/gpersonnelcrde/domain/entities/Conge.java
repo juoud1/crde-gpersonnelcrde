@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "conge")
@@ -29,6 +28,10 @@ public class Conge implements Comparable<Conge> {
 	@JsonIgnore
 	@ManyToOne
 	private Employe employe;
+
+	@JsonIgnore
+	@ManyToOne
+	private Employe employeRemplacant;
 
 	private LocalDateTime congeCreeLe;
 	private String congeCreePar;
@@ -89,6 +92,12 @@ public class Conge implements Comparable<Conge> {
 	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
+	public Employe getEmployeRemplacant() {
+		return employeRemplacant;
+	}
+	public void setEmployeRemplacant(Employe employeRemplacant) {
+		this.employeRemplacant = employeRemplacant;
+	}
 	public LocalDateTime getCongeCreeLe() {
 		return congeCreeLe;
 	}
@@ -127,6 +136,7 @@ public class Conge implements Comparable<Conge> {
 		result = prime * result + ((numNoteServiceConge == null) ? 0 : numNoteServiceConge.hashCode());
 		result = prime * result + ((typeDemandeConge == null) ? 0 : typeDemandeConge.hashCode());
 		result = prime * result + ((employe == null) ? 0 : employe.hashCode());
+		result = prime * result + ((employeRemplacant == null) ? 0 : employeRemplacant.hashCode());
 		result = prime * result + ((congeCreeLe == null) ? 0 : congeCreeLe.hashCode());
 		result = prime * result + ((congeCreePar == null) ? 0 : congeCreePar.hashCode());
 		result = prime * result + ((congeModifieLe == null) ? 0 : congeModifieLe.hashCode());
@@ -187,6 +197,11 @@ public class Conge implements Comparable<Conge> {
 				return false;
 		} else if (!employe.equals(other.employe))
 			return false;
+		if (employeRemplacant == null) {
+			if (other.employeRemplacant != null)
+				return false;
+		} else if (!employeRemplacant.equals(other.employeRemplacant))
+			return false;
 		if (congeCreeLe == null) {
 			if (other.congeCreeLe != null)
 				return false;
@@ -214,9 +229,10 @@ public class Conge implements Comparable<Conge> {
 	public String toString() {
 		return "Conge [id=" + id + ", dateDebutConge=" + dateDebutConge + ", dateFinConge=" + dateFinConge
 				+ ", infoSupplementaires=" + infoSupplementaires + ", statusConge=" + statusConge + ", dateStatusConge="
-				+ dateStatusConge + ", numNoteServiceConge=" + numNoteServiceConge + ", typeDemadeConge="
-				+ typeDemandeConge + ", employe=" + employe + ", congeCreeLe=" + congeCreeLe + ", congeCreePar="
-				+ congeCreePar + ", congeModifieLe=" + congeModifieLe + ", congeModifiePar=" + congeModifiePar + "]";
+				+ dateStatusConge + ", numNoteServiceConge=" + numNoteServiceConge + ", typeDemandeConge="
+				+ typeDemandeConge + ", employe=" + employe + ", employeRemplacant=" + employeRemplacant
+				+ ", congeCreeLe=" + congeCreeLe + ", congeCreePar=" + congeCreePar + ", congeModifieLe="
+				+ congeModifieLe + ", congeModifiePar=" + congeModifiePar + "]";
 	}
 	@Override
 	public int compareTo(Conge o) {

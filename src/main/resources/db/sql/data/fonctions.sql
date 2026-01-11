@@ -29,6 +29,8 @@ insert into fonction (FONCTION_CODE, FONCTION)
 values ('CHAUF', 'Chauffeur'); 
 --ON CONFLICT ON CONSTRAINT uniq_fonction DO NOTHING;
 insert into fonction (FONCTION_CODE, FONCTION)
+values ('STAG', 'Stagiaire'); 
+insert into fonction (FONCTION_CODE, FONCTION)
 values ('AUT', 'Autre'); 
 --WHEN OTHERS THEN
     COMMIT;

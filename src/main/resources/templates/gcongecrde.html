@@ -153,7 +153,7 @@
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
-												<option value="">Sélectionner un employé</option>
+												<option value="">Sélectionner un employé en congé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
@@ -167,11 +167,19 @@
 											<label class="form-label h6" for="datefinconge" th:text="|Date de début|">num</label>
 											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
-										<hr>
-										
+
 										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
+										</div>
+										<hr>
+										
+										<div class="col-lg-11 col-md-11 col-sm-12">
+											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">num</label>
+											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select">
+												<option value="">Sélectionner un employé Remplaçant</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select>
 										</div>
 										<hr id="asbox">
 										
