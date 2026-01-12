@@ -56,11 +56,11 @@ public class AffectationController {
 		
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
-			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction().stream().distinct().toList());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation().stream().distinct().toList());
 			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
-			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
-			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect().stream().distinct().toList());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye().stream().distinct().toList());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
 		}
@@ -91,11 +91,11 @@ public class AffectationController {
 		
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
-			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction().stream().distinct().toList());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation().stream().distinct().toList());
 			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
-			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
-			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect().stream().distinct().toList());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye().stream().distinct().toList());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
 		}
@@ -167,11 +167,11 @@ public class AffectationController {
 		
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
-			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation());
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction().stream().distinct().toList());
+			futureEmpAffectations = executor.submit(() -> affectationService.getAllAffectation().stream().distinct().toList());
 			//futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
-			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
-			futureEmployes = executor.submit(() -> employeService.getAllEmploye());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect().stream().distinct().toList());
+			futureEmployes = executor.submit(() -> employeService.getAllEmploye().stream().distinct().toList());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
 		}

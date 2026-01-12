@@ -100,11 +100,11 @@ public class EmployeController {
 		
 		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
 		
-		var allFonctions = futureEmpFonctions.get().stream().distinct().toList(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
-		var allStatus = futureEmpStatus.get().stream().distinct().toList(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		var allTypeEmp = futureTypeEmployes.get().stream().distinct().toList(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
-		var allLieuAffect = futureLieuAffectations.get().stream().distinct().toList(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
-		var allEmployes = futureEmployes.get().stream().distinct().toList();
+		var allFonctions = futureEmpFonctions.get(); //.stream().distinct().toList(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allStatus = futureEmpStatus.get(); //.stream().distinct().toList(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allTypeEmp = futureTypeEmployes.get(); //.stream().distinct().toList(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //.stream().distinct().toList(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allEmployes = futureEmployes.get(); //.stream().distinct().toList();
 		
 		model.addAttribute("allStatus", allStatus);
 											/*.sorted(Comparator.comparing(LieuAffectation::getId))
@@ -133,10 +133,10 @@ public class EmployeController {
 
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction());
-			futureEmpStatus = executor.submit(() -> statusService.getAllStatus());
-			futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp());
-			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect());
+			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction().stream().distinct().toList());
+			futureEmpStatus = executor.submit(() -> statusService.getAllStatus().stream().distinct().toList());
+			futureTypeEmployes = executor.submit(() -> typeEmployeService.getAllTypeEmp().stream().distinct().toList());
+			futureLieuAffectations = executor.submit(() -> lieuAffectationService.getAllLieuAffect().stream().distinct().toList());
 			//futureEmployes = executor.submit(() -> employeService.getAllEmploye());
 		} catch (Exception  e) {
 			throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
@@ -144,10 +144,10 @@ public class EmployeController {
 		
 		executor.close();//awaitTermination(5, TimeUnit.SECONDS); //waits until all tasks have completed execution and the executor has terminated
 		
-		var allFonctions = futureEmpFonctions.get().stream().distinct().toList(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
-		var allStatus = futureEmpStatus.get().stream().distinct().toList(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
-		var allTypeEmp = futureTypeEmployes.get().stream().distinct().toList(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
-		var allLieuAffect = futureLieuAffectations.get().stream().distinct().toList(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
+		var allFonctions = futureEmpFonctions.get(); //.stream().distinct().toList(); //fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode());
+		var allStatus = futureEmpStatus.get(); //.stream().distinct().toList(); //statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode());
+		var allTypeEmp = futureTypeEmployes.get(); //.stream().distinct().toList(); //typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode());
+		var allLieuAffect = futureLieuAffectations.get(); //.stream().distinct().toList(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
 		//var allEmployes = futureEmployes.get();
 		
 		model.addAttribute("allStatus", allStatus); //statusService.getAllStatus());
