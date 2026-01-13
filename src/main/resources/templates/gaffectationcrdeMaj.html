@@ -136,9 +136,13 @@
 									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
 										<legende class="h4 mb-3 text-center">Mettre à jour les données de l'affectation</legende>
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
-											<label class="form-label h6" for="numnoteserviceconge" th:text="|Affectation N°|">num</label>
-											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" th:value="${savedAffectation.numNoteService}" class="form-control" placeholder="num note de service affectation">
+										<div class="col-lg-2 col-md-2 col-sm-6 mt-4">
+											<label class="form-label h6" for="numaffect" th:text="|Affectation N°|">num</label>
+											<input type="text" id="numaffect" name="numaffect" th:value="${savedAffectation.numAffect}" class="form-control" disabled>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-6 mt-4">
+											<label class="form-label h6" for="numnoteserviceaffect" th:text="|N° note de svce|">num</label>
+											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" th:value="${savedAffectation.numNoteService}" class="form-control">
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-8 mt-4">
 											<label class="form-label h6" for="categorieaffect" th:text="|Catégorie|">civ</label>
@@ -148,16 +152,18 @@
 												<option th:value="|Affectation interieur de RCA|" th:text="|Affectation à l'interieur de RCA|">type de mission</option>
 											</select>
 										</div>
+										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
 											<input type="text" id="villeresidence" name="villeresidence" th:value="${savedAffectation.villeResidence}" class="form-control" >
 										</div>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
 											<input type="text" id="paysresidence" name="paysresidence" th:value="${savedAffectation.paysResidence}" class="form-control" >
 										</div>
+										<hr>
 
 										<div class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
@@ -166,7 +172,8 @@
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>	
 										</div>
-									
+										<hr>
+
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
@@ -174,18 +181,20 @@
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>	
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="emplacementaff" th:text="|Emplacemet précis|">civ</label>
 											<input type="text" id="emplacementaff" name="emplacementaff" th:value="${savedAffectation.emplacementAffect}" class="form-control">
 										</div>
 										
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
 											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
 												<option th:value="${savedAffectation.fonction}" th:text="${savedAffectation.fonction}">Sélectionner un employé</option>
 												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
 											</select>	
 										</div>
+										<hr>
+
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedebaffect" th:text="|Date début|">civ</label>
 											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" >
@@ -198,7 +207,9 @@
 											<label class="form-label h6" for="datefinaffect" th:text="|Date fin|">civ</label>
 											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control">
 										</div>
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<hr>
+
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control">
 										</div>

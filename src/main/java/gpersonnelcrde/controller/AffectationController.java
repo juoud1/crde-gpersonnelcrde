@@ -153,9 +153,9 @@ public class AffectationController {
 		return "gaffectationcrdeRecap";
 	}
 
-	@GetMapping ("/affectation-emp-crde-m.html/{numNoteServiceAffect}")
-	public String getAffectationByNumNoteSvceAffect(@PathVariable String numNoteServiceAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
-		var savedAffectation = affectationService.getAffectByByNumNoteService(numNoteServiceAffect)
+	@GetMapping ("/affectation-emp-crde-m.html/{numAffect}")
+	public String getAffectationByNumNoteSvceAffect(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+		var savedAffectation = affectationService.getAffectByNumAffectation(numAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);
 		
