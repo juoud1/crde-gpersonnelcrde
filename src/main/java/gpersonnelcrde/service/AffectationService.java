@@ -180,11 +180,11 @@ public class AffectationService {
 				.toList();
 	}
 
-	public Optional<AffectationDto> getAffectByByNumNoteService(String numNoteServiceAffectation){
-		if (StringUtils.isBlank(numNoteServiceAffectation) || !NumberUtils.isDigits(numNoteServiceAffectation )){
+	public Optional<AffectationDto> getAffectByNumAffectation(String numAffectation){
+		if (StringUtils.isBlank(numAffectation) || !NumberUtils.isDigits(numAffectation )){
 			return Optional.empty();
 		}
-		var optionalAffect = affectationRepository.findById(Long.parseLong(numNoteServiceAffectation));
+		var optionalAffect = affectationRepository.findById(Long.parseLong(numAffectation));
 	
 		return affectationMapper(optionalAffect);
 	}
@@ -225,12 +225,13 @@ public class AffectationService {
 		aDto.setInfoSupplementaires(affectation.getInfoSupplementaires());
 		aDto.setLieuAffectation(affectLieuAffectation.orElseThrow(EntityNotFoundException::new).getLieuAffect());
 		aDto.setReferenceAffect(affectation.getReferenceAffect());
-		aDto.setNumNoteService(String.valueOf(affectation.getId())); ///Formule à détermier
+		aDto.setNumNoteService(affectation.getNumNoteService()); ///Formule à détermier
 		aDto.setCategorieAffect(affectation.getCategorieAffect());
 		aDto.setVilleResidence(affectation.getVilleResidence());
 		aDto.setPaysResidence(affectation.getPaysResidence());
 		aDto.setStatusAffect(affectation.getStatusAffect());
 		aDto.setDateStatusAffect(affectation.getDateStatusAffect());
+		aDto.setNumAffect(String.valueOf(affectation.getId()));
 
 		return aDto;
 	}

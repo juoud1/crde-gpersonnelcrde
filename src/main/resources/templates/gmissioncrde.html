@@ -159,7 +159,7 @@
 												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
 										</div>
-
+										
 										<div class="col-lg-7 col-md-7 col-sm-10">
 											<label class="form-label h6" for="cadremission" th:text="|Cadre de la mission|">civ</label>
 											<input type="text" id="cadremission" name="cadremission" class="form-control" required>
@@ -212,20 +212,6 @@
 										<hr>
 										
 										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-10">
-											<!--label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
-											<select id="missempnom" name="missempmatricule" class="form-select" multiple>
-												<option value="">Sélectionner un ou plusieurs employés</option>
-												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
-
-											<ul class="dropdown-menu checkbox-menu allow-focus">
-												<li th:each="employe : ${employesEnSvce}">
-													<label th:text="${employe.empNom} + | | + ${employe.empPren}">
-														<input name="missempmatricule" type="checkbox" th:value="${employe.empMatricule}"> Allo
-													</label>
-												</li>
-											</ul-->
-
 											<div class="table-responsive overflow-auto" style="height: 10em;">
 												<table class="table table-sm table-hover">
 													<thead>

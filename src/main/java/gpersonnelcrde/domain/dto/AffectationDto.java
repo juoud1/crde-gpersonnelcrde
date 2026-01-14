@@ -13,6 +13,7 @@ public class AffectationDto {
 	private LocalDate datePriseService;
 	private String infoSupplementaires;
 	private String numNoteService;
+	private String numAffect;
 	private String statusAffect;
 	private LocalDate dateStatusAffect;
 	private String employeMatricule;
@@ -20,7 +21,7 @@ public class AffectationDto {
 	private String employeCivilite;
 	private String lieuAffectation;
 	private String fonction;
-	
+
 	public String getCategorieAffect() {
 		return categorieAffect;
 	}
@@ -81,6 +82,12 @@ public class AffectationDto {
 	public void setNumNoteService(String numNoteService) {
 		this.numNoteService = numNoteService;
 	}
+	public String getNumAffect() {
+		return numAffect;
+	}
+	public void setNumAffect(String numAffect) {
+		this.numAffect = numAffect;
+	}
 	public String getStatusAffect() {
 		return statusAffect;
 	}
@@ -138,6 +145,7 @@ public class AffectationDto {
 		result = prime * result + ((datePriseService == null) ? 0 : datePriseService.hashCode());
 		result = prime * result + ((infoSupplementaires == null) ? 0 : infoSupplementaires.hashCode());
 		result = prime * result + ((numNoteService == null) ? 0 : numNoteService.hashCode());
+		result = prime * result + ((numAffect == null) ? 0 : numAffect.hashCode());
 		result = prime * result + ((statusAffect == null) ? 0 : statusAffect.hashCode());
 		result = prime * result + ((dateStatusAffect == null) ? 0 : dateStatusAffect.hashCode());
 		result = prime * result + ((employeMatricule == null) ? 0 : employeMatricule.hashCode());
@@ -206,6 +214,11 @@ public class AffectationDto {
 				return false;
 		} else if (!numNoteService.equals(other.numNoteService))
 			return false;
+		if (numAffect == null) {
+			if (other.numAffect != null)
+				return false;
+		} else if (!numAffect.equals(other.numAffect))
+			return false;
 		if (statusAffect == null) {
 			if (other.statusAffect != null)
 				return false;
@@ -243,17 +256,17 @@ public class AffectationDto {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "AffectationDto [categorieAffect=" + categorieAffect + ", villeResidence=" + villeResidence
 				+ ", paysResidence=" + paysResidence + ", referenceAffect=" + referenceAffect + ", emplacementAffect="
 				+ emplacementAffect + ", dateDebutAffect=" + dateDebutAffect + ", dateFinAffect=" + dateFinAffect
 				+ ", datePriseService=" + datePriseService + ", infoSupplementaires=" + infoSupplementaires
-				+ ", numNoteService=" + numNoteService + ", statusAffect=" + statusAffect + ", dateStatusAffect="
-				+ dateStatusAffect + ", employeMatricule=" + employeMatricule + ", employeNom=" + employeNom
-				+ ", employeCivilite=" + employeCivilite + ", lieuAffectation=" + lieuAffectation + ", fonction="
-				+ fonction + "]";
+				+ ", numNoteService=" + numNoteService + ", numAffect=" + numAffect + ", statusAffect=" + statusAffect
+				+ ", dateStatusAffect=" + dateStatusAffect + ", employeMatricule=" + employeMatricule + ", employeNom="
+				+ employeNom + ", employeCivilite=" + employeCivilite + ", lieuAffectation=" + lieuAffectation
+				+ ", fonction=" + fonction + "]";
 	}
 	
 }

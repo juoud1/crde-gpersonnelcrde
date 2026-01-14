@@ -149,44 +149,49 @@
 												<option th:value="|Affectation internationale|" th:text="|Affectation à l'international|">Mission extérieur</option>
 											</select>
 										</div>
+										<hr>
 
 										<div class="col-lg-5 col-md- col-sm-6">
 											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
 											<input type="text" id="villeresidence" name="villeresidence" class="form-control" >
 										</div>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
 											<input type="text" id="paysresidence" name="paysresidence" th:value="${paysResidenceText} + | |" class="form-control" >
 										</div>
+										<hr>
 
-										<div class="col-lg-9 col-md-9 col-sm-10">
+										<div class="col-lg-10 col-md-10 col-sm-10">
 											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
 											<select id="affectempmatricule" name="affectempmatricule" class="form-select" required>
 												<option value="">Sélectionner un employé</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
-									
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<hr>
+										
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
 												<option value="">Sélectionner un lieu d'affectation</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="emplacementaffect" th:text="|Emplacement précis|">civ</label>
 											<input type="text" id="emplacementaffect" name="emplacementaffect" class="form-control">
 										</div>
-										
-										<div class="col-lg-5 col-md-5 col-sm-9">
+								
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
 											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
 												<option value="">Sélectionner une fonction</option>
 												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
 											</select>
 										</div>
+										<hr>
+
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="datedebaffect" th:text="|Date de début|">civ</label>
 											<input type="date" id="datedebaffect" name="datedebaffect" class="form-control" required>
@@ -195,7 +200,9 @@
 											<label class="form-label h6" for="datepriseservice" th:text="|Date prise service |">civ</label>
 											<input type="date" id="datepriseservice" name="datepriseservice" class="form-control">
 										</div>
-										<div class="col-md-10">
+										<hr>
+										
+										<div class="col-lg-11 col-md-11 col-sm-12">
 											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="commenataireaffect" name="commenataireaffect" class="form-control">
 										</div>
