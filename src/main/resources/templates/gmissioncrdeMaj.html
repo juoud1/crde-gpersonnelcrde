@@ -137,16 +137,16 @@
 									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-2 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
 										<legende id="legmissionsform" class="h4 mb-3 text-center">Mettre à jour les données de la mission</legende>
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
 											<label class="form-label h6" for="nummiss" th:text="|N° de mission|">num</label>
 											<input type="text" id="nummiss" name="nummiss" th:value="${savedMissionEmployes.numMission}" class="form-control" disabled>
 										</div>
 
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
 											<label class="form-label h6" for="numordremiss" th:text="|N° OM|">num</label>
 											<input type="text" id="numordremiss" name="numordremiss" th:value="${savedMissionEmployes.numOrdreMission}" class="form-control">
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-8 mt-4">
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
 											<label class="form-label h6" for="typeordremission" th:text="|Type de mission|">civ</label>
 											<select id="typeordremission" autofocus="autofocus" name="typeordremission" class="form-select" onchange="typeOrdreMissSelectChange()" required>
 												<option th:value="${savedMissionEmployes.typeOrdreMission}" th:text="${savedMissionEmployes.typeOrdreMission}">type de mission</option>
@@ -155,7 +155,7 @@
 											</select>
 										</div>
 										
-										<div class="col-lg-4 col-md-4 col-sm-4 mt-4">
+										<div class="col-lg-5 col-md-5 col-sm-6 mt-4">
 											<label class="form-label h6" for="naturedeplacement" th:text="|Portée de la mission|">civ</label>
 											<select id="naturedeplacement" name="naturedeplacement" class="form-select" onchange="natureDeplacementSelectChange()" required>
 												<option th:value="${savedMissionEmployes.natureMission}" th:text="${savedMissionEmployes.natureMission}">Nature de déplacement</option>
@@ -163,13 +163,14 @@
 												<option th:value="|Mission extérieur|" th:text="|Mission à l'extérieur|">Mission extérieur</option>
 											</select>
 										</div>
+										<hr>
 
-										<div class="col-lg-7 col-md-7 col-sm-10">
+										<div class="col-lg-8 col-md-8 col-sm-12">
 											<label class="form-label h6" for="cadremission" th:text="|Cadre de la mission|">civ</label>
 											<input type="text" id="cadremission" name="cadremission" th:value="${savedMissionEmployes.cadreMission}" class="form-control" required>
 										</div>
 
-										<div class="col-lg-4 col-md-4 col-sm-8">
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="motifmission" th:text="|Motif de la mission|">civ</label>
 											<select id="motifmission" name="motifmission" class="form-select" required>
 												<option th:value="${savedMissionEmployes.motifMission}" th:text="${savedMissionEmployes.motifMission}">Motif</option>
@@ -178,7 +179,7 @@
 											</select>
 										</div>
 
-										<div class="col-lg-11 col-md-11 col-sm-10">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<label class="form-label h6" for="infosupplmission" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="infosupplmission" name="infosupplmission" th:value="${savedMissionEmployes.infoSupplementaires}" class="form-control">
 										</div>
@@ -188,7 +189,7 @@
 											<label class="form-label h6" for="destville" th:text="|Ville de destination|">civ</label>
 											<input type="text" id="destville" name="destville" th:value="${savedMissionEmployes.villeMission}" class="form-control" required>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="destpays" th:text="|Pays de destination|">civ</label>
 											<input type="text" id="destpays" name="destpays" th:value="${savedMissionEmployes.paysMission}" class="form-control" required>
 										</div>
@@ -202,67 +203,43 @@
 											<label class="form-label h6" for="dateretourmiss" th:text="|Date retour|">civ</label>
 											<input type="date" id="dateretourmiss" name="dateretourmiss" th:value="${savedMissionEmployes.dateRetour}" class="form-control" >
 										</div>
-										<div class="col-lg-5 col-md-5 col-sm-6">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="dureeMiss" th:text="|Durée de la mission|">civ</label>
 											<input type="text" id="dureeMiss" name="dureeMiss" th:value="${savedMissionEmployes.dureeMiss}" class="form-control">
 										</div>
-										<!--div class="col-lg-2 col-md-2 col-sm-6">
-											<label class="form-label h6" for="nbreJrsMiss" th:text="|Nbre de mois|">civ</label>
-											<input type="text" id="nbreJrsMiss" name="nbreJrsMiss" th:value="${savedMissionEmployes.nbreJours}" class="form-control" disabled>
-										</div-->
 										<hr>
 										
-										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-10">
-											<!--label class="form-label h6" for="missempmatricule" th:text="|Employé(s) autorisé(s)|">civ</label>
-											
-											<div class="mb-2 d-flex flex-wrap gap-2">
-												<select id="missempnom" name="missempmatricule" class="form-select" style="width: 88.5%;" multiple>
-													<option th:each="employeAutorise : ${savedMissionEmployes.employesMission}" th:value="${employeAutorise.empMatricule}" th:text="${employeAutorise.empNom} +|, | + ${employeAutorise.empPren}"></option>
-													<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-												</select>
-												
-												<div class="d-flex flex-wrap text-center gap-1 p-auto m-auto" style="width: 8%;">
-													<button type="button" th:id="|btAjoutEmp|" class="btn btn-outline-primary text-center" title="Ajouter d'autre employé" style="padding: auto; width: 40%;" th:text="|+|">
-														Ajouter emp
-													</button>
-													<button type="button" th:id="|btEnleveEmp|" class="btn btn-outline-danger text-center" title="Enlever certain employé" style="padding: auto; width: 40%;" th:text="|-|">
-														Ajouter emp
-													</button>
-												</div-->
-												
-												<div class="table-responsive overflow-auto" style="height: 10em;">
-													<table class="table table-sm table-hover">
-														<thead>
-															<tr>
-																<th style="width: 3%;" th:text="| |">A</th>
-																<th th:text="|Employé(s) autorisé(s)|"> Employé(s) autorisé(s)</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr class="bg-transparent" th:each="employe, itemStat : *{employesEnSvce}">
-																<td th:if="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" checked /></td>
-																<td th:unless="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" /></td>
-																<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+										<div id="employesautorises" class="col-lg-10 col-md-10 col-sm-12">
+											<div class="table-responsive overflow-auto" style="height: 10em;">
+												<table class="table table-sm table-hover">
+													<thead>
+														<tr>
+															<th style="width: 3%;" th:text="| |">A</th>
+															<th th:text="|Employé(s) autorisé(s)|"> Employé(s) autorisé(s)</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="bg-transparent" th:each="employe, itemStat : *{employesEnSvce}">
+															<td th:if="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" checked /></td>
+															<td th:unless="${#lists.contains(savedMissionEmployes.employesMission, employe)}"><input type="checkbox"  th:name="|missempmatricule|" th:value="${employe.empMatricule}" /></td>
+															<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 											<!--/div-->
 										</div>
 
-										<div class="col-lg-10 col-md-10 col-sm-10">
+										<div class="col-lg-10 col-md-10 col-sm-12">
 											<label id="empchefmissionmatriculelabel" class="form-label h6" for="empchefmissionmatricule" th:text="|Chef de mission|">civ</label>
 											<select id="empchefmissionmatricule" name="empchefmissionmatricule" class="form-select">
 												<option th:value="${savedMissionEmployes.employeChefDeMissMatricule}" th:text="${savedMissionEmployes.employeChefDeMissNom}">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
-										<!--div class="col-md-3">
-											<input type="text" id="missempmatricule" name="missempmatricule" class="form-control" placeholder="Matricule" required>
-										</div-->
 										<hr>
 										
-										<div class="col-lg-7 col-md-7 col-sm-6">
+										<div class="col-lg-9 col-md-9 col-sm-6">
 											<label class="form-label h6" for="statusmission" th:text="|Status mission|">civ</label>
 											<select id="statusmission" name="statusmission" class="form-select">
 												<option th:value="${savedMissionEmployes.statusMission}" th:text="${savedMissionEmployes.statusMission}">status</option>
