@@ -137,9 +137,13 @@
 									<form id="missionsmajform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
 										<legende class="h4 mb-3 text-center" id="legcongesform">Mettre à jour les données de congé</legende>
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+											<label class="form-label h6" for="numconge" th:text="|N° Congé|">num</label>
+											<input type="text" id="numconge" name="numconge" th:value="${savedConge.numConge}" class="form-control" disabled>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
@@ -149,16 +153,19 @@
 												<option th:value="|Congé et autorisation sortie|" th:text="|Congé et autorisation de sortie|">type de congé</option>
 											</select>
 										</div>
-										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
-											<label class="form-label h6" for="numconge" th:text="|N° Congé|">num</label>
-											<input type="text" id="numconge" name="numconge" th:value="${savedConge.numConge}" class="form-control" disabled>
-										</div>
 										<hr>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">civ</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
 												<option th:value="${savedConge.employeMatricule}" th:text="${savedConge.employeNom}">Sélectionner un employé</option>
+												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">civ</label>
+											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select">
+												<option th:value="${savedConge.employeMatriculeRemplacant}" th:text="${savedConge.employeNomRemplacant}">Sélectionner un employé</option>
 												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
@@ -173,26 +180,17 @@
 											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" placeholder="Date de retour" >
 										</div>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control">
 										</div>
-										<hr>
-										
-										<div class="col-lg-11 col-md-11 col-sm-12">
-											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">civ</label>
-											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select">
-												<option th:value="${savedConge.employeMatriculeRemplacant}" th:text="${savedConge.employeNomRemplacant}">Sélectionner un employé</option>
-												<option th:each="employe : ${employesEnSvce}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
-										</div>
 										<hr id="asbox">
 
-										<div id="asnumasbox" class="col-lg-2 col-md-2 col-sm-6">
+										<div id="asnumasbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
 											<input type="text" id="numautorisatSortie" name="numautorisatSortie" th:value="${savedConge.numAutorisatSortie}" class="form-control">
 										</div>
-										<div id="asnumbox" class="col-lg-2 col-md-2 col-sm-6">
+										<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="numas" th:text="|N°|">num</label>
 											<input type="text" id="numas" name="numas" th:value="${savedConge.numAutSortie}" class="form-control" disabled>
 										</div>
@@ -210,14 +208,14 @@
 											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination" required>
 										</div>
 
-										<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6">
+										<div id="aspaysbox" class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
 											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination" required>
 										</div>
-										<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
-												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" required>
-											</div>
+										<div id="asmotifbox" class="col-lg-12 col-md-12 col-sm-12 as">
+											<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
+											<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" required>
+										</div>
 										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">

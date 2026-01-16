@@ -142,11 +142,11 @@
 											</div>
 										</fieldset>
 
-										<div class="col-lg-2 col-md-2 col-sm-6 mt-4">
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
 											<label class="form-label h6" for="numaffect" th:text="|Affectation N°|">civ</label>
 											<input type="text" id="numaffect" name="numaffect" th:value="${savedAffectation.numAffect}" class="form-control" disabled>
 										</div>
-										<div class="col-lg-2 col-md-2 col-sm-6 mt-4">
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
 											<label class="form-label h6" for="numnoteserviceaffect" th:text="|N° note de svce|">civ</label>
 											<input type="text" id="numnoteserviceaffect" name="numnoteserviceaffect" th:value="${savedAffectation.numNoteService}" class="form-control" disabled>
 										</div>
@@ -161,28 +161,7 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md- col-sm-6">
-											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
-											<input type="text" id="villeresidence" name="villeresidence"  th:value="${savedAffectation.villeResidence}" class="form-control"  disabled>
-										</div>
-
 										<div class="col-lg-6 col-md-6 col-sm-6">
-											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
-											<input type="text" id="paysresidence" name="paysresidence"  th:value="${savedAffectation.paysResidence}" class="form-control" disabled>
-										</div>
-										<hr>
-
-										<div class="col-lg-10 col-md-10 col-sm-10">
-											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
-											<input type="text" id="affectempmatricule" name="affectempmatricule"  th:value="${savedAffectation.employeNom} + |, | + ${savedAffectation.employeMatricule}" class="form-control" disabled>
-											<!--select id="affectempmatricule" name="affectempmatricule" class="form-select" required>
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select-->
-										</div>
-										<hr>
-
-										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<input type="text" id="lieuaffect" name="lieuaffect" th:value="${savedAffectation.lieuAffectation}" class="form-control" disabled>
 											<!--select id="lieuaffect" name="lieuaffect" class="form-select" required>
@@ -194,8 +173,17 @@
 											<label class="form-label h6" for="emplacementaffect" th:text="|Emplacement précis|">civ</label>
 											<input type="text" id="emplacementaffect" name="emplacementaffect" th:value="${savedAffectation.emplacementAffect}" class="form-control" disabled>
 										</div>
+										<hr>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-7 col-md-7 col-sm-6">
+											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
+											<input type="text" id="affectempmatricule" name="affectempmatricule"  th:value="${savedAffectation.employeNom} + |, | + ${savedAffectation.employeMatricule}" class="form-control" disabled>
+											<!--select id="affectempmatricule" name="affectempmatricule" class="form-select" required>
+												<option value="">Sélectionner un employé</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select-->
+										</div>
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="fonction" th:text="|Fonction|">civ</label>
 											<input type="text" id="fonction" name="fonction" th:value="${savedAffectation.fonction}" class="form-control" disabled>
 											<!--select id="fonctioncode" name="fonctioncode" class="form-select" required>
@@ -205,27 +193,38 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
+											<input type="text" id="villeresidence" name="villeresidence"  th:value="${savedAffectation.villeResidence}" class="form-control"  disabled>
+										</div>
+
+										<div class="col-lg-7 col-md-7 col-sm-6">
+											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
+											<input type="text" id="paysresidence" name="paysresidence"  th:value="${savedAffectation.paysResidence}" class="form-control" disabled>
+										</div>
+										<hr>
+
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="datedebaffect" th:text="|Date de début|">civ</label>
 											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" disabled>
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="datepriseservice" th:text="|Date prise service|">civ</label>
 											<input type="date" id="datepriseservice" name="datepriseservice" th:value="${savedAffectation.datePriseService}" class="form-control" disabled>
 										</div>
-										<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="datefinaffect" th:text="|Date fin|">civ</label>
 											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control" disabled>
 										</div>
 										<hr>
 
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-12 col-md-12 col-sm-12">
 											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control" disabled>
 										</div>
 										<hr>
 										
-										<div class="col-lg-4 col-md-4 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="statusaffect" th:text="|Status affectation|">civ</label>
 											<select id="statusaffect" name="statusaffect" class="form-select" disabled>
 												<option th:value="${savedAffectation.statusAffect}" th:text="${savedAffectation.statusAffect}">status</option>

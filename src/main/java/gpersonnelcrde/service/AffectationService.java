@@ -27,7 +27,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Transactional
 public class AffectationService {
 	public static final Logger logger = LoggerFactory.getLogger(AffectationService.class);
-
+	
 	private final AffectationRepository affectationRepository;
 	private final EmployeRepository employeRepository;
 	private final LieuAffectationRepository lieuAffectationRepository;

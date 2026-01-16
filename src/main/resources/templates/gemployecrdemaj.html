@@ -137,14 +137,6 @@
 									<form id="employee-form" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/employe-crde-m.html}">
 										<legende class="h4 mb-3 text-center">Modifier un employé ou stagiaire</legende>
 										<hr>
-										
-										<!--fieldset>
-											<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
-												<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
-												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
-											</div>
-										</fieldset-->
-										
 
 										<div class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="empcivilite" th:text="|Civilité/Grade|">civ</label>
@@ -157,6 +149,19 @@
 										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="emppren" th:text="|Prénom(s)|">civ</label>
 											<input type="text" id="emppren" name="emppren" th:value="${savedEmploye.empPren}" class="form-control" />
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
+											<label class="form-label h6" for="empdatensce" th:text="|Date de naissance|">civ</label>
+											<input type="date" id="empdatensce" name="empdatensce" th:value="${savedEmploye.empDateNsce}" class="form-control">
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 mt-4">
+											<label class="form-label h6" for="emplieunsce" th:text="|Lieu de naissance|">civ</label>
+											<input type="text" id="emplieunsce" name="emplieunsce" th:value="${savedEmploye.empLieuNsce}" class="form-control"/>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6 mt-4">
+											<label class="form-label h6" for="empnumactensce" th:text="|N° acte de naissance|">civ</label>
+											<input type="text" id="empnumactensce" name="empnumactensce" th:value="${savedEmploye.empNumActeNsce}" class="form-control">
 										</div>
 										<hr>
 
@@ -177,10 +182,6 @@
 												<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
 											</fieldset>
 										</div>
-										<!--div class="col-lg-2 col-md-2 col-sm-6">
-											<label class="form-label h6" for="numinterne" th:text="|Numéro interne|">civ</label>
-											<input type="text" id="numinterne" name="numinterne" th:value="${savedEmploye.empNumInterne}" class="form-control" disabled>
-										</div-->
 										<div class="col-lg-6 col-md-6 col-sm-6">
 											<!--label class="form-label h6" for="empphoto1" th:text="|Emplacement photo|">civ</label>
 											<input type="text" id="empphoto1" name="empphoto1" th:value="${savedEmploye.empEmplacementPhoto}" class="form-control" disabled/>
@@ -192,10 +193,6 @@
 														<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-4" th:alt="|Photo non disponible|" style="height: 30%; width: 30%">
 													</a>
 												</fieldset>
-												<!--fieldset class="text-center p-1"><style="border: #198754; border-style: solid; background-color: chocolate;">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-center d-block mx-auto ms-auto me-auto mb-3" th:alt="${savedEmploye.empEmplacementPhoto}" style="height: 30%; width: 30%">
-													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file m-auto" onchange="document.getElementById('photo').src =''; document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke;">
-												</fieldset-->
 											</div>
 											<div class="text-center p-auto" th:unless="${savedEmploye.empEmplacementPhoto != null and !#strings.isEmpty(savedEmploye.empEmplacementPhoto)}">
 												<fieldset class="text-center"><!--style="border: #198754; border-style: solid; background-color: chocolate;"-->
@@ -203,16 +200,25 @@
 													<input type="file" id="empphoto" name="empphoto" accept="image/*" class="form-control-file ms-auto" onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])" style="background-color: whitesmoke; width: 100%;" disabled>
 												</fieldset>
 											</div>
-											<!--div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text" id="basic-addon1">
-													<img th:src="${savedEmploye.empEmplacementPhoto}" class="rounded float-end img-responsive" alt="Responsive image" width="30" height="24" />
-													</span>
-												</div>
-												<input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-											</div-->
 										</div>
 										<hr>
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="empadrquartierresidce" th:text="|Quartier de résidence|">civ</label>
+											<input type="text" id="empadrquartierresidce" name="empadrquartierresidce" th:value="${savedEmploye.empAdrQuartierResidce}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="empadrvilleresidce" th:text="|Ville de résidence|">civ</label>
+											<input type="text" id="empadrvilleresidce" name="empadrvilleresidce" th:value="${savedEmploye.empAdrVilleResidce}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="empadrprefresidce" th:text="|Préfecture de résidence|">civ</label>
+											<input type="text" id="empadrprefresidce" name="empadrprefresidce" th:value="${savedEmploye.empAdrPrefResidce}" class="form-control" />
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<label class="form-label h6" for="empadrregionresidce" th:text="|Région de résidence|">civ</label>
+											<input type="text" id="empadrregionresidce" name="empadrregionresidce" th:value="${savedEmploye.empAdrRegionResidce}" class="form-control" />
+										</div>
 
 										<div class="col-lg-8 col-md-8 col-sm-6">
 											<label class="form-label h6" for="empemail" th:text="|E-mail|">civ</label>

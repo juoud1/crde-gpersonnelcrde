@@ -134,7 +134,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
-										<legende class="h4 mb-3 text-center" id="legaffectationsform" th:text="|Ajouter une Réaffectation d'un seul employé|">Ajouter une affectation à l'international</legende>
+										<legende class="h4 mb-3 text-center" id="legaffectationsform" th:text="|Ajouter une Réaffectation de plusieurs employés|">Ajouter une affectation à l'international</legende>
 										<hr>
 										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
 											<label class="form-label h6" for="numnoteserviceaffect" th:text="|N° NS|">civ</label>
@@ -153,8 +153,8 @@
 										
 										<div id="employelieuaffect" class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
-											<select id="lieuaffect" name="lieuaffect" class="form-select" required>
-												<option value="">Sélectionner un lieu d'affectation</option>
+											<select id="lieuaffect" name="lieuaffect" class="form-select" disabled>
+												<option th:value="${lieuAffectation.lieuAffectCode}" th:text="${lieuAffectation.lieuAffect}">Sélect un lieu d'affect</option>
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select>
 										</div>
@@ -162,22 +162,53 @@
 											<label class="form-label h6" for="emplacementaffect" th:text="|Emplacement précis|">civ</label>
 											<input type="text" id="emplacementaffect" name="emplacementaffect" class="form-control">
 										</div>
-										<hr>
 										
-										<div id="employeareaffect" class="col-lg-7 col-md-7 col-sm-7">
-											<label class="form-label h6" for="affectempmatricule" th:text="|Employé|">civ</label>
-											<select id="affectempmatricule" name="affectempmatricule" class="form-select" required>
-												<option value="">Sélectionner un employé</option>
-												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
+										<div id="employesactifs" class="col-lg-8 col-md-8 col-sm-12">
+											<div class="table-responsive overflow-auto" style="height: 10em;">
+												<table class="table table-sm table-hover">
+													<thead>
+														<tr>
+															<th class="bg-light" th:text="| |" style="width: 3%;">A</th>
+															<th class="bg-light" th:text="|Employés en poste (| + ${#lists.size(allEmployesDirection)} + |)|">Employés en poste</th>
+															<th class="bg-light" th:text="|Fonction|">Fonct</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="bg-transparent" th:each="employe, itemStat : *{allEmployesDirection}">
+															<td><input type="checkbox"  th:name="|missempmatricule1|" th:value="${employe.empMatricule}" checked /></td>
+															<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
+															<td th:text="${employe.fonction}"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
-										
-										<div id="employefonctioncode" class="col-lg-5 col-md-5 col-sm-5">
-											<label class="form-label h6" for="fonctioncode" th:text="|Fonction|">civ</label>
-											<select id="fonctioncode" name="fonctioncode" class="form-select" required>
-												<option value="">Sélectionner une fonction</option>
-												<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
-											</select>
+										<hr>
+
+										<div id="employesareaffect" class="col-lg-12 col-md-12 col-sm-12">
+											<div class="table-responsive overflow-auto" style="height: 15em;">
+												<table class="table table-sm table-hover">
+													<thead>
+														<tr>
+															<th class="bg-light" th:text="| |" style="width: 3%;">A</th>
+															<th class="bg-light" th:text="|Employés à réaffecter (| + ${#lists.size(allEmployes)} + |)|">emp réaffecter</th>
+															<th class="bg-light" th:text="|Fonction (si possible)|">fonct</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="bg-transparent" th:each="employe, itemStat : *{allEmployes}">
+															<td><input type="checkbox"  th:name="|affectempmatricule|" th:value="${employe.empMatricule}" /></td>
+															<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
+															<td>
+																<select id="fonctioncode" name="fonctioncode" class="form-select" required>
+																	<option value="">Sélectionner une fonction</option>
+																	<option th:each="fonction : ${allFonction}" th:value="${fonction.fonctionCode}" th:text="${fonction.fonction}"></option>
+																</select>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
 										<hr>
 
@@ -259,29 +290,29 @@
 			paysResidenceText.value = paysResidenceTxt;
 			if (porteeAffectSelect.options[porteeAffectSelect.selectedIndex].value !== 'Affectation intérieure RCA') {
 				paysResidenceText.value ='';
-				//legendeFormText.innerText='Ajouter une Affectation à l\'international';
-
-				//employeAReaffectBoite.style.display='none';
+				
+				/*legendeFormText.innerText='Ajouter une RéAffectation de plusieurs employés';
+				employeAReaffectBoite.style.display='none';
 				//employeLieuAffectBoite.style.disabled='true';
 				//employeEmplacementAffectBoite.style.disabled='true';
-				//employeLieuAffectTxt.setAttribute("disabled","disabled");
+				employeLieuAffectTxt.setAttribute("disabled","disabled");
 				
-				//employeFonctionCodeBoite.style.display='none';
+				employeFonctionCodeBoite.style.display='none';
 				// Gestion de réaffectation de groupe
 				employesAReaffectBoite.style.display='block';
-				employesActifsBoite.style.display='block';
+				employesActifsBoite.style.display='block';*/
 			} else {
 				paysResidenceText.value = 'Rép. Centrafricaine'; 
-				//legendeFormText.innerText='Ajouter une Affectation à l\'intérieur de la RCA';
-
-				//employeAReaffectBoite.style.display='block';
+				
+				/*legendeFormText.innerText='Ajouter une RéAffectation';
+				employeAReaffectBoite.style.display='block';
 				//employeLieuAffectBoite.style.disabled='false';
 				//employeEmplacementAffectBoite.style.disabled='false';
-				//employeLieuAffectTxt.removeAttribute("disabled");
-				//employeFonctionCodeBoite.style.display='block';
+				employeLieuAffectTxt.removeAttribute("disabled");
+				employeFonctionCodeBoite.style.display='block';
 				// Gestion de réaffectation de groupe
-				//employesAReaffectBoite.style.display='none';
-				//employesActifsBoite.style.display='none';
+				employesAReaffectBoite.style.display='none';
+				employesActifsBoite.style.display='none';*/
 			}
 		}
 

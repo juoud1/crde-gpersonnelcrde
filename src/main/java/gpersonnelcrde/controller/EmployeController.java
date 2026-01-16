@@ -1,7 +1,6 @@
 package gpersonnelcrde.controller;
 
 import java.io.IOException;
-import java.io.ObjectInputFilter.Status;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -40,9 +39,6 @@ import gpersonnelcrde.domain.dto.FonctionDto;
 import gpersonnelcrde.domain.dto.LieuAffectationDto;
 import gpersonnelcrde.domain.dto.StatusDto;
 import gpersonnelcrde.domain.dto.TypeEmployeDto;
-import gpersonnelcrde.domain.entities.Fonction;
-import gpersonnelcrde.domain.entities.LieuAffectation;
-import gpersonnelcrde.domain.entities.TypeEmploye;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
 import gpersonnelcrde.service.EmployeService;
@@ -162,8 +158,15 @@ public class EmployeController {
 					@RequestParam("empnom") String empNom,
 					@RequestParam("emppren") String empPren,
 					@RequestParam("typeemp") String typeEmploye, 
-					@RequestParam(value="empmatricule", required=false) String empMatricule, 
-					@RequestParam("empemail") String empEmail,
+					@RequestParam(value="empmatricule", required=false) String empMatricule,
+					@RequestParam(value="empdatensce", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateNsce,
+					@RequestParam(value="emplieunsce", required=false) String empLieuNsce,
+					@RequestParam(value="empnumactensce", required=false) String empNumActeNsce,
+					@RequestParam(value="empadrquartierresidce", required = false) String empAdrQtierResidce,
+					@RequestParam(value="empadrvilleresidce", required = false) String empAdrVilleResidce,
+					@RequestParam(value="empadrprefresidce", required = false) String empAdrPrefResidce,
+					@RequestParam(value="empadrregionresidce", required = false) String empAdrRegResidce,
+					@RequestParam(value="empemail", required=false) String empEmail,
 					@RequestParam(value="emptelephone", required=false) String empTelephone, 
 					@RequestParam(value="sttus", required = false) String status,
 					@RequestParam("empfnction") String empFonction,
@@ -298,15 +301,22 @@ public class EmployeController {
 	}
 
 	@PostMapping ("/employe-crde-m.html") //PUT de modification
-	public String updateEmployeByNumInterne(
+	public String updateEmployeByNumInterne(@RequestParam("numinterne") String empNumInterne,
 					@RequestParam("empcivilite") String empCivilite, 
 					@RequestParam("empnom") String empNom,
-					@RequestParam(value="emppren", required=false) String empPren,
+					@RequestParam("emppren") String empPren,
 					@RequestParam("typeemp") String typeEmploye, 
-					@RequestParam(value="empmatricule", required=false) String empMatricule, 
-					@RequestParam("empemail") String empEmail,
+					@RequestParam(value="empmatricule", required=false) String empMatricule,
+					@RequestParam(value="empdatensce", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate empDateNsce,
+					@RequestParam(value="emplieunsce", required=false) String empLieuNsce,
+					@RequestParam(value="empnumactensce", required=false) String empNumActeNsce,
+					@RequestParam(value="empadrquartierresidce", required = false) String empAdrQtierResidce,
+					@RequestParam(value="empadrvilleresidce", required = false) String empAdrVilleResidce,
+					@RequestParam(value="empadrprefresidce", required = false) String empAdrPrefResidce,
+					@RequestParam(value="empadrregionresidce", required = false) String empAdrRegResidce,
+					@RequestParam(value="empemail", required=false) String empEmail,
 					@RequestParam(value="emptelephone", required=false) String empTelephone, 
-					@RequestParam("sttus") String status,
+					@RequestParam(value="sttus", required = false) String status,
 					@RequestParam("empfnction") String empFonction,
 					@RequestParam(value="refdecretouarreteentree", required=false) String refDecretouArreteEntree,
 					@RequestParam("lieuaffectation") String lieuAffectation,

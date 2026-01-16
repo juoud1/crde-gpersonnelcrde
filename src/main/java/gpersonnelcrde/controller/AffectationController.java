@@ -1,13 +1,17 @@
 package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +37,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class AffectationController {
+	public static final Logger logger = LoggerFactory.getLogger(AffectationController.class);
+
 	private final AffectationService affectationService;
 	private final EmployeService employeService;
 	private final FonctionService fonctionService;
@@ -81,14 +87,16 @@ public class AffectationController {
 	    return "gaffectationcrdelist";
 	}
 
-	@GetMapping ("/affectation-emp-crde.html/{categAffect}")
-	public String getAffectation(@PathVariable(required = false) String categAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	@GetMapping ("/affectation-emp-crde.html/{typeAffect}")
+	public String getAffectation(@PathVariable(required = false) String typeAffect, 
+									@RequestParam(name = "lieuaffect", required = false) String lieuAffect, 
+									HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
 		Future<List<FonctionDto>> futureEmpFonctions = null;
 		Future<List<AffectationDto>> futureEmpAffectations = null;
 		//Future<List<TypeEmployeDto>> futureTypeEmployes = null;
 		Future<List<LieuAffectationDto>> futureLieuAffectations = null;
 		Future<List<EmployeDto>> futureEmployes = null;
-		
+
 		var executor = Executors.newVirtualThreadPerTaskExecutor();
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 			futureEmpFonctions = executor.submit(() -> fonctionService.getAllFonction().stream().distinct().toList());
@@ -111,27 +119,50 @@ public class AffectationController {
 		model.addAttribute("allFonction", allFonctions); //fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
-		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
-		/*
-		model.addAttribute("allFonction", fonctionService.getAllFonction());
-		model.addAttribute("allLieuAffect", lieuAffectationService.getAllLieuAffect());
-	    model.addAttribute("allAffectations", affectationService.getAllAffectation());
-		model.addAttribute("allEmployes", employeService.getAllEmploye());
-		*/
-		
-		if (StringUtils.isNotBlank(categAffect)){
-			if ("aff-ext".equalsIgnoreCase(categAffect)) {
+		//model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+
+		if (StringUtils.isNotBlank(typeAffect)){
+			if (!"aff1emp".equalsIgnoreCase(typeAffect)) {
+				var lieuAffectation = getlAffectionFromWebParam(lieuAffect, allLieuAffect)
+								.orElseThrow(() -> new IllegalArgumentException(lieuAffect + " n'est pas une direction ou service de CRDE."));
+
+				var allEmployesDirection = employeService.getEmployesByLieuAffectation(lieuAffect).stream()
+								.distinct()
+								.toList();
+				var employesDispo = new ArrayList<>(allEmployes);
+				employesDispo.removeAll(allEmployesDirection);
+
 				model.addAttribute("categAffectValue", "Affectation internationale");
 				model.addAttribute("categAffectText", "Affectation à l'international");
 				model.addAttribute("paysResidenceText", "");
+				model.addAttribute("lieuAffectation", lieuAffectation);
+				model.addAttribute("allEmployesDirection", allEmployesDirection);
+				model.addAttribute("allEmployes", employesDispo); //employeService.getAllEmploye());
+				logger.info("type affectation {}  \nlieu affectation {} \n{} employé(s) en poste et \n{} employé(s) disponible(s) à réaffecter sur {}".toUpperCase(), typeAffect,  
+					lieuAffectation.getLieuAffect(), allEmployesDirection.size(), employesDispo.size(), allEmployes.size());
+
+				return "gaffectationgroupecrde";
 			} else {
 				model.addAttribute("categAffectValue", "Affectation intérieure RCA");
 				model.addAttribute("categAffectText", "Affectation à l'intérieur de la RCA");
 				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
+				model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+				logger.info("CRDE compte au total {} employé(s)".toUpperCase(), allEmployes.size());
 			}
 		}
-
+		
 	    return "gaffectationcrde";
+	}
+
+	private Optional<LieuAffectationDto> getlAffectionFromWebParam(String webParam, List<LieuAffectationDto> lAffectations){
+		if (webParam.isBlank() || null==lAffectations) {
+			throw new IllegalArgumentException("Le nom de la direction ou la liste des directions ne peut pas être vide ou null.");
+		}
+
+		return lAffectations.stream()
+								.sorted((m, n) -> m.getLieuAffectCode().compareTo(n.getLieuAffectCode()))
+								.filter(l -> l.getLieuAffectCode().equalsIgnoreCase(webParam))
+								.findFirst();
 	}
 
 	@PostMapping("/affectation-emp-crde.html")
@@ -154,7 +185,7 @@ public class AffectationController {
 	}
 
 	@GetMapping ("/affectation-emp-crde-m.html/{numAffect}")
-	public String getAffectationByNumNoteSvceAffect(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	public String getAffectationByNumAffection(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
 		var savedAffectation = affectationService.getAffectByNumAffectation(numAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);

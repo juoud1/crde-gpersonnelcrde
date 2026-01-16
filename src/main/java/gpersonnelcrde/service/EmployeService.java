@@ -83,6 +83,7 @@ public class EmployeService {
 		logger.info("composant employé service initialisé avec succès".toUpperCase());
 	}
 
+	@Transactional
 	public List<EmployeDto> getAllEmploye() throws StockageFichiersImagesException, EmployeServiceException{
 		var employes = employeRepository.findAll();
 		logger.info("{} employé(s) récupérés avec succès!".toUpperCase(), employes.size());
@@ -112,6 +113,19 @@ public class EmployeService {
 				})
 				.toList()
 				: Collections.emptyList();
+	}
+
+	@Transactional
+	public List<EmployeDto> getEmployesByLieuAffectation (String lAffect) throws StockageFichiersImagesException, EmployeServiceException{
+		if (lAffect.isBlank()) {
+			throw new IllegalArgumentException("Le lieu d'affectation ne peut pas être vide ou null.");
+		}
+		var lAff = this.lieuAffectationRepository.findByLieuAffectCode(lAffect)
+						.get(0);
+
+		return this.getAllEmploye().stream()
+						.filter(e -> e.getLieuAffectation().equalsIgnoreCase(lAff.getLieuAffect()))
+						.toList();
 	}
 
 	@Transactional

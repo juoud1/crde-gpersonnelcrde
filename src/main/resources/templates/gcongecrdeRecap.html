@@ -143,9 +143,13 @@
 											</div>
 										</fieldset>
 
-										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" th:value="${savedConge.numNoteServiceConge}" class="form-control" disabled>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+											<label class="form-label h6" for="numconge" th:text="|N° Congé|">num</label>
+											<input type="text" id="numconge" name="numconge" th:value="${savedConge.numConge}" class="form-control" disabled>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
@@ -153,16 +157,18 @@
 												<option th:value="${savedConge.typeDemandeConge}" th:text="${savedConge.typeDemandeConge}">Sélectionner un type cge</option>
 											</select>
 										</div>
-										<div class="col-lg-2 col-md-2 col-sm-3 mt-4">
-											<label class="form-label h6" for="numconge" th:text="|N° Congé|">num</label>
-											<input type="text" id="numconge" name="numconge" th:value="${savedConge.numConge}" class="form-control" disabled>
-										</div>
 										<hr>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">civ</label>
 											<select name="matriculeempconge" class="form-select" disabled>
 												<option th:value="${savedConge.employeMatricule}" th:text="${savedConge.employeNom}">employé</option>
+											</select>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">civ</label>
+											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select" disabled>
+												<option th:value="${savedConge.employeMatriculeRemplacant}" th:text="${savedConge.employeNomRemplacant}">employé</option>
 											</select>
 										</div>
 										<hr>
@@ -176,25 +182,17 @@
 											<input type="date" id="datefinconge" name="datefinconge" th:value="${savedConge.dateFinConge}" class="form-control" disabled>
 										</div>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" th:value="${savedConge.infoSupplementaires}" class="form-control" disabled>
 										</div>
-										<hr>
-										
-										<div class="col-lg-11 col-md-11 col-sm-12">
-											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">civ</label>
-											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select" disabled>
-												<option th:value="${savedConge.employeMatriculeRemplacant}" th:text="${savedConge.employeNomRemplacant}">employé</option>
-											</select>
-										</div>
 										<hr id="asbox">
 
-										<div id="asnumasbox" class="col-lg-2 col-md-2 col-sm-6">
+										<div id="asnumasbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
 											<input type="text" id="numautorisatSortie" name="numautorisatSortie" th:value="${savedConge.numAutorisatSortie}" class="form-control" disabled>
 										</div>
-										<div id="asnumbox" class="col-lg-2 col-md-2 col-sm-6">
+										<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6">
 											<label class="form-label h6" for="numas" th:text="|N°|">num</label>
 											<input type="text" id="numas" name="numas" th:value="${savedConge.numAutSortie}" class="form-control" disabled>
 										</div>
@@ -212,14 +210,14 @@
 											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" disabled>
 										</div>
 
-										<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6">
+										<div id="aspaysbox" class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
 											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" disabled>
 										</div>
-										<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
-												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" disabled>
-											</div>
+										<div id="asmotifbox" class="col-lg-2 col-md-12 col-sm-12 as">
+											<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
+											<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" disabled>
+										</div>
 										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-6">
