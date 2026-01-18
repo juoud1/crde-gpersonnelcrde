@@ -161,7 +161,7 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="lieuaffect" th:text="|Lieu affectation|">civ</label>
 											<input type="text" id="lieuaffect" name="lieuaffect" th:value="${savedAffectation.lieuAffectation}" class="form-control" disabled>
 											<!--select id="lieuaffect" name="lieuaffect" class="form-select" required>
@@ -169,7 +169,7 @@
 												<option th:each="laffect : ${allLieuAffect}" th:value="${laffect.lieuAffectCode}" th:text="${laffect.lieuAffect}"></option>
 											</select-->
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="emplacementaffect" th:text="|Emplacement précis|">civ</label>
 											<input type="text" id="emplacementaffect" name="emplacementaffect" th:value="${savedAffectation.emplacementAffect}" class="form-control" disabled>
 										</div>
@@ -193,17 +193,6 @@
 										</div>
 										<hr>
 
-										<div class="col-lg-5 col-md-5 col-sm-6">
-											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
-											<input type="text" id="villeresidence" name="villeresidence"  th:value="${savedAffectation.villeResidence}" class="form-control"  disabled>
-										</div>
-
-										<div class="col-lg-7 col-md-7 col-sm-6">
-											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
-											<input type="text" id="paysresidence" name="paysresidence"  th:value="${savedAffectation.paysResidence}" class="form-control" disabled>
-										</div>
-										<hr>
-
 										<div class="col-lg-4 col-md-4 col-sm-6">
 											<label class="form-label h6" for="datedebaffect" th:text="|Date de début|">civ</label>
 											<input type="date" id="datedebaffect" name="datedebaffect" th:value="${savedAffectation.dateDebutAffect}" class="form-control" disabled>
@@ -216,11 +205,21 @@
 											<label class="form-label h6" for="datefinaffect" th:text="|Date fin|">civ</label>
 											<input type="date" id="datefinaffect" name="datefinaffect" th:value="${savedAffectation.dateFinAffect}" class="form-control" disabled>
 										</div>
-										<hr>
 
 										<div class="col-lg-12 col-md-12 col-sm-12">
 											<label class="form-label h6" for="commenataireaffect" th:text="|Détails supplémentaires|">civ</label>
 											<input type="text" id="commenataireaffect" name="commenataireaffect" th:value="${savedAffectation.infoSupplementaires}" class="form-control" disabled>
+										</div>
+										<hr>
+
+										<div class="col-lg-5 col-md-5 col-sm-6">
+											<label class="form-label h6" for="villeresidence" th:text="|Ville résidence|">civ</label>
+											<input type="text" id="villeresidence" name="villeresidence"  th:value="${savedAffectation.villeResidence}" class="form-control"  disabled>
+										</div>
+
+										<div class="col-lg-7 col-md-7 col-sm-6">
+											<label class="form-label h6" for="paysresidence" th:text="|Pays résidence|">civ</label>
+											<input type="text" id="paysresidence" name="paysresidence"  th:value="${savedAffectation.paysResidence}" class="form-control" disabled>
 										</div>
 										<hr>
 										

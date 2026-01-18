@@ -2,6 +2,7 @@ package gpersonnelcrde.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -119,11 +120,11 @@ public class AffectationController {
 		model.addAttribute("allFonction", allFonctions); //fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
-		//model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 
 		if (StringUtils.isNotBlank(typeAffect)){
 			if (!"aff1emp".equalsIgnoreCase(typeAffect)) {
-				var lieuAffectation = getlAffectionFromWebParam(lieuAffect, allLieuAffect)
+				var lAffectation = getlAffectionFromWebParam(lieuAffect, allLieuAffect)
 								.orElseThrow(() -> new IllegalArgumentException(lieuAffect + " n'est pas une direction ou service de CRDE."));
 
 				var allEmployesDirection = employeService.getEmployesByLieuAffectation(lieuAffect).stream()
@@ -135,29 +136,30 @@ public class AffectationController {
 				model.addAttribute("categAffectValue", "Affectation internationale");
 				model.addAttribute("categAffectText", "Affectation à l'international");
 				model.addAttribute("paysResidenceText", "");
-				model.addAttribute("lieuAffectation", lieuAffectation);
+				model.addAttribute("lAffectation", lAffectation);
 				model.addAttribute("allEmployesDirection", allEmployesDirection);
-				model.addAttribute("allEmployes", employesDispo); //employeService.getAllEmploye());
+				//model.addAttribute("allEmployes", employesDispo); //employeService.getAllEmploye());
 				logger.info("type affectation {}  \nlieu affectation {} \n{} employé(s) en poste et \n{} employé(s) disponible(s) à réaffecter sur {}".toUpperCase(), typeAffect,  
-					lieuAffectation.getLieuAffect(), allEmployesDirection.size(), employesDispo.size(), allEmployes.size());
+					lAffectation.getLieuAffect(), allEmployesDirection.size(), employesDispo.size(), allEmployes.size());
 
 				return "gaffectationgroupecrde";
 			} else {
 				model.addAttribute("categAffectValue", "Affectation intérieure RCA");
 				model.addAttribute("categAffectText", "Affectation à l'intérieur de la RCA");
 				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");
-				model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+				//model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 				logger.info("CRDE compte au total {} employé(s)".toUpperCase(), allEmployes.size());
 			}
 		}
 		
 	    return "gaffectationcrde";
 	}
-
+								
 	private Optional<LieuAffectationDto> getlAffectionFromWebParam(String webParam, List<LieuAffectationDto> lAffectations){
 		if (webParam.isBlank() || null==lAffectations) {
 			throw new IllegalArgumentException("Le nom de la direction ou la liste des directions ne peut pas être vide ou null.");
 		}
+		logger.info("Lieu affectation ou réaffectation : {}".toUpperCase(), webParam);
 
 		return lAffectations.stream()
 								.sorted((m, n) -> m.getLieuAffectCode().compareTo(n.getLieuAffectCode()))
@@ -166,23 +168,67 @@ public class AffectationController {
 	}
 
 	@PostMapping("/affectation-emp-crde.html")
-	public String addAffectation(@RequestParam("affectempmatricule") String affectEmpMatricule, @RequestParam(name="datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
-	                @RequestParam(name = "datefinaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, @RequestParam("datepriseservice") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
-					@RequestParam("numnoteserviceaffect") String numNoteServiceAffect, @RequestParam("lieuaffect") String lieuAffect, @RequestParam("emplacementaffect") String emplacementAffect, 
-					 @RequestParam("fonctioncode") String fonction, @RequestParam("porteeaffect") String categorieAffect, @RequestParam(name="commenataireaffect", required = false) String commenataireAffect, @RequestParam(name="villeresidence", required = false) String villeResidence, @RequestParam(name="paysresidence", required = false) String paysResidence, HttpServletRequest request, Model model) throws IllegalAccessException{
+	public String addAffectation(@RequestParam(name = "affectempmatricule", required = false) String affectEmpMatricule, 
+					@RequestParam(name = "datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
+	                @RequestParam(name = "datefinaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, 
+					@RequestParam(name = "datepriseservice", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
+					@RequestParam(name = "numnoteserviceaffect", required = false) String numNoteServiceAffect, 
+					@RequestParam(name = "lieuaffect", required = false) String lieuAffect, 
+					@RequestParam(name = "emplacementaffect", required = false) String emplacementAffect, 
+					@RequestParam(name = "fonctioncode", required = false) String fonction, 
+					@RequestParam(name = "porteeaffect", required = false) String categorieAffect, 
+					@RequestParam(name="commenataireaffect", required = false) String commenataireAffect, 
+					@RequestParam(name="villeresidence", required = false) String villeResidence, 
+					@RequestParam(name="paysresidence", required = false) String paysResidence, 
+					HttpServletRequest request, Model model,
+					@RequestParam(name="affectempmatricules", required = false) String... affectEmpMatricules) throws IllegalAccessException{
 		
 		var savedAffectation = affectationService.createAffectation(categorieAffect, affectEmpMatricule, dateDebAffect, dateFinAffect, datePriseService, numNoteServiceAffect, lieuAffect, emplacementAffect, fonction, commenataireAffect, villeResidence, paysResidence)
 										.orElseThrow(() -> new EntityNotFoundException("La création de l'affectation de l'employé a échouée."));
 		//savedAffectation.setEmployeNom(affectEmpMatricule);
 		if (Objects.nonNull(savedAffectation)){
-			model.addAttribute("traitement", "création de nouvelle affectation");
-			model.addAttribute("resultTraitement", "Création de l'Affectation employé effectuée avec succès.");
+			model.addAttribute("traitement", "création de nouvelle réaffectation");
+			model.addAttribute("resultTraitement", "Réaffectation de l'employé effectuée avec succès.");
 		}
 
 		model.addAttribute("savedAffectation", savedAffectation);
 
 		return "gaffectationcrdeRecap";
 	}
+
+	@PostMapping("/affectation-grp-emp-crde.html")
+	public String addAffectationGroupEmp(@RequestParam(name = "affectempmatricule", required = false) String affectEmpMatricule, 
+					@RequestParam(name="datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
+	                @RequestParam(name = "datefinaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinAffect, 
+					@RequestParam(name = "datepriseservice", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datePriseService,
+					@RequestParam(name = "numnoteserviceaffect", required = false) String numNoteServiceAffect, 
+					@RequestParam(name = "lieuaffect", required = false) String lieuAffect, 
+					@RequestParam(name = "emplacementaffect", required = false) String emplacementAffect, 
+					//@RequestParam(name = "fonctioncode", required = false) String fonction, 
+					@RequestParam(name = "porteeaffect", required = false) String categorieAffect, 
+					@RequestParam(name="commenataireaffect", required = false) String commenataireAffect,
+					@RequestParam(name="villeresidence", required = false) String villeResidence, 
+					@RequestParam(name="paysresidence", required = false) String paysResidence, 
+					HttpServletRequest request, Model model,
+					@RequestParam(name="affectempmatricules", required = false) String... affectEmpMatricules) throws IllegalAccessException, StockageFichiersImagesException, EmployeServiceException{
+
+		var savedAffectations = affectationService.createAffectations(categorieAffect, dateDebAffect, dateFinAffect, 
+												datePriseService, numNoteServiceAffect, 
+												lieuAffect, emplacementAffect, 
+												commenataireAffect, villeResidence, paysResidence,
+												Arrays.asList(affectEmpMatricules));
+												
+		var allEmployesDirection = employeService.getEmployesByLieuAffectation(lieuAffect).stream()
+								.distinct()
+								.toList();
+
+		model.addAttribute("allEmployesDirection", allEmployesDirection);
+		model.addAttribute("traitement", "création de nouvelle réaffectation");
+		model.addAttribute("resultTraitement", "Réaffectation des employés effectuée avec succès. N'EST PAS ENCORE FONCTIONNELLE");
+		model.addAttribute("savedAffectation", new AffectationDto());
+
+		return "gaffectationgroupecrderecap";								
+	}	
 
 	@GetMapping ("/affectation-emp-crde-m.html/{numAffect}")
 	public String getAffectationByNumAffection(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{

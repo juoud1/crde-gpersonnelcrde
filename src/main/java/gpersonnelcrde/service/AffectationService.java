@@ -2,6 +2,7 @@ package gpersonnelcrde.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -51,8 +52,40 @@ public class AffectationService {
 				.toList();
 	}
 
-	public Optional<AffectationDto> createAffectation(String categorieAffect, String affectEmpMatricule, LocalDate dateDebAffect, LocalDate dateFinAffect, LocalDate datePriseService,
-					String numNoteServiceAffect, String lieuAffect, String emplacementAffect, String fonction, String commenataireAffect, String villeResidence, String paysResidence) throws IllegalAccessException{
+	public List<AffectationDto> createAffectations(final String categorieAffect,  
+												final LocalDate dateDebAffect, 
+												final LocalDate dateFinAffect, 
+												final LocalDate datePriseService,
+												final String numNoteServiceAffect, 
+												final String lieuAffect, 
+												final String emplacementAffect, 
+												//final String fonction, 
+												final String commenataireAffect, 
+												final String villeResidence, 
+												final String paysResidence,
+												final List<String> affectEmpMatricules) throws IllegalAccessException{
+		
+		
+		var empMatriculesAndFonctions = affectEmpMatricules.stream()
+								.filter(str -> !str.equalsIgnoreCase(";;;"))
+								.toList();
+		logger.info("affectEmpMatricules après : {}".toUpperCase(), empMatriculesAndFonctions);
+		
+		return List.of();
+	}
+
+	public Optional<AffectationDto> createAffectation(final String categorieAffect, 
+												final String affectEmpMatricule, 
+												final LocalDate dateDebAffect, 
+												final LocalDate dateFinAffect, 
+												final LocalDate datePriseService,
+												final String numNoteServiceAffect, 
+												final String lieuAffect, 
+												final String emplacementAffect, 
+												final String fonction, 
+												final String commenataireAffect, 
+												final String villeResidence, 
+												final String paysResidence) throws IllegalAccessException{
 	
 		AffectationDto aDto = new AffectationDto();
 		aDto.setCategorieAffect(categorieAffect);
