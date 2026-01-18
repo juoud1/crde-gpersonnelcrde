@@ -136,11 +136,11 @@
 									<form id="congesform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/conge-emp-crde.html}">
 										<legende id="legcongesform" class="h4 mb-3 text-center">Ajouter un congé avec autorisation de sortie</legende>
 										<hr>
-										<div class="col-lg-2 col-md-2 col-sm-4 mt-4">
+										<div class="col-lg-2 col-md-2 col-sm-6 mt-4">
 											<label class="form-label h6" for="numnoteserviceconge" th:text="|N° Note de service|">num</label>
 											<input type="text" id="numnoteserviceconge" name="numnoteserviceconge" class="form-control">
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-8 mt-4">
+										<div class="col-lg-6 col-md-6 col-sm-6 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
 											<select id="typedemande" autofocus="autofocus" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" required>
 												<option th:value="${typCngeValue}" th:text="${typCngeText}">type de mission</option>
@@ -150,10 +150,17 @@
 										</div>
 										<hr>
 										
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-6">
 											<label class="form-label h6" for="matriculeempconge" th:text="|Employé|">num</label>
 											<select id="matriculeempconge" name="matriculeempconge" class="form-select">
 												<option value="">Sélectionner un employé en congé</option>
+												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
+											</select>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">num</label>
+											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select">
+												<option value="">Sélectionner un employé Remplaçant</option>
 												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
 											</select>
 										</div>
@@ -168,31 +175,22 @@
 											<input type="date" id="datefinconge" name="datefinconge" class="form-control" required>
 										</div>
 
-										<div class="col-lg-11 col-md-11 col-sm-12">
+										<div class="col-lg-6 col-md-6 col-sm-12">
 											<label class="form-label h6" for="infosupplconge" th:text="|Détails supplémentaires|">num</label>
 											<input type="text" id="infosupplconge" name="infosupplconge" class="form-control">
-										</div>
-										<hr>
-										
-										<div class="col-lg-11 col-md-11 col-sm-12">
-											<label class="form-label h6" for="matriculeempremplacant" th:text="|Remplaçant|">num</label>
-											<select id="matriculeempremplacant" name="matriculeempremplacant" class="form-select">
-												<option value="">Sélectionner un employé Remplaçant</option>
-												<option th:each="employe : ${allEmployes}" th:value="${employe.empMatricule}" th:text="${employe.empNom} + | | + ${employe.empPren}"></option>
-											</select>
 										</div>
 										<hr id="asbox">
 										
 										<!--div id="asbox" class="row w-100 as"-->
-											<div id="asnumbox" class="col-lg-3 col-md-3 col-sm-6 as">
+											<div id="asnumbox" class="col-lg-4 col-md-4 col-sm-6 as">
 												<label class="form-label h6" for="numautorisatSortie" th:text="|N° aut. de sortie|">num</label>
 												<input type="text" id="numautorisatsortie" name="numautorisatsortie" class="form-control">
 											</div>
-											<div id="asdatedepbox" class="col-lg-3 col-md-3 col-sm-6 as">
+											<div id="asdatedepbox" class="col-lg-4 col-md-4 col-sm-6 as">
 												<label class="form-label h6" for="datedepartautorisatsortie" th:text="|Date départ|">num</label>
 												<input type="date" id="datedepartautorisatsortie" name="datedepartautorisatsortie" class="form-control">
 											</div>
-											<div id="asdateretbox" class="col-lg-3 col-md-3 col-sm-6 as">
+											<div id="asdateretbox" class="col-lg-4 col-md-4 col-sm-6 as">
 												<label class="form-label h6" for="dateretourautorisatsortie" th:text="|Date retour|">num</label>
 												<input type="date" id="dateretourautorisatsortie" name="dateretourautorisatsortie" class="form-control">
 											</div>
@@ -202,11 +200,11 @@
 												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
 											</div>
 
-											<div id="aspaysbox" class="col-lg-6 col-md-6 col-sm-6 as">
+											<div id="aspaysbox" class="col-lg-7 col-md-7 col-sm-6 as">
 												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
 												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
 											</div>
-											<div id="asmotifbox" class="col-lg-11 col-md-11 col-sm-12 as">
+											<div id="asmotifbox" class="col-lg-12 col-md-12 col-sm-12 as">
 												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
 												<input type="text" id="motifsortie" name="motifsortie" class="form-control" required>
 											</div>

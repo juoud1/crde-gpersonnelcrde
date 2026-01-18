@@ -9,6 +9,15 @@ public class EmployeDto {
 	private String empNom;
 	private String empPren;
 	private String empCivilite;
+
+	private String empDateNsce;
+	private String empLieuNsce;
+	private String empNumActeNsce;
+
+	private String empAdrQuartierResidce;
+	private String empAdrVilleResidce;
+	private String empAdrPrefResidce;
+	private String empAdrRegionResidce;
 	private String empTelephone;
 	private String empEmail;
 
@@ -29,7 +38,7 @@ public class EmployeDto {
 	private String empEmplacementPhoto;
 	private Resource empSignature;
 	private String empEmplacementSignature;
-
+	
 	public String getEmpMatricule() {
 		return empMatricule;
 	}
@@ -53,6 +62,48 @@ public class EmployeDto {
 	}
 	public void setEmpCivilite(String empCivilite) {
 		this.empCivilite = empCivilite;
+	}
+	public String getEmpDateNsce() {
+		return empDateNsce;
+	}
+	public void setEmpDateNsce(String empDateNsce) {
+		this.empDateNsce = empDateNsce;
+	}
+	public String getEmpLieuNsce() {
+		return empLieuNsce;
+	}
+	public void setEmpLieuNsce(String empLieuNsce) {
+		this.empLieuNsce = empLieuNsce;
+	}
+	public String getEmpNumActeNsce() {
+		return empNumActeNsce;
+	}
+	public void setEmpNumActeNsce(String empNumActeNsce) {
+		this.empNumActeNsce = empNumActeNsce;
+	}
+	public String getEmpAdrQuartierResidce() {
+		return empAdrQuartierResidce;
+	}
+	public void setEmpAdrQuartierResidce(String empAdrQuartierResidce) {
+		this.empAdrQuartierResidce = empAdrQuartierResidce;
+	}
+	public String getEmpAdrVilleResidce() {
+		return empAdrVilleResidce;
+	}
+	public void setEmpAdrVilleResidce(String empAdrVilleResidce) {
+		this.empAdrVilleResidce = empAdrVilleResidce;
+	}
+	public String getEmpAdrPrefResidce() {
+		return empAdrPrefResidce;
+	}
+	public void setEmpAdrPrefResidce(String empAdrPrefResidce) {
+		this.empAdrPrefResidce = empAdrPrefResidce;
+	}
+	public String getEmpAdrRegionResidce() {
+		return empAdrRegionResidce;
+	}
+	public void setEmpAdrRegionResidce(String empAdrRegionResidce) {
+		this.empAdrRegionResidce = empAdrRegionResidce;
 	}
 	public String getEmpTelephone() {
 		return empTelephone;
@@ -165,6 +216,13 @@ public class EmployeDto {
 		result = prime * result + ((empNom == null) ? 0 : empNom.hashCode());
 		result = prime * result + ((empPren == null) ? 0 : empPren.hashCode());
 		result = prime * result + ((empCivilite == null) ? 0 : empCivilite.hashCode());
+		result = prime * result + ((empDateNsce == null) ? 0 : empDateNsce.hashCode());
+		result = prime * result + ((empLieuNsce == null) ? 0 : empLieuNsce.hashCode());
+		result = prime * result + ((empNumActeNsce == null) ? 0 : empNumActeNsce.hashCode());
+		result = prime * result + ((empAdrQuartierResidce == null) ? 0 : empAdrQuartierResidce.hashCode());
+		result = prime * result + ((empAdrVilleResidce == null) ? 0 : empAdrVilleResidce.hashCode());
+		result = prime * result + ((empAdrPrefResidce == null) ? 0 : empAdrPrefResidce.hashCode());
+		result = prime * result + ((empAdrRegionResidce == null) ? 0 : empAdrRegionResidce.hashCode());
 		result = prime * result + ((empTelephone == null) ? 0 : empTelephone.hashCode());
 		result = prime * result + ((empEmail == null) ? 0 : empEmail.hashCode());
 		result = prime * result + ((typeEmploye == null) ? 0 : typeEmploye.hashCode());
@@ -178,7 +236,9 @@ public class EmployeDto {
 		result = prime * result + ((dateDecretouArreteEntree == null) ? 0 : dateDecretouArreteEntree.hashCode());
 		result = prime * result + ((refDecretouArreteDepart == null) ? 0 : refDecretouArreteDepart.hashCode());
 		result = prime * result + ((dateDecretouArreteDepart == null) ? 0 : dateDecretouArreteDepart.hashCode());
+		result = prime * result + ((empPhoto == null) ? 0 : empPhoto.hashCode());
 		result = prime * result + ((empEmplacementPhoto == null) ? 0 : empEmplacementPhoto.hashCode());
+		result = prime * result + ((empSignature == null) ? 0 : empSignature.hashCode());
 		result = prime * result + ((empEmplacementSignature == null) ? 0 : empEmplacementSignature.hashCode());
 		return result;
 	}
@@ -210,6 +270,41 @@ public class EmployeDto {
 			if (other.empCivilite != null)
 				return false;
 		} else if (!empCivilite.equals(other.empCivilite))
+			return false;
+		if (empDateNsce == null) {
+			if (other.empDateNsce != null)
+				return false;
+		} else if (!empDateNsce.equals(other.empDateNsce))
+			return false;
+		if (empLieuNsce == null) {
+			if (other.empLieuNsce != null)
+				return false;
+		} else if (!empLieuNsce.equals(other.empLieuNsce))
+			return false;
+		if (empNumActeNsce == null) {
+			if (other.empNumActeNsce != null)
+				return false;
+		} else if (!empNumActeNsce.equals(other.empNumActeNsce))
+			return false;
+		if (empAdrQuartierResidce == null) {
+			if (other.empAdrQuartierResidce != null)
+				return false;
+		} else if (!empAdrQuartierResidce.equals(other.empAdrQuartierResidce))
+			return false;
+		if (empAdrVilleResidce == null) {
+			if (other.empAdrVilleResidce != null)
+				return false;
+		} else if (!empAdrVilleResidce.equals(other.empAdrVilleResidce))
+			return false;
+		if (empAdrPrefResidce == null) {
+			if (other.empAdrPrefResidce != null)
+				return false;
+		} else if (!empAdrPrefResidce.equals(other.empAdrPrefResidce))
+			return false;
+		if (empAdrRegionResidce == null) {
+			if (other.empAdrRegionResidce != null)
+				return false;
+		} else if (!empAdrRegionResidce.equals(other.empAdrRegionResidce))
 			return false;
 		if (empTelephone == null) {
 			if (other.empTelephone != null)
@@ -276,10 +371,20 @@ public class EmployeDto {
 				return false;
 		} else if (!dateDecretouArreteDepart.equals(other.dateDecretouArreteDepart))
 			return false;
+		if (empPhoto == null) {
+			if (other.empPhoto != null)
+				return false;
+		} else if (!empPhoto.equals(other.empPhoto))
+			return false;
 		if (empEmplacementPhoto == null) {
 			if (other.empEmplacementPhoto != null)
 				return false;
 		} else if (!empEmplacementPhoto.equals(other.empEmplacementPhoto))
+			return false;
+		if (empSignature == null) {
+			if (other.empSignature != null)
+				return false;
+		} else if (!empSignature.equals(other.empSignature))
 			return false;
 		if (empEmplacementSignature == null) {
 			if (other.empEmplacementSignature != null)
@@ -292,14 +397,18 @@ public class EmployeDto {
 	@Override
 	public String toString() {
 		return "EmployeDto [empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
-				+ ", empCivilite=" + empCivilite + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail
-				+ ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation=" + lieuAffectation
-				+ ", fonction=" + fonction + ", empNumInterne=" + empNumInterne + ", empDateDebutStatus="
-				+ empDateDebutStatus + ", empDateFinStatus=" + empDateFinStatus + ", refDecretouArreteEntree="
-				+ refDecretouArreteEntree + ", dateDecretouArreteEntree=" + dateDecretouArreteEntree
-				+ ", refDecretouArreteDepart=" + refDecretouArreteDepart + ", dateDecretouArreteDepart="
-				+ dateDecretouArreteDepart + ", empEmplacementPhoto=" + empEmplacementPhoto
+				+ ", empCivilite=" + empCivilite + ", empDateNsce=" + empDateNsce + ", empLieuNsce=" + empLieuNsce
+				+ ", empNumActeNsce=" + empNumActeNsce + ", empAdrQuartierResidce=" + empAdrQuartierResidce
+				+ ", empAdrVilleResidce=" + empAdrVilleResidce + ", empAdrPrefResidce=" + empAdrPrefResidce
+				+ ", empAdrRegionResidce=" + empAdrRegionResidce + ", empTelephone=" + empTelephone + ", empEmail="
+				+ empEmail + ", typeEmploye=" + typeEmploye + ", status=" + status + ", lieuAffectation="
+				+ lieuAffectation + ", fonction=" + fonction + ", empNumInterne=" + empNumInterne
+				+ ", empDateDebutStatus=" + empDateDebutStatus + ", empDateFinStatus=" + empDateFinStatus
+				+ ", refDecretouArreteEntree=" + refDecretouArreteEntree + ", dateDecretouArreteEntree="
+				+ dateDecretouArreteEntree + ", refDecretouArreteDepart=" + refDecretouArreteDepart
+				+ ", dateDecretouArreteDepart=" + dateDecretouArreteDepart + ", empPhoto=" + empPhoto
+				+ ", empEmplacementPhoto=" + empEmplacementPhoto + ", empSignature=" + empSignature
 				+ ", empEmplacementSignature=" + empEmplacementSignature + "]";
 	}
-		
+
 }
