@@ -274,7 +274,7 @@ public class Visite implements Comparable<Visite> {
 	}
 	@Override
 	public int compareTo(Visite o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 	
 }

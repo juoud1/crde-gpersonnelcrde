@@ -240,7 +240,9 @@ public class AffectationService {
 		var affectEmploye = employeRepository.findByEmpMatricule(affectation.getEmploye().getEmpMatricule());
 		var affectLieuAffectation = lieuAffectationRepository.findByLieuAffectCode(affectation.getLieuAffectation().getLieuAffectCode()).stream().sorted().findFirst();
 		var affectFonction = fonctionRepository.findByFonctionCode(affectation.getFonction().getFonctionCode()).stream().sorted().findFirst();
-					
+
+		var affEmp = affectEmploye.orElseThrow(EntityNotFoundException::new);
+
 		var aDto = new AffectationDto();
 		aDto.setDateDebutAffect(affectation.getDateDebutAffect());
 					
@@ -250,10 +252,9 @@ public class AffectationService {
 		
 		aDto.setDatePriseService(affectation.getDatePriseService());
 		aDto.setEmplacementAffect(affectation.getEmplacementAffect());
-		aDto.setEmployeMatricule(affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpMatricule());
-		aDto.setEmployeCivilite(affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpCivilite());
-		aDto.setEmployeNom(String.join(", ", affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpNom(),
-				affectEmploye.orElseThrow(EntityNotFoundException::new).getEmpPren()));
+		aDto.setEmployeMatricule(affEmp.getEmpMatricule());
+		aDto.setEmployeCivilite(affEmp.getEmpCivilite());
+		aDto.setEmployeNom(String.join(", ", affEmp.getEmpNom(), affEmp.getEmpPren()));
 		aDto.setFonction(affectFonction.orElseThrow(EntityNotFoundException::new).getFonction());
 		aDto.setInfoSupplementaires(affectation.getInfoSupplementaires());
 		aDto.setLieuAffectation(affectLieuAffectation.orElseThrow(EntityNotFoundException::new).getLieuAffect());

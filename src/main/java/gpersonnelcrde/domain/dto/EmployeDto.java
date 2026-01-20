@@ -10,7 +10,7 @@ public class EmployeDto {
 	private String empPren;
 	private String empCivilite;
 
-	private String empDateNsce;
+	private LocalDate empDateNsce;
 	private String empLieuNsce;
 	private String empNumActeNsce;
 
@@ -63,10 +63,10 @@ public class EmployeDto {
 	public void setEmpCivilite(String empCivilite) {
 		this.empCivilite = empCivilite;
 	}
-	public String getEmpDateNsce() {
+	public LocalDate getEmpDateNsce() {
 		return empDateNsce;
 	}
-	public void setEmpDateNsce(String empDateNsce) {
+	public void setEmpDateNsce(LocalDate empDateNsce) {
 		this.empDateNsce = empDateNsce;
 	}
 	public String getEmpLieuNsce() {

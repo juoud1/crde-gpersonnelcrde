@@ -117,7 +117,7 @@ public class MissionEmploye extends AbstractPersistable<MissionEmployePk> implem
 	}
 	@Override
 	public int compareTo(MissionEmploye o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 
 	

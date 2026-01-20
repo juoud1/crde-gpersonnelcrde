@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 //@Table(schema = "crde", name = "affectation")
@@ -322,7 +321,7 @@ public class Affectation implements Comparable<Affectation> {
 	
 	@Override
 	public int compareTo(Affectation o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 
 }

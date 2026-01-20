@@ -132,7 +132,7 @@ public class Fonction implements Comparable<Fonction> {
 	
 	@Override
 	public int compareTo(Fonction o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 	
 }

@@ -27,6 +27,9 @@ public class Employe implements Comparable<Employe> {
 	private String empMatricule;
 	private String empNom;
 	private String empPren;
+	private LocalDate empDateNsce;
+	private String empLieuNsce;
+	private String empNumActeNsce;
 	private String empCivilite;
 	private String empUrlphoto;
 	private String empUrlsignature;
@@ -64,142 +67,211 @@ public class Employe implements Comparable<Employe> {
 	private String empCreePar;
 	private LocalDateTime empModifieLe;
 	private String empModifiePar;
-
+	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getEmpMatricule() {
 		return empMatricule;
 	}
+
 	public void setEmpMatricule(String empMatricule) {
 		this.empMatricule = empMatricule;
 	}
+
 	public String getEmpNom() {
 		return empNom;
 	}
+
 	public void setEmpNom(String empNom) {
 		this.empNom = empNom;
 	}
+
 	public String getEmpPren() {
 		return empPren;
 	}
+
 	public void setEmpPren(String empPren) {
 		this.empPren = empPren;
 	}
+
+	public LocalDate getEmpDateNsce() {
+		return empDateNsce;
+	}
+
+	public void setEmpDateNsce(LocalDate empDateNsce) {
+		this.empDateNsce = empDateNsce;
+	}
+
+	public String getEmpLieuNsce() {
+		return empLieuNsce;
+	}
+
+	public void setEmpLieuNsce(String empLieuNsce) {
+		this.empLieuNsce = empLieuNsce;
+	}
+
+	public String getEmpNumActeNsce() {
+		return empNumActeNsce;
+	}
+
+	public void setEmpNumActeNsce(String empNumActeNsce) {
+		this.empNumActeNsce = empNumActeNsce;
+	}
+
 	public String getEmpCivilite() {
 		return empCivilite;
 	}
+
 	public void setEmpCivilite(String empCivilite) {
 		this.empCivilite = empCivilite;
 	}
+
 	public String getEmpUrlphoto() {
 		return empUrlphoto;
 	}
+
 	public void setEmpUrlphoto(String empUrlphoto) {
 		this.empUrlphoto = empUrlphoto;
 	}
+
 	public String getEmpUrlsignature() {
 		return empUrlsignature;
 	}
+
 	public void setEmpUrlsignature(String empUrlsignature) {
 		this.empUrlsignature = empUrlsignature;
 	}
+
 	public String getEmpTelephone() {
 		return empTelephone;
 	}
+
 	public void setEmpTelephone(String empTelephone) {
 		this.empTelephone = empTelephone;
 	}
+
 	public String getEmpEmail() {
 		return empEmail;
 	}
+
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
 	}
+
 	public String getNumNoteService() {
 		return numNoteService;
 	}
+
 	public void setNumNoteService(String numNoteService) {
 		this.numNoteService = numNoteService;
 	}
+
 	public TypeEmploye getTypeEmploye() {
 		return typeEmploye;
 	}
+
 	public void setTypeEmploye(TypeEmploye typeEmploye) {
 		this.typeEmploye = typeEmploye;
 	}
+
 	public Status getEmpStatus() {
 		return empStatus;
 	}
+
 	public void setEmpStatus(Status empStatus) {
 		this.empStatus = empStatus;
 	}
+
 	public LieuAffectation getEmpLieuAffectation() {
 		return empLieuAffectation;
 	}
+
 	public void setEmpLieuAffectation(LieuAffectation empLieuAffectation) {
 		this.empLieuAffectation = empLieuAffectation;
 	}
+
 	public Fonction getEmpFonction() {
 		return empFonction;
 	}
+
 	public void setEmpFonction(Fonction empFonction) {
 		this.empFonction = empFonction;
 	}
+
 	public String getReferenceDecretEntree() {
 		return referenceDecretEntree;
 	}
+
 	public void setReferenceDecretEntree(String referenceDecretEntree) {
 		this.referenceDecretEntree = referenceDecretEntree;
 	}
+
 	public LocalDate getDateDecretEntree() {
 		return dateDecretEntree;
 	}
+
 	public void setDateDecretEntree(LocalDate dateDecretEntree) {
 		this.dateDecretEntree = dateDecretEntree;
 	}
+
 	public String getReferenceDecretSortie() {
 		return referenceDecretSortie;
 	}
+
 	public void setReferenceDecretSortie(String referenceDecretSortie) {
 		this.referenceDecretSortie = referenceDecretSortie;
 	}
+
 	public LocalDate getDateDecretSortie() {
 		return dateDecretSortie;
 	}
+
 	public void setDateDecretSortie(LocalDate dateDecretSortie) {
 		this.dateDecretSortie = dateDecretSortie;
 	}
+
 	public List<MissionEmploye> getEmpMissions() {
 		return empMissions;
 	}
+
 	public void setEmpMissions(List<MissionEmploye> empMissions) {
 		this.empMissions = empMissions;
 	}
+
 	public LocalDateTime getEmpCreeLe() {
 		return empCreeLe;
 	}
+
 	public void setEmpCreeLe(LocalDateTime empCreeLe) {
 		this.empCreeLe = empCreeLe;
 	}
+
 	public String getEmpCreePar() {
 		return empCreePar;
 	}
+
 	public void setEmpCreePar(String empCreePar) {
 		this.empCreePar = empCreePar;
 	}
+
 	public LocalDateTime getEmpModifieLe() {
 		return empModifieLe;
 	}
+
 	public void setEmpModifieLe(LocalDateTime empModifieLe) {
 		this.empModifieLe = empModifieLe;
 	}
+
 	public String getEmpModifiePar() {
 		return empModifiePar;
 	}
+
 	public void setEmpModifiePar(String empModifiePar) {
 		this.empModifiePar = empModifiePar;
 	}
@@ -212,6 +284,9 @@ public class Employe implements Comparable<Employe> {
 		result = prime * result + ((empMatricule == null) ? 0 : empMatricule.hashCode());
 		result = prime * result + ((empNom == null) ? 0 : empNom.hashCode());
 		result = prime * result + ((empPren == null) ? 0 : empPren.hashCode());
+		result = prime * result + ((empDateNsce == null) ? 0 : empDateNsce.hashCode());
+		result = prime * result + ((empLieuNsce == null) ? 0 : empLieuNsce.hashCode());
+		result = prime * result + ((empNumActeNsce == null) ? 0 : empNumActeNsce.hashCode());
 		result = prime * result + ((empCivilite == null) ? 0 : empCivilite.hashCode());
 		result = prime * result + ((empUrlphoto == null) ? 0 : empUrlphoto.hashCode());
 		result = prime * result + ((empUrlsignature == null) ? 0 : empUrlsignature.hashCode());
@@ -233,6 +308,7 @@ public class Employe implements Comparable<Employe> {
 		result = prime * result + ((empModifiePar == null) ? 0 : empModifiePar.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -261,6 +337,21 @@ public class Employe implements Comparable<Employe> {
 			if (other.empPren != null)
 				return false;
 		} else if (!empPren.equals(other.empPren))
+			return false;
+		if (empDateNsce == null) {
+			if (other.empDateNsce != null)
+				return false;
+		} else if (!empDateNsce.equals(other.empDateNsce))
+			return false;
+		if (empLieuNsce == null) {
+			if (other.empLieuNsce != null)
+				return false;
+		} else if (!empLieuNsce.equals(other.empLieuNsce))
+			return false;
+		if (empNumActeNsce == null) {
+			if (other.empNumActeNsce != null)
+				return false;
+		} else if (!empNumActeNsce.equals(other.empNumActeNsce))
 			return false;
 		if (empCivilite == null) {
 			if (other.empCivilite != null)
@@ -359,10 +450,11 @@ public class Employe implements Comparable<Employe> {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", empMatricule=" + empMatricule + ", empNom=" + empNom + ", empPren=" + empPren
+				+ ", empDateNsce=" + empDateNsce + ", empLieuNsce=" + empLieuNsce + ", empNumActeNsce=" + empNumActeNsce
 				+ ", empCivilite=" + empCivilite + ", empUrlphoto=" + empUrlphoto + ", empUrlsignature="
 				+ empUrlsignature + ", empTelephone=" + empTelephone + ", empEmail=" + empEmail + ", numNoteService="
 				+ numNoteService + ", typeEmploye=" + typeEmploye + ", empStatus=" + empStatus + ", empLieuAffectation="
@@ -372,9 +464,10 @@ public class Employe implements Comparable<Employe> {
 				+ ", empCreeLe=" + empCreeLe + ", empCreePar=" + empCreePar + ", empModifieLe=" + empModifieLe
 				+ ", empModifiePar=" + empModifiePar + "]";
 	}
+
 	@Override
 	public int compareTo(Employe o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 					
 }

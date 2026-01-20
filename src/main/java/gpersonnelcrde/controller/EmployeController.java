@@ -185,8 +185,9 @@ public class EmployeController {
 										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
 										empDateDebutStatus, dateDecretouArreteEntree, empPhoto).orElseThrow(() -> new EntityNotFoundException("La création de l'employé a échouée."));
 		*/
-		final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, typeEmploye, empMatricule, empEmail, empTelephone, 
-										status, empFonction, refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
+		final EmployeDto savedEmploye = employeService.createEmploye(empCivilite, empNom, empPren, empDateNsce, empLieuNsce, empNumActeNsce, typeEmploye, empMatricule, empEmail, empTelephone, 
+										status, empFonction, empAdrQtierResidce, empAdrVilleResidce, empAdrPrefResidce, empAdrRegResidce,
+										refDecretouArreteEntree, lieuAffectation, empDateDebutStatus, 
 										empDateDebutStatus, dateDecretouArreteEntree, null).orElseThrow(() -> new EntityNotFoundException("La création de l'employé a échouée."));
 		
 		/*Future<EmployeDto> futureEmploye = null;

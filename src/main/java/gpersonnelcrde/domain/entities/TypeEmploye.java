@@ -100,6 +100,6 @@ public class TypeEmploye implements Comparable<TypeEmploye> {
 
 	@Override
 	public int compareTo(TypeEmploye o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 }
