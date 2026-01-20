@@ -1,12 +1,12 @@
 BEGIN;
-insert into employe (EMP_MATRICULE, EMP_NOM, EMP_PREN, EMP_CIVILITE, EMP_TELEPHONE, EMP_EMAIL, reference_decret_entree, date_decret_entree, TYPE_EMPLOYE_ID, EMP_STATUS_ID, EMP_LIEU_AFFECTATION_ID, EMP_FONCTION_ID) 
-values ('M86OP582', 'W-L', 'Hri', 'Gl', '88664422', 'gahwl@min.gouv.cf', '123', '20190315', 4L, 1L, 1L, 1L); 
+insert into employe (EMP_MATRICULE, EMP_NOM, EMP_PREN, emp_date_nsce, emp_lieu_nsce, EMP_CIVILITE, EMP_TELEPHONE, EMP_EMAIL, reference_decret_entree, date_decret_entree, TYPE_EMPLOYE_ID, EMP_STATUS_ID, EMP_LIEU_AFFECTATION_ID, EMP_FONCTION_ID) 
+values ('M86OP582', 'W-L', 'Hri', '19580325', 'Damara', 'Gl', '88664422', 'gahwl@min.gouv.cf', '123', '20190315', 4L, 1L, 1L, 1L); 
 --ROLLBACK;
 --ON CONFLICT ON CONSTRAINT uniq_matricule DO NOTHING;
 
 --BEGIN;
-insert into employe (EMP_MATRICULE, EMP_NOM, EMP_PREN, EMP_CIVILITE, EMP_TELEPHONE, EMP_EMAIL, reference_decret_entree, date_decret_entree, TYPE_EMPLOYE_ID, EMP_STATUS_ID, EMP_LIEU_AFFECTATION_ID, EMP_FONCTION_ID) 
-values ('CIV0125', 'AAAAA', 'BBBBB', 'Monsieur', '2564566', 'gdjs@emp.gouv.cf', '215', '20211005', 1L, 1L, 3L, 4L); 
+insert into employe (EMP_MATRICULE, EMP_NOM, EMP_PREN, emp_date_nsce, emp_lieu_nsce, emp_num_acte_nsce, EMP_CIVILITE, EMP_TELEPHONE, EMP_EMAIL, reference_decret_entree, date_decret_entree, TYPE_EMPLOYE_ID, EMP_STATUS_ID, EMP_LIEU_AFFECTATION_ID, EMP_FONCTION_ID) 
+values ('CIV0125', 'AAAAA', 'BBBBB', '19860315', 'Boda', '456', 'Monsieur', '2564566', 'gdjs@emp.gouv.cf', '215', '20211005', 1L, 1L, 3L, 4L); 
 --ROLLBACK;
 
 --BEGIN;

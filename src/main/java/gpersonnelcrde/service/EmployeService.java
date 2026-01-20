@@ -1,9 +1,12 @@
 package gpersonnelcrde.service;
 
+import static gpersonnelcrde.utilitaires.CrdeConstants.*;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,6 +27,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import gpersonnelcrde.domain.dto.EmployeDto;
+import gpersonnelcrde.domain.entities.AdresseEmploye;
 import gpersonnelcrde.domain.entities.Affectation;
 import gpersonnelcrde.domain.entities.Conge;
 import gpersonnelcrde.domain.entities.Employe;
@@ -35,6 +39,7 @@ import gpersonnelcrde.domain.entities.Status;
 import gpersonnelcrde.domain.entities.TypeEmploye;
 import gpersonnelcrde.exception.EmployeServiceException;
 import gpersonnelcrde.exception.StockageFichiersImagesException;
+import gpersonnelcrde.repository.AdresseEmployeRepository;
 import gpersonnelcrde.repository.AffectationRepository;
 import gpersonnelcrde.repository.CongeRepository;
 import gpersonnelcrde.repository.EmployeRepository;
@@ -61,13 +66,15 @@ public class EmployeService {
 	private final TypeEmployeRepository typeEmployeRepository;
 	private final StatusRepository statusRepository;
 	private final LieuAffectationRepository lieuAffectationRepository;
+	private final AdresseEmployeRepository adresseEmployeRepository;
 	private final StockageFichiersImagesService stockagePhotoEmployeService;
 	private final ResourceLoader resourceLoader;
 
 	public EmployeService(EmployeRepository employeRepository, AffectationRepository affectationRepository, 
 	    MissionRepository missionRepository, CongeRepository congeRepository, MissionEmployeRepository missionEmployeRepository,
 		FonctionRepository fonctionRepository, TypeEmployeRepository typeEmployeRepository, StatusRepository statusRepository, 
-		StockageFichiersImagesService stockagePhotoEmployeService, LieuAffectationRepository lieuAffectationRepository, ResourceLoader resourceLoader) {
+		StockageFichiersImagesService stockagePhotoEmployeService, LieuAffectationRepository lieuAffectationRepository,
+		AdresseEmployeRepository adresseEmployeRepository, ResourceLoader resourceLoader) {
 		this.employeRepository = employeRepository;
 		this.fonctionRepository = fonctionRepository;
 		this.typeEmployeRepository=typeEmployeRepository;
@@ -78,6 +85,7 @@ public class EmployeService {
 		this.missionRepository =missionRepository;
 		this.congeRepository = congeRepository;
 		this.stockagePhotoEmployeService = stockagePhotoEmployeService;
+		this.adresseEmployeRepository = adresseEmployeRepository;
 		this.resourceLoader = resourceLoader;
 
 		logger.info("composant employé service initialisé avec succès".toUpperCase());
@@ -89,6 +97,7 @@ public class EmployeService {
 		logger.info("{} employé(s) récupérés avec succès!".toUpperCase(), employes.size());
 
 		return employes!=null && !CollectionUtils.isEmpty(employes) ? employeRepository.findAll().stream()
+				.distinct()
 				.map((Employe emp) -> {
 					EmployeDto eDto = null;
 					try {
@@ -124,6 +133,7 @@ public class EmployeService {
 						.get(0);
 
 		return this.getAllEmploye().stream()
+						.distinct()
 						.filter(e -> e.getLieuAffectation().equalsIgnoreCase(lAff.getLieuAffect()))
 						.toList();
 	}
@@ -135,6 +145,7 @@ public class EmployeService {
 		}
 
 		var matricules = empMatricules.stream()
+			.distinct()
 			.map(EmployeDto::getEmpMatricule)
 			.sorted()
 			.toList();
@@ -148,6 +159,7 @@ public class EmployeService {
 		}
 		
 		return employeRepository.findAll().stream()
+			.distinct()
 			.sorted(Comparator.comparing(Employe::getEmpMatricule))
 			.filter(eDto -> empMatricules.contains(eDto.getEmpMatricule()))
 			.toList();
@@ -157,10 +169,13 @@ public class EmployeService {
 		return null;
 	}
 
-	public Optional<EmployeDto> createEmploye (String empCivilite, String empNom, String empPren, String typeEmploye, 
-					String empMatricule, String empEmail, String empTelephone, String status, String empFonction,
-					String refDecretouArreteEntree, String lieuAffectation, LocalDate empDateDebutStatus,
-					LocalDate empDateFinStatus, LocalDate dateDecretouArreteEntree, MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException{
+	public Optional<EmployeDto> createEmploye (final String empCivilite, final String empNom, final String empPren, 
+					final LocalDate empDateNsce, final String empLieuNsce, final String empNumActeNsce, final String typeEmploye, 
+					final String empMatricule, final String empEmail, final String empTelephone, final String status, 
+					final String empFonction, final String empAdrQtierResidce, final String empAdrVilleResidce, 
+					final String empAdrPrefResidce, final String empAdrRegResidce,
+					final String refDecretouArreteEntree, final String lieuAffectation, final LocalDate empDateDebutStatus,
+					final LocalDate empDateFinStatus, final LocalDate dateDecretouArreteEntree, final MultipartFile empPhoto) throws IllegalAccessException, InterruptedException, ExecutionException, StockageFichiersImagesException, IOException, EmployeServiceException{
 		
 		//Future<Path> futureEmplacementPhoto = null;
 		//Future<Optional<EmployeDto>> futureOptEmploye = null;
@@ -208,7 +223,16 @@ public class EmployeService {
 		eDto.setEmpEmplacementPhoto(Objects.nonNull(empPhoto) ? pathEmplacementPhoto.toString() : null);
 		eDto.setEmpPhoto(resourcePhoto);//resourceLoader.getResource(pathEmplacementPhoto.toUri().getPath()));
 		
-		var newEmp = saveEmploye (eDto);
+		eDto.setEmpDateNsce(empDateNsce);
+		eDto.setEmpLieuNsce(empLieuNsce);
+		eDto.setEmpNumActeNsce(empNumActeNsce);
+
+		eDto.setEmpAdrQuartierResidce(empAdrQtierResidce);
+		eDto.setEmpAdrVilleResidce(empAdrVilleResidce);
+		eDto.setEmpAdrPrefResidce(empAdrPrefResidce);
+		eDto.setEmpAdrRegionResidce(lieuAffectation);
+
+		var newEmp = saveEmployeUsingDto(eDto);
 		logger.info("DONNÉES EMPLOYÉ À CRÉER :\n {}", newEmp);
 
 		return newEmp;
@@ -225,7 +249,7 @@ public class EmployeService {
 		return optEmp.isPresent();
 	}
 
-	public Optional<EmployeDto> saveEmploye (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
+	public Optional<EmployeDto> saveEmployeUsingDto (final EmployeDto employeDto) throws IllegalAccessException, InterruptedException, ExecutionException, EmployeServiceException, StockageFichiersImagesException {
 		if (Objects.isNull(employeDto)) {
 			logger.info("Impossible de créer l'employé car les données sont vides.");
 			return Optional.empty();
@@ -247,19 +271,19 @@ public class EmployeService {
 		try {//(var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 				futureOptEmpFonct = executor.submit(() -> {
 					var result = fonctionRepository.findAll();
-					return result.stream().filter(f -> f.getFonctionCode().equalsIgnoreCase(employeDto.getFonction().trim())).sorted().findFirst();
+					return result.stream().distinct().filter(f -> f.getFonctionCode().equalsIgnoreCase(employeDto.getFonction().trim())).sorted().findFirst();
 				});
 				futureOptEmpStatus = executor.submit(() -> {
 					var result = statusRepository.findAll();
-					return result.stream().filter(s -> s.getStatusCode().equalsIgnoreCase(employeDto.getStatus().trim())).sorted().findFirst();
+					return result.stream().distinct().filter(s -> s.getStatusCode().equalsIgnoreCase(employeDto.getStatus().trim())).sorted().findFirst();
 				});
 				futureOptTypeEmp = executor.submit(() -> {
 					var result = typeEmployeRepository.findAll();
-					return result.stream().filter(t -> t.getTypeEmpCode().equalsIgnoreCase(employeDto.getTypeEmploye().trim())).sorted().findFirst();
+					return result.stream().distinct().filter(t -> t.getTypeEmpCode().equalsIgnoreCase(employeDto.getTypeEmploye().trim())).sorted().findFirst();
 				});
 				futureOptLieuAffect = executor.submit(() -> {
 					var result = lieuAffectationRepository.findAll();
-					return result.stream().filter(l -> l.getLieuAffectCode().equalsIgnoreCase(employeDto.getLieuAffectation().trim())).sorted().findFirst();
+					return result.stream().distinct().filter(l -> l.getLieuAffectCode().equalsIgnoreCase(employeDto.getLieuAffectation().trim())).sorted().findFirst();
 				});
 			//futurePathPhoto = executor.submit(() -> this.stockagePhotoEmployeService.chargerFichierCrde(employe.getEmpUrlphoto()));
 		} catch (Exception e) {
@@ -282,8 +306,11 @@ public class EmployeService {
 			var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employeDto.getLieuAffectation().trim());
 			var lAffect = empLieuAffect.orElseThrow(() -> new EntityNotFoundException("Le lieu d'affectation de l'employé est inconnu".toUpperCase()));
 			
+			var matEmp = employeDto.getEmpMatricule().replaceAll(CARACTERE_NON_AUTORISE, CARACTERE_REMPLACEMENT); 
+			var refDecret = employeDto.getRefDecretouArreteEntree().replaceAll(CARACTERE_NON_AUTORISE, CARACTERE_REMPLACEMENT);
+			
 			Employe employe = new Employe();
-			employe.setEmpCivilite(employeDto.getEmpCivilite());
+			employe.setEmpCivilite(StringUtils.capitalize(employeDto.getEmpCivilite()));
 			employe.setEmpCreeLe(LocalDateTime.now());
 			employe.setEmpCreePar("admin");
 			employe.setDateDecretEntree(employeDto.getDateDecretouArreteEntree());
@@ -291,27 +318,40 @@ public class EmployeService {
 			employe.setEmpEmail(employeDto.getEmpEmail());
 			employe.setEmpFonction(fonct);
 			employe.setEmpLieuAffectation(lAffect);
-			employe.setEmpMatricule(employeDto.getEmpMatricule());
+			employe.setEmpMatricule(matEmp.toUpperCase());
 			employe.setEmpModifieLe(LocalDateTime.now());
 			employe.setEmpModifiePar("admin");
-			employe.setEmpNom(employeDto.getEmpNom());
-			employe.setEmpPren(employeDto.getEmpPren());
+			employe.setEmpNom(StringUtils.capitalize(employeDto.getEmpNom()));
+			employe.setEmpPren(StringUtils.capitalize(employeDto.getEmpPren()));
 			employe.setEmpStatus(sttus);
 			employe.setEmpTelephone(employeDto.getEmpTelephone());
 			employe.setNumNoteService(null);
-			employe.setReferenceDecretEntree(employeDto.getRefDecretouArreteEntree());
+			employe.setReferenceDecretEntree(refDecret); //employeDto.getRefDecretouArreteEntree());
 			employe.setTypeEmploye(typeEmp);
 			employe.setEmpUrlphoto(employeDto.getEmpEmplacementPhoto());
+			employe.setEmpDateNsce(employeDto.getEmpDateNsce());
+			employe.setEmpLieuNsce(StringUtils.capitalize(employeDto.getEmpLieuNsce()));
+			employe.setEmpNumActeNsce(employeDto.getEmpNumActeNsce());
 
 			// Persistance de données
-			employe = saveEmploye(employe);
-			logger.info("Employé enregistré avec succès sous le n° : {}\n  la photo stockée à l'emplacement : {}".toUpperCase(), employe.getId(), employe.getEmpUrlphoto());
+			var savedEmploye = saveEmploye(employe);
+			logger.info("Employé enregistré avec succès sous le n° : {}\n  la photo stockée à l'emplacement : {}".toUpperCase(), savedEmploye.getId(), savedEmploye.getEmpUrlphoto());
 			//employe.setNumNoteService(String.valueOf(employe.getId()));
 			//logger.info("Employé enregistré avec succès.".toUpperCase());
+			
+			createInitialaffectation(savedEmploye);
+			createAdresseActive(employeDto, savedEmploye);
 
-			createInitialaffectation(employe);
-
-			return employeMapper(Optional.ofNullable(employe));	
+			/*executor = Executors.newVirtualThreadPerTaskExecutor();
+			try {
+				executor.submit(() -> createInitialaffectation(savedEmploye));
+				executor.submit(() -> createAdresseActive(employeDto, savedEmploye));
+			} catch (Exception  e) {
+				throw new EmployeServiceException("Un ou plusieurs problèmes surgissent durant la récupération des données de base pour le mappage employé/Dto; " + e.getMessage());
+			}
+			executor.close();*/
+			
+			return employeMapper(Optional.ofNullable(savedEmploye));	
 		/* } catch (EmployeServiceException e) {
 			logger.info("La création de l'employé {} a echoué \n{}\n {}", employeDto.getEmpMatricule(), e.getMessage(), e.getCause());
 			throw new EmployeServiceException("Impossile de cré. l'employé " + e.getMessage());
@@ -326,7 +366,7 @@ public class EmployeService {
 			throw new EntityNotFoundException("L'entité employé ne doit être null");
 		}
 		//logger.info("Affectation initiale de {}, {} enregistrée sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), );
-		if (checkExistanceEmployeBeforSaving(employe)){
+		if (checkExistanceEmployeBeforSaving(employe, 1)){
 			logger.info("Impossible de créer l'employé car il existe déjà dans la base de données.");
 			throw new IllegalAccessException("Cet employé existe déjà dans la base de données.");
 		}
@@ -340,19 +380,38 @@ public class EmployeService {
 		return savedEmploye; //employeRepository.saveAndFlush(employe);
 	}
 
-	private boolean checkExistanceEmployeBeforSaving(final Employe employe) {
-		var result = employeRepository.findByEmpNomAndEmpPrenAndEmpCiviliteAndEmpMatriculeAndTypeEmploye(employe.getEmpNom(), 
-							employe.getEmpPren(), 
-							employe.getEmpCivilite(), 
-							employe.getEmpMatricule(), 
-							employe.getTypeEmploye());
+	/**
+	 * Double vérification d'abord sur l'existence du matricule puis celle du nom et prénoms
+
+	 * @param employe
+	 * @param verifParam
+	 * @return true si existe sinon false
+	 */
+	private boolean checkExistanceEmployeBeforSaving(final Employe employe, int verifParam) {
+		
+		if (verifParam==1){
+			var result = employeRepository.findByEmpMatricule(employe.getEmpMatricule());
+			logger.info("le matricule {} de l'Employé existe déjà {}".toUpperCase(), employe.getEmpMatricule(), result.isPresent());
+			
+			return checkExistanceEmployeBeforSaving(employe, 2);
+		} else {
+			var result = employeRepository.findByEmpNomAndEmpPren(employe.getEmpNom(), employe.getEmpPren());
+			logger.info("le nom {} et le prénom {} de l'Employé existent aussi déjà {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), result.isPresent());
+
+			return result.isPresent();
+		}
+	}
+
+	private boolean checkExistanceEmployeNameBeforSaving(final Employe employe) {
+		var result = employeRepository.findByEmpMatricule(employe.getEmpMatricule());
+		logger.info("Employé existe déjà {}".toUpperCase(), result.isPresent());
 
 		return result.isPresent();
 	}
 
 	private void createInitialaffectation(final Employe employe){
 		if (Objects.isNull(employe)) {
-			throw new EntityNotFoundException("L'entité employé dont on veut créer son affectation initiale ne doit être null");
+			throw new EntityNotFoundException("L'entité employé dont on veut créer l'affectation initiale ne doit être null");
 		}
 
 		Affectation initAffectation = new Affectation();
@@ -379,7 +438,28 @@ public class EmployeService {
 		initAffectation.setPaysResidence("RCA"); //par défaut, RCA
 
 		var affectat = affectationRepository.saveAndFlush(initAffectation);
-		logger.info("Affectation initiale de {}, {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), affectat.getId());
+		logger.info("Affectation initiale de {} {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), affectat.getId());
+	}
+
+	private void createAdresseActive(final EmployeDto eDto, final Employe employe){
+		if (Objects.isNull(employe)) {
+			throw new EntityNotFoundException("L'entité employé dont on veut créer l'adresse initiale ne doit être null");
+		}
+
+		AdresseEmploye adresseResidceEmp = new AdresseEmploye();
+		adresseResidceEmp.setAdresseCreeLe(LocalDateTime.now());
+		adresseResidceEmp.setAdresseCreePar("admin");
+		adresseResidceEmp.setAdresseModifieLe(LocalDateTime.now());
+		adresseResidceEmp.setAdresseModifiePar("admin");
+		adresseResidceEmp.setEmploye(employe);
+		adresseResidceEmp.setEstAdresseActive(Boolean.TRUE);
+		adresseResidceEmp.setPrefectureResidence(eDto.getEmpAdrPrefResidce());
+		adresseResidceEmp.setRegionResidence(eDto.getEmpAdrRegionResidce());
+		adresseResidceEmp.setQuartierResidence(eDto.getEmpAdrQuartierResidce());
+		adresseResidceEmp.setVilleResidence(eDto.getEmpAdrVilleResidce());
+
+		var adrResidEmp = adresseEmployeRepository.saveAndFlush(adresseResidceEmp);
+		logger.info("Adresse de résidence deùl'employé {} {} est créée avec succès sous le n° : {}".toUpperCase(), employe.getEmpNom(), employe.getEmpPren(), adrResidEmp.getId());
 	}
 
 	private final void computeStatusEncoursEmploye(final Optional<Affectation> optAffectation, Optional<Conge> optConge, Optional<MissionEmploye> optMissionEmploye, EmployeDto employeDto) throws EmployeServiceException {
@@ -417,13 +497,13 @@ public class EmployeService {
 						// Employé en congé
 						employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 						employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());	
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().distinct().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());	
 				} else {
 					if (missionEmploye.getDateDepart().isAfter(affectationEmploye.getDateDebutAffect())){
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().distinct().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					}
 				}		
 			} else {
@@ -433,18 +513,18 @@ public class EmployeService {
 						// Employé en mission
 						employeDto.setEmpDateDebutStatus(missionEmploye.getDateDepart());
 						employeDto.setEmpDateFinStatus(missionEmploye.getDateRetour());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("MSN")).stream().distinct().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					
 				} else {
 					if (Objects.nonNull(congeEmploye) && congeEmploye.getDateDebutConge().isAfter(affectationEmploye.getDateDebutAffect())){
 							// Employé en congé
 							employeDto.setEmpDateDebutStatus(congeEmploye.getDateDebutConge());
 							employeDto.setEmpDateFinStatus(congeEmploye.getDateFinConge());
-							employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
+							employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("CGE")).stream().distinct().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 					} else {
 						// Employé n'a ni congé ni mission
 						employeDto.setEmpDateDebutStatus(affectationEmploye.getDateDebutAffect());
-						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("SVCE")).stream().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
+						employeDto.setStatus(statusRepository.findByStatusCode(String.valueOf("SVCE")).stream().distinct().sorted().findFirst().orElseThrow(EntityNotFoundException::new).getStatus());
 
 						if (!affectationEmploye.getDateFinAffect().isAfter(affectationEmploye.getDateDebutAffect())){
 							employeDto.setEmpDateFinStatus(affectationEmploye.getDateFinAffect());
@@ -509,11 +589,12 @@ public class EmployeService {
 		var empLieuAffect = futureOptLieuAffect.get(); //lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode());
 		
 		*/
-		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode()).stream().sorted().findFirst();
-		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode()).stream().sorted().findFirst();
-		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode()).stream().sorted().findFirst();
-		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode()).stream().sorted().findFirst();
-		
+		var empFonct = fonctionRepository.findByFonctionCode(employe.getEmpFonction().getFonctionCode()).stream().distinct().sorted().findFirst();
+		var empStatus = statusRepository.findByStatusCode(employe.getEmpStatus().getStatusCode()).stream().distinct().sorted().findFirst();
+		var empTypeEmp = typeEmployeRepository.findByTypeEmpCode(employe.getTypeEmploye().getTypeEmpCode()).stream().distinct().sorted().findFirst();
+		var empLieuAffect = lieuAffectationRepository.findByLieuAffectCode(employe.getEmpLieuAffectation().getLieuAffectCode()).stream().distinct().sorted().findFirst();
+		var empAdresseResdceActive = adresseEmployeRepository.findByEmployeAndEstAdresseActive(employe, Boolean.TRUE).stream().distinct().sorted().findFirst();
+		var adrResidce = empAdresseResdceActive.orElseGet(AdresseEmploye::new);
 		
 		//var pathPhoto = futurePathPhoto.get();
 		//logger.warn("futurePathPhoto.get() {}\n employe.getEmpUrlphoto() {}\n", pathPhoto.toString(), employe.getEmpUrlphoto());
@@ -536,6 +617,15 @@ public class EmployeService {
 		eDto.setDateDecretouArreteDepart(employe.getDateDecretSortie());
 		eDto.setEmpEmplacementPhoto(employe.getEmpUrlphoto());
 
+		eDto.setEmpAdrPrefResidce(adrResidce.getPrefectureResidence());
+		eDto.setEmpAdrRegionResidce(adrResidce.getRegionResidence());
+		eDto.setEmpAdrQuartierResidce(adrResidce.getQuartierResidence());
+		eDto.setEmpAdrVilleResidce(adrResidce.getVilleResidence());
+
+		eDto.setEmpDateNsce(employe.getEmpDateNsce());
+		eDto.setEmpLieuNsce(employe.getEmpLieuNsce());
+		eDto.setEmpNumActeNsce(employe.getEmpNumActeNsce());
+
 		var optAffectationEmploye = gettatusEncoursEmploye(employe);
 		var optCongeEmploye = getCongeEncoursEmploye(employe);
 		var optMissionEmploye = getMissionEncoursEmploye(employe);
@@ -547,6 +637,7 @@ public class EmployeService {
 	private final Optional<Affectation> gettatusEncoursEmploye(final Employe employe) {
 
 		return affectationRepository.findByEmploye(employe).stream()
+								.distinct()
 								.sorted(Comparator.comparing(Affectation::getId).reversed())
 								//.sorted((a1, a2) -> a2.getId().compareTo(a1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
@@ -556,6 +647,7 @@ public class EmployeService {
 	private final Optional<Conge> getCongeEncoursEmploye(final Employe employe) {
 
 		return congeRepository.findByEmploye(employe).stream()
+								.distinct()
 								.sorted(Comparator.comparing(Conge::getId).reversed())
 								//.sorted((c1, c2) -> c2.getId().compareTo(c1.getId()))
 								//.filter(a -> a.getDateFinAffect().equals(a.getDateDebutAffect()))
@@ -565,6 +657,7 @@ public class EmployeService {
 	private final Optional<MissionEmploye> getMissionEncoursEmploye(final Employe employe) {
 
 		return missionEmployeRepository.findAll().stream()
+								.distinct()
 								.filter(me -> me.getId().getEmploye().getEmpMatricule().equalsIgnoreCase(employe.getEmpMatricule()) && me.getId().getMission().getStatusMission().startsWith("Approuvé"))
 								.sorted((m1, m2) -> m2.getId().getMission().getId().compareTo(m1.getId().getMission().getId()))
 								.findFirst();

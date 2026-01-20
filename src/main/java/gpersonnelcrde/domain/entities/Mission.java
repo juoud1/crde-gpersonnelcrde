@@ -301,7 +301,7 @@ public class Mission implements Comparable<Mission> {
 	}
 	@Override
 	public int compareTo(Mission o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Conge implements Comparable<Conge> {
 	private String typeDemandeConge;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Employe employe;
 
 	@JsonIgnore
@@ -236,7 +237,7 @@ public class Conge implements Comparable<Conge> {
 	}
 	@Override
 	public int compareTo(Conge o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 	
 }

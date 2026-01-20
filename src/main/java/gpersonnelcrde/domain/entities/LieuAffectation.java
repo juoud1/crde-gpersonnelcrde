@@ -133,7 +133,7 @@ public class LieuAffectation implements Comparable<LieuAffectation> {
 	}
 	@Override
 	public int compareTo(LieuAffectation o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 	
 }

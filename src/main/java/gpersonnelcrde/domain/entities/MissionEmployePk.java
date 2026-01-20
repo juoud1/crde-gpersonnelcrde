@@ -69,7 +69,7 @@ public class MissionEmployePk implements Serializable, Comparable<MissionEmploye
 
 	@Override
 	public int compareTo(MissionEmployePk o) {
-		return o.getEmploye().compareTo(employe);
+		return employe.getId().compareTo(o.getEmploye().getId());
 	}
 
 }

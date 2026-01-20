@@ -13,5 +13,7 @@ import gpersonnelcrde.domain.entities.TypeEmploye;
 @Transactional
 public interface EmployeRepository extends JpaRepository<Employe, Long> {
 	Optional<Employe> findByEmpMatricule(String empMatricule);
-	Optional<Employe> findByEmpNomAndEmpPrenAndEmpCiviliteAndEmpMatriculeAndTypeEmploye(String empNom, String empPren, String empCivilite, String empMatricule, TypeEmploye typeEmploye);
+	Optional<Employe> findByEmpNomAndEmpPren(String empNom, String empPren);
+	Optional<Employe> findByEmpMatriculeAndTypeEmploye(String empMatricule, TypeEmploye typeEmploye);
+	//Optional<Employe> findByEmpNomAndEmpPrenAndEmpCiviliteAndEmpMatriculeAndTypeEmploye(String empNom, String empPren, String empCivilite, String empMatricule, TypeEmploye typeEmploye);
 }

@@ -296,7 +296,7 @@
 																		<header class="h6 mb-1 text-start">Affectations</header>
 																		<div class="d-flex flex-wrap gap-2 p-2">
 																			<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
-																			<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html/aff-int}" formmethod="get" th:text="|Ajouter une affectation|">Annuler</a>
+																			<a th:id="|affectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectation-emp-crde.html/aff1emp}" formmethod="get" th:text="|Ajouter une affectation|">Annuler</a>
 																			<a th:id="|histaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/hist|" formmethod="get" th:text="|Historique affectations|">Annuler</a>
 																			<button th:id="|impaffectemp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id="${employe.numNoteService}" th:onclick="printNoteDeService([[${employe}]])" th:text="|Imp. note de service|">Note de service</button>
 																		</div>
@@ -508,7 +508,7 @@
 												<header class="h6 mb-1 text-start">Affectations</header>
 												<div class="d-flex flex-wrap gap-2 p-2">
 													<a id="approuvaffectemp1- ${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectations-emp-crde.html/${employe.empMatricule}" formmethod="get">Approuver/Ann. affectation</a>
-													<a id="affectemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectation-emp-crde.html/aff-int" formmethod="get">Ajouter une affectation</a>
+													<a id="affectemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectation-emp-crde.html/aff1emp" formmethod="get">Ajouter une affectation</a>
 													<a id="histaffectemp1-${employe.empMatricule}" class="btn btn-outline-primary" href="/crde/gpsnel/affectations-emp-crde.html/${employe.empMatricule}" formmethod="get">Historique affectations</a>
 													<button id="impaffectemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. note de service</button>
 												</div>

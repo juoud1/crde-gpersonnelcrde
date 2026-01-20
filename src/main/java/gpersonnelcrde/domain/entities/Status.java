@@ -136,7 +136,7 @@ public class Status implements Comparable<Status> {
 
 	@Override
 	public int compareTo(Status o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}
 		
 }

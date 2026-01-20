@@ -192,6 +192,6 @@ public class Utilisateur implements Comparable<Utilisateur> {
 	}
 	@Override
 	public int compareTo(Utilisateur o) {
-		return o.getId().compareTo(id);
+		return id.compareTo(o.getId());
 	}		
 }
