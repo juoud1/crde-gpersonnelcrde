@@ -54,7 +54,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 @Transactional
 public class EmployeService {
-	public static final Logger logger = LoggerFactory.getLogger(EmployeService.class);
+	private static final Logger logger = LoggerFactory.getLogger(EmployeService.class);
 
 	private final EmployeRepository employeRepository;
 	private final AffectationRepository affectationRepository;
@@ -96,7 +96,7 @@ public class EmployeService {
 		var employes = employeRepository.findAll();
 		logger.info("{} employé(s) récupérés avec succès!".toUpperCase(), employes.size());
 
-		return employes!=null && !CollectionUtils.isEmpty(employes) ? employeRepository.findAll().stream()
+		return employes!=null && !CollectionUtils.isEmpty(employes) ? employes.stream()
 				.distinct()
 				.map((Employe emp) -> {
 					EmployeDto eDto = null;
@@ -559,7 +559,7 @@ public class EmployeService {
 		return Optional.of(eDto);
 	}
     
-    private EmployeDto employeToDtoMapper(Employe employe) throws InterruptedException, ExecutionException, EmployeServiceException{
+    private EmployeDto employeToDtoMapper(final Employe employe) throws InterruptedException, ExecutionException, EmployeServiceException{
 	    if (Objects.isNull(employe)){
 			logger.warn("Impossible de faire le mappage car aucune donnée de l'employé n'est fournie");
             throw new EntityNotFoundException("L'entité employé ne doit être null");
