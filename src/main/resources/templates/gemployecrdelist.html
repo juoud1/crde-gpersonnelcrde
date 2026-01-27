@@ -293,6 +293,17 @@
 																	<hr>
 
 																	<div class="border p-1 mb-2 bg-secondary-subtle">
+																		<header class="h6 mb-1 text-start">Adresses employé/stagiaire</header>
+																		<div class="d-flex flex-wrap gap-2 p-2">
+																			<a class="btn btn-outline-primary" th:id="|consultadremp| + ${employe.empMatricule}" th:href="@{/adr-employe-crde-m.html} + |/| + ${employe.empMatricule}+ |/cnsultadr|" formmethod="get" th:text="|Consulter adresse|">Annuler</a>
+																			<a class="btn btn-outline-primary" th:id="|changeadremp| + ${employe.empMatricule}" th:href="@{/adr-employe-crde-m.html} + |/| + ${employe.empMatricule} + |/chgmtadr|" formmethod="get" th:text="|Changer adresse|">Annuler</a>
+																			
+																			<button th:id="|imprecapifadremp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id=" |histadr| + ${employe.empMatricule}" th:onclick="printHistoriqAdresse([[${employe}]])" th:text="|Imp. Historique adresse|">Note de service</button>
+																		</div>
+																	</div>
+																	<hr>
+
+																	<div class="border p-1 mb-2 bg-secondary-subtle">
 																		<header class="h6 mb-1 text-start">Affectations</header>
 																		<div class="d-flex flex-wrap gap-2 p-2">
 																			<a th:id="|approuvaffectemp| + ${employe.empMatricule}" class="btn btn-outline-primary" th:href="@{/affectations-emp-crde.html} + |/| + ${employe.empMatricule} + |/valid|" formmethod="get" th:text="|Approuver/Ann. affectation|">Annuler</a>
@@ -503,6 +514,17 @@
 												</div>
 											</div>
 											<hr>
+											
+											<div class="border p-1 mb-2 bg-secondary-subtle">
+												<header class="h6 mb-1 text-start">Adresses employé/stagiaire</header>
+												<div class="d-flex flex-wrap gap-2 p-2">
+													<a class="btn btn-outline-primary" id="|consultadremp1| + ${employe.empMatricule}" href="/crde/gpsnel/adr-employe-crde-m.html/${employe.empMatricule}/cnsultadr" formmethod="get" th:text="|Consulter adresse|">Annuler</a>
+													<a class="btn btn-outline-primary" id="|changeadremp1| + ${employe.empMatricule}" href="/crde/gpsnel/adr-employe-crde-m.html/${employe.empMatricule}/chgmtadr" formmethod="get" th:text="|Changer adresse|">Annuler</a>
+													
+													<button id="|imprecapifadremp1| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id=" |histadr| + ${employe.empMatricule}" th:onclick="printHistoriqAdresse([[${employe}]])" th:text="|Imp. Historique adresse|">Histriq</button>
+												</div>
+											</div>
+
 
 											<div class="border p-1 mb-2 bg-secondary-subtle">
 												<header class="h6 mb-1 text-start">Affectations</header>

@@ -467,7 +467,7 @@ public class Employe implements Comparable<Employe> {
 
 	@Override
 	public int compareTo(Employe o) {
-		return id.compareTo(o.getId());
+		return empLieuAffectation.getId().compareTo(o.getEmpLieuAffectation().getId()); //id.compareTo(o.getId());
 	}
 					
 }
