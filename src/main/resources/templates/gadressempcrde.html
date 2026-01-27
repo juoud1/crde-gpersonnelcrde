@@ -133,7 +133,7 @@
 									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/adr-employe-crde.html}">
+									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|"><!-- method = "post" th:action="@{/adr-employe-crde.html}"-->
 										<legende class="h4 mb-3 text-center" th:text="${traitement}">Récapitulatif </legende>
 										<hr>
 										<fieldset>
@@ -175,7 +175,7 @@
 										<hr>
 
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
-											<button type="submit" class="btn btn-primary">Ajouter</button>
+											<button type="submit" class="btn btn-outline-primary">Ajouter</button>
 											<button type="reset" class="btn btn-dark">Annuler</button>
 											<a class="btn btn-primary" id="bajoutcongesansas" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
 										</div>

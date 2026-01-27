@@ -47,6 +47,28 @@ public class AdresseEmpController {
 		//return "cnsultadr".equalsIgnoreCase(typOp) ? "gadressempcrderecap" : "gadressempcrdelist";
 	}
 
+	@GetMapping ("/adr-employe-crde-m.html/{adresseId}")
+	public String getAdresseEmpByIdForUpdate(@PathVariable String adresseId, HttpServletRequest request, Model model) {
+		
+		//var adressesEmploye = this.adresseEmpService.getAdressesEmpByMatricule(empMatricule);
+		var adresseActuelleEmploye = this.adresseEmpService.getAllAdressesEmp().stream()
+																.distinct()
+																.filter(a->a.getAdrId().equalsIgnoreCase(adresseId))
+																.findFirst()
+																.orElse(null);
+		
+		//model.addAttribute("traitement", "Adresse actuelle de résidence de l'employé " + empMatricule);
+		model.addAttribute("adresseActuelle", adresseActuelleEmploye);
+	//	{
+		model.addAttribute("traitement", "Adresse de résidence n° " + adresseId + " -- (PAS ENCORE OPERATIONNEL, SVP)");
+			//model.addAttribute("adresseActuelle", adresseActuelleEmploye);
+			
+		return "gadressempcrdemaj";
+		
+		
+		//return "cnsultadr".equalsIgnoreCase(typOp) ? "gadressempcrderecap" : "gadressempcrdelist";
+	}
+
 	@GetMapping ("/adr-employe-crde.html/{empMatricule}")
 	public String getAdresseEmpByMatricule(@PathVariable String empMatricule, HttpServletRequest request, Model model) {
 		var adresseActuelleEmploye = this.adresseEmpService.getAdressesEmpByMatricule(empMatricule).stream()

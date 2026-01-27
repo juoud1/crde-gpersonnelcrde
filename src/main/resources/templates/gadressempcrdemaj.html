@@ -133,7 +133,7 @@
 									<span class="h1 bg-transparent" style="font-size: 6.75rem; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: darkred; margin: auto; padding: auto; writing-mode: vertical-rl; text-orientation: upright;" th:text="|CRDE|"></span>
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
-									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|" method = "post" th:action="@{/affectation-emp-crde.html}">
+									<form id="affectationsform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|"><!-- method = "post" th:action="@{/affectation-emp-crde.html}"-->
 										<legende class="h4 mb-3 text-center" th:text="${traitement}">Récapitulatif </legende>
 										<hr>
 										<fieldset>
@@ -177,8 +177,8 @@
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<a class="btn btn-outline-primary" th:href="@{/adr-employe-crde-m.html} + |/| + ${adresseActuelle.adrId}" formmethod="get" th:text="|Modifier|">Annuler</a>
 											<a class="btn btn-outline-primary" th:href="@{/adr-employe-crde.html} + |/| + ${adresseActuelle.empMatricule}" formmethod="get" th:text="|Ajouter nouvelle adresse|">Annuler</a>
-											<a class="btn btn-outline-primary" th:href="@{/adr-employe-crde-m.html} + |/| + ${adresseActuelle.empMatricule} + |/chgmtadr|" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
-											<a class="btn btn-outline-primary" id="bajoutcongesansas" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
+											<a class="btn btn-primary" th:href="@{/adr-employe-crde-m.html} + |/| + ${adresseActuelle.empMatricule} + |/chgmtadr|" formmethod="get" th:text="|Retourner liste adr.|">Annuler</a>
+											<a class="btn btn-primary" id="bajoutcongesansas" th:href="@{/employes-crde.html}" formmethod="get" th:text="|Retourner liste emp.|">Annuler</a>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6 text-center p-2 g-2">
 											<button type="button" class="btn btn-warning" id="print-recap" th:text="|Imp. l'adresse actuelle|" th:onclick="printAdresseActuelle([[${allAdressesEmploye}]])">NS</button>
