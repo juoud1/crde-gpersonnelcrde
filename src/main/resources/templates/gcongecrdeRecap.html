@@ -238,12 +238,12 @@
 											<!--a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a-->
 											
 											<a class="btn btn-outline-primary" th:href="@{/conge-emp-crde-m.html} + |/| + ${savedConge.numConge}" formmethod="get" th:text="|Modifier|">Annuler</a>
-											<a class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter nouveau congé|">Annuler</a>
-											<a class="btn btn-primary" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
+											<a class="btn btn-outline-primary" th:href="@{/conge-emp-crde.html}" formmethod="get" th:text="|Ajouter nouveau congé|">Ajout</a>
+											<a class="btn btn-primary" th:href="@{/conges-emp-crde.html}" formmethod="get" title="Retourner à la liste" th:text="|Retourner|">Ret</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
-											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedConge}]])">AS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer NS|" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer AS|" th:onclick="printAutorisationSortie([[${savedConge}]])">AS</button>
 										</div>
 										
 									</form>
@@ -279,7 +279,8 @@
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');
 		const asPaysBox = document.getElementById('aspaysbox');
-
+		const asMotifBox = document.getElementById('asmotifbox');
+		
 		const legendeFormText = document.getElementById('legcongesform');
 
 		window.addEventListener('DOMContentLoaded', typeDemandeSelectChange);
@@ -292,6 +293,7 @@
 				asDateRetBox.style.display='block';
 				asVilleBox.style.display='block';
 				asPaysBox.style.display='block';
+				asMotifBox.style.display='block';
 				asBox.style.display='block';
 			} else { 
 				legendeFormText.innerText='Mettre à jour le Congé';
@@ -301,6 +303,7 @@
 				asDateRetBox.style.display='none';
 				asVilleBox.style.display='none';
 				asPaysBox.style.display='none';
+				asMotifBox.style.display='none';
 				asBox.style.display='none';
 			}
 		}

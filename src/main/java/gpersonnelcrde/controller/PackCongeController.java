@@ -107,19 +107,19 @@ public class PackCongeController {
 	}
 
 	@PostMapping("/conge-emp-crde.html")
-	public String addConge(@RequestParam("matriculeempconge") String matriculeEmpConge,  
-					@RequestParam("typedemande") String typeDmdeConge,
-					@RequestParam("datedebconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebConge,
-	                @RequestParam("datefinconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinConge, 
-					@RequestParam("infosupplconge") String infoSupplConge,
-					@RequestParam("matriculeempremplacant") String matriculeEmpRemplacant,
-					@RequestParam("numnoteserviceconge") String numNoteDeSvceConge,
-					@RequestParam("numautorisatsortie") String numAutDeSortie, 
-					@RequestParam("datedepartautorisatsortie") LocalDate dateDepartAutorisatSortie,
-					@RequestParam("dateretourautorisatsortie") LocalDate dateRetourAutorisatSortie,
-					@RequestParam("villeautorisatsortie") String villeAutorisatSortie,
-					@RequestParam("paysautorisatsortie") String paysAutorisatSortie, 
-					@RequestParam("motifsortie") String motifSortie, HttpServletRequest request, Model model) throws IllegalAccessException{
+	public String addConge(@RequestParam(value="matriculeempconge") String matriculeEmpConge,  
+					@RequestParam(value="typedemande") String typeDmdeConge,
+					@RequestParam(value="datedebconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebConge,
+	                @RequestParam(value="datefinconge") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinConge, 
+					@RequestParam(value="infosupplconge", required=false) String infoSupplConge,
+					@RequestParam(value="matriculeempremplacant") String matriculeEmpRemplacant,
+					@RequestParam(value="numnoteserviceconge", required=false) String numNoteDeSvceConge,
+					@RequestParam(value="numautorisatsortie", required=false) String numAutDeSortie, 
+					@RequestParam(value="datedepartautorisatsortie", required=false) LocalDate dateDepartAutorisatSortie,
+					@RequestParam(value="dateretourautorisatsortie", required=false) LocalDate dateRetourAutorisatSortie,
+					@RequestParam(value="villeautorisatsortie", required=false) String villeAutorisatSortie,
+					@RequestParam(value="paysautorisatsortie", required=false) String paysAutorisatSortie, 
+					@RequestParam(value="motifsortie", required=false) String motifSortie, HttpServletRequest request, Model model) throws IllegalAccessException{
 		
 		var savedConge = packCongeService.savePackCongeEmploye(matriculeEmpConge, typeDmdeConge, dateDebConge, dateFinConge, infoSupplConge,
 								numNoteDeSvceConge, numAutDeSortie, dateDepartAutorisatSortie, dateRetourAutorisatSortie,

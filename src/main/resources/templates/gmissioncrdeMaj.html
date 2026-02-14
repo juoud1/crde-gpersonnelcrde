@@ -258,12 +258,12 @@
 										<hr>
 										
 										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
-											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier la mission|"> Modif</button>
+											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier|"> Modif</button>
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
-											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer ordre de mission|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer OM|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>
 										</div>
 										
 									</form>

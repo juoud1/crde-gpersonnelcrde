@@ -181,8 +181,7 @@
 
 										<h2 class="h4 mb-3 text-center print-underline">Liste d'absences et de congés des employés</h2>
 										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
-											<span class="ms-auto" th:text="${#lists.size(allConges)}"></span>
-											<span th:text="|congé(s)|"></span>
+											<span class="ms-auto badge bg-primary rounded-pill" th:text="${#lists.size(allConges)} + | congé(s)|"></span>
 										</div>
 										<div class="table-responsive overflow-auto" style="height: 40em;">
 											<table class="table table-bordered" id="conges-table">

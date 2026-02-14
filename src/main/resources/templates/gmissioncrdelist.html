@@ -184,8 +184,7 @@
 										<h2 class="h4 mb-3 text-center print-underline">Liste des missions</h2>
 										
 										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
-											<span class="ms-auto" th:text="${#lists.size(allMissionsEmployes)}"></span>
-											<span th:text="|mission(s)|"></span>
+											<span class="ms-auto badge bg-primary rounded-pill" th:text="${#lists.size(allMissionsEmployes)} + | mission(s)|"></span>
 										</div>
 										<div class="table-responsive overflow-auto" style="height: 40em;">
 											<table class="table table-bordered" id="missions-table">

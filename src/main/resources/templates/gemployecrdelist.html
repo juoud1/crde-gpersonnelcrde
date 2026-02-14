@@ -226,49 +226,68 @@
 
 								<h2 class="h4 mb-3 text-center print-underline">Liste du personnel</h2>
 								<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
-									<span class="ms-auto" th:text="${#lists.size(allEmployes)}"></span>
-									<span th:text="|employé(s)|"></span>
+									<span class="ms-auto badge bg-primary rounded-pill" th:text="${#lists.size(allEmployes)} + | employé(s)|"></span>
 								</div>
 								<div class="table-responsive overflow-auto" style="height: 40em;">
 									<table class="table table-bordered" id="employee-table">
 										<thead class="table-light bg-light">
 											<tr class="border border-secondary bg-secondary-subtle">
-												<th class="border-end" style="width: 8.5%;">Matricule</th>
-												<th class="border-end" style="width: 14%;">Nom & Prénoms</th>
-												<th class="border-end" style="width: 8%;">Civilité</th>
-												<!--th class="border-end">Téléphone</th-->
-												<th class="border-end" style="width: 13%;">Contact</th>
-												<th class="border-end">Type employé</th>
-												<th class="border-end" style="width: 7%;">Status</th>
-												<th class="border-end" style="width: 10.5%;">Dates status</th>
+												<th class="border-end" style="width: 6%;">Matricule</th>
+												<th class="border-end" style="width: 17%;">Nom & Prénoms</th>
+												<!--th class="border-end" style="width: 8%;">Civilité</th>
+												<th class="border-end">Téléphone</th-->
+												<th class="border-end" style="width: 15%;">Contact</th>
+												<th class="border-end" style="width: 8%;">Type emp</th>
+												<th class="border-end" style="width: 11%;">Status</th>
+												<!--th class="border-end" style="width: 8%;">Dates status</th-->
 												<!--th class="border-end">Date fin</th-->
-												<th class="border-end">Affectation</th>
-												<th class="border-end">Fonction</th>
-												<th class="border-end" style="width: 13%;">Déc/Arr Etrée</th>
-												<th class="border-end" style="width: 13%;">Décr/Arr Stie</th>
-												<th id="col-action " class="text-center">
+												<th class="border-end" style="width: 15%;">Affectation</th>
+												<th class="border-end" style="width: 11%;">Fonction</th>
+												<th class="border-end" style="width: 14%;">Décret/Arrêté</th>
+												<!--th class="border-end" style="width: 10%;">Décr/Arr Stie</th-->
+												<th id="col-action " class="text-center" style="width: 3%;">
 													Actions
 												</th>
 											</tr>
 										</thead>
 										<tbody>
 											<!-- Les employés seront ajoutés ici dynamiquement -->
-											<tr th:each="employe: ${allEmployes}">
-												<td th:text="${employe.empMatricule}" style="width: 8.5%;">nom</td>
-												<td th:text="${employe.empNom} + |, | + ${employe.empPren}">prenom</td>
-												<!--td th:text="${employe.empPren}">prenom</td-->
-												<td th:text="${employe.empCivilite}" style="width: 8%;">prenom</td>
-												<td th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td>
+											<tr class="justify-content-between align-items-center" th:each="employe: ${allEmployes}">
+												<td th:text="${employe.empMatricule}">nom</td>
+												<td th:text="${employe.empNom} + | | + ${employe.empPren} + |, | + ${employe.empCivilite}">prenom</td>
+												<!--td th:text="${employe.empPren}">prenom</td>
+												<td th:text="${employe.empCivilite}" style="width: 8%;">prenom</td-->
+												<td><ul class="list-group p-0 m-0 border-0">
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="${employe.empTelephone}">contact</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="${employe.empEmail}">contact</li>	
+													</ul> <!--th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td-->
+												</td>
 												<!--td th:text="${employe.empEmail}">email</td-->
-												<td th:text="${employe.typeEmploye}">tel</td>
-												<td th:text="${employe.status}" style="width: 7%;">role</td>
-												<td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}" style="width: 10.5%;">date</td>
+												<td th:text="${employe.typeEmploye}">typemp</td>
+												<!--td th:text="${employe.status}" style="width: 7%;">role</td-->
+												<!--td th:text="|du: | + ${employe.empDateDebutStatus} + |; au: | + ${employe.empDateFinStatus}" style="width: 10.5%;">date</td-->
+												<td><ul class="list-group p-0 m-0 border-0">
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="${employe.status}">status</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="${employe.empDateDebutStatus}">datedeb</li>
+														<!--li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="|au: | + ${employe.empDateFinStatus}">datefin</li-->	
+													</ul> <!--th:text="|Tél: |+ ${employe.empTelephone}+ |; Email: | +${employe.empEmail}">email</td-->
+												</td>
 												<!--td th:text="${employe.empDateFinStatus}">date</td-->
-												<td th:text="${employe.lieuAffectation}">status</td>
-												<td th:text="${employe.fonction}">status</td>
-												<td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}" style="width: 13%;">role</td>
-												<td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}" style="width: 13%;">role</td>
-												<td class="text-center" id="actionemp" style="width: 5%;">
+												<td th:text="${employe.lieuAffectation}">lieuaffect</td>
+												<td th:text="${employe.fonction}">fonct</td>
+												<!--td th:text="${employe.refDecretouArreteEntree} + |; du: | + ${employe.dateDecretouArreteEntree}" style="width: 13%;">role</td-->
+												<td><ul class="list-group p-0 m-0 border-0">
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="|réf.: | + ${employe.refDecretouArreteEntree}">reférence ent</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0" th:text="|du: | + ${employe.dateDecretouArreteEntree}">date ent</li>	
+													</ul>
+												</td>	
+												<!--td th:text="${employe.refDecretouArreteDepart} + |; du: | + ${employe.dateDecretouArreteDepart}" style="width: 13%;">role</td-->
+												<!--td><ul>
+														<li th:text="|réf.: | + ${employe.refDecretouArreteDepart}">reférence stie</li>
+														<li th:text="|du: | + ${employe.dateDecretouArreteDepart}">date stie</li>	
+													</ul>
+												</td-->
+												<td class="text-center" id="actionemp">
 													<button type="button" class="btn btn-warning" th:id="|bt-| + ${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-| + ${employe.empMatricule}" th:text="|...|">
 														action
 													</button>
@@ -295,7 +314,7 @@
 																	<div class="border p-1 mb-2 bg-secondary-subtle">
 																		<header class="h6 mb-1 text-start">Adresses employé/stagiaire</header>
 																		<div class="d-flex flex-wrap gap-2 p-2">
-																			<a class="btn btn-outline-primary" th:id="|consultadremp| + ${employe.empMatricule}" th:href="@{/adr-employe-crde-m.html} + |/| + ${employe.empMatricule}+ |/cnsultadr|" formmethod="get" th:text="|Consulter adresse|">Annuler</a>
+																			<a class="btn btn-outline-primary" th:id="|consultadremp| + ${employe.empMatricule}" th:href="@{/adr-employe-crde-m.html} + |/| + ${employe.empMatricule}+ |/cnsultadr|" formmethod="get" th:text="|Consulter adresse active|">Annuler</a>
 																			<a class="btn btn-outline-primary" th:id="|changeadremp| + ${employe.empMatricule}" th:href="@{/adr-employe-crde-m.html} + |/| + ${employe.empMatricule} + |/chgmtadr|" formmethod="get" th:text="|Changer adresse|">Annuler</a>
 																			
 																			<button th:id="|imprecapifadremp| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id=" |histadr| + ${employe.empMatricule}" th:onclick="printHistoriqAdresse([[${employe}]])" th:text="|Imp. Historique adresse|">Note de service</button>
@@ -479,18 +498,27 @@
 				.forEach((employe, index) => {
 					const row = document.createElement('tr');
 					row.innerHTML = `
-						<td style="width: 8.5%;">${employe.empMatricule}</td>
-						<td>${employe.empNom}, ${employe.empPren}</td>
-						<td style="width: 8%;">${employe.empCivilite}</td>
-						<td>Tél: ${employe.empTelephone}; Email: ${employe.empEmail}</td>
+						<td>${employe.empMatricule}</td>
+						<td>${employe.empNom} ${employe.empPren}, ${employe.empCivilite}</td>
+						<td><ul class="list-group p-0 m-0 border-0">
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">${employe.empTelephone}</li>
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">${employe.empEmail}</li>	
+							</ul>
+						</td>
 						<td>${employe.typeEmploye}</td>
-						<td style="width: 7%;">${employe.status}</td>
-						<td style="width: 10.5%;">du: ${employe.empDateDebutStatus}; au: ${employe.empDateFinStatus}</td>
+						<td><ul class="list-group p-0 m-0 border-0">
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">${employe.status}</li>
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">${employe.empDateDebutStatus}</li>	
+							</ul>
+						</td>
 						<td>${employe.lieuAffectation}</td>
 						<td>${employe.fonction}</td>
-						<td style="width: 13%;">${employe.refDecretouArreteEntree} ; du: ${employe.dateDecretouArreteEntree}</td>
-						<td style="width: 13%;">${employe.refDecretouArreteDepart} ; du: ${employe.dateDecretouArreteDepart}</td>
-						<td class="text-center" style="width: 5%;">
+						<td><ul class="list-group p-0 m-0 border-0">
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">réf.: ${employe.refDecretouArreteEntree}</li>
+								<li class="list-group-item d-flex justify-content-between align-items-center m-0 p-0 border-0">du: ${employe.dateDecretouArreteEntree}</li>	
+							</ul>
+						</td>
+						<td class="text-center">
 						
 							<button type="button" class="btn btn-warning" id="bt1-${employe.empMatricule}" style="margin: auto;" data-bs-toggle="modal" data-bs-target="#staticBckdpCrde1-${employe.empMatricule}" >
 								...
@@ -507,7 +535,7 @@
 											<div class="border p-1 mb-2 bg-secondary-subtle">
 												<header class="h6 mb-1 text-start">Données employé/stagiaire</header>
 												<div class="d-flex flex-wrap gap-2 p-2">
-													<a class="btn btn-outline-primary" id="consultemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}/cnsult" formmethod="get">Consulter</a>
+													<a class="btn btn-outline-primary" id="consultemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}/cnsult" formmethod="get">Afficher</a>
 													<a class="btn btn-outline-primary" id="modifemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}/mdific" formmethod="get">Mettre à jour</a>
 													<a class="btn btn-outline-danger" id="inqdepartemp1-${employe.empMatricule}" href="/crde/gpsnel/employe-crde-m.html/${employe.empMatricule}" formmethod="get">Indiquer le départ</a>
 													<button id="imprecapifemp1-${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" onclick="printNoteDeService([[${employe}]])">Imp. récapitulatif</button>
@@ -518,7 +546,7 @@
 											<div class="border p-1 mb-2 bg-secondary-subtle">
 												<header class="h6 mb-1 text-start">Adresses employé/stagiaire</header>
 												<div class="d-flex flex-wrap gap-2 p-2">
-													<a class="btn btn-outline-primary" id="|consultadremp1| + ${employe.empMatricule}" href="/crde/gpsnel/adr-employe-crde-m.html/${employe.empMatricule}/cnsultadr" formmethod="get" th:text="|Consulter adresse|">Annuler</a>
+													<a class="btn btn-outline-primary" id="|consultadremp1| + ${employe.empMatricule}" href="/crde/gpsnel/adr-employe-crde-m.html/${employe.empMatricule}/cnsultadr" formmethod="get" th:text="|Afficher adresse actuelle|">Annuler</a>
 													<a class="btn btn-outline-primary" id="|changeadremp1| + ${employe.empMatricule}" href="/crde/gpsnel/adr-employe-crde-m.html/${employe.empMatricule}/chgmtadr" formmethod="get" th:text="|Changer adresse|">Annuler</a>
 													
 													<button id="|imprecapifadremp1| + ${employe.empMatricule}" type="button" class="btn btn-outline-info align-items ms-auto" id=" |histadr| + ${employe.empMatricule}" th:onclick="printHistoriqAdresse([[${employe}]])" th:text="|Imp. Historique adresse|">Histriq</button>

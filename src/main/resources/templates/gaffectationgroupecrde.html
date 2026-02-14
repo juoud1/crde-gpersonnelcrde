@@ -175,8 +175,8 @@
 													</thead>
 													<tbody>
 														<tr class="bg-transparent" th:each="employe, itemStat : *{allEmployesDirection}">
-															<!--td><input type="checkbox"  th:name="|affectempmatricules|" th:value="${employe.empMatricule}" checked /></td-->
-															<td th:text="${employe.empMatricule}"></td>
+															<td><input type="checkbox"  th:name="|affectempmatricules|" th:value="${employe.empMatricule}" checked /></td>
+															<!--td th:text="${employe.empMatricule}"></td-->
 															<td th:text="${employe.empNom} + | | + ${employe.empPren}"></td>
 															<td th:text="${employe.fonction}"></td>
 														</tr>
@@ -241,8 +241,8 @@
 										
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
-											<button type="reset" class="btn btn-dark">Annuler</button>
-											<a class="btn btn-outline-primary ms-auto" th:href="@{/affectations-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
+											<button type="reset" class="btn btn-outline-dark">Annuler</button>
+											<a class="btn btn-outline-primary ms-auto" th:href="@{/affectations-emp-crde.html}" formmethod="get" title="Retourner à la liste" th:text="|Retourner|">Annuler</a>
 										</div>
 										
 									</form>

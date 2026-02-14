@@ -205,16 +205,16 @@
 					
 										<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6">
 											<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville de destination|">civ</label>
-											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination" required>
+											<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" th:value="${savedConge.villeAutorisatSortie}" class="form-control" placeholder="Ville de destination">
 										</div>
 
 										<div id="aspaysbox" class="col-lg-7 col-md-7 col-sm-6">
 											<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays de destination|">civ</label>
-											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination" required>
+											<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" th:value="${savedConge.paysAutorisatSortie}" class="form-control" placeholder="Pays de destination">
 										</div>
 										<div id="asmotifbox" class="col-lg-12 col-md-12 col-sm-12 as">
 											<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-											<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control" required>
+											<input type="text" id="motifsortie" name="motifsortie" th:value="${savedConge.motifSortie}" class="form-control">
 										</div>
 										<hr>
 
@@ -237,13 +237,13 @@
 										<hr>
 
 										<div class="col-lg-5 col-md-5 col-sm-12 text-center p-2 g-2">
-											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier le congé|"> Modif</button>
+											<button type="submit" class="btn btn-primary mb-1" th:text="|Modifier|"> Modif</button>
 											<!--a class="btn btn-primary" th:href="@{/mission-emp-crde-s.html}" th:text="|Supprimer la mission|">Suppr</a-->
 											<a class="btn btn-outline-dark mb-1" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Annuler|">Annuler</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 text-center p-2 g-2">	
-											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer note de service|" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
-											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer aut. de sortie|" th:onclick="printAutorisationSortie([[${savedConge}]])">OS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-note-service" th:text="|Imprimer NS|" th:onclick="printNoteServiceConge([[${savedConge}]])">NS</button>
+											<button type="button" class="btn btn-warning mb-1" id="print-autorisat-sortie" th:text="|Imprimer AS|" th:onclick="printAutorisationSortie([[${savedConge}]])">OS</button>
 										</div>
 										
 									</form>
@@ -279,6 +279,7 @@
 		const asDateRetBox = document.getElementById('asdateretbox');
 		const asVilleBox = document.getElementById('asvillebox');
 		const asPaysBox = document.getElementById('aspaysbox');
+		const asMotifBox = document.getElementById('asmotifbox');
 
 		const legendeFormText = document.getElementById('legcongesform');
 
@@ -292,6 +293,7 @@
 				asDateRetBox.style.display='block';
 				asVilleBox.style.display='block';
 				asPaysBox.style.display='block';
+				asMotifBox.style.display='block';
 				asBox.style.display='block';
 			} else { 
 				legendeFormText.innerText='Mettre à jour le Congé';
@@ -301,6 +303,7 @@
 				asDateRetBox.style.display='none';
 				asVilleBox.style.display='none';
 				asPaysBox.style.display='none';
+				asMotifBox.style.display='none';
 				asBox.style.display='none';
 			}
 		}

@@ -120,7 +120,7 @@ public class AffectationController {
 		model.addAttribute("allFonction", allFonctions); //fonctionRepository.getAllFonction());
 		model.addAttribute("allLieuAffect", allLieuAffect); //lieuAffectationService.getAllLieuAffect());
 	    model.addAttribute("allAffectations", allAffectations); //affectationService.getAllAffectation());
-		model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
+		//model.addAttribute("allEmployes", allEmployes); //employeService.getAllEmploye());
 
 		if (StringUtils.isNotBlank(typeAffect)){
 			if (!"aff1emp".equalsIgnoreCase(typeAffect)) {
@@ -138,12 +138,13 @@ public class AffectationController {
 				model.addAttribute("paysResidenceText", "");
 				model.addAttribute("lAffectation", lAffectation);
 				model.addAttribute("allEmployesDirection", allEmployesDirection);
-				//model.addAttribute("allEmployes", employesDispo); //employeService.getAllEmploye());
+				model.addAttribute("allEmployes", employesDispo); //employeService.getAllEmploye());
 				logger.info("type affectation {}  \nlieu affectation {} \n{} employé(s) en poste et \n{} employé(s) disponible(s) à réaffecter sur {}".toUpperCase(), typeAffect,  
 					lAffectation.getLieuAffect(), allEmployesDirection.size(), employesDispo.size(), allEmployes.size());
 
 				return "gaffectationgroupecrde";
 			} else {
+				model.addAttribute("allEmployes", allEmployes);
 				model.addAttribute("categAffectValue", "Affectation intérieure RCA");
 				model.addAttribute("categAffectText", "Affectation à l'intérieur de la RCA");
 				model.addAttribute("paysResidenceText", "Rép. Centrafricaine");

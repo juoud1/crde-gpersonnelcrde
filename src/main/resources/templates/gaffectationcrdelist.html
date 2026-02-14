@@ -157,7 +157,7 @@
 											<div class="row text-center w-25">
 												<div class="col-lg-12 col-md-12 col-sm-12 text-end" id="affect-a-1direction">
 													<!--a class="btn btn-outline-primary mb-1" id="bajoutaffectationext" style="display: inline-block" th:href="@{/affectation-emp-crde.html/aff-ext}" formmethod="get" th:text="|Ajouter affect. à l'étranger|">Annuler</a-->
-													<button type="button" th:id="|bt-reaffect-a-1direction|" class="btn btn-outline-primary mb-1" style="display: inline-block; margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-reaffectation|" title="Affectation de plusieurs employés à la fois" th:text="|Affectation de groupe à...|">
+													<button type="button" th:id="|bt-reaffect-a-1direction|" class="btn btn-outline-primary mb-1" style="display: inline-block; margin: auto;" data-bs-toggle="modal" th:data-bs-target="|#staticBckdpCrde-reaffectation|" title="Affectation de plusieurs employés à la fois" th:text="|Affectation de groupe   ...|">
 														action
 													</button>
 
@@ -216,8 +216,7 @@
 
 										<h2 class="h4 mb-3 text-center">Liste des affectations au sein de la CRDE</h2>
 										<div class="ms-auto mb-1 d-flex flex-wrap gap-1" style="color: darksalmon; font-weight: bold;">
-											<span class="ms-auto" th:text="${#lists.size(allAffectations)}"></span>
-											<span th:text="|affectation(s)|"></span>
+											<span class="ms-auto badge bg-primary rounded-pill" th:text="${#lists.size(allAffectations)} + | affectation(s)|"></span>
 										</div>
 										<div class="table-responsive overflow-auto" style="height: 40em;">
 											<table class="table table-bordered" id="affectat-table">

@@ -197,24 +197,24 @@
 											
 											<div id="asvillebox" class="col-lg-5 col-md-5 col-sm-6 as">
 												<label class="form-label h6" for="villeautorisatsortie" th:text="|Ville destination|">num</label>
-												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control" required>
+												<input type="text" id="villeautorisatsortie" name="villeautorisatsortie" class="form-control">
 											</div>
 
 											<div id="aspaysbox" class="col-lg-7 col-md-7 col-sm-6 as">
 												<label class="form-label h6" for="paysautorisatsortie" th:text="|Pays destination|">num</label>
-												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control" required>
+												<input type="text" id="paysautorisatsortie" name="paysautorisatsortie" class="form-control">
 											</div>
 											<div id="asmotifbox" class="col-lg-12 col-md-12 col-sm-12 as">
 												<label class="form-label h6" for="motifsortie" th:text="|Motif de sortie|">num</label>
-												<input type="text" id="motifsortie" name="motifsortie" class="form-control" required>
+												<input type="text" id="motifsortie" name="motifsortie" class="form-control">
 											</div>
 										<!--/div-->
 										<hr>
 
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<button type="submit" class="btn btn-primary">Ajouter</button>
-											<button type="reset" class="btn btn-dark">Annuler</button>
-											<a class="btn btn-outline-primary ms-auto" th:href="@{/conges-emp-crde.html}" formmethod="get" th:text="|Retourner|">Annuler</a>
+											<button type="reset" class="btn btn-outline-dark">Annuler</button>
+											<a class="btn btn-outline-primary ms-auto" th:href="@{/conges-emp-crde.html}" formmethod="get" title="Retourner à la liste" th:text="|Retourner|">Annuler</a>
 										</div>
 									</form>
 								</div>
