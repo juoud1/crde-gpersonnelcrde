@@ -136,7 +136,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="missionsrecapform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-										<legende id="legmissionsform" class="h4 mb-3 text-center" th:text="|Récapitulatif de la | + ${traitement}">Récapitulatif</legende>
+										<legende id="legmissionsform" class="h4 mb-3 text-center" th:text="|Récapitulatif | + ${traitement}">Récapitulatif</legende>
 										<hr>
 										<fieldset>
 											<div class="col-lg-10 col-md-10 col-sm-12 alert alert-success w-75 m-auto text-center" th:if="${resultTraitement != null}">
@@ -232,7 +232,7 @@
 										<div class="col-lg-9 col-md-9 col-sm-12 text-center p-2 g-2">
 											<a class="btn btn-outline-primary" th:href="@{/mission-emp-crde-m.html} + |/| + ${savedMissionEmployes.numMission}" formmethod="get" th:text="|Modifier|">Annuler</a>
 											<a class="btn btn-outline-primary" th:href="@{/mission-emp-crde.html}" formmethod="get" th:text="|Ajouter nouvelle mission|">Annuler</a>
-											<a class="btn btn-primary" th:href="@{/missions-emp-crde.html}" formmethod="get" th:text="|Retourner à la liste|">Annuler</a>
+											<a class="btn btn-primary" th:href="@{/missions-emp-crde.html}" formmethod="get" title="Retourner à la liste" th:text="|Retourner|">Annuler</a>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-6 text-center p-2 g-2">
 											<button type="button" class="btn btn-warning mb-1" id="print-ordre-mission" th:text="|Imprimer OM|" th:onclick="printOrdreMissions([[${savedMissionEmployes}]])">OM</button>

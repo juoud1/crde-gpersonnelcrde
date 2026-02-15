@@ -264,9 +264,10 @@
 																			<div class="border p-1 mb-2 bg-secondary-subtle">
 																				<header class="h6 mb-1 text-start" th:text="|Données de l'affectation N° | + ${affectation.numAffect}">Données de l'affectation</header>
 																				<div class="d-flex flex-wrap gap-2 p-2">
-																					<a class="btn btn-primary" th:id="|modifaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Modifier l'affectation|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|approuvaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Approuver/Désapprouver l'affectation|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|annulaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Annuler/Suspendre l'affectation|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|consultaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-saved.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Consulter|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|modifaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Modifier|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|approuvaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Approuver/Désapprouver|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|annulaffect-|+ ${affectation.numAffect}" th:href="@{/affectation-emp-crde-m.html} + |/| + ${affectation.numAffect}" formmethod="get" th:text="|Annuler/Suspendre|">Annuler</a>
 																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+${affectation.numNoteService}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteDeService([[${affectation}]])" th:text="|Imprimer note de service|">Note de service</button>
 																				</div>
 																			</div>

@@ -155,6 +155,23 @@ public class MissionEmployeController {
 		return "gmissioncrdeRecap";
 	}
 
+	@GetMapping ("/mission-emp-crde-saved.html/{numMission}")
+	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException {
+		var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
+								.orElseGet(MissionEmployesDto::new);
+
+		if (Objects.nonNull(savedMissionEmployes) && StringUtils.isNotBlank(savedMissionEmployes.getNumMission())){
+			model.addAttribute("resultTraitement", "Création de mission - employé(s) effectuée avec succès.");
+			model.addAttribute("traitement", "mission");
+		}
+		model.addAttribute("savedMissionEmployes", savedMissionEmployes);
+		
+		updateUI(savedMissionEmployes.getTypeOrdreMission(), model);
+
+		return "gmissioncrdeRecap";
+
+	}
+
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}/{empMatricule}") /// Il manque le cas d'appel èa partir de la formRécap
 	public String getMissionByNumAndEmpMatricule(@PathVariable String numMission, @PathVariable String empMatricule, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException{
 	    var savedMissionEmploye = missionEmployeService.getMissionEmployeByNumMissAndMatriculeEmp(numMission, empMatricule)
@@ -180,7 +197,7 @@ public class MissionEmployeController {
 	}
 
 	@GetMapping ("/mission-emp-crde-m.html/{numMission}")
-	public String getMissionByNum(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException, InterruptedException, ExecutionException{
+	public String getMissionByNumForUpdating(@PathVariable String numMission, HttpServletRequest request, Model model) throws EmployeServiceException, StockageFichiersImagesException, InterruptedException, ExecutionException{
 	    var savedMissionEmployes = missionEmployeService.getMissionEmployesByNumMiss(numMission)
 								.orElseGet(MissionEmployesDto::new);
 		

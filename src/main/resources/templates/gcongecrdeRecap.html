@@ -135,7 +135,7 @@
 								</div>
 								<div class="col-9 d-flex justify-content-end bg-light z-0 position-relative">
 									<form id="congesrecapform" class="row m-auto p-auto g-3 border border-secondary z-3 position-relative rounded-3 bg-secondary-subtle text-dark" th:autocomplete="|false|">
-										<legende class="h4 mb-3 text-center" id="legcongesform" th:text="|Récapitulatif de la | + ${traitement}">Récapitulatif</legende>
+										<legende class="h4 mb-3 text-center" id="legcongesform" th:text="|Récapitulatif | + ${traitement}">Récapitulatif</legende>
 										<hr>
 										<fieldset>
 											<div class="col-lg-10 col-md-10 col-sm-12 alert alert-success w-75 m-auto text-center" th:if="${resultTraitement != null}">
@@ -153,7 +153,7 @@
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
 											<label class="form-label h6" for="typedemande" th:text="|Type de demande|">civ</label>
-											<select id="typedemande" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" multiple disabled>
+											<select id="typedemande" name="typedemande" class="form-select" onchange="typeDemandeSelectChange()" disabled>
 												<option th:value="${savedConge.typeDemandeConge}" th:text="${savedConge.typeDemandeConge}">Sélectionner un type cge</option>
 											</select>
 										</div>

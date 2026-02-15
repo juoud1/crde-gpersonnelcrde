@@ -137,10 +137,25 @@ public class PackCongeController {
 		model.addAttribute("savedConge", savedConge);
 
 		return "gcongecrderecap";
+	
+	
+	}
+
+	@GetMapping ("/conge-emp-crde-saved.html/{numConge}")
+	public String getPackCongeByNumConge(@PathVariable String numConge, HttpServletRequest request, Model model) {
+		var savedConge = packCongeService.getPackCongeByNumNoteService(numConge)
+							.orElseGet(PackCongeDto::new);
+		model.addAttribute("savedConge", savedConge);
+		if (Objects.nonNull(savedConge) && StringUtils.isNotBlank(savedConge.getNumConge())){
+			//model.addAttribute("resultTraitement", "pack congé et aut. de sortie de l'employé effectuée avec succès.");
+			model.addAttribute("traitement", "congé");
+		}
+
+		return "gcongecrderecap";
 	}
 
 	@GetMapping ("/conge-emp-crde-m.html/{numConge}")
-	public String getPackCongeByNumNoteSvceConge(@PathVariable String numConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	public String getPackCongeByNumCongeForUpdating(@PathVariable String numConge, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
 		Future<PackCongeDto> futurePackCongeEmploye = null;
 		Future<List<EmployeDto>> futureEmployes = null;
 		

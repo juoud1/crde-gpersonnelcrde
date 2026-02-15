@@ -227,9 +227,10 @@
 																			<div class="border p-1 mb-2 bg-secondary-subtle">
 																				<header class="h6 mb-1 text-start" th:text="|Données de congé N° | + ${conge.numNoteServiceConge}">Données de l'affectation</header>
 																				<div class="d-flex flex-wrap gap-2 p-2">
-																					<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Modifier le congé|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Approuver/Désapprouver le congé|">Annuler</a>
-																					<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Annuler/Suspendre le congé|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|consultconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-saved.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Consulter|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|modifconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Modifier|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|approuvconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Approuver/Désapprouver|">Annuler</a>
+																					<a class="btn btn-primary" th:id="|annconge-|+ ${conge.numConge}" th:href="@{/conge-emp-crde-m.html} + |/| + ${conge.numConge}" formmethod="get" th:text="|Annuler/Suspendre|">Annuler</a>
 																					<button type="button" class="btn btn-info align-items ms-auto" th:id="|NS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printNoteServiceConge([[${conge}]])" title="Imprimer la note de service (NS)" th:text="|Imprimer NS|">Note de service</button>
 																					<button type="button" class="btn btn-info align-items" th:id=" |AS-|+ ${conge.numConge}" style="margin-left: 0; margin-right: 0; margin-bottom: 0.25em;" th:onclick="printAutorisationSortie([[${conge}]])" title="Imprimer l'autorisation de sortie (AS)" th:text="|Imprimer AS|">Note de service</button>
 																				</div>

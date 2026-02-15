@@ -197,6 +197,20 @@ public class AffectationController {
 		return "gaffectationcrdeRecap";
 	}
 
+	@GetMapping ("/affectation-emp-crde-saved.html/{numAffect}")
+	public String getAffectationByNumAffection(@PathVariable String numAffect, HttpServletRequest request, Model model) {
+		var savedAffectation = affectationService.getAffectByNumAffectation(numAffect)
+		
+							.orElseGet(AffectationDto::new);
+		if (Objects.nonNull(savedAffectation)){
+			model.addAttribute("traitement", "réaffectation");
+			//model.addAttribute("resultTraitement", "Réaffectation de l'employé effectuée avec succès.");
+		}
+		model.addAttribute("savedAffectation", savedAffectation);
+
+		return "gaffectationcrdeRecap";								
+	}	
+
 	@PostMapping("/affectation-grp-emp-crde.html")
 	public String addAffectationGroupEmp(@RequestParam(name = "affectempmatricule", required = false) String affectEmpMatricule, 
 					@RequestParam(name="datedebaffect", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebAffect,
@@ -229,10 +243,10 @@ public class AffectationController {
 		model.addAttribute("savedAffectation", new AffectationDto());
 
 		return "gaffectationgroupecrderecap";								
-	}	
+	}		
 
 	@GetMapping ("/affectation-emp-crde-m.html/{numAffect}")
-	public String getAffectationByNumAffection(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
+	public String getAffectationByNumAffectionForUpdating(@PathVariable String numAffect, HttpServletRequest request, Model model) throws StockageFichiersImagesException, EmployeServiceException, InterruptedException, ExecutionException{
 		var savedAffectation = affectationService.getAffectByNumAffectation(numAffect)
 							.orElseGet(AffectationDto::new);
 		model.addAttribute("savedAffectation", savedAffectation);
